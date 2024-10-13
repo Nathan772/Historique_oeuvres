@@ -1,0 +1,24 @@
+Lancer mysql avec une session USER :
+
+mysql -u nathanb -p
+
+mdp: 
+
+(voir portable ou dans le dossier dédié)
+
+
+DATA BASE :
+
+-SHOW DATABASES;
+
+-USE databasaName;
+
+"
+source bddinit.sql
+"
+
+lance le programme du dossier "bddinit.sql" lorsque c'est lancé
+depuis l'invite de commande de mysql.
+
+
+

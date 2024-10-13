@@ -1,0 +1,61 @@
+<!--
+
+écrit en reprenant le code de baeldung
+
+-->
+
+<div class="card my-5">
+  <div class="card-body">
+
+    <!-- début formulaire -->
+
+    <!-- ancienne méthode associé au formulaire
+    "onSubmit"-->
+
+    <form (ngSubmit)="registerNewUser()" #userForm="ngForm">
+
+      <!--input pour
+      le nom du user -->
+      <div class="form-group">
+
+
+        <label for="name">Name</label>
+        <input type="text" [(ngModel)]="user.name"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Enter your name"
+               required #name="ngModel">
+
+
+      </div>
+
+
+
+      <div [hidden]="!name.pristine" class="alert alert-danger">Name is required</div>
+
+
+      <!--
+      input pour le mail du user -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" [(ngModel)]="user.email"
+               class="form-control"
+               id="email"
+               name="email"
+               placeholder="Enter your email address"
+               required #email="ngModel">
+        <div [hidden]="!email.pristine" class="alert alert-danger">Email is required</div>
+      </div>
+
+
+      <button type="submit" [disabled]="!userForm.form.valid"
+              class="btn btn-info">Submit</button>
+
+
+    </form>
+
+    <!-- fin formulaire -->
+
+  </div>
+</div>
