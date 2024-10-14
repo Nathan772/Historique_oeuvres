@@ -168,8 +168,9 @@ mais celle-ci détecte une erreur dans une portion du code angular, alors qu'il 
 censé en avoir à cet endroit qui est supposé être sûr.
 Dans ce cas, c'est peut être un bug d'angular, supprimer puis remettez la partie problématique, cela pourrait refonctionner dans certains cas (c'est déjà arrivé).
 
-Pour updater les données de la bdd de façon persistante, il faut modifier le fichier
-"application.properties" : 
+Pour updater les données de la base de donnée (bdd) de façon persistante, il faut modifier le fichier
+(non?)"out/production/Historique_oeuvres/main/resources/application.properties"
+(oui)javaForHistory_work/history_work/src/main/resources/application.properties
 
 ```properties
 
@@ -250,3 +251,13 @@ Pour lancer le swagger :
 </dependency
 
 ```
+
+
+résoudre l'erreur : 
+
+```
+BeanDefinitionStoreException: Failed to parse 
+```
+
+Il faut aller dans les paramètres maven et lancer "clean" puis cliquer sur les deux flèches 
+qui forme un cercle "reload all maven incremental".

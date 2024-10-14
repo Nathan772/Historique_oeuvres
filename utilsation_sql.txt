@@ -11,7 +11,7 @@ DATA BASE :
 
 -SHOW DATABASES;
 
--USE databasaName;77
+-USE historyDB;
 
 -source monsqlfile.sql
 

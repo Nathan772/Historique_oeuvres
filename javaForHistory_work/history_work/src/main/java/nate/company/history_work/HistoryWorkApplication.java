@@ -1,13 +1,13 @@
-package nate.company.youtube_converter;
+package nate.company.history_work;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class YoutubeConverterApplication {
+public class HistoryWorkApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(YoutubeConverterApplication.class, args);
+		SpringApplication.run(HistoryWorkApplication.class, args);
 	}
 
 }

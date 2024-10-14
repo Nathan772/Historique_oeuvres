@@ -1,4 +1,4 @@
-package nate.company.youtube_converter.controller;
+package nate.company.history_work.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
