@@ -1,12 +1,9 @@
-package nate.company.youtube_converter;
+package nate.company.history_work;
 
 /* import proposé au clique sur les différentes annotations en rouge
 
  */
-import nate.company.youtube_converter.siteTools.User;
-import nate.company.youtube_converter.siteTools.UserRepository;
-import nate.company.youtube_converter.siteTools.Video;
-import nate.company.youtube_converter.siteTools.VideoRepository;
+import nate.company.history_work.siteTools.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +23,7 @@ nécessaire pourgit  résoudre :
 Parameter 0 of method init in nate.company.youtube_converter.Application
 required a bean of type 'nate.company.youtube_converter.siteTools.UserRepository' that could not be found.
  */
-@ComponentScan({"nate/company/youtube_converter"})
+@ComponentScan({"nate/company/history_work"})
 public class Application {
 
     public static void main(String[] args) {
@@ -34,7 +31,7 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository, VideoRepository videoRepository) {
+    CommandLineRunner init(UserRepository userRepository) {
         return args -> {
             /*pas nécessaire sauf si on veut tester l'ajout en brut
             sans passer par l'application Web
@@ -54,7 +51,6 @@ public class Application {
 
             System.out.println(" les données en base de données : ");
             userRepository.findAll().forEach(System.out::println);
-            videoRepository.findAll().forEach(System.out::println);
         };
     }
 }

@@ -1,4 +1,4 @@
-package nate.company.youtube_converter.siteTools;
+package nate.company.history_work.siteTools;
 
 import jakarta.persistence.*;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String name;
+    private String pseudo;
     private String email;
+    private String password;
 
     /**
      *
@@ -41,28 +42,29 @@ public class User {
      */
 
     public User(){
-        this.name = "";
+        this.pseudo = "";
         this.email = "";
+        this.password = "";
     }
 
     /*
     Pour faire fonctionner l'API il faut au minimum :
     le constructeur standard, les getters, les setters, et toString
      */
-    public User(String name, String email){
-        Objects.requireNonNull(name, "the user's name cannot be null");
+    public User(String pseudo, String email){
+        Objects.requireNonNull(pseudo, "the user's pseudo cannot be null");
         Objects.requireNonNull(email, "the user's email cannot be null");
-        this.name = name;
+        this.pseudo = pseudo;
         this.email = email;
     }
 
     /**
-     * getter on name
+     * getter on Pseudo
      * @return
-     * the name of the user
+     * the psuedo of the user
      */
-    public String getName(){
-        return name;
+    public String getPseudo(){
+        return pseudo;
     }
 
     /**
@@ -75,10 +77,12 @@ public class User {
     }
 
     /**
-     * a setter on the user's id
+     * a getter on the user's password.
+     * @return
+     * the password of the user
      */
-    public void setId(Long id){
-         this.id = id;
+    public String getPassword(){
+        return password;
     }
 
     /**
@@ -88,6 +92,23 @@ public class User {
      */
     public String getEmail(){
         return email;
+    }
+
+
+    /**
+     * a setter on the user's id
+     */
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    /**
+     *
+     * setter on the password
+     *
+     */
+    public void setPassword(String newPassword){
+        password = newPassword;
     }
 
     /**
@@ -104,12 +125,12 @@ public class User {
      * setter on the name
      *
      */
-    public void setName(String newName){
-         name = newName;
+    public void setPseudo(String newPseudo){
+         pseudo = newPseudo;
     }
     @Override
     public String toString(){
-        return "Utilisateur numéro : "+id+ ", nom : "+name+", email "+email;
+        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email;
     }
 
 

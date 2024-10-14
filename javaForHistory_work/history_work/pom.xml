@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>nate.company</groupId>
-	<artifactId>youtube-converter</artifactId>
+	<artifactId>history-work</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>youtube-converter</name>
-	<description>API pour convertir une video youtube</description>
+	<name>history-work</name>
+	<description>API pour recenser les oeuvres en cours</description>
 	<url/>
 	<licenses>
 		<license/>
