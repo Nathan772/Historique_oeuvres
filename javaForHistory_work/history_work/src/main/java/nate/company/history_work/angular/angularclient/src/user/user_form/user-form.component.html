@@ -42,8 +42,9 @@
       input pour le mail du user -->
       <!--<div class="form-group">-->
         <label for="email">Email : </label>
-        <input type="text" [(ngModel)]="user.email"
+        <input type="email" [(ngModel)]="user.email"
                class="form-control"
+               pattern=".+@.+\.[A-Za-z]{2,10}"
                id="email"
                name="email"
                minlength="5"
@@ -54,7 +55,7 @@
 
 
         <label for="password">Mot de passe : </label>
-        <input type="text" [(ngModel)]="user.password"
+        <input type="password" [(ngModel)]="user.password"
                class="form-control"
                id="password"
                name="password"
@@ -66,7 +67,7 @@
 
 
         <label for="passwordCopy">Confirmer le mot de passe : </label>
-        <input type="text" [(ngModel)]="copyInfo.passwordCopy"
+        <input type="password" [(ngModel)]="copyInfo.passwordCopy"
                class="form-control"
                id="passwordCopy"
                name="passwordCopy"
@@ -75,11 +76,19 @@
                required #passwordCopy="ngModel">
         <div [hidden]="!passwordCopy.pristine" class="alert alert-danger">password confirmation is required</div>
 
+        <div *ngIf="mismatchedPassword" class="alert alert-danger"> Attention, vous avez écrit deux mots de passes différents </div>
+        <br/>
+        <div *ngIf="alreadyExists" class="alert alert-danger"> Attention, votre mail ou votre nom d'utilisateur existe déjà </div>
 
       </div>
 
+      <!--
 
-      <button type="submit" [disabled]="!userForm.form.valid || passwordCopy != password"
+      passwordCopy != password
+      -->
+
+
+      <button type="submit" [disabled]="!userForm.form.valid"
               class="btn btn-info">S'inscrire </button>
 
 

@@ -33,6 +33,9 @@ export class UserFormComponent implements OnInit {
   router:Router;
   userService:UserService;
   copyInfo:copyData;
+  mismatchedPassword:Boolean;
+  alreadyExists:Boolean;
+
 
   /*
   le user service du constructeur permet d'être utilisé
@@ -42,6 +45,7 @@ export class UserFormComponent implements OnInit {
   constructor(routerParam: Router,service: UserService) {
     this.router = routerParam;
     this.userService =service;
+    this.mismatchedPassword = false;
     /*nécessaire même si sera remplacé
     car cela correspond aux valeurs par défaut de l'utilisateur
     même si l'id pourrait causer un conflit,
@@ -50,6 +54,7 @@ export class UserFormComponent implements OnInit {
     remplacé par la base de donnée
     par le suivant du serial !!
     */
+    this.alreadyExists = false;
 
     this.user = {id:"5", pseudo:"", email:"", password:""};
     this.copyInfo = {passwordCopy:""};
@@ -61,9 +66,19 @@ export class UserFormComponent implements OnInit {
       user => {
         //The user already exists
         if(user != null)
+          this.alreadyExists = true;
+          //back to the page with error message
+          window.location.reload();
           return;
       }
     );
+
+  //mismatched Password
+  if(this.copyInfo.passwordCopy != this.user.password){
+    this.mismatchedPassword =true;
+    //back to the page
+    window.location.reload();
+  }
 
 
     //save the new user
