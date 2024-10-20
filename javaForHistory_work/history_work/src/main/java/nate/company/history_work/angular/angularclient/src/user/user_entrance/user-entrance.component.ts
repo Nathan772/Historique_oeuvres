@@ -55,7 +55,7 @@ export class UserEntranceComponent {
      //this.userService.userAccount = null;
 
      //welcome page for connexion or inscription
-     this.router.navigate(['/entry']);
+     this.router.navigate(['/']);
 
   }
 
