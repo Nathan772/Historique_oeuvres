@@ -29,9 +29,11 @@ export class AppComponent {
 
 
   title: string;
+  isConnected:Boolean;
 
 
   constructor() {
-    this.title = 'Spring Boot feat. Angular Application';
+    this.isConnected = true;
+    this.title = "Historique d'oeuvres artistiques";
   }
 }
