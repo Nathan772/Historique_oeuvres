@@ -6,7 +6,7 @@
 
 
 <h1>
-  Inscrivez-vous
+  Inscrivez-vous !
 </h1>
 <div class="card my-5">
   <div class="card-body">
@@ -76,9 +76,9 @@
                required #passwordCopy="ngModel">
         <div [hidden]="!passwordCopy.pristine" class="alert alert-danger">password confirmation is required</div>
 
-        <div *ngIf="mismatchedPassword" class="alert alert-danger"> Attention, vous avez écrit deux mots de passes différents </div>
+        <div *ngIf="connectionService.mismatchedPassword" class="alert alert-danger"> Attention, vous avez écrit deux mots de passes différents </div>
         <br/>
-        <div *ngIf="alreadyExists" class="alert alert-danger"> Attention, votre mail ou votre nom d'utilisateur existe déjà </div>
+        <div *ngIf="connectionService.alreadyExists" class="alert alert-danger"> Attention, votre mail ou votre nom d'utilisateur existe déjà </div>
 
       </div>
 

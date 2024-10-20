@@ -52,6 +52,54 @@ public class UserController {
     public List<User> getUsers(){
         return (List<User>) userRepository.findAll();
     }
+    /**
+     * this method retrieve a specific user if exists in database
+     * @param userId
+     * user's id
+     * @param userPseudo
+     * pseudo of the user
+     * @param email
+     * the email from this user
+     * @param password
+     * the password for this account
+     * the user you want to retrieve
+     * @return
+     * the user searched if found, else null
+     */
+
+    /*
+    since we use get with parameters,
+    we have to retrieve each parameter one by one.
+    You must match the parameters
+    used in the url with a
+    "(name ="paremeter1InTheUrlName") JavaTypeParameter1 param1NameForJava,
+    etc..."
+    You can check the "right-click + console" to retrieve parameter's names but these are just the names of the fields of the
+    class you defined in your angular class file.
+    You can prevent your api from explictly saying "RequestParam(name='...')" if the java parameters' method name matches, the name of the
+    field of your class (here the class is user). Here it purpesofuly, matches for email and password (for the sake of the example)
+
+     */
+    //?id={id}&pseudo={pseudo}&email={email}&password={password}"
+    @GetMapping("/userSearch")
+    @ResponseBody
+    public ResponseEntity<?> getUser(@RequestParam(name="id") String userId, @RequestParam(name="pseudo") String userPseudo,
+                                     @RequestParam(name="email") String email, @RequestParam(name="password") String password
+                                     ){
+        System.out.println("on entre bien dans la méthode getUser de Java");
+        var allUsers = userRepository.findAll();
+        for(var user:allUsers){
+            //user found
+            //pseudo already used or email already used
+            if(user.getPseudo().equals(userPseudo) ||user.getEmail().equals(email) )
+                ResponseEntity.ok(user);
+        }
+        System.out.println("on entre bien dans la méthode getUser de Java");
+        /*user not found (not necessarily an error
+        depending on the usage)
+        */
+        return ResponseEntity.ok().build();
+    }
 
 
 
@@ -92,6 +140,10 @@ public class UserController {
     @PostMapping("/users")
     public void addUser(@RequestBody User user){
         System.out.println(" on ajoute le user : "+user);
+        /*by default every user is average
+        if the add been add through the website
+         */
+        user.setCategory("average");
         userRepository.save(user);
     }
 
