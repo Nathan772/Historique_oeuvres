@@ -30,12 +30,12 @@
                id="pseudo"
                minlength="4"
                name="pseudo"
-               placeholder="Enter your name"
-               required #name="ngModel">
+               placeholder="Enter your pseudo"
+               required #pseudo="ngModel">
 
 
 
-      <div [hidden]="!name.pristine" class="alert alert-danger">Name is required</div>
+      <div [hidden]="!pseudo.pristine" class="alert alert-danger">Pseudo is required</div>
 
 
       <!--
@@ -74,6 +74,7 @@
                placeholder="Enter a second time your password"
                minlength="6"
                required #passwordCopy="ngModel">
+
         <div [hidden]="!passwordCopy.pristine" class="alert alert-danger">password confirmation is required</div>
 
         <div *ngIf="connectionService.mismatchedPassword" class="alert alert-danger"> Attention, vous avez écrit deux mots de passes différents </div>

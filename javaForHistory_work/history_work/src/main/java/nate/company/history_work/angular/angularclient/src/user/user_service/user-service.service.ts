@@ -17,7 +17,7 @@ export class UserService {
 
   private usersUrl: string;
   private registerUrl: string;
-  private userPseudo:string;
+  public userAccount:User = {id:"",pseudo:"",email:"",password:""};
   private connectUrl:string;
   private userExistsUrl:string;
 
@@ -29,7 +29,6 @@ export class UserService {
     this.connectUrl = 'http://localhost:8080/connect';
     this.userExistsUrl = 'http://localhost:8080/userSearch';
     //default pseudo : empty
-    this.userPseudo = "";
     //this.userPseudo = "";
   }
 

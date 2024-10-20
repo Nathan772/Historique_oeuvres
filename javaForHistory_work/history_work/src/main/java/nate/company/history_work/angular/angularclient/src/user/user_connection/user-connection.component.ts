@@ -19,13 +19,13 @@ import { User,copyData } from '../user';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
 
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  selector: 'app-user-connexion',
+  templateUrl: './user-connection.component.html',
+  styleUrls: ['./user-connection.component.scss']
 })
 
 
-export class UserFormComponent implements OnInit {
+export class UserConnectionComponent implements OnInit {
 
 
   user: User;
@@ -34,9 +34,8 @@ export class UserFormComponent implements OnInit {
   router:Router;
   userService:UserService;
   copyInfo:copyData;
-  //mismatchedPassword:Boolean;
-  //alreadyExists:Boolean;
   connectionService:ConnectionServiceService;
+  alreadyTried:Boolean;
 
 
   /*
@@ -64,47 +63,50 @@ export class UserFormComponent implements OnInit {
     /*at the inception
     the user is not connected at all...
     */
+    this.alreadyTried=false;
     this.connectionService.isConnected = false;
     this.connectionService.alreadyExists = false
     this.connectionService.mismatchedPassword = false;
   }
 
 
-  registerNewUser() {
-    console.log("try to register user");
+  connectUser() {
+    console.log("try to connect user");
     //check if user exists in data base
     this.userService.findUser(this.user).subscribe(
-      user => {
-        //The user already exists
-        if(user != null){
-          this.connectionService.alreadyExists = true;
-          //back to the page with error message
-          return;
+        userFound => {
+
+          //The user already exists
+          if(userFound != null){
+              console.log("le user a été trouvé !")
+              //the user exists, starts connexion
+              if(userFound.password == this.user.password){
+                 //connect the user + retrieve infos
+                 this.connectionService.isConnected = true;
+                 //update the actual user with their true info (notably the uid)
+                 this.userService.userAccount = userFound;
+
+                //user homepage
+                this.gotoUserEntrance()
+              }
+              //error return
+              else{
+                this.connectionService.alreadyExists = true;
+                this.connectionService.mismatchedPassword = true
+                return;
+              }
+
+          }
+
+          else{
+            console.log("le user n'a pas été trouvé !")
+            this.alreadyTried = true;
+            this.connectionService.alreadyExists = false;
+            return;
+          }
+
         }
-      }
     );
-
-  //mismatched Password
-  if(this.copyInfo.passwordCopy != this.user.password){
-    this.connectionService.mismatchedPassword=true;
-    //back to the page
-    //window.location.reload();
-    return;
-  }
-
-
-
-
-    //save the new user
-    this.userService.save(this.user).subscribe(
-      result => {
-        //connect the user
-        this.connectionService.isConnected = true;
-        //update the actual user with their true info (notably the uid)
-        this.userService.userAccount = this.user;
-        //no, only for admin now
-        this.gotoUserEntrance()
-        });
   }
 
 gotoUserEntrance() {

@@ -213,6 +213,7 @@ Pour générer automatiquement des fichiers :
 -ng generate service user-service
 -ng generate component user-form
 -ng generate component user-list
+-ng generate component user-entrance
 -ng generate class user
 
 
@@ -275,6 +276,12 @@ Utilisation de get ou post du controller :
 https://stackoverflow.com/questions/67262447/which-http-status-code-to-return-if-there-is-no-data-found-from-database-in-rest
 
 ---> code retour http lorsqu'il n'y a pas de données :
+
+
+
+utiliser get avec des paramètres :
+
+https://www.baeldung.com/spring-request-param
 	
 	-200 OK avec length == 0 pour indiquer qu'il n'y a rien
 

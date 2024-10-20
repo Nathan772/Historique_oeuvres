@@ -18,7 +18,8 @@ import {VideoDLFormComponent } from './videoDL/videoDLForm/video-dl-form.compone
 import {VideoListComponent } from './videoDL/videoList/video-list.component';
 import {VideoDLPageComponent } from './videoDL/videoDLPage/video-dlpage.component';
 import { ConnectionServiceService } from './connection/connection-service.service';
-
+import { UserEntranceComponent} from './user/user_entrance/user-entrance.component';
+import { UserConnectionComponent } from './user/user_connection/user-connection.component';
 @NgModule({
    declarations: [
       AppComponent,
@@ -26,7 +27,10 @@ import { ConnectionServiceService } from './connection/connection-service.servic
       UserFormComponent,
       VideoListComponent,
       VideoDLFormComponent,
-      VideoDLPageComponent
+      VideoDLPageComponent,
+      UserEntranceComponent,
+      UserConnectionComponent
+
     ],
   imports: [
       BrowserModule,

@@ -9,19 +9,33 @@ import { VideoDLFormComponent } from '../videoDL/videoDLForm/video-dl-form.compo
 import { VideoListComponent } from '../videoDL/videoList/video-list.component';
 import { VideoDLPageComponent } from '../videoDL/videoDLPage/video-dlpage.component';
 import {AppComponent } from './app.component';
+import {UserEntranceComponent } from '../user/user_entrance/user-entrance.component'
+import { UserConnectionComponent } from '../user/user_connection/user-connection.component';
 /*
 ce tableau indique quel composant afficher selon
-le chemin web "path" choisit par le user
-comment les noms sont
-définis ??
-ils sont associés à
-des choses existantes normalement,
-adduser semble être le nom de la fonction d'ajout
-utilisé dans userController
-"path:users" est réutilisée
- dans le fichier
- user-form pour naviguer entre les pages après l'ajout d'un utilisateur
+le chemin web "path" choisit (ce sera l'url qui va s'afficher dans la page web et aussi celui qui peut être réutilisé
+  dans des appels de fonction)par le user
 */
+
+
+const routes: Routes = [
+  { path: 'entry', component: AppComponent },
+  //admin pdv : all th user
+  { path: 'users', component: UserListComponent },
+  //register path
+  { path: 'addUser', component: UserFormComponent },
+  //path for searching user
+  { path: 'userSearch', component: UserFormComponent },
+  //removal path
+  { path: 'users/delete', component: UserListComponent },
+  //welcome page for connected user
+  {path: 'user/entrance' , component: UserEntranceComponent},
+  //connection page
+  {path: 'connection' , component: UserConnectionComponent},
+
+  //{path: 'user/myListMangas' , component: UserListMangasComponent},
+  //connection path (update later)
+  //{ path: 'connectUser', component: UserConnectionComponent },
 /*
 
 utiliser les router pour associer
@@ -33,19 +47,6 @@ afficherait les vidéos propres au user,
 etc...
 
 */
-const routes: Routes = [
-  { path: 'entry', component: AppComponent },
-  //admin pdv : all th user
-  { path: 'users', component: UserListComponent },
-  //register path
-  { path: 'adduser', component: UserFormComponent },
-  //path for searching user
-  { path: 'userSearch', component: UserFormComponent },
-  //removal path
-  { path: 'users/delete', component: UserListComponent },
-  //connection path (useless ?)
-  //{path:'user/connect', component: },
-
   /*
   deprecated
   /*

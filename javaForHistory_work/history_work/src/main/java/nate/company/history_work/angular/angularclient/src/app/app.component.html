@@ -341,7 +341,14 @@ Accueil
 
 </h1>
 
+<!--
 
+déplacer cette partie plus tard dans un nouveau composant spécial, comme ça
+on active ce composant seulement si une condition "ngIf"
+est fausse.
+À savoir : le user n'est pas connecté
+
+-->
 
 <div class="container">
   <div class="row">
@@ -367,8 +374,17 @@ Accueil
             <br>
 
             <li>
-              <a routerLink="/adduser" class="btn btn-info"> Vous inscrire </a>
+              <a routerLink="/addUser" class="btn btn-info"> Vous inscrire ? </a>
             </li>
+
+            <br/>
+            <li>
+              <a routerLink="/connection" class="btn btn-info"> Vous connecter ? </a>
+            </li>
+            <!--
+            <li>
+              <a routerLink="/connectUser" class="btn btn-info"> Vous connecter ? </a>
+            </li> -->
 
             <br>
             <br>
