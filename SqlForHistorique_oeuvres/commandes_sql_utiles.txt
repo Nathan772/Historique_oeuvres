@@ -13,6 +13,8 @@ DATA BASE :
 
 -USE databasaName;
 
+-USE historyDB;
+
 "
 source bddinit.sql
 "

@@ -35,14 +35,25 @@ etc...
 */
 const routes: Routes = [
   { path: 'entry', component: AppComponent },
+  //admin pdv : all th user
   { path: 'users', component: UserListComponent },
+  //register path
   { path: 'adduser', component: UserFormComponent },
-
+  //path for searching user
+  { path: 'userSearch', component: UserFormComponent },
+  //removal path
   { path: 'users/delete', component: UserListComponent },
+  //connection path (useless ?)
+  //{path:'user/connect', component: },
+
+  /*
+  deprecated
+  /*
   { path: 'videos', component: VideoListComponent },
   { path: 'videos/delete', component: VideoListComponent },
   { path: 'videos/downloadPage', component: VideoDLPageComponent },
-  { path: 'videos/form', component: VideoDLFormComponent }
+  { path: 'videos/form', component: VideoDLFormComponent }*/
+
 
 ];
 

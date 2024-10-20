@@ -34,6 +34,7 @@ public class User {
     private String pseudo;
     private String email;
     private String password;
+    private String category;
 
     /**
      *
@@ -45,17 +46,20 @@ public class User {
         this.pseudo = "";
         this.email = "";
         this.password = "";
+        this.category ="average";
     }
 
     /*
     Pour faire fonctionner l'API il faut au minimum :
     le constructeur standard, les getters, les setters, et toString
      */
-    public User(String pseudo, String email){
+    public User(String pseudo, String email, String password){
         Objects.requireNonNull(pseudo, "the user's pseudo cannot be null");
         Objects.requireNonNull(email, "the user's email cannot be null");
+        Objects.requireNonNull(password, "the user's password cannot be null");
         this.pseudo = pseudo;
         this.email = email;
+        this.password = password;
     }
 
     /**
@@ -94,6 +98,15 @@ public class User {
         return email;
     }
 
+    /**
+     * getter on the category
+     * @return
+     * the category of the user (admin, average)
+     */
+    public String getCategory(){
+        return category;
+    }
+
 
     /**
      * a setter on the user's id
@@ -109,6 +122,17 @@ public class User {
      */
     public void setPassword(String newPassword){
         password = newPassword;
+    }
+
+    /**
+     *
+     * @param category
+     * the category of the user ("admin" or "average)
+     * setter on the category
+     *
+     */
+    public void setCategory(String category){
+        category = category;
     }
 
     /**
@@ -130,7 +154,7 @@ public class User {
     }
     @Override
     public String toString(){
-        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email;
+        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category;
     }
 
 

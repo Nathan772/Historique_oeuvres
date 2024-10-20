@@ -1,10 +1,42 @@
+Le site qui sert de référence :
+
+- https://www.baeldung.com/spring-boot-angular-web 
+
+--> donne les instructions pour installer spring.
+
+Pour installer spring : 
+
+- télécharger les jar associés aux versions de spring que vous souhaitez utiliser ou récupérez ceux du dossier 
+
+VideoConverter/Dependeciens_for_video_converter
+
+Ils permettront de résoudre:
+
+- If you want an embedded database (H2, HSQL or Derby), please put it on the classpath
+
+
+
+
+- les jars sont sur le site de maven : https://mvnrepository.com/  > leurs références sont directement accessibles
+- ajouter les jars au build de votre projet pour que cela soit aussi reconnu dans le fichier pom.xml (si vous ne le faites pas, ils ne seront pas reconnus et
+apparaitront en rouge) : https://www.geeksforgeeks.org/how-to-add-external-jar-file-to-an-intellij-idea-project/
+
+
+
+-Sur le fichier pom.xml :
+
+1) faire clique droite "add as maven project" (je ne me souviens plus du nom précis)
+
+--> https://stackoverflow.com/questions/19245737/how-to-execute-maven-project-through-pom-xml-file
+
+2) appuyez sur le marteau du build
+
+
+-si l'ajout des jars est bien faite, il n'est pas nécessaire de lancer un quelconque builder ou grader de maven, on constate que les parties qui apparaissaient en rouge 
+dans le fichier XML, reprennent une couleur dites "normale" (noir) et le fait d'écrire les annotations ne pose plus problèmes dans les fichiers
+
+
 Pour angular :
-
-
-lancer le projet :
-0) lancer le fichier Application.java depuis intellij
-1) il faut se placer dans angularclient
-2) tapez : ng serve --open
 
 -npm install -g @angular/cli@1.7.4
 
@@ -90,6 +122,8 @@ Pour résoudre :
 
 -->  npm i rxjs@7.5.2
 
+--> yarn add rxjs
+
 - An unhandled exception occurred: Cannot find module '@angular-devkit/architect/node'
 
 -->  passer par yarn pour instaler devkit/archtiect/node :
@@ -126,138 +160,35 @@ constructeur de service qui n'utilisait pas
 le mot "this" + le paramètre
 service qui était privé
 
-Quand il y a des problèmes d'affichage, penser à regarder les logs pour plus d'infos.
 
-Pour ce qui est du problème où angular ne reconnait pas une autre page que index,
-verifier que le fichier main.ts est de la forme :
+Remarque pour la bdd :
 
-```typescript
+spring ne semble reconnaitre les noms de table qui ne sont écrits qu'en minuscule,
+comme le recommande la convention.
+Ainsi si le @Table(name="nomTable") contient des majuscules,
+elles seront transformées en minuscule.
+Ainsi, si la table existe déjà, mais porte une majuscule, alors une nouvelle table
+sera créée et sera écrite en minuscule.
 
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
-import {AppModule} from './app.module';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {enableProdMode} from '@angular/core';
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-
-```
-
-Cela permet de gérer les pages multiples.
-Contrairement à l'autre format qui est en mode standalone (c'est à dire une seule page autorisée).
-
-Si il y a un problème avec rxjs alors qu'il est installé avec yarn et 
-npm, alors tenter de supprimer rxjs pour le réinstaller, depuis le dossier
-angular/angularclient : et si ça produit une erreur avec architect/node,
-alors supprimer manuellement en allant directement dans le fichier 
-associé, les lignes qui contiennent architect/Node, il peut causer des 
-bugs à l'installation.
-
-```bash
-
-yarn add rxjs
-
-```
-
-essayez aussi de désinstaller rxjs pour yarn et pour npm.
-Puis de réinstaller si nécessaire.
-
-Autre chose, il est possible qu'au lancement du projet, votre page charge 
-mais celle-ci détecte une erreur dans une portion du code angular, alors qu'il n'est pas 
-censé en avoir à cet endroit qui est supposé être sûr.
-Dans ce cas, c'est peut être un bug d'angular, supprimer puis remettez la partie problématique, cela pourrait refonctionner dans certains cas (c'est déjà arrivé).
-
-Pour updater les données de la base de donnée (bdd) de façon persistante, il faut modifier le fichier
-(non?)"out/production/Historique_oeuvres/main/resources/application.properties"
-(oui)javaForHistory_work/history_work/src/main/resources/application.properties
-
-```properties
-
-spring.application.name=youtube-converter
-spring.datasource.url=jdbc:mysql://localhost:3306/votreBDD
-spring.datasource.username=votre_nom_utilisateur
-spring.datasource.password=votre_mdp
-spring.jpa.hibernate.ddl-auto=update
-```
-
-voir : 
-
-https://www.geeksforgeeks.org/spring-boot-how-to-access-database-using-spring-data-jpa/
-
-Il faut aussi modifier le pom.xml pour permettre de connecter la base:
-```xml
-<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-		<!--
-		nécessaire pour résoudre l'erreur :
-
-		Failed to load driver class com.mysql.jdbc.Driver
-		liée aux modifications de application.properties
-		lié à la bdd
-		-->
-
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<version>9.0.0</version>
-		</dependency>
-```
+Pour voir comment préciser l'utilisateur et la bdd choisie, 
+allez voir dans le fichier angular_organisation.md
 
 
-Pour générer automatiquement des fichiers :
+Adresse déjà utilisée :
 
-1) on crée le dossier associé au composant puis...
+trouver : 
 
-2) ... selon les besoin :
+lsof -ti :$PORT
 
--ng generate service user-service
--ng generate component user-form
--ng generate component user-list
--ng generate class user
+exemple :
 
+lsof -ti :8080
 
-ng generate component videoDL-form
-ng generate service videoDLService
+kill: 
 
-ng generate component videoDLPage
+kill $(lsof -ti :$PORT)
 
+Pour tester les requêtes avec POSTMAN avant de les tester
+avec le site :
 
-Pour utiliser des fichiers javascript dans angular projet,
-il faut ajouter dans le fichier angular.json le path vers 
-le fichier javascript, dans la partie "scripts": [].
-
-Il faut le faire pour chaque fichier script, nouveau.
-
-voir : https://medium.com/@Codeible/adding-loading-and-using-javascript-in-angular-3281ea4b056b
-
-pour plus de détails
-
-
-
-Pour lancer le swagger : 
-
-- lancer le fichier application.java 
-
-- se rendre sur la page : http://localhost:8080/swagger-ui/index.html
-
-- n'oubliez pas les dépendances : 
-
-```xml
-
-<dependency>
-    <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    <version>2.3.0</version>
-</dependency
-
-```
-
-
-résoudre l'erreur : 
-
-```
-BeanDefinitionStoreException: Failed to parse 
-```
-
-Il faut aller dans les paramètres maven et lancer "clean" puis cliquer sur les deux flèches 
-qui forme un cercle "reload all maven incremental".
+1) faire un ajout : https://toolsqa.com/postman/post-request-in-postman/

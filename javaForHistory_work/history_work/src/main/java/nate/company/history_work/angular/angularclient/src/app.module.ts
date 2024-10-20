@@ -17,6 +17,7 @@ import { VideoDLServiceService } from './videoDL/videoDLService/video-dlservice.
 import {VideoDLFormComponent } from './videoDL/videoDLForm/video-dl-form.component';
 import {VideoListComponent } from './videoDL/videoList/video-list.component';
 import {VideoDLPageComponent } from './videoDL/videoDLPage/video-dlpage.component';
+import { ConnectionServiceService } from './connection/connection-service.service';
 
 @NgModule({
    declarations: [
@@ -34,7 +35,7 @@ import {VideoDLPageComponent } from './videoDL/videoDLPage/video-dlpage.componen
       FormsModule,
       RouterModule
     ],
-  providers: [UserService, VideoDLServiceService],
+  providers: [UserService, VideoDLServiceService, ConnectionServiceService],
   bootstrap:[AppComponent],
 })
 export class AppModule { }

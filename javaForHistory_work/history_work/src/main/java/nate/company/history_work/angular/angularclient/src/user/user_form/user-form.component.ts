@@ -16,6 +16,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user_service/user-service.service';
 import { User,copyData } from '../user';
+import { ConnectionServiceService } from "../../connection/connection-service.service";
 
 @Component({
   selector: 'app-user-form',
@@ -33,15 +34,21 @@ export class UserFormComponent implements OnInit {
   router:Router;
   userService:UserService;
   copyInfo:copyData;
+  //mismatchedPassword:Boolean;
+  //alreadyExists:Boolean;
+  connectionService:ConnectionServiceService;
+
 
   /*
   le user service du constructeur permet d'être utilisé
   pour sauvegarder le User offert.
 
   */
-  constructor(routerParam: Router,service: UserService) {
+  constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService ) {
     this.router = routerParam;
     this.userService =service;
+    this.connectionService = connectionService;
+    //this.mismatchedPassword = false;
     /*nécessaire même si sera remplacé
     car cela correspond aux valeurs par défaut de l'utilisateur
     même si l'id pourrait causer un conflit,
@@ -50,25 +57,50 @@ export class UserFormComponent implements OnInit {
     remplacé par la base de donnée
     par le suivant du serial !!
     */
+    //this.alreadyExists = false;
 
     this.user = {id:"5", pseudo:"", email:"", password:""};
     this.copyInfo = {passwordCopy:""};
+    /*at the inception
+    the user is not connected at all...
+    */
+    this.connectionService.isConnected = false;
+    this.connectionService.alreadyExists = false
+    this.connectionService.mismatchedPassword = false;
   }
 
   registerNewUser() {
+    console.log("try to register user");
     //check if user exists in data base
     this.userService.findUser(this.user).subscribe(
       user => {
         //The user already exists
-        if(user != null)
+        if(user != null){
+          this.connectionService.alreadyExists = true;
+          //back to the page with error message
           return;
+        }
       }
     );
+
+  //mismatched Password
+  if(this.copyInfo.passwordCopy != this.user.password){
+    this.connectionService.mismatchedPassword=true;
+    //back to the page
+    //window.location.reload();
+    return;
+  }
+
+
 
 
     //save the new user
     this.userService.save(this.user).subscribe(
-      result => this.gotoUserList());
+      result => {
+        //connect the user
+        this.connectionService.isConnected = true;
+        this.gotoUserList()
+        });
   }
 
   gotoUserList() {
