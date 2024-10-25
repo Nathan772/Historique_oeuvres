@@ -62,9 +62,11 @@ Par la suite j'ai lancé la commande "ng generate service user-service", pour cr
     -An unhandled exception occurred: Cannot find module '@angular-devkit/schematics/tools'
     -https://stackoverflow.com/questions/53940350/error-cannot-find-module-angular-devkit-schematics-and-cannot-find-module
 
-J'ai aussi dû créer un répertoire : "user_list" à la main et lancer depuis ce répertoire la commande :
+J'ai aussi dû aller dans un répertoire et lancer depuis ce répertoire la commande :
 
 "ng generate component user-list"
+
+"ng generate component movie-search"
 
 Pour créer un composant chargé d'afficher la list de user dans le répertoire user_list.
 

@@ -4,13 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserListComponent } from '../user/user_list/user-list.component';
 import { UserFormComponent } from '../user/user_form/user-form.component';
 import { UserService } from '../user/user_service/user-service.service';
-import { VideoDLServiceService } from '../videoDL/videoDLService/video-dlservice.service';
-import { VideoDLFormComponent } from '../videoDL/videoDLForm/video-dl-form.component';
-import { VideoListComponent } from '../videoDL/videoList/video-list.component';
-import { VideoDLPageComponent } from '../videoDL/videoDLPage/video-dlpage.component';
 import {AppComponent } from './app.component';
-import {UserEntranceComponent } from '../user/user_entrance/user-entrance.component'
+import {UserEntranceComponent } from '../user/user_entrance/user-entrance.component';
 import { UserConnectionComponent } from '../user/user_connection/user-connection.component';
+import { MovieSearchComponent } from '../movies/movie_search/movie-search.component';
 /*
 ce tableau indique quel composant afficher selon
 le chemin web "path" choisit (ce sera l'url qui va s'afficher dans la page web et aussi celui qui peut être réutilisé
@@ -32,6 +29,11 @@ const routes: Routes = [
   {path: 'user/entrance' , component: UserEntranceComponent},
   //connection page
   {path: 'connection' , component: UserConnectionComponent},
+
+  //connection page
+  //Update avec la page pour la liste de films du user...
+  {path: 'user/entrance/user/myListMovies' , component: MovieSearchComponent},
+
 
   //{path: 'user/myListMangas' , component: UserListMangasComponent},
   //connection path (update later)
