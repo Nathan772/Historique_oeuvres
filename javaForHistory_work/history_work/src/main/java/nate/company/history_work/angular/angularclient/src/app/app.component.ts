@@ -33,7 +33,7 @@ export class AppComponent {
 
 
   constructor() {
-    this.isConnected = true;
+    this.isConnected = false;
     this.title = "Historique d'oeuvres artistiques";
   }
 }

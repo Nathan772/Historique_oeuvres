@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { UserListComponent } from './user/user_list/user-list.component';
 import { UserFormComponent } from './user/user_form/user-form.component';
+import { AccueilComponent } from './accueil/accueil.component';
 import { UserService } from './user/user_service/user-service.service';
 import {RouterModule} from '@angular/router';
 
@@ -42,6 +43,7 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       NavbarMoviesComponent,
       MovieListComponent,
       MovieSearchComponent,
+      AccueilComponent,
     ],
   imports: [
       BrowserModule,
