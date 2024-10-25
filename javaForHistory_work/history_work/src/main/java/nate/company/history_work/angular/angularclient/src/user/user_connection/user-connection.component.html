@@ -1,0 +1,76 @@
+<!--
+
+écrit en reprenant le code de baeldung
+
+-->
+
+
+<h1>
+  Connectez-vous !
+</h1>
+<div class="card my-5">
+  <div class="card-body">
+
+    <!-- début formulaire -->
+
+    <!-- ancienne méthode associé au formulaire
+    "onSubmit"-->
+
+
+    <form (ngSubmit)="connectUser()" #userConnectionForm="ngForm">
+
+      <!--input pour
+      le nom du user -->
+      <div class="form-group">
+
+
+        <label for="pseudo">Pseudo : </label>
+        <input type="text" [(ngModel)]="user.pseudo"
+               class="form-control"
+               id="pseudo"
+               minlength="4"
+               name="pseudo"
+               placeholder="Enter your pseudo"
+               required #pseudo="ngModel">
+
+
+
+      <div [hidden]="!pseudo.pristine" class="alert alert-danger">Pseudo is required</div>
+
+
+
+        <label for="password">Mot de passe : </label>
+        <input type="password" [(ngModel)]="user.password"
+               class="form-control"
+               id="password"
+               name="password"
+               minlength="6"
+               placeholder="Enter your password"
+               required #password="ngModel">
+
+        <div [hidden]="!password.pristine" class="alert alert-danger">password is required</div>
+
+        <!-- false password -->
+        <div *ngIf="connectionService.alreadyExists == true && connectionService.mismatchedPassword" class="alert alert-danger"> Attention, certaines informations sont incorrectes (user et/ou mot de passe) </div>
+        <!--false id -->
+        <div *ngIf="connectionService.alreadyExists == false && this.alreadyTried == true" class="alert alert-danger"> Attention, certaines informations sont incorrectes (user et/ou mot de passe) </div>
+        <br/>
+
+      </div>
+
+      <!--
+
+      passwordCopy != password
+      -->
+
+
+      <button type="submit" [disabled]="!userConnectionForm.form.valid"
+              class="btn btn-info">Se connecter </button>
+
+
+    </form>
+
+    <!-- fin formulaire -->
+
+  </div>
+</div>

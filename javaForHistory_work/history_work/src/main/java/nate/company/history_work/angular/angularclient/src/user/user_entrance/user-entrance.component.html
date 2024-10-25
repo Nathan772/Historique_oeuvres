@@ -1,0 +1,79 @@
+<h1>
+  Ravi de te voir {{ userService.userAccount.pseudo }} !
+</h1>
+
+<form (ngSubmit)="disconnect()">
+
+<button type="submit" class="btn btn-info"> Déconnexion ? </button>
+
+</form>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-dark my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center text-white py-3"> Qu'aimerais-tu consulter ? :</h2>
+          <ul class="text-center list-inline py-3">
+
+
+            <!--
+            the routerLink are associated to the file
+            named "app-routing.module.ts
+            -->
+            <!--
+            for admin user
+            <li class="list-inline-item">
+              <a routerLink="/users" class="btn btn-info">List des utilisateurs</a>
+            </li>
+            -->
+
+            <br>
+            <br>
+
+            <li>
+              <a routerLink="/myListMangas" class="btn btn-info"> mangas ? </a>
+            </li>
+
+            <br>
+            <br>
+
+            <li>
+              <a routerLink="/myListMangas" class="btn btn-info"> livres ? (à modifier dans html pour matcher les livres dans user-entrance.component.html)
+
+              </a>
+            </li>
+
+            <br>
+            <br>
+
+            <li>
+              <a routerLink="user/myListMovies" class="btn btn-info"> films ?</a>
+            </li>
+
+            <br>
+            <br>
+
+            <li>
+              <a routerLink="/myListMangas" class="btn btn-info"> séries ?(user-entrance.comp... modifier) </a>
+            </li>
+
+            <br>
+            <br>
+
+
+          </ul>
+        </div>
+
+      </div>
+      <!--
+      nécesaire ou non ? (vient du fichier qui a servi de base (app.component)
+      <router-outlet></router-outlet>
+      -->
+    </div>
+  </div>
+</div>
+
+
+<!--<app-user-list></app-user-list>-->
+

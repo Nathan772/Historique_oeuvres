@@ -13,20 +13,35 @@ import { UserListComponent } from './user/user_list/user-list.component';
 import { UserFormComponent } from './user/user_form/user-form.component';
 import { UserService } from './user/user_service/user-service.service';
 import {RouterModule} from '@angular/router';
-import { VideoDLServiceService } from './videoDL/videoDLService/video-dlservice.service';
-import {VideoDLFormComponent } from './videoDL/videoDLForm/video-dl-form.component';
-import {VideoListComponent } from './videoDL/videoList/video-list.component';
-import {VideoDLPageComponent } from './videoDL/videoDLPage/video-dlpage.component';
+
+
 import { ConnectionServiceService } from './connection/connection-service.service';
+import { UserEntranceComponent} from './user/user_entrance/user-entrance.component';
+import { UserConnectionComponent } from './user/user_connection/user-connection.component';
+
+
+//about movies
+import { MovieServiceService } from './movies/movie_service/movie-service.service';
+import { NavbarMoviesComponent } from './movies/navbar/navbar-movies.component';
+import { MovieListComponent } from './movies/movie_list/movie-list.component';
+import { MovieCardComponent } from './movies/movie_card/movie-card.component';
+import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
+
+
+
+
 
 @NgModule({
    declarations: [
       AppComponent,
       UserListComponent,
       UserFormComponent,
-      VideoListComponent,
-      VideoDLFormComponent,
-      VideoDLPageComponent
+      UserEntranceComponent,
+      UserConnectionComponent,
+      MovieCardComponent,
+      NavbarMoviesComponent,
+      MovieListComponent,
+      MovieSearchComponent,
     ],
   imports: [
       BrowserModule,
@@ -35,7 +50,7 @@ import { ConnectionServiceService } from './connection/connection-service.servic
       FormsModule,
       RouterModule
     ],
-  providers: [UserService, VideoDLServiceService, ConnectionServiceService],
+  providers: [UserService, ConnectionServiceService, MovieServiceService],
   bootstrap:[AppComponent],
 })
 export class AppModule { }

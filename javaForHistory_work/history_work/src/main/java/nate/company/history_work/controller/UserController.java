@@ -91,13 +91,15 @@ public class UserController {
         for(var user:allUsers){
             //user found
             //pseudo already used or email already used
-            if(user.getPseudo().equals(userPseudo) ||user.getEmail().equals(email) )
-                ResponseEntity.ok(user);
+            if(user.getPseudo().equals(userPseudo) || user.getEmail().equals(email) ) {
+                System.out.println("le user a bien été trouvé ");
+                return ResponseEntity.ok(user);
+            }
         }
-        System.out.println("on entre bien dans la méthode getUser de Java");
         /*user not found (not necessarily an error
         depending on the usage)
         */
+        System.out.println("le user a pas été trouvé ");
         return ResponseEntity.ok().build();
     }
 

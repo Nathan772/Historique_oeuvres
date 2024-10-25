@@ -1,0 +1,12 @@
+<!-- on utilise 
+  la méthode searchLaunched pour émettre
+  un événement en parallèle de la recherche
+  qui contiendra la chaine de caractère associée
+  à cette recherche
+  searchLaunched a été définie dans navbar.component.ts
+-->
+<!-- attention à importer en parallèle
+FormsModule (dans app.module), lorsqu'on utilise ngModel ou
+sinon  il y aura une erreur -->
+<input type="text" [(ngModel)]="searchValue" />
+<button (click)="this.searchLaunched()">rechercher</button>

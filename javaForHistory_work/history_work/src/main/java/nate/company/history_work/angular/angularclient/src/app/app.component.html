@@ -341,13 +341,26 @@ Accueil
 
 </h1>
 
+<!--
 
+déplacer cette partie plus tard dans un nouveau composant spécial, comme ça
+on active ce composant seulement si une condition "ngIf"
+est fausse.
+À savoir : le user n'est pas connecté
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
+-->
+<!--
+Il faudra ajouter :
+
+[hidden] ="isConnected"
+
+pour cacher la partie pour l'inscription et la connexion
+-->
+<div class="container" >
+  <div class="row" >
+    <div class="col-md-12" >
       <div class="card bg-dark my-5">
-        <div class="card-body">
+        <div class="card-body" >
           <h2 class="card-title text-center text-white py-3">{{ title }}</h2>
           <ul class="text-center list-inline py-3">
 
@@ -367,8 +380,17 @@ Accueil
             <br>
 
             <li>
-              <a routerLink="/adduser" class="btn btn-info"> Vous inscrire </a>
+              <a routerLink="/addUser" class="btn btn-info"> Vous inscrire ? </a>
             </li>
+
+            <br/>
+            <li>
+              <a routerLink="/connection" class="btn btn-info"> Vous connecter ? </a>
+            </li>
+            <!--
+            <li>
+              <a routerLink="/connectUser" class="btn btn-info"> Vous connecter ? </a>
+            </li> -->
 
             <br>
             <br>
