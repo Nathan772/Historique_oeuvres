@@ -2,14 +2,30 @@
 
 elles sont contenues dans
 la variable movie
-que nous avons créé dans 
+que nous avons créé dans
 movie-card component
 -->
-<p>
   <!-- cas où le user
     ne veut pas afficher toutes les infos d'un
     seul film
   -->
+
+<head>
+
+
+</head>
+
+<div class="row">
+  <div class="col s12 m6">
+    <div
+      class="card"
+      [ngClass]="{
+        'red lighten-1': true
+      }"
+    >
+      <div class="card-content white-text">
+        <span class="card-title">
+
   <span *ngIf="!fullInfoOn">
     <!-- <img src="{{ movie.Poster }}" sizes="(max-width: 10px) 200px, 50vw" /> -->
     <img src="{{ movie.Poster }}" width="100px" height="100px" />
@@ -18,11 +34,13 @@ movie-card component
     Année :{{ movie.Year }} <br />
     Catégorie : {{ movie.Type }} <br />
     ID: {{ movie.imdbID }}
-
     <button (click)="this.completeInformations(movie.imdbID)">+ d'infos</button>
   </span>
 
-  <!-- cas où le user
+
+
+
+<!-- cas où le user
    veut afficher toutes les infos d'un film film
   -->
 
@@ -50,12 +68,19 @@ movie-card component
     <br />
     Awards:
     {{ movieFull.Awards }}
-
+<button (click)="this.addToWatchList(movieFull.imdbID, movieFull.Title , movieFull.Genre)">+ liste visionnage</button>
     <button (click)="this.disableFull()">- d'infos</button>
   </span>
+<!--
+<i class="material-icons" (click)="edition = true">edit</i>
+     -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- on donne 'l'identifiant 
+  <!-- on donne 'l'identifiant
     imdb du film qui nous intéresse
-    pour savoir avoir plus d'info 
+    pour savoir avoir plus d'info
     sur celui-ci-->
-</p>

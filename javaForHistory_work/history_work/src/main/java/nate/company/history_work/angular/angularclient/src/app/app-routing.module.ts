@@ -8,6 +8,7 @@ import {AppComponent } from './app.component';
 import {UserEntranceComponent } from '../user/user_entrance/user-entrance.component';
 import { UserConnectionComponent } from '../user/user_connection/user-connection.component';
 import { MovieSearchComponent } from '../movies/movie_search/movie-search.component';
+import { AccueilComponent } from '../accueil/accueil.component';
 /*
 ce tableau indique quel composant afficher selon
 le chemin web "path" choisit (ce sera l'url qui va s'afficher dans la page web et aussi celui qui peut être réutilisé
@@ -16,6 +17,8 @@ le chemin web "path" choisit (ce sera l'url qui va s'afficher dans la page web e
 
 
 const routes: Routes = [
+  { path: '', component: AccueilComponent },
+
   { path: 'entry', component: AppComponent },
   //admin pdv : all th user
   { path: 'users', component: UserListComponent },

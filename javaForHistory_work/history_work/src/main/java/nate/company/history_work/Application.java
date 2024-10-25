@@ -21,6 +21,7 @@ ajoutés manuellement
 /*
 nécessaire pourgit  résoudre :
 Parameter 0 of method init in nate.company.youtube_converter.Application
+
 required a bean of type 'nate.company.youtube_converter.siteTools.UserRepository' that could not be found.
  */
 @ComponentScan({"nate/company/history_work"})

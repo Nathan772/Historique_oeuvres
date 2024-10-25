@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MovieFullInformations, MovieShortInformations } from '../movie_models/movie_models';
 import { MovieServiceService } from '../movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { UserService } from '../../user/user_service/user-service.service';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -19,8 +19,37 @@ export class MovieCardComponent implements OnInit {
   serviceMovie: MovieServiceService;
   movieFull: MovieFullInformations;
   fullInfoOn: boolean = false;
+  userService:UserService;
 
   ngOnInit() {}
+
+  /* l'initialisation
+    du service dans le constructeur
+    est indispensable*/
+    constructor(movieService: MovieServiceService, userService:UserService) {
+      this.serviceMovie = movieService;
+      this.userService = userService;
+      this.movieFull = {
+        Title: "",
+          Year: "",
+          Genre: "",
+          Director: "",
+          Plot:"",
+          Awards: "",
+          Poster: "",
+          Ratings: [],
+          imdbID: "",
+          Type: "",
+         };
+       this.movie = {
+          Title: "",
+           Year: "",
+           imdbID: "",
+           Type: "",
+           Poster: ""
+           }
+
+    }
 
   /* cette fonction donne les infos complètes
    sur un film à la variable movieFullen en se servant d'un service. */
@@ -40,35 +69,15 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  addToWatchList(imdbID:string, title:string, genre:string){
+    //this.userService.
+   }
+
   /* cette fonction va désactiver le mode full
   information*/
   disableFull() {
     this.fullInfoOn = false;
   }
 
-  /* l'initialisation
-  du service dans le constructeur
-  est indispensable*/
-  constructor(service: MovieServiceService) {
-    this.serviceMovie = service;
-    this.movieFull = {
-      Title: "",
-        Year: "",
-        Genre: "",
-        Director: "",
-        Plot:"",
-        Awards: "",
-        Poster: "",
-        Ratings: [],
-        imdbID: "",
-        Type: "",
-       };
-     this.movie = {
-        Title: "",
-         Year: "",
-         imdbID: "",
-         Type: "",
-         Poster: ""
-         }
-  }
+
 }
