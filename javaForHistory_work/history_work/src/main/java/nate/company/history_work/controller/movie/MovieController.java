@@ -5,6 +5,7 @@ import nate.company.history_work.siteTools.movie.MovieRepository;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.watch_read.WatchMovie;
 import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
+import nate.company.history_work.siteTools.wrapper.WrapperUserMovie;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -124,26 +125,61 @@ public class MovieController {
 
     /**
      *
+     *
+     * the "add movie" add a new movie into the data base.
+     *
+     * @param wrapperUserMovie
+     *
+     * the wrapper that contains the user and the movie.
+     */
+    //Requestbody can be used only once,
+    //thereby you use a wrapper class
+    // request functional on Postman
+    /*@PostMapping("/user/movie/add")
+    public Movie addMovie(@RequestBody WrapperUserMovie wrapperUserMovie){
+        System.out.println(" on ajoute le film : "+wrapperUserMovie.getMovie());
+        //save the movie in database
+//        var movieSaved = movieRepository.save(movie);
+//
+//        //save the association : movie-user in a table...
+//        var watchMovie = new WatchMovie(user.getId(), movieSaved.getIdMovie(), null, null);
+//
+//        //... in the data base
+//        watchMovieRepository.save(watchMovie);
+//
+//        System.out.println("film sauvegardé pour le user...");
+//
+        return wrapperUserMovie.getMovie();
+
+    }*/
+
+    /**
+     *
+     *
      * the "add movie" add a new movie into the data base.
      *
      * @param movie
+     *
+     * the wrapper that contains the user and the movie.
      */
-    //param fields
-    //and my object field will probably not match
+    //Requestbody can be used only once,
+    //thereby you use a wrapper class
+    // test single arg
     @PostMapping("/user/movie/add")
-    public void addMovie(@RequestBody Movie movie, @RequestBody User user){
+    public Movie addMovie(@RequestBody Movie movie){
         System.out.println(" on ajoute le film : "+movie);
-
         //save the movie in database
-        var movieSaved = movieRepository.save(movie);
-
-        //save the association : movie-user in a table...
-        var watchMovie = new WatchMovie(user.getId(), movieSaved.getIdMovie(), null, null);
-
-        //... in the data base
-        watchMovieRepository.save(watchMovie);
-
-        System.out.println("film sauvegardé pour le user...");
+//        var movieSaved = movieRepository.save(movie);
+//
+//        //save the association : movie-user in a table...
+//        var watchMovie = new WatchMovie(user.getId(), movieSaved.getIdMovie(), null, null);
+//
+//        //... in the data base
+//        watchMovieRepository.save(watchMovie);
+//
+//        System.out.println("film sauvegardé pour le user...");
+//
+        return movie;
 
     }
 

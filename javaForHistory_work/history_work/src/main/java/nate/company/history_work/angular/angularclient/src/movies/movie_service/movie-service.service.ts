@@ -99,7 +99,8 @@ export class MovieServiceService {
         };
 
         console.log("On test la sauvegarde d'un nouveau film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
-        return this.HttpClient.post<Movie>(this.userMoviesUrl+"/add",{movie, user});
+        return this.HttpClient.post<Movie>(this.userMoviesUrl+"/add",movieSimple);
+        //"/user/movie/add"
   }
 
 
