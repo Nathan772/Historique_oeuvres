@@ -1,20 +1,15 @@
-package nate.company.history_work.controller;
-/*
-import nate.company.history_work.siteTools.User;
-import nate.company.history_work.siteTools.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-*/
-import nate.company.history_work.siteTools.User;
-import nate.company.history_work.siteTools.UserRepository;
-import org.springframework.http.ResponseEntity;
+package nate.company.history_work.controller.movie;
+
+import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.watch_read.WatchMovie;
+import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.annotation.Repeatable;
-import java.util.List;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 
@@ -24,22 +19,23 @@ permet de résoudre le problème de
 cors policy error
  */
 @CrossOrigin("*")
-public class UserController {
-
-    /*
+public class MovieController {
+     /*
    necessary constructor for REST API
      */
     //standard constructors
 
-    private final UserRepository userRepository;
+    private final MovieRepository movieRepository;
+    private final WatchMovieRepository watchMovieRepository;
 
     /*
     constructeur créé par moi-même qui se remplit avec un paramètre de type UserRepo...
     C'est Spring qui gérera lui-même l'ajout/la création de l'argument lors de l'appel
      */
-    public UserController(UserRepository userRepository){
-        Objects.requireNonNull(userRepository);
-        this.userRepository = userRepository;
+    public MovieController(MovieRepository movieRepository, WatchMovieRepository watchMovieRepository){
+        Objects.requireNonNull(movieRepository);
+        this.movieRepository = movieRepository;
+        this.watchMovieRepository = watchMovieRepository;
     }
 
     /**
@@ -48,10 +44,10 @@ public class UserController {
      * @return
      */
     //@RequestMapping("/users")
-    @GetMapping("/users")
+    /*@GetMapping("/user/movie/add")
     public List<User> getUsers(){
         return (List<User>) userRepository.findAll();
-    }
+    }*/
     /**
      * this method retrieve a specific user if exists in database
      * @param userId
@@ -81,11 +77,11 @@ public class UserController {
 
      */
     //?id={id}&pseudo={pseudo}&email={email}&password={password}"
-    @GetMapping("/userSearch")
+    /*@GetMapping("/userSearch")
     @ResponseBody
     public ResponseEntity<?> getUser(@RequestParam(name="id") String userId, @RequestParam(name="pseudo") String userPseudo,
                                      @RequestParam(name="email") String email, @RequestParam(name="password") String password
-                                     ){
+    ){
         System.out.println("on entre bien dans la méthode getUser de Java");
         var allUsers = userRepository.findAll();
         for(var user:allUsers){
@@ -96,12 +92,12 @@ public class UserController {
                 return ResponseEntity.ok(user);
             }
         }
-        /*user not found (not necessarily an error
+        user not found (not necessarily an error
         depending on the usage)
-        */
+
         System.out.println("le user a pas été trouvé ");
         return ResponseEntity.ok().build();
-    }
+    }*/
 
 
 
@@ -126,27 +122,29 @@ public class UserController {
     }*/
 
 
-
-
-
-
-
-
-
     /**
      *
-     * the "add user" add a new user in the data base.
+     * the "add movie" add a new movie into the data base.
      *
-     * @param user
+     * @param movie
      */
-    @PostMapping("/users")
-    public void addUser(@RequestBody User user){
-        System.out.println(" on ajoute le user : "+user);
-        /*by default every user is average
-        if the add been add through the website
-         */
-        user.setCategory("average");
-        userRepository.save(user);
+    //param fields
+    //and my object field will probably not match
+    @PostMapping("/user/movie/add")
+    public void addMovie(@RequestBody Movie movie, @RequestBody User user){
+        System.out.println(" on ajoute le film : "+movie);
+
+        //save the movie in database
+        var movieSaved = movieRepository.save(movie);
+
+        //save the association : movie-user in a table...
+        var watchMovie = new WatchMovie(user.getId(), movieSaved.getIdMovie(), null, null);
+
+        //... in the data base
+        watchMovieRepository.save(watchMovie);
+
+        System.out.println("film sauvegardé pour le user...");
+
     }
 
     /**
@@ -156,17 +154,21 @@ public class UserController {
      * @param id
      * @return
      */
-
+/*
     @DeleteMapping("users/delete/{id}")
     public ResponseEntity<String> removeUser(@PathVariable String id){
         var userIdLong = Long.parseLong(id);
         //var userIdLong = user.getId();
         System.out.println("on supprime le user avec l'id : "+userIdLong);
         userRepository.deleteById(userIdLong);
-        /* a necessary rreturn to enable removal
-         */
+         a necessary rreturn to enable removal
         return ResponseEntity.noContent().build();
-    }
-
-
+    }*/
 }
+
+
+
+
+
+
+

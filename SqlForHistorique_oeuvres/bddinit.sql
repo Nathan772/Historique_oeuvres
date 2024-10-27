@@ -64,14 +64,18 @@ CREATE TABLE genre(
 CREATE TABLE manga(
   idmanga SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(300) NOT NULL,
-  description text NOT NULL
+  -- description text NOT NULL
 );
 
 CREATE TABLE movie(
   idmovie SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(300) NOT NULL,
-  description text NOT NULL
+  year int unsigned,
+  genre:VARCHAR(300) NOT NULL,
+  director:VARCHAR(300) NOT NULL,
+  imdbID:VARCHAR(300) NOT NULL,
 );
+
 
 -- -- this table enable to store all the genre related to one movie
 CREATE TABLE hasGenreMovie(
@@ -81,8 +85,6 @@ CREATE TABLE hasGenreMovie(
   FOREIGN KEY(idgenre) REFERENCES genre(idgenre) on delete cascade on update cascade,
   FOREIGN KEY(idmovie) REFERENCES manga(idmanga) on delete cascade on update cascade
 );
-
-
 
 
 -- -- this table enable to store all the genre related to one manga
@@ -99,16 +101,34 @@ CREATE TABLE hasGenreManga(
 -- link between movie and user
 -- en cours de visionnage
 
+
+
+
 CREATE TABLE watchMovie(
   idwatchMovie SERIAL NOT NULL PRIMARY KEY,
   iduser BIGINT UNSIGNED NOT NULL,
   idmovie BIGINT UNSIGNED NOT NULL,
-  current_state VARCHAR(200),
-  last_moment TIME NOT NULL DEFAULT '0:00:00',
-  FOREIGN KEY (idmovie) REFERENCES serie(idmovie) on delete cascade on update cascade,
+  currentState VARCHAR(200) DEFAULT "à regarder plus tard",
+  -- enable to know the last time you update your statut regarding your 
+  -- interest for a movie
+  lastUpdate DATE NOT NULL DEFAULT GETDATE(),
+  lastMoment TIME NOT NULL DEFAULT '0:00:00',
+  FOREIGN KEY (idmovie) REFERENCES movie(idmovie) on delete cascade on update cascade,
   FOREIGN KEY (iduser) REFERENCES user(iduser) on delete on update cascade
-  constraint current_state check (current_state = "à regarder plus tard" OR current_state = "fini" current_state ="à revoir" OR current_state = "en cours de visionnage" OR current_state = "abandon")
+  constraint currentState check (currentState = "à regarder plus tard" OR currentState = "fini" currentState ="à revoir" OR currentState = "en cours de visionnage" OR currentState = "abandon")
 );
+
+
+
+
+
+
+
+
+	
+
+
+
 
 -- link between user and manga
 -- si le dernier chapitre et dernier tome ne sont pas spécifié

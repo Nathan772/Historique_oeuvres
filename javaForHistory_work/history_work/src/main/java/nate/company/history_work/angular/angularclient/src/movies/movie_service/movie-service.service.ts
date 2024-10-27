@@ -10,6 +10,8 @@ import {
   Movie,
   SearchResponse,
 } from '../movie_models/movie_models';
+
+import { User } from '../../user/user';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -77,7 +79,7 @@ export class MovieServiceService {
   /**
    This method add a movie into the database
    */
-  addMovieToUserList(movie:MovieFullInformations) {
+  addMovieToUserList(movie:MovieFullInformations, user:User) {
         /*
         Title: string;
           Year: string;
@@ -85,17 +87,19 @@ export class MovieServiceService {
           Director: string;
           imdbID: string;*/
 
+        //une solution serait de retirer
+        // le champ genre de movie movieSimple
+        //
         let movieSimple : Movie = {
           idmovie:"0",
           title:movie.Title,
           year:movie.Year,
-          genre:movie.Genre,
           director:movie.Director,
           imdbID:movie.imdbID
         };
 
-        console.log("On sauvegarde un nouveau film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
-        return this.HttpClient.post<Movie>(this.userMoviesUrl+"/add", movie);
+        console.log("On test la sauvegarde d'un nouveau film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
+        return this.HttpClient.post<Movie>(this.userMoviesUrl+"/add",{movie, user});
   }
 
 

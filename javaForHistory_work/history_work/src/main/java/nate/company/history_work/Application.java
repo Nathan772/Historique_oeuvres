@@ -3,15 +3,12 @@ package nate.company.history_work;
 /* import proposé au clique sur les différentes annotations en rouge
 
  */
-import nate.company.history_work.siteTools.UserRepository;
+import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-
-import java.util.stream.Stream;
 
 /*
 créé moi-même copie du code de la page baledung.com :

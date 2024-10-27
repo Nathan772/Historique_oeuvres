@@ -23,7 +23,6 @@ export interface Movie {
   idmovie:string;
   title: string;
   year: string;
-  genre: string;
   director: string;
   imdbID: string;
 }

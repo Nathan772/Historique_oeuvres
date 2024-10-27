@@ -1,7 +1,6 @@
-package nate.company.history_work.siteTools;
+package nate.company.history_work.siteTools.movie;
 
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Bean;
 
 import org.springframework.stereotype.Component;
 
@@ -9,12 +8,11 @@ import java.util.Objects;
 
 @Entity
 @Component
-/* table est utilisé car
-il existe déjà une table de nom "User" donc on renomme
-avec @Table name="..." en précisant le nouveau nom de la table que l'on souhaite créer
+/*
+name = movie, enable to be recognized as "movie" in database
  */
-@Table(name="user")
-public class User {
+@Table(name="movie")
+public class Movie {
     /*
     Id et generatedValue ont été
     importés manuellement en se référant aux noms présents
@@ -30,11 +28,15 @@ public class User {
     //on ne peut pas mettre de commentaire entre les 2
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String pseudo;
-    private String email;
-    private String password;
-    private String category;
+    private long idmovie;
+    private String title;
+    private int year;
+    //many genre
+    // for one movie
+    //private String genre;
+    private String imdbID;
+    //director of the movie
+    private String director;
 
     /**
      *
@@ -42,24 +44,28 @@ public class User {
      * "required a bean of type "java.lang.String" that could not be found"
      */
 
-    public User(){
-        this.pseudo = "";
-        this.email = "";
-        this.password = "";
-        this.category ="average";
+    public Movie(){
     }
 
     /*
     Pour faire fonctionner l'API il faut au minimum :
     le constructeur standard, les getters, les setters, et toString
      */
-    public User(String pseudo, String email, String password){
-        Objects.requireNonNull(pseudo, "the user's pseudo cannot be null");
-        Objects.requireNonNull(email, "the user's email cannot be null");
-        Objects.requireNonNull(password, "the user's password cannot be null");
-        this.pseudo = pseudo;
-        this.email = email;
-        this.password = password;
+    public Movie(long idmovie, String title, int year, String imdbID, String director){
+        Objects.requireNonNull(title, "the movie's title cannot be null");
+        Objects.requireNonNull(imdbID, "the imdbID cannot be null");
+        Objects.requireNonNull(director, "the movie director cannot be null");
+        if(year < 0){
+            throw new IllegalArgumentException("movie's year cannot be null");
+        }
+        if(idmovie < 0){
+            throw new IllegalArgumentException("movie's id cannot be null");
+        }
+        this.idmovie = idmovie;
+        this.year = year;
+        this.imdbID = imdbID;
+        this.director = director;
+        this.title = title;
     }
 
     /**
@@ -67,8 +73,8 @@ public class User {
      * @return
      * the psuedo of the user
      */
-    public String getPseudo(){
-        return pseudo;
+    public String getTitle(){
+        return title;
     }
 
     /**
@@ -76,8 +82,8 @@ public class User {
      * @return
      * the id of the user
      */
-    public long getId(){
-        return id;
+    public long getIdMovie(){
+        return idmovie;
     }
 
     /**
@@ -85,8 +91,8 @@ public class User {
      * @return
      * the password of the user
      */
-    public String getPassword(){
-        return password;
+    public int getYear(){
+        return year;
     }
 
     /**
@@ -94,8 +100,8 @@ public class User {
      * @return
      * the email of the user
      */
-    public String getEmail(){
-        return email;
+    public String getDirector(){
+        return director;
     }
 
     /**
@@ -103,16 +109,16 @@ public class User {
      * @return
      * the category of the user (admin, average)
      */
-    public String getCategory(){
-        return category;
+    public String imdbID(){
+        return imdbID;
     }
 
 
     /**
      * a setter on the user's id
      */
-    public void setId(Long id){
-        this.id = id;
+    public void setMovieId(Long id){
+        this.idmovie = id;
     }
 
     /**
@@ -120,19 +126,18 @@ public class User {
      * setter on the password
      *
      */
-    public void setPassword(String newPassword){
-        password = newPassword;
+    public void setDirector(String newDirector){
+        this.director = newDirector;
     }
 
     /**
      *
-     * @param category
-     * the category of the user ("admin" or "average)
-     * setter on the category
+     * @param year
+     * the year of the movie release.
      *
      */
-    public void setCategory(String category){
-        category = category;
+    public void setYear(int year){
+        this.year = year;
     }
 
     /**
@@ -140,8 +145,8 @@ public class User {
      * setter on the email
      *
      */
-    public void setEmail(String newEmail){
-         email = newEmail;
+    public void setTitle(String newTitle){
+        title = newTitle;
     }
 
     /**
@@ -149,13 +154,14 @@ public class User {
      * setter on the name
      *
      */
-    public void setPseudo(String newPseudo){
-         pseudo = newPseudo;
+    public void setImdbID(String newImdbId){
+        imdbID = newImdbId;
     }
     @Override
     public String toString(){
-        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category;
+        return "L'id du film : "+idmovie+ ", titre : "+title+", directeur "+director + " année : "+year;
     }
 
 
 }
+

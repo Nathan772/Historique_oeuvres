@@ -71,7 +71,7 @@ export class MovieCardComponent implements OnInit {
 
     addToWatchList(movie:MovieFullInformations){
       //this.userService.
-      this.movieService.addMovieToUserList(movie);
+      this.movieService.addMovieToUserList(movie, this.userService.userAccount);
     }
 
   /* cette fonction va désactiver le mode full
