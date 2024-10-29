@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 /* pour faire cet import, il faut l'écrire en dur*/
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 /* pour faire cet import, il faut l'écrire en dur*/
 import { Observable, of } from 'rxjs';
 import { NavbarMoviesComponent } from '../navbar/navbar-movies.component';
 import {
   MovieFullInformations,
   MovieShortInformations,
+  Movie,
   SearchResponse,
 } from '../movie_models/movie_models';
+
+import { User } from '../../user/user';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -16,9 +19,114 @@ import { map } from 'rxjs/operators';
   permet de dire où chercher la racine du projet*/,
 })
 export class MovieServiceService {
-  constructor(private HttpClient: HttpClient) {}
+
+  private userMoviesUrl: string;
+  /*private registerUrl: string;
+  public userAccount:User = {id:"",pseudo:"",email:"",password:""};
+  private connectUrl:string;
+  private userExistsUrl:string;*/
+
+
+
+  constructor(private HttpClient: HttpClient) {
+        this.userMoviesUrl = 'http://localhost:8080/user/movie';
+        /*this.registerUrl = 'http://localhost:8080/register';
+        this.connectUrl = 'http://localhost:8080/connect';
+        this.userExistsUrl = 'http://localhost:8080/userSearch';*/
+  }
 
   //searchValue:string;
+
+
+
+
+
+
+
+  //RELATED TO DATABASE
+
+
+
+
+
+
+
+
+  /**
+  this method enable to convert
+  data to be readable by a get
+  method
+  from
+  https://stackoverflow.com/questions/74699021/angular-14-http-get-request-pass-object-as-param
+  */
+  public ToHttpParams(request: any): HttpParams {
+      let httpParams = new HttpParams();
+      Object.keys(request).forEach(function (key) {
+        httpParams = httpParams.append(key, request[key]);
+      });
+      return httpParams;
+  }
+
+
+  /* récupère l'ensemble des films de la liste des fillms d'utilisateur que l'on souhaite prendre depuis
+  la base */
+  public findAllMoviesFromUserList(): Observable<MovieFullInformations[]> {
+    return this.HttpClient.get<MovieFullInformations[]>(this.userMoviesUrl);
+  }
+
+
+
+  /**
+   This method add a movie into the database
+   */
+  addMovieToUserList(movie:MovieFullInformations, user:User){
+        /*
+        Title: string;
+          Year: string;
+          Genre: string;
+          Director: string;
+          imdbID: string;*/
+
+        //une solution serait de retirer
+        // le champ genre de movie movieSimple
+        //
+        let movieSimple : Movie = {
+          id:"0",
+          title:movie.Title,
+          year:movie.Year,
+          director:movie.Director,
+          imdbID:movie.imdbID
+        };
+
+        console.log("On test la sauvegarde d'un nouveau film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
+        this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{"movie":movieSimple,"user":user})
+                .subscribe(
+                      movieRetrieved => {
+                        //The user already exists
+                        return movieRetrieved;
+                      }
+                    );
+        //"/user/movie/add"
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//NOT RELATED TO DATABASE
+
+
+
+
+
 
   /* fonction qui prend un argument le titre d'un film
   et qui récupère un observable qui contient les infos du films : titre, année, etc...*/
@@ -45,6 +153,8 @@ export class MovieServiceService {
     //les [...] permettetent de faire
     //une copie du tableau
   }
+
+
 
   public randomDisplay(): void {
     console.log("c'est très réel");

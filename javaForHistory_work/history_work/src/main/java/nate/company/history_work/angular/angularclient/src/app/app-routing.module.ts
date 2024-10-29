@@ -17,7 +17,7 @@ le chemin web "path" choisit (ce sera l'url qui va s'afficher dans la page web e
 
 
 const routes: Routes = [
-  { path: '', component: AccueilComponent },
+  { path: '', component: AccueilComponent},
 
   { path: 'entry', component: AppComponent },
   //admin pdv : all th user
@@ -35,7 +35,7 @@ const routes: Routes = [
 
   //connection page
   //Update avec la page pour la liste de films du user...
-  {path: 'user/entrance/user/myListMovies' , component: MovieSearchComponent},
+  {path: 'user/entrance/myListMovies' , component: MovieSearchComponent},
 
 
   //{path: 'user/myListMangas' , component: UserListMangasComponent},

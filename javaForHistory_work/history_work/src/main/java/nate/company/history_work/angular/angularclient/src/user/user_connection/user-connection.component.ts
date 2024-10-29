@@ -78,7 +78,7 @@ export class UserConnectionComponent implements OnInit {
 
           //The user already exists
           if(userFound != null){
-              console.log("le user a été trouvé !")
+              console.log("le user a été trouvé ! son id : "+userFound.id+ " son pseudo : "+userFound.pseudo);
               //the user exists, starts connexion
               if(userFound.password == this.user.password){
                  //connect the user + retrieve infos

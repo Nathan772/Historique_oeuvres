@@ -3,11 +3,15 @@ package nate.company.history_work;
 /* import proposé au clique sur les différentes annotations en rouge
 
  */
-import nate.company.history_work.siteTools.UserRepository;
+import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.user.UserRepository;
+import nate.company.history_work.siteTools.watch_read.WatchMovie;
+import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -32,26 +36,24 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository) {
+    CommandLineRunner init(UserRepository userRepository, MovieRepository movieRepository, WatchMovieRepository watchMovieRepository) {
         return args -> {
             /*pas nécessaire sauf si on veut tester l'ajout en brut
-            sans passer par l'application Web
+            sans passer par l'application Web*/
             Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(name -> {
-                User user = new User(name, name.toLowerCase() + "@domain.com");
-                userRepository.save(user);
+                userRepository.save(new User(name, name+"@gmail.com", "666666"));
             });
-             */
+
+
+            movieRepository.save(new Movie());
+            watchMovieRepository.save(new WatchMovie(1,1,"à regarder plus tard"));
 
             //même chose, mais pour les vidéos
 
-           /* Stream.of("https://www.youtube.com/watch?v=fAZUbQRf6DI",
-                    "https://www.youtube.com/watch?v=e6brGv5af3w").forEach(link -> {
-                Video video = new Video(link);
-                videoRepository.save(video);
-            });*/
-
             System.out.println(" les données en base de données : ");
             userRepository.findAll().forEach(System.out::println);
+            movieRepository.findAll().forEach(System.out::println);
+            watchMovieRepository.findAll().forEach(System.out::println);
         };
     }
 }

@@ -16,7 +16,7 @@ export class MovieCardComponent implements OnInit {
   pas il faut aussi l'initialiser au niveau
   du contructeur (voir constructeur)
   */
-  serviceMovie: MovieServiceService;
+  movieService: MovieServiceService;
   movieFull: MovieFullInformations;
   fullInfoOn: boolean = false;
   userService:UserService;
@@ -27,7 +27,7 @@ export class MovieCardComponent implements OnInit {
     du service dans le constructeur
     est indispensable*/
     constructor(movieService: MovieServiceService, userService:UserService) {
-      this.serviceMovie = movieService;
+      this.movieService = movieService;
       this.userService = userService;
       this.movieFull = {
         Title: "",
@@ -54,7 +54,7 @@ export class MovieCardComponent implements OnInit {
   /* cette fonction donne les infos complètes
    sur un film à la variable movieFullen en se servant d'un service. */
   completeInformations(imdbID: string) {
-    this.serviceMovie.getMovieComplete(imdbID).subscribe((data) => {
+    this.movieService.getMovieComplete(imdbID).subscribe((data) => {
       /*
       on s'assure que le film a bien été trouvé
       avant de l'affecter à this.movieFull*/
@@ -69,9 +69,10 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  addToWatchList(imdbID:string, title:string, genre:string){
-    //this.userService.
-   }
+    addToWatchList(movie:MovieFullInformations){
+      //this.userService.
+      this.movieService.addMovieToUserList(movie, this.userService.userAccount);
+    }
 
   /* cette fonction va désactiver le mode full
   information*/

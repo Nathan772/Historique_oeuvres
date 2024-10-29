@@ -16,7 +16,20 @@ export interface MovieFullInformations {
   Type: string;
 }
 
+/*
+a simple class to represent movies in database
+*/
+export interface Movie {
+  id:string;
+  title: string;
+  year: string;
+  director: string;
+  imdbID: string;
+}
+
+
 export interface MovieShortInformations {
+
   Title: string;
   Year: string;
   imdbID: string;

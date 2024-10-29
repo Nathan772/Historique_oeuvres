@@ -28,8 +28,6 @@ export class UserService {
     this.registerUrl = 'http://localhost:8080/register';
     this.connectUrl = 'http://localhost:8080/connect';
     this.userExistsUrl = 'http://localhost:8080/userSearch';
-    //default pseudo : empty
-    //this.userPseudo = "";
   }
 
 
