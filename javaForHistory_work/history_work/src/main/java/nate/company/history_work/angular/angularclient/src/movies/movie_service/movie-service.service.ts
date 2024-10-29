@@ -79,7 +79,7 @@ export class MovieServiceService {
   /**
    This method add a movie into the database
    */
-  addMovieToUserList(movie:MovieFullInformations, user:User) {
+  addMovieToUserList(movie:MovieFullInformations, user:User){
         /*
         Title: string;
           Year: string;
@@ -91,7 +91,7 @@ export class MovieServiceService {
         // le champ genre de movie movieSimple
         //
         let movieSimple : Movie = {
-          idmovie:"0",
+          id:"0",
           title:movie.Title,
           year:movie.Year,
           director:movie.Director,
@@ -99,7 +99,13 @@ export class MovieServiceService {
         };
 
         console.log("On test la sauvegarde d'un nouveau film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
-        return this.HttpClient.post<Movie>(this.userMoviesUrl+"/add",movieSimple);
+        this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{"movie":movieSimple,"user":user})
+                .subscribe(
+                      movieRetrieved => {
+                        //The user already exists
+                        return movieRetrieved;
+                      }
+                    );
         //"/user/movie/add"
   }
 

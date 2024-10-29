@@ -131,26 +131,26 @@ public class UserController {
      * @param user
      */
     @PostMapping("/users")
-    public void addUser(@RequestBody User user){
+    public User addUser(@RequestBody User user){
         System.out.println(" on ajoute le user : "+user);
         /*by default every user is average
         if the add been add through the website
          */
         user.setCategory("average");
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     /**
      * a remove method for users.
      * Even if the mapping starts by delete, it starts implicitly by
      * You can try a request with postman to check if it actually works.
-     * @param id
+     * @param idUser
      * @return
      */
 
-    @DeleteMapping("users/delete/{id}")
-    public ResponseEntity<String> removeUser(@PathVariable String id){
-        var userIdLong = Long.parseLong(id);
+    @DeleteMapping("users/delete/{idUser}")
+    public ResponseEntity<String> removeUser(@PathVariable String idUser){
+        var userIdLong = Long.parseLong(idUser);
         //var userIdLong = user.getId();
         System.out.println("on supprime le user avec l'id : "+userIdLong);
         userRepository.deleteById(userIdLong);

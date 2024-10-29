@@ -2,11 +2,16 @@ package nate.company.history_work.siteTools.watch_read;
 
 import jakarta.persistence.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @Entity
 @Component
@@ -15,8 +20,8 @@ import java.util.Objects;
 public class WatchMovie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long idwatchMovie;
+    @Column(name="idwatchmovie")
+    private long id;
     private long iduser;
     private long idmovie;
     /*
@@ -27,17 +32,35 @@ public class WatchMovie {
     "en cours de visionnage"
 
      */
-    private String currentState;
-    private Date lastUpdate;
-    private Time lastMoment;
+    //@Value("${props.currentState:'à regarder plus tard'}")
+    private String currentState = "à regarder plus tard";
+
+    private Date lastUpdate = new Date(new java.util.Date().getTime()/1000);
+    //@Value("${props.currentState:'à regarder plus tard'}")
+    private Time lastMoment = new Time(0,0,0) ;
 
     /**
      *
      * default constructor necessary for bean...
+     * but cannot be actually used because of foreign key issue
      */
 
     public WatchMovie(){
 
+    }
+
+    public WatchMovie(long idUser, long idmovie, String currentState){
+        if(idUser < 0){
+            throw new IllegalArgumentException("user's watching a movie ID cannot be lower than 0");
+        }
+        if(idmovie < 0){
+            throw new IllegalArgumentException("movie's ID cannot be lower than 0");
+        }
+
+        this.iduser = idUser;
+        this.idmovie = idmovie;
+
+        this.currentState = currentState;
     }
 
 
@@ -61,7 +84,7 @@ public class WatchMovie {
      * the id of the tab
      */
     public long getIdWatchMovie(){
-        return idwatchMovie;
+        return id;
     }
 
     /**
@@ -176,10 +199,10 @@ public class WatchMovie {
     }
 
     public void setIdwatchMovie(long idwatchMovie){
-        this.idwatchMovie = idwatchMovie;
+        this.id = idwatchMovie;
     }
     @Override
     public String toString(){
-        return "L'Id du tuple numéro : "+idwatchMovie+ ", l'id de l'utilisateur : "+iduser+", l'état de visionnage "+currentState;
+        return "L'Id du tuple numéro : "+id+ ", l'id de l'utilisateur : "+iduser+" et celui du film : "+idmovie+", l'état de visionnage "+currentState;
     }
 }

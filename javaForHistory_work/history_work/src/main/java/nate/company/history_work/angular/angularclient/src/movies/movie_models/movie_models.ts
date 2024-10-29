@@ -20,7 +20,7 @@ export interface MovieFullInformations {
 a simple class to represent movies in database
 */
 export interface Movie {
-  idmovie:string;
+  id:string;
   title: string;
   year: string;
   director: string;

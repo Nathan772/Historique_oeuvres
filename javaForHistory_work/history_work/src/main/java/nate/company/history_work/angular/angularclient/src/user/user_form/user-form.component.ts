@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit {
         //connect the user
         this.connectionService.isConnected = true;
         //update the actual user with their true info (notably the uid)
-        this.userService.userAccount = this.user;
+        this.userService.userAccount = result;
         //no, only for admin now
         this.gotoUserEntrance()
         });

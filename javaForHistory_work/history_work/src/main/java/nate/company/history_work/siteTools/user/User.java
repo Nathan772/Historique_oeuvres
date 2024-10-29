@@ -27,13 +27,16 @@ public class User {
      */
     //attention l'annotation doit suivre directement les champs
     //on ne peut pas mettre de commentaire entre les 2
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="iduser")
     private long id;
     private String pseudo;
     private String email;
     private String password;
-    private String category;
+    private String category = "average";
 
     /**
      *
@@ -42,6 +45,7 @@ public class User {
      */
 
     public User(){
+        this.id = 3;
         this.pseudo = "";
         this.email = "";
         this.password = "";
@@ -71,11 +75,11 @@ public class User {
     }
 
     /**
-     * a getter on the user's id.
+     * a getter on the user's idUser.
      * @return
      * the id of the user
      */
-    public long getId(){
+    public long getIdUser(){
         return id;
     }
 
@@ -110,7 +114,7 @@ public class User {
     /**
      * a setter on the user's id
      */
-    public void setId(Long id){
+    public void setIdUser(Long id){
         this.id = id;
     }
 

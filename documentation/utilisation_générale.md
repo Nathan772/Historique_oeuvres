@@ -287,3 +287,14 @@ https://www.baeldung.com/spring-request-param
 	
 	-200 OK avec length == 0 pour indiquer qu'il n'y a rien
 
+
+
+Remarque : si la requête GET/POST semble ne pas se lancer, pensez à subscribe sur votre 
+appel de https dans la partie angular.
+
+Pour permettre le renommage des colonnes, il faut écrire : 
+```
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+```
+Dans le fichier applicaition.properties

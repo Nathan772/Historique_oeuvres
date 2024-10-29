@@ -27,8 +27,8 @@ public class Movie {
     //attention l'annotation doit suivre directement les champs
     //on ne peut pas mettre de commentaire entre les 2
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long idmovie;
+    @Column(name="idmovie")
+    private long id;
     private String title;
     private int year;
     //many genre
@@ -45,6 +45,10 @@ public class Movie {
      */
 
     public Movie(){
+        this.title = "bla";
+        this.year = 0;
+        this.imdbID ="sss";
+        this.director = "jean";
     }
 
     /*
@@ -61,7 +65,7 @@ public class Movie {
         if(idmovie < 0){
             throw new IllegalArgumentException("movie's id cannot be null");
         }
-        this.idmovie = idmovie;
+        this.id = idmovie;
         this.year = year;
         this.imdbID = imdbID;
         this.director = director;
@@ -82,8 +86,8 @@ public class Movie {
      * @return
      * the id of the user
      */
-    public long getIdMovie(){
-        return idmovie;
+    public long getId(){
+        return id;
     }
 
     /**
@@ -109,7 +113,7 @@ public class Movie {
      * @return
      * the category of the user (admin, average)
      */
-    public String imdbID(){
+    public String getImdbID(){
         return imdbID;
     }
 
@@ -118,7 +122,7 @@ public class Movie {
      * a setter on the user's id
      */
     public void setMovieId(Long id){
-        this.idmovie = id;
+        this.id = id;
     }
 
     /**
@@ -159,7 +163,7 @@ public class Movie {
     }
     @Override
     public String toString(){
-        return "L'id du film : "+idmovie+ ", titre : "+title+", directeur "+director + " année : "+year;
+        return "L'id du film : "+id+ ", titre : "+title+", directeur "+director + " année : "+year;
     }
 
 

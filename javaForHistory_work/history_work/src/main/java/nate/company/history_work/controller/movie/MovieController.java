@@ -35,6 +35,7 @@ public class MovieController {
      */
     public MovieController(MovieRepository movieRepository, WatchMovieRepository watchMovieRepository){
         Objects.requireNonNull(movieRepository);
+        Objects.requireNonNull(watchMovieRepository);
         this.movieRepository = movieRepository;
         this.watchMovieRepository = watchMovieRepository;
     }
@@ -135,53 +136,31 @@ public class MovieController {
     //Requestbody can be used only once,
     //thereby you use a wrapper class
     // request functional on Postman
-    /*@PostMapping("/user/movie/add")
+    @PostMapping("/user/movie/add")
     public Movie addMovie(@RequestBody WrapperUserMovie wrapperUserMovie){
         System.out.println(" on ajoute le film : "+wrapperUserMovie.getMovie());
         //save the movie in database
-//        var movieSaved = movieRepository.save(movie);
-//
-//        //save the association : movie-user in a table...
-//        var watchMovie = new WatchMovie(user.getId(), movieSaved.getIdMovie(), null, null);
-//
-//        //... in the data base
-//        watchMovieRepository.save(watchMovie);
-//
-//        System.out.println("film sauvegardé pour le user...");
-//
-        return wrapperUserMovie.getMovie();
+        Movie movieSaved;
+        movieRepository.save(wrapperUserMovie.getMovie());
 
-    }*/
+        //retrieve its actual ID
+        for(var movie:movieRepository.findAll()){
+            if(movie.getImdbID().equals(wrapperUserMovie.getMovie().getImdbID())){
+                movieSaved = movie;
+                //save the association : movie-user in a table of the data base
+                var watchMovie = new WatchMovie(wrapperUserMovie.getUser().getIdUser(), movieSaved.getId(), "à regarder plus tard");
+                watchMovieRepository.save(watchMovie);
 
-    /**
-     *
-     *
-     * the "add movie" add a new movie into the data base.
-     *
-     * @param movie
-     *
-     * the wrapper that contains the user and the movie.
-     */
-    //Requestbody can be used only once,
-    //thereby you use a wrapper class
-    // test single arg
-    @PostMapping("/user/movie/add")
-    public Movie addMovie(@RequestBody Movie movie){
-        System.out.println(" on ajoute le film : "+movie);
-        //save the movie in database
-//        var movieSaved = movieRepository.save(movie);
-//
-//        //save the association : movie-user in a table...
-//        var watchMovie = new WatchMovie(user.getId(), movieSaved.getIdMovie(), null, null);
-//
-//        //... in the data base
-//        watchMovieRepository.save(watchMovie);
-//
-//        System.out.println("film sauvegardé pour le user...");
-//
-        return movie;
+                System.out.println("film sauvegardé pour le user...");
 
+                return wrapperUserMovie.getMovie();
+            }
+        }
+        System.out.println("it is not supposed to happen : movie could not be registered");
+        return null;
     }
+
+
 
     /**
      * a remove method for users.
