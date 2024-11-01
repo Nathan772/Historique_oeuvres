@@ -111,15 +111,16 @@ CREATE TABLE watchmovie(
   idwatchmovie SERIAL NOT NULL PRIMARY KEY,
   iduser BIGINT UNSIGNED NOT NULL,
   idmovie BIGINT UNSIGNED NOT NULL,
-  currentState VARCHAR(200) NOT NULL DEFAULT "a regarder plus tard",
+  currentState VARCHAR(200) NOT NULL DEFAULT 'à regarder plus tard',
   -- enable to know the last time you update your statut regarding your 
   -- interest for a movie
   lastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   lastMoment TIME NOT NULL DEFAULT '0:00:00',
   FOREIGN KEY (idmovie) REFERENCES movie(idmovie) on delete cascade on update cascade,
   FOREIGN KEY (iduser) REFERENCES user(iduser) on delete cascade on update cascade,
-  constraint currentStateConsistent check (currentState = 'à regarder plus tard' OR currentState = 'fini' OR currentState = 'à revoir' OR currentState = 'en cours de lecture'
- OR currentState  = 'abandon')
+  constraint currentStateConsistent check (currentState = 'à regarder plus tard' OR currentState = 'fini' OR currentState = 'à revoir' OR currentState = 'en cours de visionnage'
+ OR currentState  = 'abandon'),
+ constraint unique_user_movie unique (iduser, idmovie)
 );
 
 
@@ -141,13 +142,14 @@ CREATE TABLE readmanga(
   idreadman SERIAL NOT NULL PRIMARY KEY,
   iduser BIGINT UNSIGNED NOT NULL,
   idmanga BIGINT UNSIGNED NOT NULL,
-  current_state VARCHAR(200) NOT NULL DEFAULT 'a lire plus tard',
+  current_state VARCHAR(200) NOT NULL DEFAULT 'à lire plus tard',
   lastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   lastChapterRead int unsigned,
   lastVolumeRead int unsigned,
   FOREIGN KEY (idmanga) REFERENCES manga(idmanga) on delete cascade on update cascade,
   FOREIGN KEY (iduser) REFERENCES user(iduser) on delete cascade on update cascade,
-  constraint current_state check (current_state = 'à lire plus tard' OR current_state = 'fini' OR current_state = 'en cours de lecture' OR current_state = 'à relire' OR current_state = 'en pause' OR current_state = 'abandon')
+  constraint current_state check (current_state = 'à lire plus tard' OR current_state = 'fini' OR current_state = 'en cours de lecture' OR current_state = 'à relire' OR current_state = 'en pause' OR current_state = 'abandon'),
+  constraint unique_user_manga unique (iduser, idmanga)
   
 );
 

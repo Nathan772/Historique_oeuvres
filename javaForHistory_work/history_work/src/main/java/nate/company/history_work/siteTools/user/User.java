@@ -65,6 +65,13 @@ public class User {
         this.password = password;
     }
 
+    public User(long id,String pseudo, String email, String password, String category){
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.category =category;
+    }
+
     /**
      * getter on Pseudo
      * @return
@@ -79,7 +86,7 @@ public class User {
      * @return
      * the id of the user
      */
-    public long getIdUser(){
+    public long getId(){
         return id;
     }
 
@@ -114,7 +121,7 @@ public class User {
     /**
      * a setter on the user's id
      */
-    public void setIdUser(Long id){
+    public void setId(long id){
         this.id = id;
     }
 

@@ -44,10 +44,11 @@ export class UserFormComponent implements OnInit {
   pour sauvegarder le User offert.
 
   */
-  constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService ) {
+  constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService) {
     this.router = routerParam;
     this.userService =service;
     this.connectionService = connectionService;
+
     //this.mismatchedPassword = false;
     /*nécessaire même si sera remplacé
     car cela correspond aux valeurs par défaut de l'utilisateur
@@ -59,7 +60,7 @@ export class UserFormComponent implements OnInit {
     */
     //this.alreadyExists = false;
 
-    this.user = {id:"5", pseudo:"", email:"", password:""};
+    this.user = {id:0, pseudo:"", email:"", password:""};
     this.copyInfo = {passwordCopy:""};
     /*at the inception
     the user is not connected at all...

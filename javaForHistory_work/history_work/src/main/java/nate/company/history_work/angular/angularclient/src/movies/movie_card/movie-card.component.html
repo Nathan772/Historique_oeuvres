@@ -68,7 +68,8 @@ movie-card component
     <br />
     Awards:
     {{ movieFull.Awards }}
-<button (click)="this.addToWatchList(movieFull)">+ liste visionnage</button>
+<button (click)="this.addToWatchList(movieFull)" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
+    <button (click)="this.removeFromWatchList(movieFull)" *ngIf=movieService.listMovieContainsMovie(movieFull)> - liste visionnage </button>
     <button (click)="this.disableFull()">- d'infos</button>
   </span>
 <!--

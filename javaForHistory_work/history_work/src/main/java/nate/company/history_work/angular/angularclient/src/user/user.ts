@@ -1,9 +1,12 @@
 /*
 créé avec "ng generate class user"
 puis remplit avec le ce qui est écrit sur baeldung...
+
+pb : types incompatibles
+lors de la récupération du user depuis la bdd???
 */
 export interface User {
-  id:string;
+  id:number;
   pseudo:string;
   email:string;
   password:string;

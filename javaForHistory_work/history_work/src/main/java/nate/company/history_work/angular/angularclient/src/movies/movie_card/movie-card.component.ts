@@ -71,8 +71,46 @@ export class MovieCardComponent implements OnInit {
 
     addToWatchList(movie:MovieFullInformations){
       //this.userService.
-      this.movieService.addMovieToUserList(movie, this.userService.userAccount);
+      this.movieService.addMovieToUserList(movie);
     }
+
+    removeFromWatchList(movie:MovieFullInformations){
+        //this.userService.
+        this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount).subscribe(data => {
+          console.log(movie.Title+" a été supprimé de la liste du user : "+this.userService.userAccount);
+                                                                                        })
+    }
+
+  /**
+
+  this method enables to prepare a list with all the movies registered by the user in database.
+
+   */
+   /*
+  retrieveUserMovies(){
+    console.log("on récupère les films du user "+this.userService.userAccount.pseudo);
+    this.movieService.findAllMoviesFromUserList(this.userService.userAccount.id).subscribe((movies) => {
+
+         on s'assure que le film a bien été trouvé
+         avant de l'affecter à this.movieFull
+          /* on donne à movieFull
+          les infos du film qui nous intéresse
+              if (movies != null){
+                console.log('les films ont bien été trouvé');
+                for(let movie of movies){
+                  console.log("on ajoute zzz "+movie.title);
+                  console.log("le imdb est : "+movie.imdbID);
+                  this.movieService.getMovieComplete(movie.imdbID).subscribe((movieComplete) => {
+                    console.log("film trouvé avec l'API : "+movieComplete.imdbID+ " "+movieComplete.Title);
+                    this.addToWatchList(movieComplete);
+                  });
+                }
+              }
+
+          }
+        );
+  }*/
+
 
   /* cette fonction va désactiver le mode full
   information*/

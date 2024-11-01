@@ -17,7 +17,7 @@ export class UserService {
 
   private usersUrl: string;
   private registerUrl: string;
-  public userAccount:User = {id:"",pseudo:"",email:"",password:""};
+  public userAccount:User = {id:0,pseudo:"",email:"",password:""};
   private connectUrl:string;
   private userExistsUrl:string;
 
@@ -34,16 +34,24 @@ export class UserService {
  /**
   retrieve a user in the data base
   */
+  /* deprecated, can use sensitive data
   public findUser(user:User): Observable<User> {
-    /*let headers = new Headers();
+    //let headers = new Headers();
     headers.append('Content-Type','application/json');
-    headers.append()*/
+    headers.append()
     //let params = new URLSearchParams();
     //params.append("",)
-    /*let options = user ?
-    { params: new HttpParams().set('userName', user) } : {};*/
+    //let options = user ?
+    { params: new HttpParams().set('userName', user) } : {};
     //const params = new HttpParams().set('','');
     return this.http.get<User>(this.userExistsUrl, { params: this.ToHttpParams(user)});
+  }*/
+
+  /**
+    retrieve a user in the data base
+    */
+  public findUser(user:User): Observable<User> {
+    return this.http.post<User>(this.userExistsUrl,user);
   }
 
 /**
@@ -60,6 +68,9 @@ https://stackoverflow.com/questions/74699021/angular-14-http-get-request-pass-ob
     });
     return httpParams;
   }
+
+
+
 
 
   /* récupère les users que l'on souhaite prendre depuis
@@ -82,6 +93,7 @@ UserController.java
     console.log("On sauvegarde un nouvel utilisateur : "+user);
     return this.http.post<User>(this.usersUrl, user);
   }
+
 
 /**
  cette méthode permet la suppresion d'un user.

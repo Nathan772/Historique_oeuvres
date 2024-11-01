@@ -40,14 +40,14 @@ public class Application {
         return args -> {
             /*pas nécessaire sauf si on veut tester l'ajout en brut
             sans passer par l'application Web*/
-            Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(name -> {
+            /*Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(name -> {
                 userRepository.save(new User(name, name+"@gmail.com", "666666"));
             });
 
 
             movieRepository.save(new Movie());
             watchMovieRepository.save(new WatchMovie(1,1,"à regarder plus tard"));
-
+            */
             //même chose, mais pour les vidéos
 
             System.out.println(" les données en base de données : ");

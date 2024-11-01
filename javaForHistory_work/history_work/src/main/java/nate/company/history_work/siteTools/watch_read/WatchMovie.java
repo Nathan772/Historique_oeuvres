@@ -5,10 +5,13 @@ import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
+
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
@@ -35,7 +38,8 @@ public class WatchMovie {
     //@Value("${props.currentState:'à regarder plus tard'}")
     private String currentState = "à regarder plus tard";
 
-    private Date lastUpdate = new Date(new java.util.Date().getTime()/1000);
+    //date of last registration of movie status
+    private Date lastUpdate = new Date();
     //@Value("${props.currentState:'à regarder plus tard'}")
     private Time lastMoment = new Time(0,0,0) ;
 

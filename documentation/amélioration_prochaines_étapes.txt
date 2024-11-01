@@ -8,25 +8,13 @@ ajouter :
 -veut_lire (== a lire plus tard) non --> remplacer par état
 -etat (à lire plus tard, en cours de lecture, abandon, en pause, terminé, à relire)
 
-1- Gestion de la connexion utilisateur
+
+1- Corriger : 
+
+-il faut que le site récupère en mémoire, dès que le user se connecte, la liste 
+de films que le user possède et le charge dans une liste pour pouvoir ensuite les utiliser.
 
 
--Possibilité pour un utilisateur de se connecter avec un compte existant, donc formulaire pour la connexion. (Prioritaire)
-
-
-
-
-
-
-2- Page d'accueil user
-
-
-A)
-
-On peut créer une page d'accueil dédiée au moment où le user se connecte, avec 
-"bonjour, (PRÉNOM)".
-
-(PRIORITAIRE)
 
 
 
@@ -59,3 +47,19 @@ B)
 3) Gérer le swagger (Prioritaire)
 
 - essayer d'ajouter du texte pour au moins une requête pour être sûr de pouvoir associer du texte au swagger pour pouvoir l'expliquer à l'entretien
+
+
+4) Amélioration complexité :
+
+-Vérifier, et ajouter si possible des méthodes qui permettent de récupérer des infos sur les repository mais sans faire un parcours entier des éléments présents dans le find.
+
+
+5) Genre :
+
+- Créer une wrapperClass pour permettre de récupérer le genre d'un film, et associé 
+
+- un film à ses genres dans la bdd
+
+6) Ajouter les loggers :
+
+-tester les messages avec des loggers plutôt qu'avec des systèm.out.println();
