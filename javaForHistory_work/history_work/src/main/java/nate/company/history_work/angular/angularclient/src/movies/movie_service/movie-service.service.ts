@@ -119,11 +119,10 @@ export class MovieServiceService {
               director:movie.Director,
               imdbID:movie.imdbID
     };
-    console.log("blab");
     for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents : "+this.userMoviesList[i].imdbID);
+        //console.log("les films présents : "+this.userMoviesList[i].imdbID);
         if(this.userMoviesList[i].imdbID === movie.imdbID){
-          console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
+          //console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
           return true
         }
     }
@@ -134,34 +133,14 @@ export class MovieServiceService {
    This method add a movie into the database
    */
 
-   //can I delete with the same pattern as POST which mean : wrapper ???
-  removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
 
-        let movieSimple : Movie = {
-          id:"0",
-          title:movie.Title,
-          year:movie.Year,
-          director:movie.Director,
-          imdbID:movie.imdbID
-        };
-
-        //remove movie from movie list
-        let index = this.userMoviesList.indexOf(movie);
-        if(index!==-1){
-          this.userMoviesList.splice(index,1);
-        }
-
-        console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.id+" avec pour IMDB "+movieSimple.imdbID);
-
-        return this.HttpClient.delete<Movie>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID);
-  }
 
 
 
   /**
    This method add a movie into the database
    */
-  addMovieToUserList(movie:MovieFullInformations){
+  addMovieToUserListWithoutDataBase(movie:MovieFullInformations){
 
         //une solution serait de retirer
         // le champ genre de movie movieSimple
@@ -176,9 +155,10 @@ export class MovieServiceService {
 
         //add movie to movie list
         this.userMoviesList.push(movie);
-        for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("ajout dans la liste du user : succès !");
+        /*for(let i=0;i<this.userMoviesList.length;i++){
               console.log("les films présents : "+this.userMoviesList[i].imdbID);
-        }
+        }*/
 
   }
 
@@ -197,17 +177,23 @@ export class MovieServiceService {
           };
 
           //add movie to movie list
-          this.userMoviesList.push(movie);
+          //this.userMoviesList.push(movie);
 
           console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
+          /*
+          problème ici !!!!! :...
+          */
           this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{"movie":movieSimple,"user":user})
                   .subscribe(
                         movieRetrieved => {
                           //save succeed
+                          this.addMovieToUserListWithoutDataBase(movie)
                           return movieRetrieved;
                         }
                       );
+
     }
+
 
 
 
@@ -259,4 +245,43 @@ export class MovieServiceService {
   public randomDisplay(): void {
     console.log("c'est très réel");
   }
+
+//can I delete with the same pattern as POST which mean : wrapper ???
+public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
+
+          let movieSimple : Movie = {
+            id:"0",
+            title:movie.Title,
+            year:movie.Year,
+            director:movie.Director,
+            imdbID:movie.imdbID
+          };
+
+          //remove movie from movie list
+          let index = this.userMoviesList.indexOf(movie);
+          if(index!==-1){
+            console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
+            this.userMoviesList.splice(index,1);
+          }
+
+
+          console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.id+" avec pour IMDB "+movieSimple.imdbID);
+          /*
+          functional but no checking*/
+          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID)
+          .subscribe(response =>
+                    {
+                      if(response != null){
+                      //remove from list
+                      /*if(index!==-1){
+                        console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
+                        this.userMoviesList.splice(index,1);
+                      }*/
+                    }
+                    //console.log(movie.Title+" a été supprimé de la liste du user : "+this.userService.userAccount)
+          });
+
+        //this.HttpClient.delete<Movie>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID).map(response =>response.json()).pipe(catchError());
+
+    }
 }
