@@ -257,14 +257,9 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
             imdbID:movie.imdbID
           };
 
-          //remove movie from movie list
-          let index = this.userMoviesList.indexOf(movie);
-          if(index!==-1){
-            console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
-            this.userMoviesList.splice(index,1);
-          }
-
-
+          this.userMoviesList = this.userMoviesList.filter(
+            movieKept => movieKept.imdbID != movie.imdbID
+          )
           console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.id+" avec pour IMDB "+movieSimple.imdbID);
           /*
           functional but no checking*/
