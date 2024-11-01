@@ -37,19 +37,17 @@ Now the Application.java should work
 
 In order to run the project, 
 
-1) in a first terminal :
-```bash
-cd javaForYoutubeDownloader/youtube-converter
-/src/main/java.nate.company/
-```
-run the Application.java file
-(you can also run this file from intellij)
+1) from intelliJ :
+
+run the "Application.java".
+
+It enables to run the database.
 
 
-3) in a second terminal :
+3) in a terminal :
 ```bash 
-cd javaForYoutubeDownloader/youtube-converter
-/src/main/java.nate.company/angular/angularclient
+cd Historique_oeuvres/javaForHistory_wo
+rk/history_work/src/main/java/nate/company/history_work/angular/angularclient
 ```
 run the following command : 
 ```bash
