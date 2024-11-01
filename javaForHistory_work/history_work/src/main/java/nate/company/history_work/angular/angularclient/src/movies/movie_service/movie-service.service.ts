@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators';
 export class MovieServiceService {
 
   private userMoviesUrl: string;
+  public userMoviesList:MovieFullInformations[] = [];
   /*private registerUrl: string;
   public userAccount:User = {id:"",pseudo:"",email:"",password:""};
   private connectUrl:string;
@@ -68,28 +69,74 @@ export class MovieServiceService {
   }
 
 
-  /* récupère l'ensemble des films de la liste des fillms d'utilisateur que l'on souhaite prendre depuis
-  la base */
-  public findAllMoviesFromUserList(): Observable<MovieFullInformations[]> {
-    return this.HttpClient.get<MovieFullInformations[]>(this.userMoviesUrl);
+  /* retrieve all the movies from user data present in the database. */
+  public findAllMoviesFromUserList(userId:number):Observable<Movie[]>{
+    //deprecated (begin)
+    //let params = new URLSearchParams(); deprecated
+    //params.append("someParamKey", this.someParamValue)
+     //let headers = new Headers();
+       /* headers.append('Content-Type','application/json');
+        headers.append()
+        //let params = new URLSearchParams();
+        //params.append("",)
+        //let options = user ?
+        { params: new HttpParams().set('userName', user) } : {};
+        //const params = new HttpParams().set('','');
+        return this.http.get<User>(this.userExistsUrl, { params: this.ToHttpParams(user)});*/
+       //{params: new HttpParams.set('id',userId)}
+       //let params = new HttpParams().set("id",userId); //Create new HttpParams
+      //deprecated (end)
+
+        //not completly functional
+       /*let headers = new Headers();
+       headers.append('Content-Type', 'application/json');
+       let params = new URLSearchParams();
+       return this.HttpClient.get<Movie[]>(this.userMoviesUrl, {params:this.ToHttpParams(userId)});*/
+
+
+
+       //l
+
+        interface UserId {
+         id:number;
+       }
+
+     let userInfo:UserId = {
+       id:userId
+      }
+      return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(userInfo)});
   }
 
-
-
   /**
+   this method checks if the list of movie of the user in their watch list contains the movie.
+
+   */
+  public listMovieContainsMovie(movie:MovieFullInformations){
+    let movieSimple : Movie = {
+              id:"0",
+              title:movie.Title,
+              year:movie.Year,
+              director:movie.Director,
+              imdbID:movie.imdbID
+    };
+    console.log("blab");
+    for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents : "+this.userMoviesList[i].imdbID);
+        if(this.userMoviesList[i].imdbID === movie.imdbID){
+          console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
+          return true
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
+  }
+/**
    This method add a movie into the database
    */
-  addMovieToUserList(movie:MovieFullInformations, user:User){
-        /*
-        Title: string;
-          Year: string;
-          Genre: string;
-          Director: string;
-          imdbID: string;*/
 
-        //une solution serait de retirer
-        // le champ genre de movie movieSimple
-        //
+   //can I delete with the same pattern as POST which mean : wrapper ???
+  removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
+
         let movieSimple : Movie = {
           id:"0",
           title:movie.Title,
@@ -98,16 +145,69 @@ export class MovieServiceService {
           imdbID:movie.imdbID
         };
 
-        console.log("On test la sauvegarde d'un nouveau film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
-        this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{"movie":movieSimple,"user":user})
-                .subscribe(
-                      movieRetrieved => {
-                        //The user already exists
-                        return movieRetrieved;
-                      }
-                    );
-        //"/user/movie/add"
+        //remove movie from movie list
+        let index = this.userMoviesList.indexOf(movie);
+        if(index!==-1){
+          this.userMoviesList.splice(index,1);
+        }
+
+        console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.id+" avec pour IMDB "+movieSimple.imdbID);
+
+        return this.HttpClient.delete<Movie>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID);
   }
+
+
+
+  /**
+   This method add a movie into the database
+   */
+  addMovieToUserList(movie:MovieFullInformations){
+
+        //une solution serait de retirer
+        // le champ genre de movie movieSimple
+        //
+        /*let movieSimple : Movie = {
+          id:"0",
+          title:movie.Title,
+          year:movie.Year,
+          director:movie.Director,
+          imdbID:movie.imdbID
+        };*/
+
+        //add movie to movie list
+        this.userMoviesList.push(movie);
+        for(let i=0;i<this.userMoviesList.length;i++){
+              console.log("les films présents : "+this.userMoviesList[i].imdbID);
+        }
+
+  }
+
+
+  addMovieToUserInDataBase(movie:MovieFullInformations, user:User){
+
+          //une solution serait de retirer
+          // le champ genre de movie movieSimple
+          //
+          let movieSimple : Movie = {
+            id:"0",
+            title:movie.Title,
+            year:movie.Year,
+            director:movie.Director,
+            imdbID:movie.imdbID
+          };
+
+          //add movie to movie list
+          this.userMoviesList.push(movie);
+
+          console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
+          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{"movie":movieSimple,"user":user})
+                  .subscribe(
+                        movieRetrieved => {
+                          //save succeed
+                          return movieRetrieved;
+                        }
+                      );
+    }
 
 
 

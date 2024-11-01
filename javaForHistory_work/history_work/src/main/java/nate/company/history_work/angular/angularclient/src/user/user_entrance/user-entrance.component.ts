@@ -41,7 +41,7 @@ export class UserEntranceComponent {
     this.connectionService.isConnected = false;
     this.connectionService.alreadyExists = false
     this.connectionService.mismatchedPassword = false;
-    this.userService.userAccount = {id:"",pseudo:"", password:"", email:""};
+    this.userService.userAccount = {id:0,pseudo:"", password:"", email:""};
     this.redirectionToConnectionPage();
   }
 

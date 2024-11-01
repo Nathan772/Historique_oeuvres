@@ -15,6 +15,8 @@ généré automatiquement
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user_service/user-service.service';
+import {MovieServiceService } from '../../movies/movie_service/movie-service.service';
+import {MovieFullInformations} from '../../movies/movie_models/movie_models';
 import { User,copyData } from '../user';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
 
@@ -36,6 +38,7 @@ export class UserConnectionComponent implements OnInit {
   copyInfo:copyData;
   connectionService:ConnectionServiceService;
   alreadyTried:Boolean;
+  movieService:MovieServiceService;
 
 
   /*
@@ -43,10 +46,11 @@ export class UserConnectionComponent implements OnInit {
   pour sauvegarder le User offert.
 
   */
-  constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService ) {
+  constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService, movieService:MovieServiceService ) {
     this.router = routerParam;
     this.userService =service;
     this.connectionService = connectionService;
+    this.movieService = movieService;
     //this.mismatchedPassword = false;
     /*nécessaire même si sera remplacé
     car cela correspond aux valeurs par défaut de l'utilisateur
@@ -58,7 +62,7 @@ export class UserConnectionComponent implements OnInit {
     */
     //this.alreadyExists = false;
 
-    this.user = {id:"5", pseudo:"", email:"", password:""};
+    this.user = {id:51, pseudo:"", email:"", password:""};
     this.copyInfo = {passwordCopy:""};
     /*at the inception
     the user is not connected at all...
@@ -85,6 +89,11 @@ export class UserConnectionComponent implements OnInit {
                  this.connectionService.isConnected = true;
                  //update the actual user with their true info (notably the uid)
                  this.userService.userAccount = userFound;
+                 console.log("le pseudo du user connecté est : "+userFound);
+                 console.log("le pseudo du user connecté est : "+userFound.pseudo);
+                 console.log("l'id du user connecté est : "+userFound.id);
+                 console.log("le mail du user est : "+userFound.email);
+                 console.log("le password du user est : "+userFound.password);
 
                 //user homepage
                 this.gotoUserEntrance()
@@ -108,8 +117,54 @@ export class UserConnectionComponent implements OnInit {
         }
     );
   }
+  /*
+  retrieveUserMovies(){
+    this.userService.retrieveUserMovies();
+  }*/
+
+
+addToWatchList(movie:MovieFullInformations){
+      //this.userService.
+      this.movieService.addMovieToUserList(movie);
+      //check if updated worked for user-connection
+      for(let i=0;i<this.movieService.userMoviesList.length;i++){
+        console.log("les films présents : "+this.movieService.userMoviesList[i].imdbID);
+      }
+
+}
+
+/**
+
+  this method enables to prepare a list with all the movies registered by the user in database.
+
+   */
+  retrieveUserMovies(){
+    console.log("on récupère les films du user "+this.userService.userAccount.pseudo+" "+this.userService.userAccount.id);
+    this.movieService.findAllMoviesFromUserList(this.userService.userAccount.id).subscribe((movies) => {
+      /*
+         on s'assure que le film a bien été trouvé
+         avant de l'affecter à this.movieFull*/
+          /* on donne à movieFull
+          les infos du film qui nous intéresse*/
+              if (movies != null){
+                console.log('les films ont bien été trouvé');
+                for(let movie of movies){
+                  console.log("on ajoute "+movie.title);
+                  console.log("le imdb est : "+movie.imdbID);
+                  this.movieService.getMovieComplete(movie.imdbID).subscribe((movieComplete) => {
+                    console.log("film trouvé avec l'API : "+movieComplete.imdbID+ " "+movieComplete.Title);
+                    this.addToWatchList(movieComplete);
+                  });
+                }
+              }
+
+          }
+        );
+  }
 
 gotoUserEntrance() {
+    //prepare user's movie list
+    this.retrieveUserMovies();
     this.router.navigate(['/user/entrance']);
   }
 

@@ -6,11 +6,17 @@ import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.watch_read.WatchMovie;
 import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
 import nate.company.history_work.siteTools.wrapper.WrapperUserMovie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+
+import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
 @RestController
 
@@ -44,12 +50,25 @@ public class MovieController {
      * this method retrieves all the users from the database
      * (linked to "findAll" from user.service)
      * @return
+     * the list of movie possessed by the user
      */
     //@RequestMapping("/users")
-    /*@GetMapping("/user/movie/add")
-    public List<User> getUsers(){
-        return (List<User>) userRepository.findAll();
-    }*/
+    @GetMapping("user/movie")
+    public List<Movie> getUserMovies(@RequestParam(name="id") long userId){
+        var list = new ArrayList<Movie>();
+         for(var watchMovie:watchMovieRepository.findAll()){
+            if(watchMovie.getIdUser() == userId){
+                var movie = movieRepository.findById(watchMovie.getIdMovie());
+                //add movies to the list of movies possessed by the user
+                if(movie.isPresent()) {
+                    LOGGER.log(Level.INFO,"Le film "+movie+" a été ajouté à la liste des films du user");
+                    //transform movie in order to get a field Id
+                    list.add(new Movie(movie.get().getId(),movie.get().getTitle(),movie.get().getYear(),movie.get().getImdbID(),movie.get().getDirector()));
+                }
+            }
+        }
+         return List.copyOf(list);
+    }
     /**
      * this method retrieve a specific user if exists in database
      * @param userId
@@ -138,9 +157,29 @@ public class MovieController {
     // request functional on Postman
     @PostMapping("/user/movie/add")
     public Movie addMovie(@RequestBody WrapperUserMovie wrapperUserMovie){
-        System.out.println(" on ajoute le film : "+wrapperUserMovie.getMovie());
+        LOGGER.log(Level.INFO, " on ajoute le film : "+wrapperUserMovie.getMovie());
         //save the movie in database
         Movie movieSaved;
+        //check if movie already exists first :
+        for(var existingMovie:movieRepository.findAll()){
+            //this movie is already in the database
+            if(existingMovie.getImdbID().equals(wrapperUserMovie.getMovie().getImdbID())){
+                movieSaved = existingMovie;
+
+                //save the link movie - user, in database
+                var watchMovie = new WatchMovie(wrapperUserMovie.getUser().getId(), movieSaved.getId(), "à regarder plus tard");
+                LOGGER.log(Level.INFO, " le movie à regarder a pour date de dernière update : "+watchMovie.getLastUpdate());
+                //System.out.println(" le movie à regarder a pour date de de dernière update : "+watchMovie.getLastUpdate());
+                watchMovieRepository.save(watchMovie);
+
+                //System.out.println("film sauvegardé pour le user...");
+                LOGGER.log(Level.INFO, " film sauvegardé pour le user :"+wrapperUserMovie.getUser().getPseudo());
+
+                return wrapperUserMovie.getMovie();
+            }
+        }
+
+
         movieRepository.save(wrapperUserMovie.getMovie());
 
         //retrieve its actual ID
@@ -148,16 +187,55 @@ public class MovieController {
             if(movie.getImdbID().equals(wrapperUserMovie.getMovie().getImdbID())){
                 movieSaved = movie;
                 //save the association : movie-user in a table of the data base
-                var watchMovie = new WatchMovie(wrapperUserMovie.getUser().getIdUser(), movieSaved.getId(), "à regarder plus tard");
+                var watchMovie = new WatchMovie(wrapperUserMovie.getUser().getId(), movieSaved.getId(), "à regarder plus tard");
                 watchMovieRepository.save(watchMovie);
-
-                System.out.println("film sauvegardé pour le user...");
-
+                LOGGER.log(Level.INFO, "film sauvegardé pour le user...");
                 return wrapperUserMovie.getMovie();
             }
         }
-        System.out.println("it is not supposed to happen : movie could not be registered");
+        LOGGER.log(Level.INFO, "it is not supposed to happen : movie could not be registered");
         return null;
+    }
+
+    /**
+     *
+     * a remove method for an association between a movie and a user.
+     *
+     * @param id
+     * the user who watches the movie
+     * @param imdbID
+     * the movie watch with its imdbID.
+     *
+     * the movie and the user who watches this movie.
+     *
+     * @return
+     * a response that precises if everything end up properly.
+     */
+
+    @DeleteMapping("/user/movie/remove/{id}/{imdbID}")
+    public ResponseEntity<String> removeMovieFromList(@PathVariable String id, @PathVariable String imdbID){
+
+        Movie movieSaved;
+        for(var existingMovie:movieRepository.findAll()){
+            //this movie is already in the database which is consistent
+            if(existingMovie.getImdbID().equals(imdbID)){
+                movieSaved = existingMovie;
+                var idUserLong = Long.parseLong(id);
+                for(var watchMovie:watchMovieRepository.findAll()){
+                    //Link between movie and user : found
+                    if(watchMovie.getIdMovie() == movieSaved.getId() && watchMovie.getIdUser() == idUserLong){
+                        //let's delete all these things
+                        //removal succeed
+                        watchMovieRepository.delete(watchMovie);
+                        LOGGER.log(Level.INFO, "Success : the movie has been correctly removed !!");
+                        return ResponseEntity.noContent().build();
+                    }
+                }
+
+            }
+        }
+        LOGGER.log(Level.INFO, "Error : the movie that was supposed to be removed hasn't been found !!");
+        return ResponseEntity.notFound().build();
     }
 
 

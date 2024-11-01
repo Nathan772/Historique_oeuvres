@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+
+import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
 @RestController
 
@@ -71,8 +74,8 @@ public class UserController {
     field of your class (here the class is user). Here it purpesofuly, matches for email and password (for the sake of the example)
 
      */
-    //?id={id}&pseudo={pseudo}&email={email}&password={password}"
-    @GetMapping("/userSearch")
+    // rather post than get mapping in order to hide user data
+    /*@GetMapping("/userSearch")
     @ResponseBody
     public ResponseEntity<?> getUser(@RequestParam(name="id") String userId, @RequestParam(name="pseudo") String userPseudo,
                                      @RequestParam(name="email") String email, @RequestParam(name="password") String password
@@ -80,17 +83,54 @@ public class UserController {
         System.out.println("on entre bien dans la méthode getUser de Java");
         var allUsers = userRepository.findAll();
         for(var user:allUsers){
+            System.out.println("L'id du user : "+user.getId());
             //user found
             //pseudo already used or email already used
             if(user.getPseudo().equals(userPseudo) || user.getEmail().equals(email) ) {
-                System.out.println("le user a bien été trouvé ");
+                System.out.println("Le user a bien été trouvé : ");
+                var userForAngular = new User(user.getId(),user.getPseudo(),user.getEmail(),user.getPassword(),user.getCategory() );
                 return ResponseEntity.ok(user);
+
             }
         }
-        /*user not found (not necessarily an error
-        depending on the usage)
-        */
-        System.out.println("le user a pas été trouvé ");
+        //user not found (not necessarily an error
+        //depending on the usage)
+
+        System.out.println("le user n'a pas été trouvé ");
+        return ResponseEntity.ok().build();
+    }*/
+
+    /**
+     * Retrieve user from data based, based on their pseudo or their email
+     * @param userSearched
+     * the user few information (email/pseudo)
+     * @return
+     * the user complete data
+     */
+
+    @PostMapping("/userSearch")
+    public ResponseEntity<?> getUser(@RequestBody User userSearched){
+        var userPseudo = userSearched.getPseudo();
+        var email = userSearched.getEmail();
+        //System.out.println("on entre bien dans la méthode getUser de Java");
+        var allUsers = userRepository.findAll();
+        for(var user:allUsers){
+            //System.out.println("L'id du user : "+user.getId());
+            LOGGER.log(Level.INFO,"L'id du recherché user : "+user.getId());
+            //user found
+            //pseudo already used or email already used
+            if(user.getPseudo().equals(userPseudo) || user.getEmail().equals(email) ) {
+                //System.out.println("Le user a bien été trouvé : ");
+                LOGGER.log(Level.INFO,"Le user "+userPseudo+"a bien été trouvé");
+                var userForAngular = new User(user.getId(),user.getPseudo(),user.getEmail(),user.getPassword(),user.getCategory() );
+                return ResponseEntity.ok(user);
+
+            }
+        }
+        //user not found (not necessarily an error
+        //depending on the usage)
+
+        LOGGER.log(Level.INFO,"Le user n'a pas été trouvé");
         return ResponseEntity.ok().build();
     }
 
@@ -132,7 +172,7 @@ public class UserController {
      */
     @PostMapping("/users")
     public User addUser(@RequestBody User user){
-        System.out.println(" on ajoute le user : "+user);
+        LOGGER.log(Level.INFO, " on ajoute le user : "+user);
         /*by default every user is average
         if the add been add through the website
          */
@@ -151,8 +191,7 @@ public class UserController {
     @DeleteMapping("users/delete/{idUser}")
     public ResponseEntity<String> removeUser(@PathVariable String idUser){
         var userIdLong = Long.parseLong(idUser);
-        //var userIdLong = user.getId();
-        System.out.println("on supprime le user avec l'id : "+userIdLong);
+        LOGGER.log(Level.INFO,"on supprime le user avec l'id : "+userIdLong);
         userRepository.deleteById(userIdLong);
         /* a necessary rreturn to enable removal
          */
