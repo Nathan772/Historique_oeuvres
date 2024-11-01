@@ -125,7 +125,7 @@ export class UserConnectionComponent implements OnInit {
 
 addToWatchList(movie:MovieFullInformations){
       //this.userService.
-      this.movieService.addMovieToUserList(movie);
+      this.movieService.addMovieToUserListWithoutDataBase(movie);
       //check if updated worked for user-connection
       for(let i=0;i<this.movieService.userMoviesList.length;i++){
         console.log("les films présents : "+this.movieService.userMoviesList[i].imdbID);
@@ -147,7 +147,7 @@ addToWatchList(movie:MovieFullInformations){
           /* on donne à movieFull
           les infos du film qui nous intéresse*/
               if (movies != null){
-                console.log('les films ont bien été trouvé');
+                console.log('les de l\'utilisateur films ont bien été trouvé');
                 for(let movie of movies){
                   console.log("on ajoute "+movie.title);
                   console.log("le imdb est : "+movie.imdbID);

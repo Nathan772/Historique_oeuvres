@@ -219,6 +219,7 @@ public class MovieController {
         for(var existingMovie:movieRepository.findAll()){
             //this movie is already in the database which is consistent
             if(existingMovie.getImdbID().equals(imdbID)){
+                LOGGER.log(Level.INFO, "A movie with the imdb : "+imdbID+" has been found in the database");
                 movieSaved = existingMovie;
                 var idUserLong = Long.parseLong(id);
                 for(var watchMovie:watchMovieRepository.findAll()){

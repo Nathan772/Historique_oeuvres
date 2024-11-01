@@ -69,16 +69,17 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-    addToWatchList(movie:MovieFullInformations){
+  /**
+   add a movie to user watchList
+   */
+    addToWatchListAndDatabase(movie:MovieFullInformations){
       //this.userService.
-      this.movieService.addMovieToUserList(movie);
+      this.movieService.addMovieToUserInDataBase(movie, this.userService.userAccount);
     }
 
-    removeFromWatchList(movie:MovieFullInformations){
+    removeFromWatchListAndDataBase(movie:MovieFullInformations){
         //this.userService.
-        this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount).subscribe(data => {
-          console.log(movie.Title+" a été supprimé de la liste du user : "+this.userService.userAccount);
-                                                                                        })
+        this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount);
     }
 
   /**
