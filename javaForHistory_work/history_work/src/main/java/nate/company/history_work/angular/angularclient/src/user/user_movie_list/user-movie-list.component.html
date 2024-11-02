@@ -4,3 +4,20 @@ useless ?? deprecated ???
 
 -->
 <h1>Votre liste de films </h1>
+
+
+<!--
+  le nom de
+  cet élément correspond
+  au nom du sélecteur
+  de movie-card
+
+le nom : "movie"
+correspond au nom du champ
+"movie" définit dans movie-card.component
+
+Le nom "listFilm"
+correspond au champ "listFilm" de "movieList".
+-->
+<app-movie-user-card *ngFor="let movieInfo of movieService.userMoviesList" [movieFull]="movieInfo">
+</app-movie-user-card>
