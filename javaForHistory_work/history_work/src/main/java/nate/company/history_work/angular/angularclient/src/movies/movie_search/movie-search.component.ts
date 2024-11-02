@@ -3,7 +3,8 @@ import { MovieServiceService } from '../movie_service/movie-service.service';
 import { NavbarMoviesComponent } from '../navbar/navbar-movies.component';
 import { MovieListComponent } from '../movie_list/movie-list.component';
 import { MovieCardComponent } from '../movie_card/movie-card.component';
-import { MovieShortInformations, SearchResponse, MovieFullInformations, Rating} from '../movie_models/movie_models'
+import { MovieShortInformations, SearchResponse, MovieFullInformations, Rating} from '../movie_models/movie_models';
+import {UserService } from '../../user/user_service/user-service.service';
 
 @Component({
   selector: 'app-movie-search',
@@ -28,6 +29,7 @@ export class MovieSearchComponent {
      constructeur (voir tout en bas) sinon il y aura des
      pbs*/
     movieService: MovieServiceService;
+    userService:UserService;
      /*on va utiliser cet émeteur pour émettre un tableau
     qui correspond à la liste de films
     trouvée par l'utilisateur lors de sa recherche.
@@ -63,8 +65,13 @@ export class MovieSearchComponent {
          /* l'initialisation
     du service dans le constructeur
     est indispensable*/
-    constructor(service:MovieServiceService){
+    constructor(service:MovieServiceService, userService:UserService){
       this.movieService = service;
+      this.userService = userService;
+      //load user's movies
+      if(this.movieService.userMoviesList.length == 0){
+                  this.movieService.retrieveUserMovies(this.userService.userAccount);
+      }
     }
     ngOnInit() {}
 }

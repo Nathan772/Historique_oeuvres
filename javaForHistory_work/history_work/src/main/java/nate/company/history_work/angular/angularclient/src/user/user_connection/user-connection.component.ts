@@ -123,29 +123,21 @@ export class UserConnectionComponent implements OnInit {
   }*/
 
 
-addToWatchList(movie:MovieFullInformations){
-      //this.userService.
-      this.movieService.addMovieToUserListWithoutDataBase(movie);
-      //check if updated worked for user-connection
-      for(let i=0;i<this.movieService.userMoviesList.length;i++){
-        console.log("les films présents : "+this.movieService.userMoviesList[i].imdbID);
-      }
-
-}
 
 /**
 
   this method enables to prepare a list with all the movies registered by the user in database.
 
    */
+   /*
   retrieveUserMovies(){
     console.log("on récupère les films du user "+this.userService.userAccount.pseudo+" "+this.userService.userAccount.id);
     this.movieService.findAllMoviesFromUserList(this.userService.userAccount.id).subscribe((movies) => {
       /*
          on s'assure que le film a bien été trouvé
-         avant de l'affecter à this.movieFull*/
+         avant de l'affecter à this.movieFull
           /* on donne à movieFull
-          les infos du film qui nous intéresse*/
+          les infos du film qui nous intéresse
               if (movies != null){
                 console.log('les de l\'utilisateur films ont bien été trouvé');
                 for(let movie of movies){
@@ -160,11 +152,11 @@ addToWatchList(movie:MovieFullInformations){
 
           }
         );
-  }
+  }*/
 
 gotoUserEntrance() {
     //prepare user's movie list
-    this.retrieveUserMovies();
+    this.movieService.retrieveUserMovies(this.userService.userAccount);
     this.router.navigate(['/user/entrance']);
   }
 

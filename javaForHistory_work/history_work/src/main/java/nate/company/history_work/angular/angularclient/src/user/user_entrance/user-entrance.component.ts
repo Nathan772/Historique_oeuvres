@@ -37,13 +37,13 @@ export class UserEntranceComponent {
  /**
    this method starts a disconnection
    */
-  disconnect(){
+  /*disconnect(){
     this.connectionService.isConnected = false;
     this.connectionService.alreadyExists = false
     this.connectionService.mismatchedPassword = false;
     this.userService.userAccount = {id:0,pseudo:"", password:"", email:""};
     this.redirectionToConnectionPage();
-  }
+  }*/
 
   redirectionToConnectionPage() {
     console.log("you're not connected : go back to login page");

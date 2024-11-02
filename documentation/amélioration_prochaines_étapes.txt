@@ -1,4 +1,4 @@
-0- bdd corriger :
+1- bdd corriger :
 
 
 ajouter :
@@ -7,16 +7,6 @@ ajouter :
 -dernier_tome_lu
 -veut_lire (== a lire plus tard) non --> remplacer par état
 -etat (à lire plus tard, en cours de lecture, abandon, en pause, terminé, à relire)
-
-
-1- Corriger : 
-
--il faut que le site récupère en mémoire, dès que le user se connecte, la liste 
-de films que le user possède et le charge dans une liste pour pouvoir ensuite les utiliser.
-
-
-
-
 
 
 (--)
@@ -60,6 +50,13 @@ B)
 
 - un film à ses genres dans la bdd
 
-6) Ajouter les loggers :
+6) Code couleur :
 
--tester les messages avec des loggers plutôt qu'avec des systèm.out.println();
+-afficher un code couleur selon l'état de lecture d'une oeuvre : 
+
+- à regarder plus tard : rouge
+- fini : vert 
+- en cours de visionnage : jaune
+- à revoir : violet
+
+

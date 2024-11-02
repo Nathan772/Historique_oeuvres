@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
-import { UserListComponent } from './user/user_list/user-list.component';
+//import { UserListComponent } from './user/user_list/user-list.component';
 import { UserFormComponent } from './user/user_form/user-form.component';
 import { AccueilComponent } from './accueil/accueil.component';
+import { MovieMenuUserComponent } from './user/movie_menu_user/movie-menu-user.component';
 import { UserService } from './user/user_service/user-service.service';
 import {RouterModule} from '@angular/router';
 
@@ -35,7 +36,6 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
 @NgModule({
    declarations: [
       AppComponent,
-      UserListComponent,
       UserFormComponent,
       UserEntranceComponent,
       UserConnectionComponent,
@@ -44,6 +44,7 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       MovieListComponent,
       MovieSearchComponent,
       AccueilComponent,
+      MovieMenuUserComponent,
     ],
   imports: [
       BrowserModule,

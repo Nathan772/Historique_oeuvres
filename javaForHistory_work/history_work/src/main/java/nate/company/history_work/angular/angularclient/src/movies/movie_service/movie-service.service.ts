@@ -22,6 +22,9 @@ export class MovieServiceService {
 
   private userMoviesUrl: string;
   public userMoviesList:MovieFullInformations[] = [];
+  //créer une nouvelle catégorie qui contiendrait les status de visionnage des films
+  //pour pouvoir ajouter un jeu de couleur et plus généralement, une correspodance.
+  //public userMoviesStatus:MovieStatus[] = [];
   /*private registerUrl: string;
   public userAccount:User = {id:"",pseudo:"",email:"",password:""};
   private connectUrl:string;
@@ -34,7 +37,49 @@ export class MovieServiceService {
         /*this.registerUrl = 'http://localhost:8080/register';
         this.connectUrl = 'http://localhost:8080/connect';
         this.userExistsUrl = 'http://localhost:8080/userSearch';*/
+        if(this.userMoviesList){
+
+          }
   }
+
+/*
+this method retrieve the movies from the database and add them to the user list
+*/
+retrieveUserMovies(userAccount:User){
+              console.log("on récupère les films du user "+userAccount.pseudo+" "+userAccount.id);
+              this.findAllMoviesFromUserList(userAccount.id).subscribe((movies) => {
+                /*
+                   on s'assure que le film a bien été trouvé
+                   avant de l'affecter à this.movieFull*/
+                    /* on donne à movieFull
+                    les infos du film qui nous intéresse*/
+                        if (movies != null){
+                          console.log('les films de l\'utilisateur '+userAccount.id+'films ont bien été trouvé');
+                          for(let movie of movies){
+                            console.log("on ajoute "+movie.title);
+                            console.log("le imdb est : "+movie.imdbID);
+                            this.getMovieComplete(movie.imdbID).subscribe((movieComplete) => {
+                              console.log("film trouvé avec l'API : "+movieComplete.imdbID+ " "+movieComplete.Title);
+                              this.addToWatchList(movieComplete);
+                            });
+                          }
+                        }
+
+                    }
+                  );
+            }
+
+
+addToWatchList(movie:MovieFullInformations){
+      //this.userService.
+      this.addMovieToUserListWithoutDataBase(movie);
+      //check if updated worked for user-connection
+      for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents : "+this.userMoviesList[i].imdbID);
+      }
+
+}
+
 
   //searchValue:string;
 

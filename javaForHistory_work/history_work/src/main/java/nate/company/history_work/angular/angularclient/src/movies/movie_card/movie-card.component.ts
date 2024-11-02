@@ -49,6 +49,10 @@ export class MovieCardComponent implements OnInit {
            Poster: ""
            }
 
+         if(this.movieService.userMoviesList.length == 0){
+            this.movieService.retrieveUserMovies(userService.userAccount);
+         }
+
     }
 
   /* cette fonction donne les infos complètes

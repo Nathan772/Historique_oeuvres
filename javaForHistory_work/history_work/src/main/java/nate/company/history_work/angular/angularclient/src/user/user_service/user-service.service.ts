@@ -10,24 +10,28 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { User } from '../user';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import {ConnectionServiceService} from '../../connection/connection-service.service';
 
 @Injectable({
   providedIn:'root'})
 export class UserService {
 
+  router:Router;
   private usersUrl: string;
   private registerUrl: string;
   public userAccount:User = {id:0,pseudo:"",email:"",password:""};
   private connectUrl:string;
   private userExistsUrl:string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, routerParam: Router) {
     //usersUrl va permettre de faire le lien avec le backend
     //l'@ 8080 est une @ du backend
     this.usersUrl = 'http://localhost:8080/users';
     this.registerUrl = 'http://localhost:8080/register';
     this.connectUrl = 'http://localhost:8080/connect';
     this.userExistsUrl = 'http://localhost:8080/userSearch';
+    this.router = routerParam;
   }
 
 
@@ -46,6 +50,44 @@ export class UserService {
     //const params = new HttpParams().set('','');
     return this.http.get<User>(this.userExistsUrl, { params: this.ToHttpParams(user)});
   }*/
+
+
+
+
+
+
+/**
+   this method starts a disconnection
+   */
+  disconnect(connectionService:ConnectionServiceService){
+    connectionService.isConnected = false;
+    connectionService.alreadyExists = false
+    connectionService.mismatchedPassword = false;
+    this.userAccount = {id:0,pseudo:"", password:"", email:""};
+    this.redirectionToConnectionPage(connectionService);
+  }
+
+redirectionToConnectionPage(connectionService:ConnectionServiceService) {
+    console.log("you're not connected : go back to login page");
+     //not connected
+     connectionService.isConnected = false;
+     connectionService.alreadyExists = false
+     connectionService.mismatchedPassword = false;
+     //no user
+     //this.userService.userAccount = null;
+
+     //welcome page for connexion or inscription
+     this.router.navigate(['/']);
+
+  }
+
+
+
+
+
+
+
+
 
   /**
     retrieve a user in the data base

@@ -298,3 +298,15 @@ spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.Im
 spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 ```
 Dans le fichier applicaition.properties
+
+
+
+Pour éviter que les pages perdent les données lorsqu'elles sont rafraichies, il faut les mettre dans le local storage,
+https://stackoverflow.com/questions/62834093/angular-data-loss-when-page-refresh :
+
+```angular
+
+    handleDetails(value) {
+      localStorage.setItem('key', value);
+      }
+```
