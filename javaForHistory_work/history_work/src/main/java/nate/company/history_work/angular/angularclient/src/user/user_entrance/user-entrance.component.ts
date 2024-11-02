@@ -18,32 +18,26 @@ export class UserEntranceComponent {
   le user service du constructeur permet d'être utilisé
   pour utiliser le user offert.
   */
-  constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService ) {
-    //the user is not connected redirection...
-    if(connectionService.isConnected == false){
-      console.log("l'utilisateur n'est pas connecté")
-      this.redirectionToConnectionPage();
-    }
-    console.log("le user est déjà connecté ");
+  constructor(routerParam: Router,userService: UserService, connectionService:ConnectionServiceService ) {
+    console.log("on passe par le constructeur de user-entrance...");
+    this.userService = userService;
+    this.connectionService = connectionService;
+    this.userService.prepareConnection(this.connectionService);
+    console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
     //retrieve data from the component that initiate the connection
     this.router = routerParam;
-    this.userService = service;
-    this.connectionService = connectionService;
-    this.connectionService.isConnected = connectionService.isConnected;
-    this.connectionService.alreadyExists = false;
-    this.connectionService.mismatchedPassword = false;
   }
 
  /**
    this method starts a disconnection
    */
-  disconnect(){
+  /*disconnect(){
     this.connectionService.isConnected = false;
     this.connectionService.alreadyExists = false
     this.connectionService.mismatchedPassword = false;
     this.userService.userAccount = {id:0,pseudo:"", password:"", email:""};
     this.redirectionToConnectionPage();
-  }
+  }*/
 
   redirectionToConnectionPage() {
     console.log("you're not connected : go back to login page");

@@ -2,7 +2,7 @@
   Ravi de te voir {{ userService.userAccount.pseudo }} !
 </h1>
 
-<form (ngSubmit)="disconnect()">
+<form (ngSubmit)="userService.disconnect(connectionService)">
 
 <button type="submit" class="btn btn-info"> Déconnexion ? </button>
 
@@ -39,7 +39,7 @@
             <br>
 
             <li>
-              <a routerLink="/myListMangas" class="btn btn-info"> livres ? (à modifier dans html pour matcher les livres dans user-entrance.component.html)
+              <a routerLink="myListBooks" class="btn btn-info"> livres ? (à modifier dans html pour matcher les livres dans user-entrance.component.html)
 
               </a>
             </li>
@@ -48,14 +48,14 @@
             <br>
 
             <li>
-              <a routerLink="myListMovies" class="btn btn-info"> films ?</a>
+              <a routerLink="menuMovieChoice" class="btn btn-info"> films ?</a>
             </li>
 
             <br>
             <br>
 
             <li>
-              <a routerLink="/myListMangas" class="btn btn-info"> séries ?(user-entrance.comp... modifier) </a>
+              <a routerLink="myListMangas" class="btn btn-info"> séries ?(user-entrance.comp... modifier) </a>
             </li>
 
             <br>

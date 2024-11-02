@@ -49,6 +49,10 @@ export class MovieCardComponent implements OnInit {
            Poster: ""
            }
 
+         if(this.movieService.userMoviesList.length == 0){
+            this.movieService.retrieveUserMovies(userService.userAccount);
+         }
+
     }
 
   /* cette fonction donne les infos complètes
@@ -80,6 +84,28 @@ export class MovieCardComponent implements OnInit {
     removeFromWatchListAndDataBase(movie:MovieFullInformations){
         //this.userService.
         this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount);
+        //remove movie from movie list
+        /*let index = this.movieService.userMoviesList.indexOf(movie);
+        if(index!==-1){
+          console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
+          this.movieService.userMoviesList.splice(index,1);
+        }*/
+
+        /*for(let i=0;i<this.movieService.userMoviesList.length;i++){
+                //console.log("les films présents : "+this.userMoviesList[i].imdbID);
+                if(this.movieService.userMoviesList[i].imdbID === movie.imdbID){
+                  //console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
+                  let index = this.movieService.userMoviesList.indexOf(movie);
+                  if(index!==-1){
+                    console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
+                    this.movieService.userMoviesList.splice(index,1);
+                  }
+                  else{
+                    console.log("le film qui doit être retiré n'a pas été trouvé");
+                  }
+                }
+              }*/
+
     }
 
   /**
