@@ -301,8 +301,10 @@ Dans le fichier applicaition.properties
 
 
 
-Pour éviter que les pages perdent les données lorsqu'elles sont rafraichies, il faut les mettre dans le local storage,
-https://stackoverflow.com/questions/62834093/angular-data-loss-when-page-refresh :
+Pour éviter que les pages perdent les données lorsqu'elles sont rafraichies, il faut les mettre dans le local storage/le session storage,
+https://stackoverflow.com/questions/62834093/angular-data-loss-when-page-refresh/
+https://dev-academy.com/angular-session-storage/
+:
 
 ```angular
 

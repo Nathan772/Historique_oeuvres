@@ -116,12 +116,12 @@ public class UserController {
         var allUsers = userRepository.findAll();
         for(var user:allUsers){
             //System.out.println("L'id du user : "+user.getId());
-            LOGGER.log(Level.INFO,"L'id du recherché user : "+user.getId());
+            LOGGER.log(Level.INFO,"L'id du user recherché user : "+user.getId());
             //user found
             //pseudo already used or email already used
             if(user.getPseudo().equals(userPseudo) || user.getEmail().equals(email) ) {
                 //System.out.println("Le user a bien été trouvé : ");
-                LOGGER.log(Level.INFO,"Le user "+userPseudo+"a bien été trouvé");
+                LOGGER.log(Level.INFO,"Le user "+userPseudo+" a bien été trouvé");
                 var userForAngular = new User(user.getId(),user.getPseudo(),user.getEmail(),user.getPassword(),user.getCategory() );
                 return ResponseEntity.ok(user);
 

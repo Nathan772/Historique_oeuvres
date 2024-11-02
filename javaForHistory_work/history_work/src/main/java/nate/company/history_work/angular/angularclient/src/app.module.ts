@@ -11,12 +11,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 //import { UserListComponent } from './user/user_list/user-list.component';
 import { UserFormComponent } from './user/user_form/user-form.component';
+import { UserMovieListComponent } from './user/user_movie_list/user-movie-list.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MovieMenuUserComponent } from './user/movie_menu_user/movie-menu-user.component';
 import { UserService } from './user/user_service/user-service.service';
 import {RouterModule} from '@angular/router';
 
 
+
+import {MovieUserCardComponent } from './user/cards/movie_user_card/movie-user-card.component';
 import { ConnectionServiceService } from './connection/connection-service.service';
 import { UserEntranceComponent} from './user/user_entrance/user-entrance.component';
 import { UserConnectionComponent } from './user/user_connection/user-connection.component';
@@ -45,6 +48,8 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       MovieSearchComponent,
       AccueilComponent,
       MovieMenuUserComponent,
+      UserMovieListComponent,
+      MovieUserCardComponent,
     ],
   imports: [
       BrowserModule,

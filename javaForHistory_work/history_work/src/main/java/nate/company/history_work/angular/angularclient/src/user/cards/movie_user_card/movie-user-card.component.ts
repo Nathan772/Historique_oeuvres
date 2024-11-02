@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MovieFullInformations, MovieShortInformations } from '../movie_models/movie_models';
-import { MovieServiceService } from '../movie_service/movie-service.service';
+import { MovieFullInformations, MovieShortInformations } from '../../../movies/movie_models/movie_models';
+import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { UserService } from '../../user/user_service/user-service.service';
+import { UserService } from '../../user_service/user-service.service';
 @Component({
-  selector: 'app-movie-card',
-  templateUrl: './movie-card.component.html',
-  styleUrls: ['./movie-card.component.css'],
+  selector: 'app-movie-user-card',
+  templateUrl: './movie-user-card.component.html',
+  styleUrls: ['./movie-user-card.component.css'],
 })
-export class MovieCardComponent implements OnInit {
-  @Input()
-  movie: MovieShortInformations;
+export class MovieUserCardComponent implements OnInit {
+  //@Input()
+  //movie: MovieShortInformations;
   /*
   pour init ce champ, cela ne suffit
   pas il faut aussi l'initialiser au niveau
@@ -42,13 +42,6 @@ export class MovieCardComponent implements OnInit {
           imdbID: "",
           Type: "",
          };
-       this.movie = {
-          Title: "",
-           Year: "",
-           imdbID: "",
-           Type: "",
-           Poster: ""
-           }
 
          if(this.movieService.userMoviesList.length == 0){
             this.movieService.retrieveUserMovies(userService.userAccount);

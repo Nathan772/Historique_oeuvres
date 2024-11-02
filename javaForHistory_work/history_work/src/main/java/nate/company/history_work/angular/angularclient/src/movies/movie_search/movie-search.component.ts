@@ -5,6 +5,7 @@ import { MovieListComponent } from '../movie_list/movie-list.component';
 import { MovieCardComponent } from '../movie_card/movie-card.component';
 import { MovieShortInformations, SearchResponse, MovieFullInformations, Rating} from '../movie_models/movie_models';
 import {UserService } from '../../user/user_service/user-service.service';
+import {ConnectionServiceService } from '../../connection/connection-service.service';
 
 @Component({
   selector: 'app-movie-search',
@@ -30,6 +31,7 @@ export class MovieSearchComponent {
      pbs*/
     movieService: MovieServiceService;
     userService:UserService;
+    connectionService:ConnectionServiceService;
      /*on va utiliser cet émeteur pour émettre un tableau
     qui correspond à la liste de films
     trouvée par l'utilisateur lors de sa recherche.
@@ -65,13 +67,17 @@ export class MovieSearchComponent {
          /* l'initialisation
     du service dans le constructeur
     est indispensable*/
-    constructor(service:MovieServiceService, userService:UserService){
+    constructor(service:MovieServiceService, userService:UserService, connectionService:ConnectionServiceService){
       this.movieService = service;
       this.userService = userService;
       //load user's movies
       if(this.movieService.userMoviesList.length == 0){
                   this.movieService.retrieveUserMovies(this.userService.userAccount);
       }
+      //prepare user data to keep the connection
+      this.connectionService = connectionService;
+      this.userService.prepareConnection(this.connectionService);
+      console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
     }
     ngOnInit() {}
 }
