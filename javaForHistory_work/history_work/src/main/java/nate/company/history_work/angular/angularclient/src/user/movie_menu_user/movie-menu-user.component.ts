@@ -24,6 +24,11 @@ export class MovieMenuUserComponent {
         this.movieService = movieService;
         this.userService = userService;
         this.connectionService = connectionService;
+        console.log("on passe par le constructeur de movie menu user")
+        this.userService.prepareConnection(this.connectionService);
+        console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
+         //retrieve data from the component that initiate the connection
+         //useless :this.router = routerParam;
       }
 
 }

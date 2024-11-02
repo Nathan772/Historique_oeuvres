@@ -154,10 +154,22 @@ export class UserConnectionComponent implements OnInit {
         );
   }*/
 
+/*
+ see : https://dev-academy.com/angular-session-storage/
+ this method enable to save for a session.
+*/
+dataSave(){
+    //save user data for long term session
+    sessionStorage.setItem('userPseudo', ""+this.userService.userAccount.pseudo);
+  }
+
 gotoUserEntrance() {
     //prepare user's movie list
     this.movieService.retrieveUserMovies(this.userService.userAccount);
+    //save user data to keep the session
+    this.dataSave();
     this.router.navigate(['/user/entrance']);
+
   }
 
   gotoUserList() {
