@@ -9,7 +9,7 @@ Les méthodes sont celles de UserController.java
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { User } from '../user';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ConnectionServiceService} from '../../connection/connection-service.service';
 
@@ -149,30 +149,16 @@ http://localhost:8080/user
   } /*
      set data for the user, into the service
      */
-     public setUser(userChosen:Observable<User>){
-           userChosen.subscribe(
-                           userFound => {
-                             //The user already exists
-                             if(userFound !== null){
-                                 console.log("le user a été trouvé ! son id : "+userFound.id+ " son pseudo : "+userFound.pseudo);
-
-                                    //update the actual user with their true info (notably the uid)
-                                    this.userAccount = userFound;
-                                    console.log("le pseudo du user connecté est : "+userFound);
-                                    console.log("le pseudo du user connecté est : "+userFound.pseudo);
-                                    console.log("l'id du user connecté est : "+userFound.id);
-                                    console.log("le mail du user est : "+userFound.email);
-                                    console.log("le password du user est : "+userFound.password);
-                             }
-                              else {
-                                console.log("le user n'a pas été trouvé : échec")
-
-                              }
-
-                           }
-
-                   );
-     }
+  /* useless deprecated
+  public setUser(userChosen:Observable<User>){
+     return userChosen.subscribe(
+      userFound => {
+        this.userAccount = userFound;
+      console.log("après ou avant ?")
+      return true;
+      }
+    );
+  }*/
 
     /* this method do a redirection to home page (mostly because the user is not connected or disconnected
       */
@@ -193,7 +179,7 @@ http://localhost:8080/user
     /*
     this method update user connection status and data if it's necessary
     */
-    public prepareConnection(connectionService:ConnectionServiceService){
+    public async prepareConnection(connectionService:ConnectionServiceService){
       //the user is not connected redirection to connection page
           //reload user from the same session (BEGIN)
           if(connectionService.isConnected == false && sessionStorage.getItem('userPseudo') == null){
@@ -212,10 +198,17 @@ http://localhost:8080/user
                   email:"none@gmail.com",
                   password:"none"
               }
-            console.log("le user récupéré est : "+userSimple.pseudo);
-            this.setUser(this.findUser(userSimple));
 
-            console.log("le user vaut mtnt : "+this.userAccount.pseudo);
+
+            /* await handle asychronous response
+            for the retrieve of the user
+            source : https://stackoverflow.com/questions/63136965/how-to-wait-for-function-with-subscribe-to-finish-in-angular-8
+            */
+            this.userAccount = await this.findUser(userSimple).toPromise() || userSimple;
+            //let isReady = this.setUser(userDataBase);
+
+
+            console.log("le user récupéré vaut maintenant: "+this.userAccount.pseudo+" et a pour id "+this.userAccount.id);
             //set connection "on";
             connectionService.isConnected = true;
           }

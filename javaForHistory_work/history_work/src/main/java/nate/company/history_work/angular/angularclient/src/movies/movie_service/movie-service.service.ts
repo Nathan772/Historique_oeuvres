@@ -46,7 +46,7 @@ export class MovieServiceService {
 this method retrieve the movies from the database and add them to the user list
 */
 retrieveUserMovies(userAccount:User){
-              console.log("on récupère les films du user "+userAccount.pseudo+" "+userAccount.id);
+              console.log("on récupère les films du user nommé : "+userAccount.pseudo+" et d'id : "+userAccount.id);
               this.findAllMoviesFromUserList(userAccount.id).subscribe((movies) => {
                 /*
                    on s'assure que le film a bien été trouvé
