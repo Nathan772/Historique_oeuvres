@@ -14,8 +14,6 @@ export class MovieMenuUserComponent {
   movieService:MovieServiceService;
   connectionService:ConnectionServiceService;
 
-  ngOnInit() {}
-
 
     /* l'initialisation
       du service dans le constructeur
@@ -30,5 +28,7 @@ export class MovieMenuUserComponent {
          //retrieve data from the component that initiate the connection
          //useless :this.router = routerParam;
       }
+
+    ngOnInit() {}
 
 }

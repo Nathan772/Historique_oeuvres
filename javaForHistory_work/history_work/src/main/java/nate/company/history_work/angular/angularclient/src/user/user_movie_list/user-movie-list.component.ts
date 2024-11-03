@@ -24,17 +24,37 @@ export class UserMovieListComponent implements OnInit {
       movieService:MovieServiceService;
       connectionService:ConnectionServiceService
       userService:UserService;
+
       constructor(service:MovieServiceService, userService:UserService, connectionService:ConnectionServiceService){
         this.movieService = service;
         this.userService = userService;
-        //load user's movies
-        if(this.movieService.userMoviesList.length == 0){
-                    this.movieService.retrieveUserMovies(this.userService.userAccount);
-        }
         //prepare user data to keep the connection
         this.connectionService = connectionService;
-        this.userService.prepareConnection(this.connectionService);
-        console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
+        this.prepareUser();
+
+
       }
+
+      /*
+      this method prepare the user data in
+      an asynchronous manner.
+      It's necessary to retrieve data base information in the
+      proper way cause data don't come in a serialized manner but
+      in parallel tasks.
+      Constructor cannto by async
+      */
+      async prepareUser(){
+        await this.userService.prepareConnection(this.connectionService);
+        //console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
+        //load user's movies
+        this.movieService.retrieveUserMovies(this.userService.userAccount);
+        console.log("on passe dans le for des films présents : ");
+        for(let i=0;i<this.movieService.userMoviesList.length;i++){
+          console.log("les films présents après la récupération  : "+this.movieService.userMoviesList[i].imdbID);
+        }
+    }
+
+
+
       ngOnInit() {}
 }
