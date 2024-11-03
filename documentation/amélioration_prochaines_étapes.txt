@@ -1,22 +1,3 @@
-1- bdd corriger :
-
-
-ajouter :
-
--dernier_chapitre_lu
--dernier_tome_lu
--veut_lire (== a lire plus tard) non --> remplacer par état
--etat (à lire plus tard, en cours de lecture, abandon, en pause, terminé, à relire)
-
-
-(--)
-
-Que voulez-vous faire :
-
-
-- Liste des oeuvres (ouvre une page déroulante avec les oeuvres possibles)
-- Ajouter une oeuvre (ouvre un formulaire qui permet de rechercher une oeuvre selon son type, puis, via une api dédiée au type)
-
 utilisez les apis suivantes : 
 
 -manga : https://api.mangadex.org/docs/swagger.html
@@ -26,31 +7,30 @@ utilisez les apis suivantes :
 -série : ???
 
 
-
-B) 
+1) 
 
 (- PRIORITAIRE)
 
 -une version admin de la paga d'accueil avec la possibilité de voir la liste des utilisateurs avec la possibilité de les supprimer.
 
+2) 
 
-3) Gérer le swagger (Prioritaire)
+-ajouter une liste déroulante plutôt qu'un simple bouton pour permettre différents status de films : 
 
-- essayer d'ajouter du texte pour au moins une requête pour être sûr de pouvoir associer du texte au swagger pour pouvoir l'expliquer à l'entretien
+--> les status : currentState = 'à regarder plus tard' OR currentState = 'fini' OR currentState = 'à revoir' OR currentState = 'en cours de visionnage' OR currentState  = 'abandon'
 
-
-4) Amélioration complexité :
+3) Amélioration complexité :
 
 -Vérifier, et ajouter si possible des méthodes qui permettent de récupérer des infos sur les repository mais sans faire un parcours entier des éléments présents dans le find.
 
 
-5) Genre :
+4) Genre :
 
 - Créer une wrapperClass pour permettre de récupérer le genre d'un film, et associé 
 
 - un film à ses genres dans la bdd
 
-6) Code couleur :
+5) Code couleur :
 
 -afficher un code couleur selon l'état de lecture d'une oeuvre : 
 
@@ -59,4 +39,27 @@ B)
 - en cours de visionnage : jaune
 - à revoir : violet
 
+-cela applique un sous problème : il faut pouvoir récupérer l'état de chaque film et pouvoir l'associer sur sa carte.
+
+-on pourrait créer un type spécial qui serait les "cardMovie" qui renseigne les infos classiques des films mais aussi une chaine de caractère qui stocke leur état.
+Ce type n'existerait pas en base (car inutile + doublon d'infos) mais seulement en JAVA et en Angular, et serait seulement utilisé au moment de récupérer les films du user
+on pourrait créer une liste qui contient la correspondance entre cette card et un film classique d'angular (ou alors la comparaison des imdb suffirait)
+
+
+5) Une fois que 1 à 4 est réglé pour les films faire la même chose pour les mangas, livres, séries.
+
+
+PT (PLUS TARD) 1) bdd corriger :
+
+
+ajouter :
+
+-dernier_chapitre_lu
+-dernier_tome_lu
+-veut_lire (== a lire plus tard) non --> remplacer par état
+-etat (à lire plus tard, en cours de lecture, abandon, en pause, terminé, à relire)
+
+PT 2) Gérer le swagger (Prioritaire)
+
+- essayer d'ajouter du texte pour au moins une requête pour être sûr de pouvoir associer du texte au swagger pour pouvoir l'expliquer à l'entretien
 
