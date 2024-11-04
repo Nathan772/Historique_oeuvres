@@ -16,6 +16,17 @@ export interface MovieFullInformations {
   Type: string;
 }
 
+/**
+ retrive a movie with its status of
+ watching
+ ("à regarder plus tard",
+   "en cours de visionnage",
+   ...)
+ */
+export interface MovieWithStatus {
+  movie:MovieFullInformations;
+  status:string;
+}
 /*
 a simple class to represent movies in database
 */
