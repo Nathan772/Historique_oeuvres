@@ -34,7 +34,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": ["src/videoDL/videoDLForm/video-dl-form.component.js"]
+            "scripts": ["./src/user/cards/movie_user_card/movie-user-card.js"]
           },
           "configurations": {
             "production": {
@@ -93,7 +93,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["./src/user/cards/movie_user_card/movie-user-card.js"]
           }
         }
       }
