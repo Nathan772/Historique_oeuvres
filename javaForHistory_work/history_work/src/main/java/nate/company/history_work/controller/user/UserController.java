@@ -177,7 +177,18 @@ public class UserController {
         if the add been add through the website
          */
         user.setCategory("average");
-        return userRepository.save(user);
+        userRepository.save(user);
+        User savedUser = null;
+        //retrieve actual id in database
+        for(var userInDB:userRepository.findAll()){
+            if(userInDB.getPseudo().equals(user.getPseudo())){
+                LOGGER.log(Level.INFO,"user copié en db");
+                savedUser = userInDB;
+            }
+        }
+        if(savedUser == null) savedUser = user;
+        LOGGER.log(Level.INFO,"l'id du user sauvegardé est : "+savedUser.getId());
+        return savedUser;
     }
 
     /**
