@@ -94,7 +94,9 @@ export class UserFormComponent implements OnInit {
   }
 
 
-
+    if(this.connectionService.alreadyExists){
+      return;
+    }
 
     //save the new user
     this.userService.save(this.user).subscribe(
