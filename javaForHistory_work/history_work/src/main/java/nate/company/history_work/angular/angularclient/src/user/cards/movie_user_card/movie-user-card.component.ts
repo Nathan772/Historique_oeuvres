@@ -3,6 +3,8 @@ import { MovieFullInformations, MovieShortInformations } from '../../../movies/m
 import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user_service/user-service.service';
+//declare function greet():void;
+//declare function showHiddenStatus():void;
 @Component({
   selector: 'app-movie-user-card',
   templateUrl: './movie-user-card.component.html',
@@ -22,7 +24,9 @@ export class MovieUserCardComponent implements OnInit {
   fullInfoOn: boolean = false;
   userService:UserService;
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   /* l'initialisation
     du service dans le constructeur
@@ -70,20 +74,20 @@ export class MovieUserCardComponent implements OnInit {
   /**
    add a movie to user watchList
    */
-    addToWatchListAndDatabase(movie:MovieFullInformations){
+    addToWatchListAndDatabase(movie:MovieFullInformations, status:string){
       //this.userService.
-      this.movieService.addMovieToUserInDataBase(movie, this.userService.userAccount);
+      this.movieService.addMovieToUserInDataBase(movie, status, this.userService.userAccount);
     }
 
     removeFromWatchListAndDataBase(movie:MovieFullInformations){
         //this.userService.
         this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount);
         //remove movie from movie list
-        /*let index = this.movieService.userMoviesList.indexOf(movie);
+        let index = this.movieService.userMoviesList.indexOf(movie);
         if(index!==-1){
           console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
           this.movieService.userMoviesList.splice(index,1);
-        }*/
+        }
 
         /*for(let i=0;i<this.movieService.userMoviesList.length;i++){
                 //console.log("les films présents : "+this.userMoviesList[i].imdbID);

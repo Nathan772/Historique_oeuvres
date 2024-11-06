@@ -29,6 +29,9 @@ export class MovieServiceService {
   public userAccount:User = {id:"",pseudo:"",email:"",password:""};
   private connectUrl:string;
   private userExistsUrl:string;*/
+  statusWatching:string[] =
+    ["en cours de visionnage",
+      "à regarder plus tard", "fini", "à revoir"];
 
 
 
@@ -77,7 +80,6 @@ addToWatchList(movie:MovieFullInformations){
       for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents : "+this.userMoviesList[i].imdbID);
       }
-
 }
 
 
@@ -208,7 +210,7 @@ addToWatchList(movie:MovieFullInformations){
   }
 
 
-  addMovieToUserInDataBase(movie:MovieFullInformations, user:User){
+  addMovieToUserInDataBase(movie:MovieFullInformations, status:String, user:User){
 
           //une solution serait de retirer
           // le champ genre de movie movieSimple

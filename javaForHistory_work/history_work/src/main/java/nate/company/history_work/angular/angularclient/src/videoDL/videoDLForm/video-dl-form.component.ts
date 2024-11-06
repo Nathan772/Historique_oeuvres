@@ -13,7 +13,7 @@ export class VideoDLFormComponent implements OnInit {
   router:Router;
   videoService:VideoDLServiceService;
   video:Video;
-  //loading video
+  //loading videor
   videoLoading:boolean=false;
 
   /*

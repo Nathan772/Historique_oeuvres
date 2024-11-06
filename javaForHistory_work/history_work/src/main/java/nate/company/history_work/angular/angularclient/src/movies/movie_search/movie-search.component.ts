@@ -55,7 +55,8 @@ export class MovieSearchComponent {
         films associé au nom recherché par le user.*/
         if (data != null && data.length > 0) {
           console.log("la liste est non-vide");
-          this.listMovies = data;
+          //Only accept movies and no other kind
+          this.listMovies = data.filter(movie=>movie.Type === "movie");
         }
       });
 
