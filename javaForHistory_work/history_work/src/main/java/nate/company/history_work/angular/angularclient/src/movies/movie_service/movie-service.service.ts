@@ -49,6 +49,8 @@ export class MovieServiceService {
 this method retrieve the movies from the database and add them to the user list
 */
 retrieveUserMovies(userAccount:User){
+            //empty user movie list to not have copy of the same movie
+            this.userMoviesList = [];
               console.log("on récupère les films du user nommé : "+userAccount.pseudo+" et d'id : "+userAccount.id);
               this.findAllMoviesFromUserList(userAccount.id).subscribe((movies) => {
                 /*
@@ -201,8 +203,14 @@ addToWatchList(movie:MovieFullInformations){
         };*/
 
         //add movie to movie list
-        this.userMoviesList.push(movie);
-        console.log("ajout dans la liste du user : succès !");
+        if(this.userMoviesList.findIndex((movieIntoList) => movieIntoList === movie) < 0){
+          this.userMoviesList.push(movie);
+          console.log("ajout dans la liste du user du film "+movie.Title+" : succès !");
+        }
+        else{
+          console.log("le film"+movie.Title+"est déjà présent dans la liste, pas de double ajout");
+        }
+
         /*for(let i=0;i<this.userMoviesList.length;i++){
               console.log("les films présents : "+this.userMoviesList[i].imdbID);
         }*/

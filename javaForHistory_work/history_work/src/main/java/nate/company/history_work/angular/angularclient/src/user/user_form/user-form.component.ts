@@ -70,6 +70,15 @@ export class UserFormComponent implements OnInit {
     this.connectionService.mismatchedPassword = false;
   }
 
+    /*
+     see : https://dev-academy.com/angular-session-storage/
+     this method enable to save for a session.
+    */
+    dataSave(){
+        //save user data for long term session
+        sessionStorage.setItem('userPseudo', ""+this.userService.userAccount.pseudo);
+      }
+
 
   registerNewUser() {
     console.log("try to register user");
@@ -106,6 +115,10 @@ export class UserFormComponent implements OnInit {
         //update the actual user with their true info (notably the uid)
         this.userService.userAccount = result;
         //no, only for admin now
+
+        //long term session user
+        this.dataSave();
+
         this.gotoUserEntrance()
         });
   }
