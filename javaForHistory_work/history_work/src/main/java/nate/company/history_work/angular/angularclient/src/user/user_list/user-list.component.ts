@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user_service/user-service.service';
+import { ConnectionServiceService } from "../../connection/connection-service.service";
 
 @Component({
   selector: 'app-user-list',
@@ -29,12 +30,22 @@ export class UserListComponent implements OnInit {
   users: User[];
   userService:UserService;
   router:Router;
+  connectionService:ConnectionServiceService;
 
 
-  constructor(routerParam: Router, service: UserService) {
+  constructor(routerParam: Router, service: UserService,  connectionService:ConnectionServiceService) {
     this.users = [];
     this.userService = service;
     this.router = routerParam;
+    this.connectionService = connectionService
+    this.userService.prepareConnection(this.connectionService);
+    this.userService.findAll().subscribe(users=>
+      {
+      if(users != null){
+        this.users = users;
+       }
+     }
+    );
 
   }
 

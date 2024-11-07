@@ -20,7 +20,7 @@ export class UserService {
   router:Router;
   private usersUrl: string;
   private registerUrl: string;
-  public userAccount:User = {id:0,pseudo:"",email:"",password:""};
+  public userAccount:User = {id:0,pseudo:"",email:"",password:"",category:"average"};
   private connectUrl:string;
   private userExistsUrl:string;
 
@@ -63,7 +63,7 @@ export class UserService {
     connectionService.isConnected = false;
     connectionService.alreadyExists = false
     connectionService.mismatchedPassword = false;
-    this.userAccount = {id:0,pseudo:"", password:"", email:""};
+    this.userAccount = {id:0,pseudo:"", password:"", email:"",category:"average"};
     this.redirectionToConnectionPage(connectionService);
   }
 
@@ -196,7 +196,8 @@ http://localhost:8080/user
                   id:0,
                   pseudo:userPseudo,
                   email:"none@gmail.com",
-                  password:"none"
+                  password:"none",
+                  category:"average"
               }
 
 

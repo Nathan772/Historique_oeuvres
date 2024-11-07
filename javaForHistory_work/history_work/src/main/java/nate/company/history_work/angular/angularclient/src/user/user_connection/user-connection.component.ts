@@ -62,7 +62,7 @@ export class UserConnectionComponent implements OnInit {
     */
     //this.alreadyExists = false;
 
-    this.user = {id:51, pseudo:"", email:"", password:""};
+    this.user = {id:51, pseudo:"", email:"", password:"",category:"average"};
     this.copyInfo = {passwordCopy:""};
     /*at the inception
     the user is not connected at all...
@@ -83,6 +83,7 @@ export class UserConnectionComponent implements OnInit {
           //The user already exists
           if(userFound != null){
               console.log("le user a été trouvé ! son id : "+userFound.id+ " son pseudo : "+userFound.pseudo);
+
               //the user exists, starts connexion
               if(userFound.password == this.user.password){
                  //connect the user + retrieve infos
@@ -94,7 +95,7 @@ export class UserConnectionComponent implements OnInit {
                  console.log("l'id du user connecté est : "+userFound.id);
                  console.log("le mail du user est : "+userFound.email);
                  console.log("le password du user est : "+userFound.password);
-
+                  console.log("son status est : "+userFound.category);
                 //user homepage
                 this.gotoUserEntrance()
               }

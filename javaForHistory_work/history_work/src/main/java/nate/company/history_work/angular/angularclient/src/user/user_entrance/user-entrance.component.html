@@ -31,6 +31,7 @@
             <br>
             <br>
 
+            <!--
             <li>
               <a routerLink="/myListMangas" class="btn btn-info"> mangas ? </a>
             </li>
@@ -42,7 +43,7 @@
               <a routerLink="myListBooks" class="btn btn-info"> livres ? (à modifier dans html pour matcher les livres dans user-entrance.component.html)
 
               </a>
-            </li>
+            </li>-->
 
             <br>
             <br>
@@ -54,9 +55,21 @@
             <br>
             <br>
 
+            <!--
             <li>
               <a routerLink="myListMangas" class="btn btn-info"> séries ?(user-entrance.comp... modifier) </a>
+            </li>-->
+
+
+            <div *ngIf="userService.userAccount.category=='admin'">
+
+            <li>
+
+              <a routerLink="listUsers" class="btn btn-info"> liste des utilisateurs ?</a>
+
             </li>
+
+            </div>
 
             <br>
             <br>
