@@ -10,6 +10,7 @@ export interface User {
   pseudo:string;
   email:string;
   password:string;
+  category:string;
 }
 
 export interface copyData {

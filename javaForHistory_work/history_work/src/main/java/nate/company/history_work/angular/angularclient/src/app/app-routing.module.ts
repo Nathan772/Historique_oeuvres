@@ -16,8 +16,7 @@ import {AppComponent } from './app.component';
 import { MovieSearchComponent } from '../movies/movie_search/movie-search.component';
 import { AccueilComponent } from '../accueil/accueil.component';
 
-
-
+import {UserListComponent} from '../user/user_list/user-list.component';
 import { UserMovieListComponent } from '../user/user_movie_list/user-movie-list.component';
 import {UserEntranceComponent } from '../user/user_entrance/user-entrance.component';
 import { MovieMenuUserComponent } from '../user/movie_menu_user/movie-menu-user.component';
@@ -54,6 +53,8 @@ const routes: Routes = [
 
    //search movie page
    {path: 'user/entrance/menuMovieChoice/listMovies' , component: UserMovieListComponent},
+
+   {path: 'user/entrance/listUsers' , component: UserListComponent},
 
 ];
 
