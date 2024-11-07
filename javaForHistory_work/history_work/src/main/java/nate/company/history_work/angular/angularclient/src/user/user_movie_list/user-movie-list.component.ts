@@ -47,13 +47,13 @@ export class UserMovieListComponent implements OnInit {
         await this.userService.prepareConnection(this.connectionService);
         //console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
         //load user's movies
-        if(this.movieService.userMoviesList.length==0){
+
           this.movieService.retrieveUserMovies(this.userService.userAccount);
           console.log("on passe dans le for des films présents : ");
           for(let i=0;i<this.movieService.userMoviesList.length;i++){
             console.log("les films présents après la récupération  : "+this.movieService.userMoviesList[i].imdbID);
           }
-        }
+
     }
 
 
