@@ -8,10 +8,18 @@ It would enable users to know which one they can read next.
 
 # Future features
 
-1- user authentification
 2- add manga
 3- add book
 4- enable to seek among books and mangas through a mobile list.
+5- add friends to watch their lists
+6-
+
+# Quick first look
+
+You can look at how the project works thanks to the video avalaible in the git project at the following links :
+
+https://github.com/Nathan772/Historique_oeuvres/blob/main/historique_oeuvres_partie2.mkv
+https://github.com/Nathan772/Historique_oeuvres/blob/main/historique_oeuvres_partie1.mkv
 
 
 # How to start the project :
