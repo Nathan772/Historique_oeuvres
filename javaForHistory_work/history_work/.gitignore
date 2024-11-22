@@ -31,4 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Files to not be tracked
 src/main/resources/application.properties
+src/main/java/nate/company/history_work/angular/angularclient/angular.json
+src/main/java/nate/company/history_work/angular/angularclient/package-lock.json
