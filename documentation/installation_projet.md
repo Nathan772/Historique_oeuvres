@@ -127,7 +127,7 @@ Pour résoudre :
     -npm i listr2
 
 
-Pour les installations de angualar :
+Pour les installations de angalar :
 
 npm/yarn, les faire dans le dossier source de angular nommé ici, "angular".
 Si une install npm ne marche pas, essayez de la faire avec yarn (généralement tout marche avec yarn). Si le package 
