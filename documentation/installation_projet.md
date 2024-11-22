@@ -1,4 +1,40 @@
-Pour angular :
+Pour angular (front) et java (back) :
+
+A)
+
+Tout d'abord, il vous faut créer votre propre base de données en locale associée au projet et mettre à jour le fichier application.properties : 
+
+1) history-work > src > main > resources > application.properties :
+
+Regardez le texte fléché dans les parties ci-dessous et suivez les indications associées.
+Si il n'y a pas de texte fléché, laissez les instructions telles qu'elles sont dans le fichier.
+
+```
+
+spring.application.name=Historique_oeuvres 
+
+
+spring.datasource.url=jdbc:mysql://localhost:3306/historyDB --> à la place de "historyDB" mettez
+le nom de la base données que vous voulez pour stocker les données (vous pouvez l'appeler "historyDB")
+spring.datasource.username=nathanb --> à la place de "nathanb", mettez le nom du compte que vous utilisez pour mysql et que vous avez utilisé pour stocker la base de données choisie pour "historyDB".
+spring.datasource.password=Orez_2456- -> mettez le mot de passe que vous utilisez pour accéder à ce même compte pour mysql
+
+
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+
+```
+
+2) sur mysql :
+
+a) créez votre compte + le mot de passe associé
+b) créez la base de données que vous avez choisi pour remplacer historyDB
+c) rdv dans et lancez : SqlForHistorique_oeuvres > bddinit.sql
+
+cela permettra de préparer votre base de données.
+
+B)
 
 
 lancer le projet :

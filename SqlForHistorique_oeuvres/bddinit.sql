@@ -124,6 +124,40 @@ CREATE TABLE watchmovie(
 );
 
 
+CREATE TABLE serie(
+  idserie SERIAL PRIMARY KEY NOT NULL,
+  title VARCHAR(300) NOT NULL,
+  year int unsigned,
+  director VARCHAR(300) NOT NULL,
+  imdbID VARCHAR(300) NOT NULL UNIQUE
+);
+
+CREATE TABLE watchSerie(
+  idwatchserie SERIAL NOT NULL PRIMARY KEY,
+  iduser BIGINT UNSIGNED NOT NULL,
+  idserie BIGINT UNSIGNED NOT NULL,
+  currentState VARCHAR(200) NOT NULL DEFAULT 'à regarder plus tard',
+  -- enable to know the last time you update your statut regarding your 
+  -- interest for a movie
+  lastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  lastMoment TIME NOT NULL DEFAULT '0:00:00',
+  lastSeasonWatch int DEFAULT 1,
+  FOREIGN KEY (idserie) REFERENCES serie(idserie) on delete cascade on update cascade,
+  FOREIGN KEY (iduser) REFERENCES user(iduser) on delete cascade on update cascade,
+  constraint currentStateConsistent check (currentState = 'à regarder plus tard' OR currentState = 'fini' OR currentState = 'en pause' OR currentState = 'à revoir' OR currentState = 'en cours de visionnage'
+ OR currentState  = 'abandon'),
+ constraint unique_user_movie unique (iduser, idserie)
+);
+
+-- -- this table enable to store all the genre related to one movie
+CREATE TABLE hasgenreserie(
+  idhasgenreserie SERIAL NOT NULL PRIMARY KEY,
+  idgenre BIGINT UNSIGNED NOT NULL,
+  idserie BIGINT UNSIGNED NOT NULL,
+  FOREIGN KEY(idgenre) REFERENCES genre(idgenre) on delete cascade on update cascade,
+  FOREIGN KEY(idmovie) REFERENCES manga(idmanga) on delete cascade on update cascade
+);
+
 
 
 
@@ -160,20 +194,7 @@ CREATE TABLE readmanga(
 
 
 
--- CREATE TABLE serie(
---      idserie SERIAL NOT NULL PRIMARY KEY,
---      title VARCHAR(300) NOT NULL,
---      description VARCHAR(200) NOT NULL,
---      genre
--- );
 
--- CREATE TABLE watchSerie(
---   idwatch SERIAL NOT NULL PRIMARY KEY,
---   iduser BIGINT UNSIGNED REFERENCES user,
---   idserie BIGINT UNSIGNED REFERENCES serie,
---   FOREIGN KEY (idserie) REFERENCES serie(idserie) on delete cascade,
---   FOREIGN KEY (iduser) REFERENCES user(iduser) on delete cascade
--- );
 
 -- CREATE TABLE watchMovie(
 --   idwatch SERIAL NOT NULL PRIMARY KEY,

@@ -1,0 +1,19 @@
+<!--
+cette page gérera l'affichage utilisateur des éléments des listes
+de films -->
+
+<!--
+  le nom de
+  cet élément correspond
+  au nom du sélecteur
+  de movie-card
+
+le nom : "movie"
+correspond au nom du champ
+"movie" définit dans movie-card.component
+
+Le nom "listFilm"
+correspond au champ "listFilm" de "movieList".
+-->
+<app-movie-card *ngFor="let movieInfo of listMovies" [movie]="movieInfo">
+</app-movie-card>

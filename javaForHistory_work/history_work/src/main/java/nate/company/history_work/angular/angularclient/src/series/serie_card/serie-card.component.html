@@ -1,0 +1,80 @@
+
+
+<head>
+
+
+</head>
+
+
+
+<div class="row">
+  <div class="col s12 m6">
+    <div
+      class="card"
+      [ngClass]="{
+        'blue lighten-1': true
+      }"
+    >
+      <div class="card-content white-text">
+        <span class="card-title">
+
+  <div *ngIf="!fullInfoOn ">
+
+    <img src="{{ serie.Poster }}" width="100px" height="100px" />
+    <br />
+    Titre : {{ serie.Title }} <br />
+    Année :{{ serie.Year }} <br />
+    Catégorie : {{ serie.Type }} <br />
+    ID: {{ serie.imdbID }}
+    <button (click)="this.completeInformations(serie.imdbID)">+ d'infos</button>
+  </div>
+
+
+
+
+<!-- cas où le user
+   veut afficher toutes les infos d'un film film
+  -->
+
+  <span *ngIf="fullInfoOn">
+    <img src="{{ serieFull.Poster }}" sizes="(max-width: 50px) 200px, 50vw" />
+    <br />
+    Titre : {{ serieFull.Title }} et Année :{{ serieFull.Year }} <br />
+    <br />
+    Catégorie :
+    {{ serieFull.Type }}
+    <br />
+    Genre :
+    {{ serieFull.Genre }}
+    <br />
+    Id:
+    {{ serieFull.imdbID }}
+    <br />
+    <br />
+    Plot:
+    {{ serieFull.Plot }}
+    <br />
+    Director:
+    {{ serieFull.Director }}
+    <br />
+    <br />
+    Awards:
+    {{ serieFull.Awards }}
+<button (click)="this.addToWatchListAndDatabase(serieFull, 'à regarder plus tard')" *ngIf=!serieService.listSerieContainsSerie(serieFull)> + liste visionnage</button>
+
+    <button (click)="this.removeFromWatchListAndDataBase(serieFull)" *ngIf=serieService.listSerieContainsSerie(serieFull)> - liste visionnage </button>
+    <button (click)="this.disableFull()">- d'infos</button>
+  </span>
+<!--
+<i class="material-icons" (click)="edition = true">edit</i>
+     -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- on donne 'l'identifiant
+    imdb du film qui nous intéresse
+    pour savoir avoir plus d'info
+    sur celui-ci-->

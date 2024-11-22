@@ -30,6 +30,8 @@ utilisez les apis suivantes :
 
 - un film à ses genres dans la bdd
 
+- permettre d'afficher par genre choisit par le user les films dans la liste à afficher
+
 5) Code couleur :
 
 -afficher un code couleur selon l'état de lecture d'une oeuvre : 

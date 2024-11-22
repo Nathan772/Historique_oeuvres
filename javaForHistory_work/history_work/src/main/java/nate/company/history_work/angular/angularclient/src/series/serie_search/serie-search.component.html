@@ -1,0 +1,24 @@
+<!--
+"movie_search"
+remplace main.component.ts
+-->
+
+
+<!--search activate est un émeteur de navbar qui va donner
+  à startSearch (qui) l'élément qu'il doit chercher-->
+<app-navbar-series (searchActivate)="startSearch($event)"> </app-navbar-series>
+
+<!-- on va donner
+  le contenu du champ
+  "listFilms" du père
+  au champ "ListFilm"
+  de serielist
+  serielist-->
+<app-serie-list
+  [listseries]="listseries"
+>
+
+</app-serie-list>
+
+
+
