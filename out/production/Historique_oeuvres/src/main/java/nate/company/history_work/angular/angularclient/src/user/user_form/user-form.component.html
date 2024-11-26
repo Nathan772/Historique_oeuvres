@@ -1,0 +1,101 @@
+<!--
+
+écrit en reprenant le code de baeldung
+
+-->
+
+
+<h1>
+  Inscrivez-vous !
+</h1>
+<div class="card my-5">
+  <div class="card-body">
+
+    <!-- début formulaire -->
+
+    <!-- ancienne méthode associé au formulaire
+    "onSubmit"-->
+
+
+    <form (ngSubmit)="registerNewUser()" #userForm="ngForm">
+
+      <!--input pour
+      le nom du user -->
+      <div class="form-group">
+
+
+        <label for="pseudo">Pseudo : </label>
+        <input type="text" [(ngModel)]="user.pseudo"
+               class="form-control"
+               id="pseudo"
+               minlength="4"
+               name="pseudo"
+               placeholder="Enter your pseudo"
+               required #pseudo="ngModel">
+
+
+
+      <div [hidden]="!pseudo.pristine" class="alert alert-danger">Pseudo is required</div>
+
+
+      <!--
+      input pour le mail du user -->
+      <!--<div class="form-group">-->
+        <label for="email">Email : </label>
+        <input type="email" [(ngModel)]="user.email"
+               class="form-control"
+               pattern=".+@.+\.[A-Za-z]{2,10}"
+               id="email"
+               name="email"
+               minlength="5"
+               placeholder="Enter your email address"
+               required #email="ngModel">
+
+        <div [hidden]="!email.pristine" class="alert alert-danger">Email is required</div>
+
+
+        <label for="password">Mot de passe : </label>
+        <input type="password" [(ngModel)]="user.password"
+               class="form-control"
+               id="password"
+               name="password"
+               minlength="6"
+               placeholder="Enter your password"
+               required #password="ngModel">
+
+        <div [hidden]="!password.pristine" class="alert alert-danger">password is required</div>
+
+
+        <label for="passwordCopy">Confirmer le mot de passe : </label>
+        <input type="password" [(ngModel)]="copyInfo.passwordCopy"
+               class="form-control"
+               id="passwordCopy"
+               name="passwordCopy"
+               placeholder="Enter a second time your password"
+               minlength="6"
+               required #passwordCopy="ngModel">
+
+        <div [hidden]="!passwordCopy.pristine" class="alert alert-danger">password confirmation is required</div>
+
+        <div *ngIf="connectionService.mismatchedPassword" class="alert alert-danger"> Attention, vous avez écrit deux mots de passes différents </div>
+        <br/>
+        <div *ngIf="connectionService.alreadyExists" class="alert alert-danger"> Attention, votre mail ou votre nom d'utilisateur existe déjà </div>
+
+      </div>
+
+      <!--
+
+      passwordCopy != password
+      -->
+
+
+      <button type="submit" [disabled]="!userForm.form.valid"
+              class="btn btn-info">S'inscrire </button>
+
+
+    </form>
+
+    <!-- fin formulaire -->
+
+  </div>
+</div>

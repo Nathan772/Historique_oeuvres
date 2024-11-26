@@ -1,0 +1,77 @@
+A propos du générateur Spring :
+
+
+Group : nom de l'entreprise
+
+Artifact : nom du projet
+
+description : description du projet
+
+projet :
+
+-maven
+
+langage :
+
+-java
+
+Spring boot :
+
+3.3.3 pour java 22
+
+
+dépendences :
+
+-spring data jpa --> converti le java en qqc traitable par la bdd
+-maria db --> base de données utilisées
+-spring web: permet de raccrocher avec du dev web
+
+--> on peut aussi ajouter d'autres dépendences manuellement je crois
+
+Pour le lancement du fichier spring :
+
+-extraire le zip
+-lancer intellij > ouvrir > choisir le pom.xml du projet > open as project > trust the project
+
+
+ensuite :
+
+pour tester spring :
+
+-activer le bouton qui vous propose de lancer maven, sinon les annotations spring ne seront pas reconnues (coin bas droite)
+-créer un package nate.company.youtube-converter.controller, qui est l'enfant de "nate.company.youtube-converter", le second
+étant un package présent par défaut.
+
+-ajoutez l'annotation @RestController dans votre controller, pour dire que ce sera une représentation pour les API REST.
+Representational state transfer.
+
+
+
+voir le controller pour les détails
+
+
+maven install pour surefire pour installer un nouveau jar :
+
+mvn install:install-file \
+   -Dfile=<path-to-file> \
+   -DgroupId=<group-id> \
+   -DartifactId=<artifact-id> \
+   -Dversion=<version> \
+   -Dpackaging=<packaging> \
+   -DgeneratePom=true
+
+exemple avec surefire :
+
+mvn install:install-file \
+   -Dfile=/home/nathanb/Bureau/Bureau/app_logiciel/jar/maven-surefire-plugin-3.5.0.jar \
+   -DgroupId=org.apache.maven.plugins \
+   -DartifactId=maven-surefire-plugin \
+   -Dversion=3.5.0 \
+   -Dpackaging=jar \
+   -DgeneratePom=true
+
+Et aussi :
+
+project strucutre > Modules > bouton + > Jars or directories > sélectionner le fichier > cocher la case du fichier > apply + ok
+
+dans le menu "Maven", lancer package

@@ -1,0 +1,100 @@
+<!-- on affiche les infos du films
+
+elles sont contenues dans
+la variable movie
+que nous avons créé dans
+movie-card component
+-->
+  <!-- cas où le user
+    ne veut pas afficher toutes les infos d'un
+    seul film
+  -->
+
+<head>
+
+
+</head>
+
+
+
+<div class="row">
+  <div class="col s12 m6">
+    <div
+      class="card"
+      [ngClass]="{
+        'blue lighten-1': true
+      }"
+    >
+      <div class="card-content white-text">
+        <span class="card-title">
+
+  <div *ngIf="!fullInfoOn ">
+    <!-- <img src="{{ movie.Poster }}" sizes="(max-width: 10px) 200px, 50vw" /> -->
+    <img src="{{ movie.Poster }}" width="100px" height="100px" />
+    <br />
+    Titre : {{ movie.Title }} <br />
+    Année :{{ movie.Year }} <br />
+    Catégorie : {{ movie.Type }} <br />
+    ID: {{ movie.imdbID }}
+    <button (click)="this.completeInformations(movie.imdbID)">+ d'infos</button>
+  </div>
+
+
+
+
+<!-- cas où le user
+   veut afficher toutes les infos d'un film film
+  -->
+
+  <span *ngIf="fullInfoOn">
+    <img src="{{ movieFull.Poster }}" sizes="(max-width: 50px) 200px, 50vw" />
+    <br />
+    Titre : {{ movieFull.Title }} et Année :{{ movieFull.Year }} <br />
+    <br />
+    Catégorie :
+    {{ movieFull.Type }}
+    <br />
+    Genre :
+    {{ movieFull.Genre }}
+    <br />
+    Id:
+    {{ movieFull.imdbID }}
+    <br />
+    <br />
+    Plot:
+    {{ movieFull.Plot }}
+    <br />
+    Director:
+    {{ movieFull.Director }}
+    <br />
+    <br />
+    Awards:
+    {{ movieFull.Awards }}
+<button (click)="this.addToWatchListAndDatabase(movieFull, 'à regarder plus tard')" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
+
+    <!--
+    deprecated, need to be replaced later
+    <div class="ngbDropdownMenu" aria-labelledby="dropdownMap">
+  <ng-container *ngFor="let status of movieService.statusWatching">
+  <button ngbDropdownItem id="statusButton" class="dropdown-item" (click)="this.addToWatchListAndDatabase(movieFull, status)" >
+    {{status}}
+    </button>
+  </ng-container>
+  </div>-->
+
+    <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf=movieService.listMovieContainsMovie(movieFull)> - liste visionnage </button>
+    <button (click)="this.disableFull()">- d'infos</button>
+  </span>
+<!--
+<i class="material-icons" (click)="edition = true">edit</i>
+     -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- on donne 'l'identifiant
+    imdb du film qui nous intéresse
+    pour savoir avoir plus d'info
+    sur celui-ci-->

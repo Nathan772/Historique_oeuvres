@@ -1,0 +1,18 @@
+Lancer mysql avec une session USER :
+
+mysql -u nathanb -p
+
+mdp: 
+
+2456
+
+
+DATA BASE :
+
+-SHOW DATABASES;
+
+-USE historyDB;
+
+-source monsqlfile.sql
+
+https://www.youtube.com/watch?v=aYsELJ7dB_o

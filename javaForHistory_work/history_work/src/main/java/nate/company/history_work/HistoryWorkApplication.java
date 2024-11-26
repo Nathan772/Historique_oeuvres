@@ -7,7 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class HistoryWorkApplication {
 
 	public static void main(String[] args) {
