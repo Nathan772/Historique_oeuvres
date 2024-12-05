@@ -48,6 +48,7 @@ public class UserController {
     public List<User> getUsers(){
         return (List<User>) userRepository.findAll();
     }
+
     /**
      * this method retrieve a specific user if exists in database
      * @param userId
@@ -103,13 +104,15 @@ public class UserController {
     }*/
 
     /**
-     * Retrieve user from data based, based on their pseudo or their email
+     * Retrieve user from data based, based on their pseudo or their email.
+     * Actually, it can be used to know if the identifier (pseudo & email) can
+     * be used to create a unique User.
+     *
      * @param userSearched
      * the user few information (email/pseudo)
      * @return
      * the user complete data
      */
-
     @PostMapping("/userSearch")
     public ResponseEntity<?> doesIdentifierExist(@RequestBody User userSearched){
         var userPseudo = userSearched.getPseudo();
@@ -136,12 +139,6 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-
-
-
-
-
-
     /**
      *
      * Retrieve a user based on their pseudo or email.
@@ -157,13 +154,6 @@ public class UserController {
         userRepository.find
 
     }*/
-
-
-
-
-
-
-
 
 
     /**
@@ -199,8 +189,7 @@ public class UserController {
      * You can try a request with postman to check if it actually works.
      * @param idUser
      * @return
-     */
-
+     */    // TODO : Change implementation : 1 - Check whether the id is in the repo | 2 - If it returns a non null value, delete by id otherwise, return NotFOUND code
     @DeleteMapping("users/delete/{idUser}")
     public ResponseEntity<String> removeUser(@PathVariable String idUser){
         var userIdLong = Long.parseLong(idUser);
@@ -210,6 +199,4 @@ public class UserController {
          */
         return ResponseEntity.noContent().build();
     }
-
-
 }
