@@ -1,30 +1,195 @@
 package nate.company.history_work.controller.movie;
 
 import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.user.UserRepository;
+import nate.company.history_work.siteTools.watch_read.WatchMovie;
+import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+
+/**
+ * Unit test of the MovieController class.
+ */
+@WebMvcTest(MovieController.class)
 public class MovieControllerTest {
-  @Autowired
-  private MovieController test;
 
-  // TODO : create a test to ensure we can't go for User's id  equals to 0
+    @Autowired        // Injects dependencies
+    private MockMvc mockMvc;
 
-  // TODO : create a test to ensure we can't go for a user's id that doesn't exist
+    @MockBean
+    private MovieRepository movieRepository;
 
-  // TODO : Change the configuration to not test this on the production database
+    @MockBean
+    private WatchMovieRepository watchMovieRepository;
 
-  @Test
-  public void firstTest(){
-    List<Movie> movies = test.getUserMovies(1);
-    assertEquals(1, movies.size());
-  }
+    @MockBean
+    private UserRepository userRepository; // Without this Mock, the test can't be launched
+
+    @Test
+    public void shouldGetUserMovies() throws Exception {
+        var firstMovie = new Movie(1L, "Le Comte de Monte-Cristo", 2024, "ID_1", "Matthieu Delaporte");
+        var secondMovie = new Movie(2L, "Barbie", 2023, "ID_2", "Greta Gerwig");
+        var firstWatchMovie = new WatchMovie(1L, 1L, "À regarder plus tard");
+        var secondWatchMovie = new WatchMovie(1L, 2L, "À regarder plus tard");
+
+        when(watchMovieRepository.findAll()).thenReturn(List.of(firstWatchMovie, secondWatchMovie));
+        when(movieRepository.findById(1L)).thenReturn(Optional.of(firstMovie));
+        when(movieRepository.findById(2L)).thenReturn(Optional.of(secondMovie));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie?id=1")) // Forgetting the '/' character at the beginning makes the  method throw an exception
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$[0].title").value("Le Comte de Monte-Cristo"))
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].imdbID").value("ID_1"))
+                .andExpect(jsonPath("$[1].title").value("Barbie"))
+                .andExpect(jsonPath("$[1].id").value(2L))
+                .andExpect(jsonPath("$[1].imdbID").value("ID_2"));
+    }
+
+    @Test
+    public void shouldReturnNoneMovie() throws Exception {
+        when(watchMovieRepository.findAll()).thenReturn(List.of());
+        when(userRepository.findById(1L)).thenReturn(Optional.of(new User()));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie?id=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
+
+    // TODO : To pass this test, the method of the controller must be implemented in a different
+    // way that checks the user id exist
+    @Test
+    public void shouldGetError() throws Exception {
+        when(watchMovieRepository.findAll()).thenReturn(List.of());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie?id=1"))
+                .andExpect(status().isNotFound());
+    }
+
+    /**
+     * Checks the save of a movie that already exists in the database.
+     * @throws Exception
+     */
+    @Test
+    public void shouldAddMovie() throws Exception {
+        String jsonRequest =
+                """
+                {
+                    "user" : 
+                    {
+                          "id" : 1,
+                          "pseudo" : "leoMessi",
+                          "email" : "lm@sfr.fr",
+                          "password" : "bestFootballPlayer",
+                          "category" : "average"
+                    },
+                    "movie" : 
+                    {
+                           "id" : 2,
+                           "title" : "Barbie",
+                           "year" : 2023,
+                           "imdbID" : "ID_2",
+                           "director" : "Greta Gerwig"
+                    }
+                }
+                """;
+
+        var firstMovie = new Movie(1L, "Le Comte de Monte-Cristo", 2024, "ID_1", "Matthieu Delaporte");
+        var secondMovie = new Movie(2L, "Barbie", 2023, "ID_2", "Greta Gerwig");
+        var watchMovie = new WatchMovie(1L, 2L, "À regarder plus tard");
+
+        // TODO : Must modify these lines after the changes of the addMovie method
+        when(movieRepository.findAll()).thenReturn(List.of(firstMovie, secondMovie));
+        when(watchMovieRepository.save(watchMovie)).thenReturn(watchMovie);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/movie/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest))
+                .andExpect(jsonPath("$.id").value(2L))
+                .andExpect(jsonPath("$.title").value("Barbie"));
+    }
+
+
+    /**
+     * Checks the save of a movie that does not exist in the database.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldAddMovie2() throws Exception {
+        String jsonRequest =
+                """
+                {
+                    "user" : 
+                    {
+                          "id" : 1,
+                          "pseudo" : "leoMessi",
+                          "email" : "lm@sfr.fr",
+                          "password" : "bestFootballPlayer",
+                          "category" : "average"
+                    },
+                    "movie" : 
+                    {
+                           "id" : 1,
+                           "title" : "Barbie",
+                           "year" : 2023,
+                           "imdbID" : "ID_1",
+                           "director" : "Greta Gerwig"
+                    }
+                }
+                """;
+        var movie = new Movie(1L, "Barbie", 2023, "ID_1", "Greta Gerwig");
+        var watchMovie = new WatchMovie(1L, 2L, "À regarder plus tard");
+
+        // TODO : Must modify these lines after the changes of the addMovie method
+        when(movieRepository.findAll()).thenReturn(List.of());  // Error there, due to the method of the controller calls this repository instruction at two different times
+        when(movieRepository.save(movie)).thenReturn(movie);
+        when(watchMovieRepository.save(watchMovie)).thenReturn(watchMovie);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/movie/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest))
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.title").value("Barbie"));
+    }
+
+    @Test
+    public void shouldDeleteMovieFromList() throws Exception {
+        var movie = new Movie(1L, "The Batman", 1984, "Note", "Nolan");
+        var watchMovie = new WatchMovie(1L, 1L, "À regarder plus tard");
+
+        when(movieRepository.findAll()).thenReturn(List.of(movie));
+        when(watchMovieRepository.findAll()).thenReturn(List.of(watchMovie));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/user/movie/remove/1/Note"))
+                .andExpect(status().isNoContent());
+    }
 }

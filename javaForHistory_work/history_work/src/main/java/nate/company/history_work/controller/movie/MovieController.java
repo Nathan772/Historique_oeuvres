@@ -69,6 +69,8 @@ public class MovieController {
         }
          return List.copyOf(list);
     }
+
+
     /**
      * this method retrieve a specific user if exists in database
      * @param userId
@@ -121,11 +123,6 @@ public class MovieController {
     }*/
 
 
-
-
-
-
-
     /**
      *
      * Retrieve a user based on their pseudo or email.
@@ -141,7 +138,6 @@ public class MovieController {
         userRepository.find
 
     }*/
-
 
     /**
      *
@@ -178,14 +174,14 @@ public class MovieController {
                 return wrapperUserMovie.getMovie();
             }
         }
-
-
         movieRepository.save(wrapperUserMovie.getMovie());
+
 
         //retrieve its actual ID
         for(var movie:movieRepository.findAll()){
             if(movie.getImdbID().equals(wrapperUserMovie.getMovie().getImdbID())){
                 movieSaved = movie;
+                System.out.println(movieSaved.getId());
                 //save the association : movie-user in a table of the data base
                 var watchMovie = new WatchMovie(wrapperUserMovie.getUser().getId(), movieSaved.getId(), "à regarder plus tard");
                 watchMovieRepository.save(watchMovie);
@@ -238,7 +234,6 @@ public class MovieController {
         LOGGER.log(Level.INFO, "Error : the movie that was supposed to be removed hasn't been found !!");
         return ResponseEntity.notFound().build();
     }
-
 
 
     /**

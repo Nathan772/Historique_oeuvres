@@ -1,7 +1,9 @@
 package nate.company.history_work.controller.user;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.user.UserRepository;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -109,7 +111,7 @@ public class UserController {
      */
 
     @PostMapping("/userSearch")
-    public ResponseEntity<?> getUser(@RequestBody User userSearched){
+    public ResponseEntity<?> doesIdentifierExist(@RequestBody User userSearched){
         var userPseudo = userSearched.getPseudo();
         var email = userSearched.getEmail();
         //System.out.println("on entre bien dans la méthode getUser de Java");
@@ -131,7 +133,7 @@ public class UserController {
         //depending on the usage)
 
         LOGGER.log(Level.INFO,"Le user n'a pas été trouvé");
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
 
