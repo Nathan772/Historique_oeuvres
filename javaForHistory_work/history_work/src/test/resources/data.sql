@@ -188,7 +188,15 @@ INSERT INTO user(pseudo, email, password)
 VALUES ('mikeTyson', 'mt@gmail.com', 'bestBoxer'),
        ('margotRobbie', 'mr@gmail.com', 'greatActress'),
        ('michaelJackson', 'mj@gmail.com', 'greatestSinger'),
-       ('celineDion', 'cd@gmail.com', 'amazingVoice')
+       ('celineDion', 'cd@gmail.com', 'amazingVoice');
+
+
+INSERT INTO movie(title, year, imdbID, director)
+VALUES ('Barbie', 2023, 'ID_1', 'Greta Gerwig'),
+       ('Interstellar', 2014, 'ID_2', 'Christopher Nolan'),
+       ('Gladiator', 2000, 'ID_3', 'Ridley Scott'),
+       ('Alice au pays des merveilles', 2010, 'ID_4', 'Tim Burton'),
+       ('Le Parrain', 1972, 'ID_5', 'Francis Ford Coppola');
 
 
 

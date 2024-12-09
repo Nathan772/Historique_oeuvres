@@ -166,6 +166,20 @@ public class Movie {
         return "L'id du film : "+id+ ", titre : "+title+", directeur "+director + " année : "+year;
     }
 
-
+    /**
+     * Indicates whether some other object is "equal to" this Movie.
+     *
+     * @param o object to compare with the instance of movie.
+     * @return true if this object is the same as the one given in argument, false otherwise.
+     */
+    @Override
+    public boolean equals(Object o){
+        return o instanceof Movie movie
+                && id == movie.id
+                && title.equals(movie.title)
+                && year == movie.year
+                && imdbID.equals(movie.imdbID)
+                && director.equals(movie.director);
+    }
 }
 
