@@ -30,10 +30,11 @@ public class Movie {
     @Column(name="idmovie")
     private long id;
     private String title;
-    private int year;
+    private int yearOfRelease;
     //many genre
     // for one movie
     //private String genre;
+
     private String imdbID;
     //director of the movie
     private String director;
@@ -46,7 +47,7 @@ public class Movie {
 
     public Movie(){
         this.title = "bla";
-        this.year = 0;
+        this.yearOfRelease = 0;
         this.imdbID ="sss";
         this.director = "jean";
     }
@@ -66,7 +67,7 @@ public class Movie {
             throw new IllegalArgumentException("movie's id cannot be null");
         }
         this.id = idmovie;
-        this.year = year;
+        this.yearOfRelease = year;
         this.imdbID = imdbID;
         this.director = director;
         this.title = title;
@@ -96,7 +97,7 @@ public class Movie {
      * the password of the user
      */
     public int getYear(){
-        return year;
+        return yearOfRelease;
     }
 
     /**
@@ -141,7 +142,7 @@ public class Movie {
      *
      */
     public void setYear(int year){
-        this.year = year;
+        this.yearOfRelease = year;
     }
 
     /**
@@ -163,7 +164,7 @@ public class Movie {
     }
     @Override
     public String toString(){
-        return "L'id du film : "+id+ ", titre : "+title+", directeur "+director + " année : "+year;
+        return "L'id du film : "+id+ ", titre : "+title+", directeur "+director + " année : "+ yearOfRelease;
     }
 
     /**
@@ -177,7 +178,7 @@ public class Movie {
         return o instanceof Movie movie
                 && id == movie.id
                 && title.equals(movie.title)
-                && year == movie.year
+                && yearOfRelease == movie.yearOfRelease
                 && imdbID.equals(movie.imdbID)
                 && director.equals(movie.director);
     }
