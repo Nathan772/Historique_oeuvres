@@ -19,8 +19,9 @@
 
     <form (ngSubmit)="registerNewUser()" #userForm="ngForm">
 
-      <!--input pour
-      le nom du user -->
+      <!--
+      ======================= PSEUDO OF THE USER ==========================
+      -->
       <div class="form-group">
 
 
@@ -28,42 +29,59 @@
         <input type="text" [(ngModel)]="user.pseudo"
                class="form-control"
                id="pseudo"
-               minlength="4"
+               minlength="{{getStaticPseudoMinLength}}"
                name="pseudo"
                placeholder="Enter your pseudo"
                required #pseudo="ngModel">
 
+      <div *ngIf="!pseudo.touched" [hidden]="!pseudo.pristine" class="alert alert-danger">Pseudo is required</div>
 
-
-      <div [hidden]="!pseudo.pristine" class="alert alert-danger">Pseudo is required</div>
+      <div *ngIf="pseudo.invalid && (pseudo.dirty || pseudo.touched)" class="alert alert-danger">
+        <div *ngIf="!pseudo.errors?.['minLength']">
+          Le pseudonyme doit faire {{getStaticPseudoMinLength}} caractères
+        </div>
+      </div>
 
 
       <!--
-      input pour le mail du user -->
-      <!--<div class="form-group">-->
+      ======================= EMAIL OF THE USER ==========================
+      -->
         <label for="email">Email : </label>
         <input type="email" [(ngModel)]="user.email"
                class="form-control"
                pattern=".+@.+\.[A-Za-z]{2,10}"
                id="email"
                name="email"
-               minlength="5"
+               minlength="{{getStaticEmailMinLength}}"
                placeholder="Enter your email address"
                required #email="ngModel">
 
         <div [hidden]="!email.pristine" class="alert alert-danger">Email is required</div>
 
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+            L'addresse mail n'est pas valide
+        </div>
 
+
+      <!--
+      ======================= PASSWORD OF THE USER ==========================
+      -->
         <label for="password">Mot de passe : </label>
         <input type="password" [(ngModel)]="user.password"
                class="form-control"
                id="password"
                name="password"
-               minlength="6"
+               minlength="{{getStaticPasswordMinLength}}"
                placeholder="Enter your password"
                required #password="ngModel">
 
-        <div [hidden]="!password.pristine" class="alert alert-danger">password is required</div>
+        <div *ngIf="!password.touched" [hidden]="!password.pristine" class="alert alert-danger">password is required</div>
+
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+          <div *ngIf="!password.errors?.['minLength']">
+            Le mot de passe doit faire {{getStaticPasswordMinLength}} caractères
+          </div>
+        </div>
 
 
         <label for="passwordCopy">Confirmer le mot de passe : </label>
@@ -72,7 +90,7 @@
                id="passwordCopy"
                name="passwordCopy"
                placeholder="Enter a second time your password"
-               minlength="6"
+               minlength="{{getStaticPasswordMinLength}}"
                required #passwordCopy="ngModel">
 
         <div [hidden]="!passwordCopy.pristine" class="alert alert-danger">password confirmation is required</div>

@@ -27,6 +27,12 @@ import { ConnectionServiceService } from "../../connection/connection-service.se
 
 export class UserFormComponent implements OnInit {
 
+  public static rules = {
+    pseudoMinLength : 4,
+    passwordMinLength : 6,
+    emailMinLength : 5
+  };
+
 
   user: User;
   //copyData{passwordCopy:string};
@@ -78,6 +84,31 @@ export class UserFormComponent implements OnInit {
         //save user data for long term session
         sessionStorage.setItem('userPseudo', ""+this.userService.userAccount.pseudo);
       }
+
+
+  /**
+   * This getter is useful to access passwordMinLength static
+   * field within the HTML context.
+   */
+  get getStaticPasswordMinLength(){
+    return UserFormComponent.rules.passwordMinLength;
+  }
+
+  /**
+   * This getter is useful to access pseudoMinLength static
+   * field within the HTML context.
+   */
+   get getStaticPseudoMinLength(){
+      return UserFormComponent.rules.pseudoMinLength;
+   }
+
+   /**
+    * This getter is useful to access emailMinLength static
+    * field within the HTML context.
+    */
+    get getStaticEmailMinLength(){
+       return UserFormComponent.rules.emailMinLength;
+    }
 
 
   registerNewUser() {
