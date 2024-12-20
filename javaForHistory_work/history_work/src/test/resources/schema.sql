@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS USER_TABLE;
 DROP TABLE IF EXISTS MOVIE;
 
 CREATE TABLE `user_table`(
-     `iduser` bigint(20) unsigned NOT NULL PRIMARY KEY,
+     `iduser` bigint(20) unsigned NOT NULL PRIMARY KEY AUTO_INCREMENT,
      `pseudo` VARCHAR(100) NOT NULL UNIQUE,
      `email` VARCHAR(100) NOT NULL UNIQUE,
      `password` VARCHAR(100) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `user_table`(
 
 
 CREATE TABLE `movie`(
-  `idmovie` bigint(20) unsigned PRIMARY KEY NOT NULL,
+  `idmovie` bigint(20) unsigned PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(300) NOT NULL,
   `yearOfRelease` int unsigned,
   `director` VARCHAR(300) NOT NULL,
