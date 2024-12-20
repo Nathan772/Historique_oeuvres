@@ -1,0 +1,6 @@
+div#movieCard {
+  color : green;
+  display : inline-block;
+  width : 50%;
+  vertical-align:top;
+}
