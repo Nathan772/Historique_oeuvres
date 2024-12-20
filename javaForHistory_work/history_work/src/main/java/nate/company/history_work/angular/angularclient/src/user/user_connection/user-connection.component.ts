@@ -105,7 +105,6 @@ export class UserConnectionComponent implements OnInit {
                 this.connectionService.mismatchedPassword = true
                 return;
               }
-
           }
 
           else{
@@ -114,7 +113,13 @@ export class UserConnectionComponent implements OnInit {
             this.connectionService.alreadyExists = false;
             return;
           }
+        },
 
+        // This function handles error cases (for instance, if the back sends a 404 error code)
+        error => {
+          console.log("le user n'a pas été trouvé !")
+          this.alreadyTried = true;
+          this.connectionService.alreadyExists = false;
         }
     );
   }

@@ -51,9 +51,9 @@
         <div [hidden]="!password.pristine" class="alert alert-danger">password is required</div>
 
         <!-- false password -->
-        <div *ngIf="connectionService.alreadyExists == true && connectionService.mismatchedPassword" class="alert alert-danger"> Attention, certaines informations sont incorrectes (user et/ou mot de passe) </div>
+        <div *ngIf="connectionService.alreadyExists && connectionService.mismatchedPassword" class="alert alert-danger"> Attention, certaines informations sont incorrectes (user et/ou mot de passe) </div>
         <!--false id -->
-        <div *ngIf="connectionService.alreadyExists == false && this.alreadyTried == true" class="alert alert-danger"> Attention, certaines informations sont incorrectes (user et/ou mot de passe) </div>
+        <div *ngIf="!connectionService.alreadyExists && this.alreadyTried" class="alert alert-danger"> Attention, certaines informations sont incorrectes (user et/ou mot de passe) </div>
         <br/>
 
       </div>
