@@ -1,6 +1,7 @@
-div#movieCard {
-  color : green;
-  display : inline-block;
+/*This makes the movie cards be displayed side by side (two cards per row)*/
+div#movieCard-display {
+  display : inline-block; /*divs will be displayed side by side*/
   width : 50%;
-  vertical-align:top;
+  vertical-align : top; /*when a card is displayed in full information mode,
+                        it will be displayed at the same height of its neighbour*/
 }
