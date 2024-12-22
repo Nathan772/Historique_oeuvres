@@ -23,4 +23,13 @@ lance le programme du dossier "bddinit.sql" lorsque c'est lancé
 depuis l'invite de commande de mysql.
 
 
+mysqldump -u nathanb historyDB > db_backup.sql
+
+
+/*Renames the table user*/
+ALTER TABLE user_table RENAME user_table;
+
+/*Renames the column year of the movie table*/
+ALTER TABLE movie RENAME COLUMN year TO yearOfRelease;
+
 
