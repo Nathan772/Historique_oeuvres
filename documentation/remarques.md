@@ -9,11 +9,32 @@ Pour installer spring :
 
 - télécharger les jar associés aux versions de spring que vous souhaitez utiliser ou récupérez ceux du dossier 
 
-VideoConverter/Dependeciens_for_video_converter
+"Dependencies_for_Historique_oeuvres"
 
 Ils permettront de résoudre:
 
-- If you want an embedded database (H2, HSQL or Derby), please put it on the classpath
+- If you want an embedded database (H2, HSQL or Derby), please put it on the classpath*
+
+
+Il est aussi possible que vous ayez à recréer le fichier :
+
+"java_for_history_work/history_work/src/main/resources/application.properties"
+
+si il n'est pas présent.
+
+remplissez application.properties avec les infos suivantes :
+
+
+```
+
+spring.application.name=Historique_oeuvre
+spring.datasource.url=jdbc:mysql://localhost:3306/historyDB(ou votre nom de database)
+spring.datasource.username=votreUserNameDeDB
+spring.datasource.password=votreMdpdeDBUserNameDeDB
+spring.jpa.hibernate.ddl-auto=update
+
+
+```
 
 
 

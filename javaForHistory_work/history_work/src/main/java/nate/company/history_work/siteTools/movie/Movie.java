@@ -56,18 +56,18 @@ public class Movie {
     Pour faire fonctionner l'API il faut au minimum :
     le constructeur standard, les getters, les setters, et toString
      */
-    public Movie(long idmovie, String title, int year, String imdbID, String director){
+    public Movie(long idmovie, String title, int yearOfRelease, String imdbID, String director){
         Objects.requireNonNull(title, "the movie's title cannot be null");
         Objects.requireNonNull(imdbID, "the imdbID cannot be null");
         Objects.requireNonNull(director, "the movie director cannot be null");
-        if(year < 0){
+        if(yearOfRelease < 0){
             throw new IllegalArgumentException("movie's year cannot be null");
         }
         if(idmovie < 0){
             throw new IllegalArgumentException("movie's id cannot be null");
         }
         this.id = idmovie;
-        this.yearOfRelease = year;
+        this.yearOfRelease = yearOfRelease;
         this.imdbID = imdbID;
         this.director = director;
         this.title = title;
@@ -96,7 +96,7 @@ public class Movie {
      * @return
      * the password of the user
      */
-    public int getYear(){
+    public int getYearOfRelease(){
         return yearOfRelease;
     }
 
@@ -137,12 +137,13 @@ public class Movie {
 
     /**
      *
-     * @param year
+     *
+     * @param yearOfRelease
      * the year of the movie release.
      *
      */
-    public void setYear(int year){
-        this.yearOfRelease = year;
+    public void setYearOfRelease(int yearOfRelease){
+        this.yearOfRelease = yearOfRelease;
     }
 
     /**

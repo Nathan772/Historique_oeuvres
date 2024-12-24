@@ -63,7 +63,7 @@ public class MovieController {
                 if(movie.isPresent()) {
                     LOGGER.log(Level.INFO,"Le film "+movie+" a été ajouté à la liste des films du user");
                     //transform movie in order to get a field Id
-                    list.add(new Movie(movie.get().getId(),movie.get().getTitle(),movie.get().getYear(),movie.get().getImdbID(),movie.get().getDirector()));
+                    list.add(new Movie(movie.get().getId(),movie.get().getTitle(),movie.get().getYearOfRelease(),movie.get().getImdbID(),movie.get().getDirector()));
                 }
             }
         }
@@ -174,12 +174,16 @@ public class MovieController {
                 return wrapperUserMovie.getMovie();
             }
         }
-        movieRepository.save(wrapperUserMovie.getMovie());
+
+        //the movie is not in the database yet
+        var movieToAdd = wrapperUserMovie.getMovie();
+        LOGGER.log(Level.INFO,"adding the movie date of release data : "+movieToAdd.getYearOfRelease()+" name : "+movieToAdd.getTitle());
+        movieRepository.save(movieToAdd);
 
 
         //retrieve its actual ID
         for(var movie:movieRepository.findAll()){
-            if(movie.getImdbID().equals(wrapperUserMovie.getMovie().getImdbID())){
+            if(movie.getImdbID().equals(movieToAdd.getImdbID())){
                 movieSaved = movie;
                 System.out.println(movieSaved.getId());
                 //save the association : movie-user in a table of the data base
@@ -189,7 +193,7 @@ public class MovieController {
                 return wrapperUserMovie.getMovie();
             }
         }
-        LOGGER.log(Level.INFO, "it is not supposed to happen : movie could not be registered");
+        LOGGER.log(Level.WARNING, "it is not supposed to happen : movie could not be registered");
         return null;
     }
 

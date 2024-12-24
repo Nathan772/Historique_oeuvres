@@ -164,7 +164,7 @@ addToWatchList(movie:MovieFullInformations){
     let movieSimple : Movie = {
               id:"0",
               title:movie.Title,
-              year:movie.Year,
+              yearOfRelease:movie.Year,
               director:movie.Director,
               imdbID:movie.imdbID
     };
@@ -220,13 +220,14 @@ addToWatchList(movie:MovieFullInformations){
 
   addMovieToUserInDataBase(movie:MovieFullInformations, status:String, user:User){
 
+          console.log("l'année de sortie du film  est :"+movie.Year+" et son titre est : "+movie.Title);
           //une solution serait de retirer
           // le champ genre de movie movieSimple
           //
           let movieSimple : Movie = {
             id:"0",
             title:movie.Title,
-            year:movie.Year,
+            yearOfRelease:movie.Year,
             director:movie.Director,
             imdbID:movie.imdbID
           };
@@ -307,7 +308,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
           let movieSimple : Movie = {
             id:"0",
             title:movie.Title,
-            year:movie.Year,
+            yearOfRelease:movie.Year,
             director:movie.Director,
             imdbID:movie.imdbID
           };

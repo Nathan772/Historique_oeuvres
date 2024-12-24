@@ -33,7 +33,7 @@ a simple class to represent movies in database
 export interface Movie {
   id:string;
   title: string;
-  year: string;
+  yearOfRelease: string;
   director: string;
   imdbID: string;
 }
