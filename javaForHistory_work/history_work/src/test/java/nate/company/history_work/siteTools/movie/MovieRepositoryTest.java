@@ -49,13 +49,13 @@ public class MovieRepositoryTest {
         assertTrue(movie.isPresent());
         assertEquals(expectedMovie.getId(), movie.get().getId());
         assertEquals(expectedMovie.getTitle(), movie.get().getTitle(), "Barbie");
-        assertEquals(expectedMovie.getYear(), movie.get().getYear());
+        assertEquals(expectedMovie.getYearOfRelease(), movie.get().getYearOfRelease());
 
         // Second Movie
         assertTrue(movie.isPresent());
         assertEquals(secondExpectedMovie.getId(), secondMovie.get().getId());
         assertEquals(secondExpectedMovie.getTitle(), secondMovie.get().getTitle(), "Gladiator");
-        assertEquals(secondExpectedMovie.getYear(), secondMovie.get().getYear());
+        assertEquals(secondExpectedMovie.getYearOfRelease(), secondMovie.get().getYearOfRelease());
     }
 
     @Test

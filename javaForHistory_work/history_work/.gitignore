@@ -32,6 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### Environment file ###
+.env
+
 # Files to not be tracked
 src/main/resources/application.properties
 src/main/java/nate/company/history_work/angular/angularclient/angular.json
