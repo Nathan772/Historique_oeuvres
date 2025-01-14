@@ -159,6 +159,15 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- GreenMail is used for integration test of the email sending service-->
+		<!-- https://mvnrepository.com/artifact/com.icegreen/greenmail -->
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>1.6.5</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

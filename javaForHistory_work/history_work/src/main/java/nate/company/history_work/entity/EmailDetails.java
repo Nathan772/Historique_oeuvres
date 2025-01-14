@@ -8,7 +8,8 @@ import nate.company.history_work.service.EmailService;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailDetails implements EmailService {
-    private String bodyContent;
+public class EmailDetails {
+    private String recipient;
     private String subject;
+    private String bodyContent;
 }
