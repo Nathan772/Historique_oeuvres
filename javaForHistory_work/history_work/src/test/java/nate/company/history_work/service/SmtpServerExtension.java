@@ -28,7 +28,7 @@ public class SmtpServerExtension implements BeforeAllCallback, AfterAllCallback 
 
     private String user = "ddjm.developer@gmail.com";
 
-    private String password = "pzxh vhgy btxb ghus";
+    private String password = "xxxxx";
 
     private GreenMail smtpServer;
 
