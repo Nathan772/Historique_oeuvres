@@ -1,11 +1,15 @@
 package nate.company.history_work.controller.movie;
 
+import nate.company.history_work.entity.EmailDetails;
+import nate.company.history_work.service.EmailService;
+import nate.company.history_work.service.EmailServiceImpl;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.watch_read.WatchMovie;
 import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
 import nate.company.history_work.siteTools.wrapper.WrapperUserMovie;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -24,7 +24,6 @@ public class EmailServiceTest {
     @Test
     public void shouldSendSimpleMailTest(){
         SimpleMailMessage simpleMail = new SimpleMailMessage();
-        //when(new SimpleMailMessage()).thenReturn(simpleMail);
 
         String to = "recipient@gmail.com";
         String subject = "Simple Mail Test";
@@ -35,8 +34,15 @@ public class EmailServiceTest {
         simpleMail.setText(bodyMessage);
 
         assertTrue(emailService.sendSimpleMessage(new EmailDetails(to, subject, bodyMessage)));
-
         verify(javaMailSender).send(simpleMail);
+    }
+
+    @Test
+    public void shouldNotSendSimpleMailTest(){
+        String subject = "Simple Mail Test";
+        String bodyMessage = "Hello World !";
+
+        assertTrue(emailService.sendSimpleMessage(new EmailDetails(null, subject, bodyMessage)));
     }
 
 }

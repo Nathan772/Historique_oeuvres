@@ -4,6 +4,7 @@ package nate.company.history_work.service;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
 import org.junit.jupiter.api.extension.AfterAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import static com.icegreen.greenmail.util.ServerSetup.PROTOCOL_SMTP;
 
 @Component
-public class SmtpServerExtension implements BeforeAllCallback, AfterAllCallback {
+public class SmtpServerExtension implements BeforeAllCallback, AfterAllCallback, AfterEachCallback {
 
     private int port = 3025;
 
@@ -37,5 +38,10 @@ public class SmtpServerExtension implements BeforeAllCallback, AfterAllCallback 
 
     public MimeMessage[] getMessages() {
         return smtpServer.getReceivedMessages();
+    }
+
+    @Override
+    public void afterEach(ExtensionContext extensionContext) throws Exception {
+        smtpServer.purgeEmailFromAllMailboxes();
     }
 }

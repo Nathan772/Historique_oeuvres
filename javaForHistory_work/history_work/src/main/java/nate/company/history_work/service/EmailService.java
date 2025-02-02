@@ -7,7 +7,6 @@
 package nate.company.history_work.service;
 
 import nate.company.history_work.entity.EmailDetails;
-import org.springframework.stereotype.Service;
 
 
 /**
