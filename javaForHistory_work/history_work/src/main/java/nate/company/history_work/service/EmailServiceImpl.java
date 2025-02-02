@@ -14,7 +14,6 @@ import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
 @Service
 public class EmailServiceImpl implements EmailService{
-
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -23,20 +22,7 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public boolean sendSimpleMessage(EmailDetails details) {
-//        try{
-//            SimpleMailMessage mailMessage = new SimpleMailMessage();
-//            mailMessage.setFrom(sender);
-//            mailMessage.setTo(details.getRecipient());
-//            mailMessage.setSubject(details.getSubject());
-//            mailMessage.setText(details.getBodyContent());
-//            javaMailSender.send(mailMessage);
-//            return true;
-//        }catch(MailException exception){
-//            LOGGER.log(Level.WARNING, "Could not send following simple mail : "
-//                        + details + "\n" + exception.getCause());
-//            return false;
-//        }
-
+        try{
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(sender);
             mailMessage.setTo(details.getRecipient());
@@ -44,5 +30,10 @@ public class EmailServiceImpl implements EmailService{
             mailMessage.setText(details.getBodyContent());
             javaMailSender.send(mailMessage);
             return true;
+        }catch(MailException exception){
+            LOGGER.log(Level.WARNING, "Could not send following simple mail : "
+                        + details + "\n" + exception.getCause());
+            return false;
+        }
     }
 }

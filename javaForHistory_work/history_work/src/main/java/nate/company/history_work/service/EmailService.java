@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 /**
  * This service is based on the JavaMailSender implementation.
  *
- * From a content, it creates a mail and sends it.
+ * From a content, it creates a mail and send it.
  */
 public interface EmailService {
-
     public boolean sendSimpleMessage(EmailDetails details);
-
 }

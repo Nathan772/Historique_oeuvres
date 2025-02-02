@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -45,6 +46,7 @@ public class EmailServiceIT {
 
 //    @Value("${smtp.port}")
 //    private static int port;
+
     @RegisterExtension
     static SmtpServerExtension smtpServerExtension = new SmtpServerExtension();
 
@@ -78,7 +80,6 @@ public class EmailServiceIT {
 
     @Test
     public void emailShouldBeSent() throws MessagingException, IOException {
-
         // prepare
         String toAddress = "receiver@test";
         String subject = "sending email from test";
