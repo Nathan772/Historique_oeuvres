@@ -18,6 +18,21 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * <p>Gathers the integration tests for the email service. It checks that the {@link EmailServiceImpl} is running
+ * accurately. This class runs an SMTP server to store the mails after their delivery by the mail service.
+ * </p>
+ * The {@link SmtpServerExtension} starts the server at the beginning of the tests and stops it after all
+ * the test methods have been run. It also purges the server of any potentially stored emails after each test
+ * method execution, ensuring the tests remain independent.
+ *
+ * @author Dylan DE JESUS
+ * @author Nathan BILINGI
+ * @see EmailService
+ * @see EmailServiceImpl
+ * @see SmtpServerExtension
+ * @see com.icegreen.greenmail.util.GreenMail
+ */
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
 public class EmailServiceIT {
@@ -27,9 +42,8 @@ public class EmailServiceIT {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @RegisterExtension
+    @RegisterExtension  // Extension suits better for JUnit5 than the RunWith annotation
     static SmtpServerExtension smtpServerExtension = new SmtpServerExtension();
-
 
     @Test
     public void shouldSendMail() throws MessagingException {

@@ -1,3 +1,9 @@
+/**
+ * This service will be used by the authentication service.
+ *
+ * This implementation of the EmailService class
+ */
+
 package nate.company.history_work.service;
 
 import nate.company.history_work.entity.EmailDetails;
@@ -12,14 +18,43 @@ import java.util.logging.Level;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
+
+/**
+ * This service is based on the JavaMailSender implementation.
+ *
+ * From a content, it creates a mail and send it.
+ *
+ * @author Dylan DE JESUS
+ * @author Nathan BILINGI
+ * @see EmailService
+ */
 @Service
 public class EmailServiceImpl implements EmailService{
+
+    /**
+     * The instance of the spring class that sends mails through
+     * Java API
+     * @see #sendSimpleMessage(EmailDetails)
+     */
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
+    /**
+     * The username of the mail account that will
+     * be used to send mails
+     * 
+     * @see #sendSimpleMessage(EmailDetails)
+     */
+    @Value("${spring.mail.username}")   // Takes the value inside the application.properties file
     private String sender;
 
+    /**
+     * Sends a simple mail. The message is sent from the sender (defined in the configuration) to a remote recipient
+     * address with a subject and a simple String body content.
+     *
+     * @param details the data used to send the mail (recipient, subject, body content).
+     * @return true if the mail has been sent successfully, false otherwise.
+     */
     @Override
     public boolean sendSimpleMessage(EmailDetails details) {
         try{

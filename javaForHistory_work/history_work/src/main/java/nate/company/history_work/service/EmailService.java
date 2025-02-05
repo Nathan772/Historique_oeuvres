@@ -1,5 +1,5 @@
 /**
- * This class is called from the authentication module.
+ * Used by all the email services.
  *
  * It manages the email sending logic.
  */
@@ -10,9 +10,10 @@ import nate.company.history_work.entity.EmailDetails;
 
 
 /**
- * This service is based on the JavaMailSender implementation.
+ * This interface gives a way to send simple mails.
  *
- * From a content, it creates a mail and send it.
+ * @author Dylan DE JESUS
+ * @author Nathan BILINGI
  */
 public interface EmailService {
     public boolean sendSimpleMessage(EmailDetails details);

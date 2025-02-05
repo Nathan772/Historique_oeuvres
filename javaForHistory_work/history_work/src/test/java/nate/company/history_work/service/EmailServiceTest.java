@@ -12,12 +12,30 @@ import org.springframework.mail.javamail.JavaMailSender;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 
+
+/**
+ * This class gathers all the unit tests for the Email service. It checks that the {@link EmailServiceImpl} is running
+ * accurately.
+ *
+ * @author Dylan DE JESUS
+ * @author Nathan BILINGI
+ * @see EmailService
+ * @see EmailServiceImpl
+ */
 @ExtendWith(MockitoExtension.class)
 public class EmailServiceTest {
 
+    /**
+     * The mock that will be injected into the service implementation.
+     *
+     * @see #emailService
+     */
     @Mock
     private JavaMailSender javaMailSender;
 
+    /**
+     * The instance of the mail service after the injection of the mock.
+     */
     @InjectMocks
     private EmailServiceImpl emailService;
 
@@ -42,7 +60,7 @@ public class EmailServiceTest {
         String subject = "Simple Mail Test";
         String bodyMessage = "Hello World !";
 
+        // The mail can't be sent because of the missing recipient address
         assertTrue(emailService.sendSimpleMessage(new EmailDetails(null, subject, bodyMessage)));
     }
-
 }
