@@ -45,6 +45,12 @@ public class EmailServiceIT {
     @RegisterExtension  // Extension suits better for JUnit5 than the RunWith annotation
     static SmtpServerExtension smtpServerExtension = new SmtpServerExtension();
 
+    /**
+     * Checks that a mail can be successfully sent. It sends it to a SMTP server that where we can check
+     * if the mail has been sent.
+     *
+     * @throws MessagingException if the subject of the message couldn't been retrieved
+     */
     @Test
     public void shouldSendMail() throws MessagingException {
         // prepare
@@ -62,6 +68,11 @@ public class EmailServiceIT {
         assertEquals(subject, receivedMessages[0].getSubject());
     }
 
+    /**
+     * Checks that the email service can send multiple mails.
+     *
+     * @throws MessagingException if the subject of the messages couldn't been retrieved
+     */
     @Test
     public void shouldSendMultipleMails() throws MessagingException {
         // prepare

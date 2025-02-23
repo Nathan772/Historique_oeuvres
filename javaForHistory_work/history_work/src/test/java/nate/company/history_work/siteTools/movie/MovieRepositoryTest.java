@@ -12,22 +12,30 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@SpringBootTest
 /**
- * Unit test class for the {@link MovieRepository} class.
+ * <p>Unit test class for the {@link MovieRepository} class.</p>
  *
- * These tests are primarily intended as a training exercise for writing unit tests
- * for repositories within a Spring context in a full-stack application.
+ * <p>These tests are primarily intended as a training exercise for writing unit tests
+ * for repositories within a Spring context in a full-stack application.</p>
  *
- * The tests focus on verifying the methods provided by the {@link CrudRepository} class,
+ *
+ * <p>The tests focus on verifying the methods provided by the {@link CrudRepository} class,
  * which {@link MovieRepository} inherits, similarly to how {@link UserRepository}
  * and {@link WatchMovieRepository} work.
+ * </p>
  *
+ * @author  Dylan DE JESUS
+ * @author Nathan BILINGI
  */
-@SpringBootTest
 public class MovieRepositoryTest {
     @Autowired
     private MovieRepository movieRepository;
 
+    /**
+     * Checks that all the movies of the database can be retrieved at once.
+     */
     @Test
     public void shouldGetAllMovies(){
         var movies = new ArrayList<>();
@@ -37,6 +45,9 @@ public class MovieRepositoryTest {
         assertEquals(5, movies.size(), nbMovies);
     }
 
+    /**
+     * Checks that a movie can be retrieved thanks to its id.
+     */
     @Test
     public void shouldGetMovieByID(){
         var expectedMovie = new Movie(1L, "Barbie", 2023, "ID_1", "Greta Gerwig");
@@ -58,6 +69,9 @@ public class MovieRepositoryTest {
         assertEquals(secondExpectedMovie.getYearOfRelease(), secondMovie.get().getYearOfRelease());
     }
 
+    /**
+     * Checks that wrong movie ids makes it impossible to find records in the database.
+     */
     @Test
     public void shouldNotGetMovieByID(){
         var firstWrongTrial = movieRepository.existsById(10L); // ID higher than the highest stored in the db
@@ -69,6 +83,10 @@ public class MovieRepositoryTest {
         assertFalse(thirdWrongTrial);
     }
 
+    /**
+     * Checks that an error is thrown when a null id is given when we want to retrieve a movie from
+     * the database.
+     */
     @Test
     public void shouldThrowErrorBecauseOfNullID(){
         InvalidDataAccessApiUsageException exception = assertThrows(InvalidDataAccessApiUsageException.class,
@@ -78,6 +96,9 @@ public class MovieRepositoryTest {
         assertEquals("The given id must not be null", exception.getMessage());
     }
 
+    /**
+     * Checks that the movie is successfully saved in the database.
+     */
     @Test
     public void shouldSaveMovie(){
         var movie = new Movie(6L, "Oppenheimer", 2023, "ID_6", "Christopher Nolan");;
@@ -93,6 +114,9 @@ public class MovieRepositoryTest {
                                         // movies stored in the database)
     }
 
+    /**
+     * Checks that a movie can be deleted from the database thanks to its id.
+     */
     @Test
     public void shouldDeleteMovieByID(){
         var nbMoviesBeforeDeletion = movieRepository.count();

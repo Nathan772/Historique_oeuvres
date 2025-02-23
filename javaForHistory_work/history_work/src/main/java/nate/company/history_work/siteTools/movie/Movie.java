@@ -6,6 +6,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+/**
+ * This class is the representation of a movie in the database.
+ *
+ * @author Nathan BILINGI
+ * @author Dylan DE JESUS
+ */
 @Entity
 @Component
 /*
@@ -44,7 +50,6 @@ public class Movie {
      * constructeur par défaut, c'est à dire, avec 0 arguments, indispensable pour résoudre l'erreur
      * "required a bean of type "java.lang.String" that could not be found"
      */
-
     public Movie(){
         this.title = "bla";
         this.yearOfRelease = 0;
@@ -52,9 +57,17 @@ public class Movie {
         this.director = "jean";
     }
 
-    /*
-    Pour faire fonctionner l'API il faut au minimum :
-    le constructeur standard, les getters, les setters, et toString
+    /**
+     * Constructs a movie.
+     *
+     * To make the API work we need at least :
+     *  The standard constructor, getters, setters, toString.
+     *
+     * @param idmovie the id of the movie
+     * @param title the title of the movie
+     * @param yearOfRelease the release year of the movie
+     * @param imdbID the imdb id
+     * @param director the director name of the movie
      */
     public Movie(long idmovie, String title, int yearOfRelease, String imdbID, String director){
         Objects.requireNonNull(title, "the movie's title cannot be null");
@@ -74,95 +87,93 @@ public class Movie {
     }
 
     /**
-     * getter on Pseudo
-     * @return
-     * the psuedo of the user
+     * Retrieves the title of the movie.
+     * @return the title
      */
     public String getTitle(){
         return title;
     }
 
     /**
-     * a getter on the user's id.
-     * @return
-     * the id of the user
+     * Retrieves the id of the movie.
+     *
+     * @return the id of the movie
      */
     public long getId(){
         return id;
     }
 
     /**
-     * a getter on the user's password.
-     * @return
-     * the password of the user
+     * Retrieves the release year of the movie.
+     * @return the year
      */
     public int getYearOfRelease(){
         return yearOfRelease;
     }
 
     /**
-     * getter on the email
-     * @return
-     * the email of the user
+     * Retrieves the name of the director of the movie.
+     *
+     * @return the name of the director
      */
     public String getDirector(){
         return director;
     }
 
     /**
-     * getter on the category
-     * @return
-     * the category of the user (admin, average)
+     * Retrieves the category.
+     *
+     * @return the category of the user (admin, average)
      */
     public String getImdbID(){
         return imdbID;
     }
 
-
     /**
-     * a setter on the user's id
+     * Sets a new user's id.
+     *
+     * @param id the new id
      */
     public void setMovieId(Long id){
         this.id = id;
     }
 
     /**
+     * Sets a new password.
      *
-     * setter on the password
-     *
+     * @param newDirector the new director name
      */
     public void setDirector(String newDirector){
         this.director = newDirector;
     }
 
     /**
+     * Sets a new year of release.
      *
-     *
-     * @param yearOfRelease
-     * the year of the movie release.
-     *
+     * @param yearOfRelease the year of the movie release.
      */
     public void setYearOfRelease(int yearOfRelease){
         this.yearOfRelease = yearOfRelease;
     }
 
     /**
+     * Sets a new email address.
      *
-     * setter on the email
-     *
+     * @param newTitle the new title
      */
     public void setTitle(String newTitle){
         title = newTitle;
     }
 
     /**
+     * Sets a new Imdb id.
      *
-     * setter on the name
-     *
+     * @param newImdbId  the new id
      */
     public void setImdbID(String newImdbId){
         imdbID = newImdbId;
     }
+
     @Override
     public String toString(){
         return "L'id du film : "+id+ ", titre : "+title+", directeur "+director + " année : "+ yearOfRelease;

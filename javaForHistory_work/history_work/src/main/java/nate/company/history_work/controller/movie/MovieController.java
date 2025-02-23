@@ -22,26 +22,36 @@ import java.util.logging.Level;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
-@RestController
-
-/*
-permet de résoudre le problème de
-"No Access-control-allow-origin"
-cors policy error
+/**
+ * Acts like a REST controller that manages the requests about movies.
+ *
+ * @author Nathan BILINGI
+ * @author Dylan DE JESUS
  */
-@CrossOrigin("*")
+@RestController
+@CrossOrigin("*") // permet de résoudre le problème de "No Access-control-allow-origin" cors policy error
 public class MovieController {
      /*
    necessary constructor for REST API
      */
     //standard constructors
 
+    /**
+     * Repository that stores movies.
+     */
     private final MovieRepository movieRepository;
+
+    /**
+     * Repository that stores movies watched by a user.
+     */
     private final WatchMovieRepository watchMovieRepository;
 
-    /*
-    constructeur créé par moi-même qui se remplit avec un paramètre de type UserRepo...
-    C'est Spring qui gérera lui-même l'ajout/la création de l'argument lors de l'appel
+    /**
+     * Constructs (by myself) filled with a parameter of type UserRepo. Spring will generate
+     * the injection of the argument itself when the constructor is called by a third part.
+     *
+     * @param movieRepository the repository that stores all the movies
+     * @param watchMovieRepository the repository that stores all movies watched by a user
      */
     public MovieController(MovieRepository movieRepository, WatchMovieRepository watchMovieRepository){
         Objects.requireNonNull(movieRepository);
@@ -51,10 +61,11 @@ public class MovieController {
     }
 
     /**
-     * this method retrieves all the users from the database
+     * This method retrieves all the users from the database
      * (linked to "findAll" from user.service)
-     * @return
-     * the list of movie possessed by the user
+     *
+     * @param userId id of the user
+     * @return the list of movie possessed by the user
      */
     //@RequestMapping("/users")
     @GetMapping("user/movie")
@@ -128,12 +139,10 @@ public class MovieController {
 
 
     /**
-     *
      * Retrieve a user based on their pseudo or email.
-     * @param user
-     * the you user you want to retrieve
-     * @return
-     * the user object.
+     *
+     * @param user the you user you want to retrieve
+     * @return the user object.
      */
     //@RequestMapping("/users")
     //@GetMapping("/user")
@@ -144,13 +153,11 @@ public class MovieController {
     }*/
 
     /**
+     * The "add movie" add a new movie into the data base.
      *
+     * @param wrapperUserMovie the wrapper that contains the user and the movie.
      *
-     * the "add movie" add a new movie into the data base.
-     *
-     * @param wrapperUserMovie
-     *
-     * the wrapper that contains the user and the movie.
+     * @return the retrieved movie
      */
     //Requestbody can be used only once,
     //thereby you use a wrapper class

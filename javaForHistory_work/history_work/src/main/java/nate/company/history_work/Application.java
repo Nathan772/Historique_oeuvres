@@ -17,6 +17,9 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.stream.Stream;
 
+/**
+ * This is the starting point of the application.
+ */
 /*
 créé moi-même copie du code de la page baledung.com :
 ajoutés manuellement
@@ -31,6 +34,11 @@ required a bean of type 'nate.company.youtube_converter.siteTools.UserRepository
 @ComponentScan({"nate/company/history_work"})
 public class Application {
 
+    /**
+     * Starts the application.
+     *
+     * @param args the arguments on the command line
+     */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }

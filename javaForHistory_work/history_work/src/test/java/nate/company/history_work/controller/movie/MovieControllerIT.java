@@ -11,15 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Integration test for the MovieController class.
  */
-@SpringBootTest
-@AutoConfigureMockMvc
-public class MovieControllerIT {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Test
-    public void firstTest(){
-
-    }
-}
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//public class MovieControllerIT {
+//
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Test
+//    public void firstTest(){
+//
+//    }
+//}

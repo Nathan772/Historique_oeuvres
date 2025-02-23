@@ -8,8 +8,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //@SpringBootApplication
+
+/**
+ * TODO : Put some doc here
+ */
 public class HistoryWorkApplication {
 
+	/**
+	 * Program entry.
+	 *
+	 * @param args command line arguments
+	 */
 	public static void main(String[] args) {
 //		SpringApplication.run(HistoryWorkApplication.class, args);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

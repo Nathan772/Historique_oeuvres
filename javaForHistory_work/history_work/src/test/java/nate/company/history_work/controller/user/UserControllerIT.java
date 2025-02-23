@@ -9,16 +9,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-/**
- * Integration test of the UserController class.
- */
 @SpringBootTest
 @AutoConfigureMockMvc
+/**
+ * Structure of an integration test for a controller.
+ */
 public class UserControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * TODO : Actually, we have some postman tests that may do the thing
+     */
     @Test
     public void firstTest(){
         //

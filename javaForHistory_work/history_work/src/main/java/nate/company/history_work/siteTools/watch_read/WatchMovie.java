@@ -1,58 +1,92 @@
+/**
+ * This part is used by both code that manages users and the one that
+ * manages movies.
+ *
+ * This file contains a structure that gathers a user id and a related movie he watched.
+ */
+
 package nate.company.history_work.siteTools.watch_read;
 
 import jakarta.persistence.*;
 
-import org.springframework.beans.factory.annotation.Value;
+import nate.company.history_work.controller.movie.MovieController;
+import nate.company.history_work.controller.user.UserController;
 import org.springframework.stereotype.Component;
 
-
 import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Objects;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
-
+/**
+ * Binds a user to a movie he watched or is planning to watch. It manages information like the last time of the movie
+ * he watched and the viewing state of the movie.
+ *
+ * @author Nathan BILINGI
+ * @author Dylan DE JESUS
+ * @see MovieController
+ * @see UserController
+ */
 @Entity
 @Component
-
 @Table(name="watchmovie")
 public class WatchMovie {
 
+    /**
+     * The id of the watchmovie within the database.
+     */
     @Id
     @Column(name="idwatchmovie")
     private long id;
-    private long iduser;
-    private long idmovie;
-    /*
-    the state of watching of the movie :
-    "à regarder plus tard",
-    "à revoir",
-    "fini",
-    "en cours de visionnage"
-
-     */
-    //@Value("${props.currentState:'à regarder plus tard'}")
-    private String currentState = "à regarder plus tard";
-
-    //date of last registration of movie status
-    private Date lastUpdate = new Date();
-    //@Value("${props.currentState:'à regarder plus tard'}")
-    private Time lastMoment = new Time(0,0,0) ;
 
     /**
-     *
-     * default constructor necessary for bean...
-     * but cannot be actually used because of foreign key issue
+     * The id of the user in the database.
      */
+    private long iduser;
 
-    public WatchMovie(){
+    /**
+     * The id of the movie in the database.
+     */
+    private long idmovie;
 
-    }
+    /**
+     * <p>
+     *     The state of the movie.
+     * </p>
+     * <ul>
+     *      <li>"à regarder plus tard"</li>
+     *      <li>"à revoir"</li>
+     *      <li>"fini"</li>
+     *      <li>"en cours de visionnage"</li>
+     * </ul>
+     */
+    private String currentState = "à regarder plus tard";
 
+    /**
+     * The date of last registration of movie status. By default, it is initialized
+     * at the current time when allocated.
+     */
+    private Date lastUpdate = new Date();
+
+    /**
+     * The last moment watched by the user. It is initialized at 00:00:00.
+     */
+    private Time lastMoment = new Time(0);
+
+    /**
+     * <p>Constructs a WatchMovie.
+     * </p>
+     * <br>
+     * <p>This default constructor is necessary for bean... but cannot be actually used because of foreign key issue.
+     * </p>
+     */
+    public WatchMovie(){}
+
+    /**
+     * Constructs a WatchMovie.
+     *
+     * @param idUser the id of the user watching the movie
+     * @param idmovie the id of the movie
+     * @param currentState the description of the viewing state of the movie
+     */
     public WatchMovie(long idUser, long idmovie, String currentState){
         if(idUser < 0){
             throw new IllegalArgumentException("user's watching a movie ID cannot be lower than 0");
@@ -63,11 +97,17 @@ public class WatchMovie {
 
         this.iduser = idUser;
         this.idmovie = idmovie;
-
         this.currentState = currentState;
     }
 
-
+    /**
+     * Constructs a WatchMovie.
+     *
+     * @param idUser the id of the user watching the movie
+     * @param idmovie the id of the movie
+     * @param currentState the description of the viewing state of the movie
+     * @param lastMoment the time when the user paused the movie
+     */
     public WatchMovie(long idUser, long idmovie, String currentState, Time lastMoment){
         if(idUser < 0){
             throw new IllegalArgumentException("user's watching a movie ID cannot be lower than 0");
@@ -83,39 +123,43 @@ public class WatchMovie {
     }
 
     /**
-     * getter on idwatchMovie
-     * @return
-     * the id of the tab
+     * Retrieves the id of the watchMovie.
+     *
+     * @return the id of the tab
      */
     public long getIdWatchMovie(){
         return id;
     }
 
     /**
-     * a getter on the user's id.
-     * @return
-     * the id of the user that watch the movie
+     * Retrieves the user's id.
+     *
+     * @return the id of the user that watch the movie
      */
     public long getIdUser(){
         return iduser;
     }
 
     /**
-     * a getter on the id of the movie watched.
-     * @return
-     * the id of the movie watched.
+     * Retrieves the id of the movie watched.
+     *
+     * @return the id of the movie watched
      */
     public long getIdMovie(){
         return idmovie;
     }
-    /*
-    the state of watching of the movie :
-    "à regarder plus tard",
-    "à revoir",
-    "fini",
-    "en cours de visionnage"
-     @return
-     the state
+
+    /**
+     * <p>Retrieves the state of watching of the movie
+     * </p>
+     * <ul>
+     *     <li>"à regarder plus tard"</li>
+     *     <li>"à revoir"</li>
+     *     <li>"fini"</li>
+     *     <li>"en cours de visionnage"</li>
+     * </ul>
+     *
+     * @return the viewing state of the movie, as a String sentence
      */
     public String getCurrentState(){
         return currentState;
@@ -139,72 +183,72 @@ public class WatchMovie {
         return lastMoment;
     }
 
-    /*
-    the state of watching of the movie :
-    "à regarder plus tard",
-    "à revoir",
-    "fini",
-    "en cours de visionnage"
-
-     */
     /**
-     * @param lastUpdate
-     * the last update of the movie.
+     * Sets a new value the lastUpdate done regarding the movie status.
      *
-     * a setter on the lastUpdate done regarding the movie status.
+     * @param lastUpdate the last update of the movie.
      */
     public void setLastUpdate(Date lastUpdate){
         this.lastUpdate = lastUpdate;
     }
 
     /**
-     * @param lastMoment
+     * Sets the last moment watched of the movie.
      *
-     * setter on the last moment watched of the movie.
-     *
+     * @param lastMoment the time that describes the last moment watched.
      */
     public void setLastMoment(Time lastMoment){
         lastMoment = lastMoment;
     }
 
     /**
+     * <p>Sets a new viewing state of the movie. It can take values such as the following :
+     * </p>
+     * <ul>
+     *     <li>"à voir plus tard"</li>
+     *     <li>"à revoir"</li>
+     *     <li>...</li>
+     * </ul>
      *
-     * a setter on the current state of the movie
-     * ("à voir plus tard",à revoir,..." etc...
-     * @param currentState
-     * the state of the watched movie.
-     *
+     * @param currentState the state of the watched movie.
      */
     public void setCurrentState(String currentState){
         this.currentState = currentState;
     }
 
     /**
+     * Sets a new id of the movie.
      *
-     * setter on the id of the movie.
-     *
-     * @param idmovie
-     * the id of the movie watched
-     *
-     *
-     *
+     * @param idmovie the id of the movie watched
      */
     public void setIdMovie(long idmovie){
         this.idmovie = idmovie;
     }
 
     /**
+     * Sets the new user's id.
      *
-     * setter on the name
-     *
+     * @param iduser the new user's id.
      */
     public void setIdUser(long iduser){
         this.iduser = iduser;
     }
 
+    /**
+     * Sets a new id.
+     *
+     * @param idwatchMovie the new id.
+     */
     public void setIdwatchMovie(long idwatchMovie){
         this.id = idwatchMovie;
     }
+
+    /**
+     * Returns a String representation of this {@link WatchMovie}. It provides information like the
+     * {@link WatchMovie} id, the user's id, the movie id and the viewing state.
+     *
+     * @return a string representation of this {@link WatchMovie}.
+     */
     @Override
     public String toString(){
         return "L'Id du tuple numéro : "+id+ ", l'id de l'utilisateur : "+iduser+" et celui du film : "+idmovie+", l'état de visionnage "+currentState;

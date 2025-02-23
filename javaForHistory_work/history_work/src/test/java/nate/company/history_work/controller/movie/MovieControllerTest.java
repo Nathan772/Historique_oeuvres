@@ -23,7 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 /**
- * Unit test of the MovieController class.
+ * Unit test of the {@link MovieController} class.
+ *
+ * @author Dylan DE JESUS
+ * @author Nathan BILINGI
+ * @see MovieController
  */
 @WebMvcTest(MovieController.class)
 public class MovieControllerTest {
@@ -40,6 +44,11 @@ public class MovieControllerTest {
     @MockBean
     private UserRepository userRepository; // Without this Mock, the test can't be launched
 
+    /**
+     * Checks that all the movies saved by a user are all retrieved.
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
+     */
     @Test
     public void shouldGetUserMovies() throws Exception {
         var firstMovie = new Movie(1L, "Le Comte de Monte-Cristo", 2024, "ID_1", "Matthieu Delaporte");
@@ -62,6 +71,12 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$[1].imdbID").value("ID_2"));
     }
 
+    /**
+     * Checks that an empty list is returned when a valid user doesn't have
+     * any movie in his bookmark.
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
+     */
     @Test
     public void shouldReturnNoneMovie() throws Exception {
         when(watchMovieRepository.findAll()).thenReturn(List.of());
@@ -72,9 +87,14 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$").isEmpty());
     }
 
-
-    // TODO : To pass this test, the method of the controller must be implemented in a different
-    // way that checks the user id exist
+    /**
+     * Checks that a the retrieval of a movie of a uer that doesn't exist in the database should
+     * return a Not Found code.
+     *
+     * TODO : To pass this test, the method of the controller must be implemented in a different way that checks the user id exist
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
+     */
     @Test
     public void shouldGetError() throws Exception {
         when(watchMovieRepository.findAll()).thenReturn(List.of());
@@ -86,7 +106,8 @@ public class MovieControllerTest {
 
     /**
      * Checks the save of a movie that already exists in the database.
-     * @throws Exception
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
      */
     @Test
     public void shouldAddMovie() throws Exception {
@@ -131,7 +152,7 @@ public class MovieControllerTest {
     /**
      * Checks the save of a movie that does not exist in the database.
      *
-     * @throws Exception
+     * @throws Exception if the perform method of the mockMVC throws it
      */
     @Test
     public void shouldAddMovie2() throws Exception {
@@ -171,6 +192,11 @@ public class MovieControllerTest {
                 .andExpect(jsonPath("$.title").value("Barbie"));
     }
 
+    /**
+     * Checks that a movie can be deleted.
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
+     */
     @Test
     public void shouldDeleteMovieFromList() throws Exception {
         var movie = new Movie(1L, "The Batman", 1984, "Note", "Nolan");

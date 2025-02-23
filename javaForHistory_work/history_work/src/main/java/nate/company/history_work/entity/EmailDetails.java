@@ -1,6 +1,5 @@
 /**
  * This file contains the entity used by the email sending service.
- *
  * It provides an object that can be used to represent emails information.
  */
 
@@ -9,6 +8,7 @@ package nate.company.history_work.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 
 /**
@@ -22,7 +22,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmailDetails {
+    @NonNull
     private String recipient;
+    @NonNull
     private String subject;
+    @NonNull
     private String bodyContent;
 }

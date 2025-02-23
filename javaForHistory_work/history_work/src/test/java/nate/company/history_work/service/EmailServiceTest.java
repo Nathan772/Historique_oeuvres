@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 
@@ -39,6 +39,9 @@ public class EmailServiceTest {
     @InjectMocks
     private EmailServiceImpl emailService;
 
+    /**
+     * Checks that an email can be sent when proper data is given.
+     */
     @Test
     public void shouldSendSimpleMailTest(){
         SimpleMailMessage simpleMail = new SimpleMailMessage();
@@ -55,12 +58,17 @@ public class EmailServiceTest {
         verify(javaMailSender).send(simpleMail);
     }
 
+    /**
+     * Checks that an exception is thrown if null value is given instead of email data.
+     */
     @Test
-    public void shouldNotSendSimpleMailTest(){
+    public void shouldThrowNullPointerException(){
         String subject = "Simple Mail Test";
         String bodyMessage = "Hello World !";
 
-        // The mail can't be sent because of the missing recipient address
-        assertTrue(emailService.sendSimpleMessage(new EmailDetails(null, subject, bodyMessage)));
+        // The mail can't be sent because of the missing email data
+        var e = assertThrows(NullPointerException.class,
+                () -> emailService.sendSimpleMessage(null));
+        assertEquals("Email details is null", e.getMessage());
     }
 }

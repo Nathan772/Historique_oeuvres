@@ -14,13 +14,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.logging.Level;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
 
 /**
- * This service is based on the JavaMailSender implementation.
+ * This service is based on the {@link JavaMailSender} implementation.
  *
  * From a content, it creates a mail and send it.
  *
@@ -57,6 +58,7 @@ public class EmailServiceImpl implements EmailService{
      */
     @Override
     public boolean sendSimpleMessage(EmailDetails details) {
+        Objects.requireNonNull(details, "Email details is null");
         try{
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom(sender);

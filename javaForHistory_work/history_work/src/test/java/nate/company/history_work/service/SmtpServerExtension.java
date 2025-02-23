@@ -17,6 +17,8 @@ import javax.mail.internet.MimeMessage;
 
 import static com.icegreen.greenmail.util.ServerSetup.PROTOCOL_SMTP;
 
+
+@Component
 /**
  * Manages a server that waits for incoming emails. This class uses the {@link GreenMail} implementation.
  *
@@ -28,7 +30,6 @@ import static com.icegreen.greenmail.util.ServerSetup.PROTOCOL_SMTP;
  * @see AfterAllCallback
  * @see AfterEachCallback
  */
-@Component
 public class SmtpServerExtension implements BeforeAllCallback, AfterAllCallback, AfterEachCallback {
 
     /**

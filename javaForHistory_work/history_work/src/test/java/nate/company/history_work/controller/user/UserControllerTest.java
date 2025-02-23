@@ -19,10 +19,11 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+@WebMvcTest(UserController.class)
 /**
  * Unit test for the UserController class.
  */
-@WebMvcTest(UserController.class)
 public class UserControllerTest {
 
     @Autowired
@@ -37,6 +38,11 @@ public class UserControllerTest {
     @MockBean
     private WatchMovieRepository watchMovieRepository;
 
+    /**
+     * Checks that all the user are retrieved.
+     *
+     * @throws Exception if the mockMVC could not perform
+     */
     @Test
     public void shouldGetAllUsers() throws Exception {
         var user1 = new User("leoMessi", "lm@sfr.fr", "bestFootballPlayer");
@@ -49,9 +55,9 @@ public class UserControllerTest {
     }
 
     /**
-     * Ensure that the user can be retrieved thanks to its information in the database.
+     * Ensures that the user can be retrieved thanks to its information in the database.
      *
-     * @throws Exception
+     * @throws Exception if the mockMVC could not perform.
      */
     @Test
     public void shouldGetIdentifier() throws Exception {
@@ -84,7 +90,7 @@ public class UserControllerTest {
      * Checks that the identifier can be retrieved even with pseudo or email doesn't match
      * the User in the database.
      *
-     * @throws Exception
+     * @throws Exception if the mockMVC could not perform.
      */
     @Test
     public void shouldGetIdentifier2() throws Exception {
@@ -112,6 +118,11 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password").value("bestFootballPlayer"));
     }
 
+    /**
+     * Checks that a non-existing user (in the database) can't be retrieved.
+     *
+     * @throws Exception if the mockMVC could not perform
+     */
     @Test
     public void shouldNotGetIdentifier() throws Exception {
         String jsonRequest =
@@ -133,6 +144,11 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /**
+     * Checks that a user can be added.
+     *
+     * @throws Exception if the mockMVC could not perform
+     */
     @Test
     public void shouldAddUser() throws Exception {
         String jsonRequest =
@@ -159,6 +175,11 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.password").value("bestFootballPlayer"));
     }
 
+    /**
+     * Checks that the user is successfully deleted.
+     *
+     * @throws Exception if the mockMVC could not perform
+     */
     @Test
     public void shouldRemoveUser() throws Exception {
         var user = new User("leoMessi", "lm@sfr.fr", "bestFootballPlayer");
@@ -168,6 +189,11 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Checks that the deletion returns "not found" code for non-existing user.
+     *
+     * @throws Exception if the mockMVC could not perform
+     */
     @Test
     public void shouldReturnNotFound() throws Exception {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());

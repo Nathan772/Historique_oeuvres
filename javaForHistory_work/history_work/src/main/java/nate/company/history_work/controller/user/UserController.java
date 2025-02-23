@@ -12,13 +12,11 @@ import java.util.logging.Level;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
-@RestController
 
-/*
-permet de résoudre le problème de
-"No Access-control-allow-origin"
-cors policy error
+/**
+ * User controller.
  */
+@RestController
 @CrossOrigin("*")
 public class UserController {
 
@@ -26,12 +24,16 @@ public class UserController {
    necessary constructor for REST API
      */
     //standard constructors
-
+    /**
+     * The repository that stores users
+     */
     private final UserRepository userRepository;
 
-    /*
-    constructeur créé par moi-même qui se remplit avec un paramètre de type UserRepo...
-    C'est Spring qui gérera lui-même l'ajout/la création de l'argument lors de l'appel
+    /**
+     * constructeur créé par moi-même qui se remplit avec un paramètre de type UserRepo...
+     *  C'est Spring qui gérera lui-même l'ajout/la création de l'argument lors de l'appel
+     *
+     * @param userRepository the repository that manages users.
      */
     public UserController(UserRepository userRepository){
         Objects.requireNonNull(userRepository);
@@ -41,7 +43,8 @@ public class UserController {
     /**
      * this method retrieves all the users from the database
      * (linked to "findAll" from user.service)
-     * @return
+     *
+     * @return the list containing all the users
      */
     //@RequestMapping("/users")
     @GetMapping("/users")
@@ -51,19 +54,12 @@ public class UserController {
 
     /**
      * this method retrieve a specific user if exists in database
-     * @param userId
-     * user's id
-     * @param userPseudo
-     * pseudo of the user
-     * @param email
-     * the email from this user
-     * @param password
-     * the password for this account
-     * the user you want to retrieve
-     * @return
-     * the user searched if found, else null
+     * @param userId user's id
+     * @param userPseudo pseudo of the user
+     * @param email the email from this user
+     * @param password the password for this account the user you want to retrieve
+     * @return the user searched if found, else null
      */
-
     /*
     since we use get with parameters,
     we have to retrieve each parameter one by one.
@@ -105,13 +101,11 @@ public class UserController {
 
     /**
      * Retrieve user from data based, based on their pseudo or their email.
-     * Actually, it can be used to know if the identifier (pseudo & email) can
+     * Actually, it can be used to know if the identifier (pseudo and email) can
      * be used to create a unique User.
      *
-     * @param userSearched
-     * the user few information (email/pseudo)
-     * @return
-     * the user complete data
+     * @param userSearched the user few information (email/pseudo)
+     * @return the user complete data
      */
     @PostMapping("/userSearch")
     public ResponseEntity<?> doesIdentifierExist(@RequestBody User userSearched){
@@ -142,10 +136,8 @@ public class UserController {
     /**
      *
      * Retrieve a user based on their pseudo or email.
-     * @param user
-     * the you user you want to retrieve
-     * @return
-     * the user object.
+     * @param user the you user you want to retrieve
+     * @return the user object.
      */
     //@RequestMapping("/users")
     //@GetMapping("/user")
@@ -157,10 +149,10 @@ public class UserController {
 
 
     /**
+     * Adds a new user in the database.
      *
-     * the "add user" add a new user in the data base.
-     *
-     * @param user
+     * @param user the request body that contains data for a new user to add
+     * @return the user insterd in the database
      */
     @PostMapping("/users")
     public User addUser(@RequestBody User user){
@@ -187,8 +179,9 @@ public class UserController {
      * a remove method for users.
      * Even if the mapping starts by delete, it starts implicitly by
      * You can try a request with postman to check if it actually works.
-     * @param idUser
-     * @return
+     *
+     * @param idUser the id of the user
+     * @return a response entity
      */    // TODO : Change implementation : 1 - Check whether the id is in the repo | 2 - If it returns a non null value, delete by id otherwise, return NotFOUND code
     @DeleteMapping("users/delete/{idUser}")
     public ResponseEntity<String> removeUser(@PathVariable String idUser){
