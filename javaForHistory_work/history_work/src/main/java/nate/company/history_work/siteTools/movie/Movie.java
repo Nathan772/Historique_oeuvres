@@ -74,7 +74,7 @@ public class Movie {
         Objects.requireNonNull(imdbID, "the imdbID cannot be null");
         Objects.requireNonNull(director, "the movie director cannot be null");
         if(yearOfRelease < 0){
-            throw new IllegalArgumentException("movie's year cannot be null");
+            throw new IllegalArgumentException("movie's year cannot be lower than 0");
         }
         if(idmovie < 0){
             throw new IllegalArgumentException("movie's id cannot be null");
@@ -134,7 +134,10 @@ public class Movie {
      *
      * @param id the new id
      */
-    public void setMovieId(Long id){
+    public void setMovieId(long id){
+        if(id < 0){
+            throw new IllegalArgumentException("movie id cannot be lower than 0");
+        }
         this.id = id;
     }
 
@@ -144,6 +147,7 @@ public class Movie {
      * @param newDirector the new director name
      */
     public void setDirector(String newDirector){
+        Objects.requireNonNull(newDirector);
         this.director = newDirector;
     }
 
@@ -153,6 +157,9 @@ public class Movie {
      * @param yearOfRelease the year of the movie release.
      */
     public void setYearOfRelease(int yearOfRelease){
+        if(yearOfRelease < 0){
+            throw new IllegalArgumentException("Movie's year of release cannot be lower than 0");
+        }
         this.yearOfRelease = yearOfRelease;
     }
 
@@ -162,6 +169,7 @@ public class Movie {
      * @param newTitle the new title
      */
     public void setTitle(String newTitle){
+        Objects.requireNonNull(newTitle);
         title = newTitle;
     }
 
@@ -171,6 +179,7 @@ public class Movie {
      * @param newImdbId  the new id
      */
     public void setImdbID(String newImdbId){
+        Objects.requireNonNull(newImdbId);
         imdbID = newImdbId;
     }
 

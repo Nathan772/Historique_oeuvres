@@ -155,10 +155,29 @@ Pour lancer le swagger :
     <groupId>org.springdoc</groupId>
     <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
     <version>2.3.0</version>
-</dependency
+</dependency>
 
 ```
 
+
+résoudre l'erreur :
+
+```xml
+<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+		<!--
+		nécessaire pour résoudre l'erreur :
+
+		Failed to load driver class com.mysql.jdbc.Driver
+		liée aux modifications de application.properties
+		lié à la bdd
+		-->
+
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>9.0.0</version>
+		</dependency>
+```
 
 résoudre l'erreur :
 
@@ -168,6 +187,16 @@ BeanDefinitionStoreException: Failed to parse
 
 Il faut aller dans les paramètres maven et lancer "clean" puis cliquer sur les deux flèches
 qui forme un cercle "reload all maven incremental".
+
+```java
+/*
+nécessaire pourgit  résoudre :
+Parameter 0 of method init in nate.company.youtube_converter.Application
+
+required a bean of type 'nate.company.youtube_converter.siteTools.UserRepository' that could not be found.
+ */
+@ComponentScan({"nate/company/history_work"})
+```
 
 
 
@@ -217,3 +246,663 @@ https://dev-academy.com/angular-session-storage/
       }
 ```
 
+
+d'autres erreurs (liés au projet de M2) :
+
+
+
+Debug :
+
+Erreur :
+"
+Failed to instantiate [org.springframework.boot.web.servlet.ServletRegistrationBean]: Factory method 'h2Console' threw exception with message: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: Failed to load driver class 
+com.mysql.cj.jdbc.Driver in either of HikariConfig class loader or Thread context classloader
+"
+
+résoudre : 
+
+-créer le fichier persistence.xml dans resources/META-INF/persistence.xml :
+persistence.xml : 
+
+```xml 
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="main-persistence-unit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:tcp://localhost/~/h2DB"/>
+
+            <!-- Credentials -->
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
+
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:p6spy:h2:tcp://localhost/~/h2DB" />
+
+            <!-- Automatic schema export -->
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="drop-and-create"/>
+
+            <!-- SQL statement logging -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
+```
+
+- créer resources/spy.properties :
+
+```properties
+
+driverlist=org.h2.Driver
+appender=com.p6spy.engine.spy.appender.StdoutLogger
+logMessageFormat=com.p6spy.engine.spy.appender.CustomLineFormat
+customLogMessageFormat=%(category)|%(sql)
+
+``
+
+Il faut aussi et peut être seulement :
+
+```
+
+<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.2.0</version>
+        </dependency>
+``` 
+le mysql connect --> c'est peut être pas nécessaire, il faut juste clean+ compile + package je crois
+
+avec son jar associé...
+
+Par contre après ça il faut :
+
+clean + compile + package dans la fenêtre de droite de Maven
+
+
+La commande pour lancer H2 :
+
+java -cp h2-2.3.232.jar org.h2.tools.Server -ifNotExists &
+
+Si le port est déjà utilisé  pour H2 :
+
+```shell
+netstat -plten |grep java 
+```
+
+res :
+```
+tcp   0   0 0.0.0.0:8080   0.0.0.0:*  LISTEN   1001  76084  9488/java   
+```
+
+```
+kill -9 9488
+```
+
+Il est aussi possible que vous ayez à recréer le fichier
+
+application.properties :
+
+```
+Il est aussi possible que vous ayez à recréer le fichier :
+
+"main/resources/application.properties"
+
+si il n'est pas présent.
+
+remplissez application.properties avec les infos suivantes
+pour pouvoir vous connecter à la base de données :
+
+
+```
+
+spring.datasource.url=jdbc:h2:file:./data/demo
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+
+```
+
+Il faut ensuite : 
+
+clean + compile + package
+
+
+Pour résoudre : 
+
+"org.h2.message.DbException: Log file error: "/data/demo.trace.db", cause: 
+"org.h2.message.DbException: Error while creating file ""/data"""
+
+il faut écrire :
+
+```
+
+spring.datasource.url=jdbc:h2:file:./data/demo
+```
+
+dans application.properties et pas 
+
+```
+spring.datasource.url=jdbc:h2:file:/data/demo
+```
+
+source: 
+https://stackoverflow.com/questions/64756454/why-does-spring-boot-with-embedded-h2-throw-a-org-h2-message-dbexception-error
+
+
+
+
+résoudre: 
+
+"Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: Séquence "USER_TABLE_SEQ" non trouvée
+Sequence "USER_TABLE_SEQ" not found; SQL statement:"
+
+il faut retirer de application.properties :
+
+```
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+```
+
+voir :
+
+https://stackoverflow.com/questions/51949922/spring-boot-2-migration-org-h2-jdbc-jdbcsqlexception-sequence-not-found
+
+résoudre :
+
+"Table "USER_TABLE" not found (this database is empty); SQL statement:"
+
+--> 
+
+solution 1 (générer manuellement les tables): 
+
+
+https://stackoverflow.com/questions/74510923/h2-in-memory-database-jdbcsqlsyntaxerrorexception-table-not-found-this-databa
+
+
+
+solution 2 (générer automatiquement les tables) :
+
+```properties
+
+# Config bdd H2
+server.port=8080
+server.address=localhost
+spring.datasource.url=jdbc:h2:./src/main/resources/db/db
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=nathanb
+spring.datasource.password=password
+
+#je crois que c'est cette ligne qui génère automatiquement les tables
+spring.jpa.hibernate.ddl-auto=update
+
+# Activer la console H2
+spring.h2.console.enabled=true
+#spring.h2.console.enabled=false
+spring.h2.console.path=/h2-console
+spring.h2.console.settings.trace=false
+spring.h2.console.settings.web-allow-others=true
+
+```
+
+N'oubliez pas de: 
+
+clean + compile + package + run project
+
+
+
+
+
+résoudre : 
+
+"Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC 
+Connection for DDL execution [Mauvais nom d'utilisateur ou mot de passe"
+
+Il faut créer le fichier :
+
+src/main/resources/persistence.xml :
+
+```
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="main-persistence-unit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:tcp://localhost/~/h2DB"/>
+
+            <!-- Credentials -->
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
+
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:p6spy:h2:tcp://localhost/~/h2DB" />
+
+            <!-- Automatic schema export -->
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="drop-and-create"/>
+
+            <!-- SQL statement logging -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
+
+
+```
+
+et définir le "user value=" et "password value=" avec les mêmes 
+valeurs que celles que vous avez choisi dans application.properties.
+
+Aussi, il faut supprimer le dossier db dans ressources, sinon cela 
+maintiendra le conflit sur le mdp et le user.
+Laissez-le se recréer automatiquement.
+
+
+Attention, si vous voulez créer un nouveau user avec un nouveau mot de passe,
+il faudra configurer comme dans cette page à priori (je ne l'ai pas
+fait car cela risque de faire perdre du temps notamment pour certaines infos
+que je ne connais pas : server_IP, h2_port) :
+
+https://www.ibm.com/docs/en/tnpm/1.4.4?topic=database-creating-user-password-h2
+
+
+Pour persister via h2 mais avec erreur:
+
+```properties
+
+#old data
+
+#spring.datasource.url=jdbc:h2:file:./data/demo
+#spring.datasource.driverClassName=org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=password
+#spring.h2.console.enabled=true
+#spring.jpa.defer-datasource-initialization=true
+
+
+#new data
+
+
+# Config bdd H2
+server.port=8080
+server.address=localhost
+#enregistre dans des fichiers de façon persistante
+#mais n'affiche pas sur la fenêtre de h2
+#spring.datasource.url=jdbc:h2:./src/main/resources/db/db
+
+#il faut cibler la bdd de la version browser
+# la version du browser
+# correspond à celle visible sur le site web de h2:
+# jdbc:h2:tcp//localhost/~/h2DB
+# c'est aussi celle écrite dans persistence.xml
+# voir : https://stackoverflow.com/questions/61797029/why-h2-database-doesnt-show-my-table-in-the-browser
+
+#erreur + pas persistant
+#spring.datasource.url=jdbc:h2:mem:h2DB
+#tenative
+#fonctionnel pour la persistance mais écrit
+# no suitable driver for dans le navigateur
+spring.datasource.url=jdbc:h2:tcp://localhost/~/h2DB
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=update
+
+# Activer la console H2
+spring.h2.console.enabled=true
+#spring.h2.console.enabled=false
+spring.h2.console.path=/h2DB/
+spring.h2.console.settings.trace=false
+spring.h2.console.settings.web-allow-others=true
+```
+
+Si on a le message :
+
+"Connexion localhost refusée"
+
+pensez à lancer H2 avant de run Application.java.
+
+
+Résoudre :
+
+```
+No suitable driver found for 08001/0
+java.sql.SQLException: No suitable driver found for
+    at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+    at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+    at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:338)
+    at org.h2.server.web.WebServer.getConnection(WebServer.java:811)
+    at org.h2.server.web.WebApp.login(WebApp.java:1038)
+    at org.h2.server.web.WebApp.process(WebApp.java:226)
+    at org.h2.server.web.WebApp.processRequest(WebApp.java:176)
+    at org.h2.server.web.WebThread.process(WebThread.java:154)
+    at org.h2.server.web.WebThread.run(WebThread.java:103)
+```
+
+Allez sur java 21, la version 23 est trop haut level pour h2.
+
+"Class has been compiled by a more recent version of the Java Environment"
+
+Pensez à switcher java 21 partout :
+
+-au niveau du pom.xml
+
+-au niveau de la structure du projet :
+    - sdks et module et 
+    
+- clean + compile + package
+
+état final de persistence.xml :
+
+```xml
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="main-persistence-unit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <!-- proper path but needs java21 -->
+            <!-- it seems to work with version 23 too... so???-->
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:tcp://localhost/~/h2DB"/>
+
+            <!--
+            not the proper path  for h2
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:mem:h2DB"/>
+
+                      -->
+
+            <!-- Credentials -->
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
+
+            <!--not the proper path for h2:
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:p6spy:h2:mem:h2DB" />
+            -->
+            <!-- proper path but needs java21-->
+
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:p6spy:h2:tcp://localhost/~/h2DB" />
+
+            <!-- Automatic schema export -->
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="drop-and-create"/>
+
+            <!-- SQL statement logging -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
+
+```
+
+état final de application.properties :
+
+```properties 
+
+
+
+
+
+#new data
+
+# Config bdd H2
+server.port=8080
+server.address=localhost
+#register in files but not in h2
+#spring.datasource.url=jdbc:h2:./src/main/resources/db/db
+
+#il faut cibler la bdd de la version browser
+# la version du browser
+# correspond à celle visible sur le site web de h2:
+# jdbc:h2:tcp//localhost/~/h2DB
+# c'est aussi celle écrite dans persistence.xml
+# voir : https://stackoverflow.com/questions/61797029/why-h2-database-doesnt-show-my-table-in-the-browser
+
+#have to be run with JAVA 21 NOT 23 otherwise : "driver error"...
+#it seems to laso work with 23 version so.. ???
+spring.datasource.url=jdbc:h2:tcp://localhost/~/h2DB
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=update
+
+# Activer la console H2
+#spring.h2.console.enabled=true
+spring.h2.console.enabled=false
+spring.h2.console.path=/h2DB/
+spring.h2.console.settings.trace=false
+spring.h2.console.settings.web-allow-others=true
+
+```
+
+Pour résoudre les erreurs :
+
+"NULL not allowed for column "NOMCOLMUNID" ID ; SQL statement:" 
+
+"Caused by: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: NULL non permis pour la colonne
+"
+-->
+
+```java
+
+/*supprimer cette ligne*/
+@GeneratedValue(strategy=GenerationType.IDENTITY, ge) 
+
+```
+
+et remplacer par 
+
+```java
+
+@GeneratedValue(strategy = GenerationType.AUTO)
+
+```
+
+ajouter au début de la class 
+
+```java
+@Component
+```
+
+résoudre : 
+
+"Caused by: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: 
+Violation d'index unique ou clé primaire: "PRIMARY KEY ON PUBLIC."
+
+--> il faut vous assurer que vous possédez pour votre class
+au - 1 constructeur qui prend en paramètre tous les champs de la class
+(dont l'id).
+
+
+
+cross origin permet de résoudre le problème de :
+
+```java
+@RestController
+@RequestMapping
+@CrossOrigin("*")
+public class UserController {}
+```
+
+résoudre : 
+
+No 'Access-Control-Allow-Origin'.
+
+
+Une autre possbilité est que les fichiers de sécurité : 
+
+"SecurityConfig"
+"AuthController"
+
+créent une sécurité renforcées qui requiert une authentification.
+Mettez en commentaire l'entierté de ces fichiers hormis la déclaration de la class.
+Sinon vous aurez des bugs avec le controller qui fera des doubles appels si 
+vous ne commentez pas les champs et les méthodes.
+
+
+il faut aussi mettre dans application.properties :
+
+```properties 
+
+spring.thymeleaf.enabled =false
+
+```
+
+pour désactiver thymeleaf
+
+
+erreur :
+
+"Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'dataSourceScriptDatabaseInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception with message: URL must start with 'jdbc'"
+
+solution pensez à mettre cette fonction dans le main 
+
+de Application.java :
+
+```java
+
+@Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        /*
+        it loads .env file
+         */
+         /*
+        it loads .env file
+         */
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        configurer.setLocation(new FileSystemResource("javaForHistory_work/history_work/src/.env"));
+        return configurer;
+    }
+```
+
+pb :
+
+"Could not resolve placeholder 'HOST_EMAIL_USERNAME' in value "${HOST_EMAIL_USERNAME}""
+
+
+
+pb : 
+
+" Error creating bean with name 'emailServiceImpl': Injection of autowired dependencies failed" 
+
+" Could not resolve placeholder 'spring.mail.username' in value "${spring.mail.username}" "
+
+solution :
+
+
+Vérifiez que le champ : 
+
+"spring.mail.username" n'est pas commenté
+
+
+
+pb : 
+
+"movie.YEARofRelease is null while is primitive (setter)"
+
+solution : 
+
+vérifiez les getters et setters de la class movie,
+assurez vous qu'ils sont bien nommez, qu'ils utilisent des types primitifs tout comme la classe elle-même
+
+
+exporter des variables d'environnement : 
+
+créez un .env et placez-le dans : 
+
+src >
+
+écrives les variables qui vous intéressent (attention il ne faut pas espacer les = des noms des variables) :
+
+```xml
+HOST_EMAIL_USERNAME=blabla
+HOST_EMAIL_PASSWORD=blibli
+
+...
+```
+
+envoyez les variables dans l'environnement :
+
+```shell
+export $(grep -v '^#' .env | xargs)
+```
+
+à l'endroit où se trouve le .env
+
+
+
+vérifiez que les variables sont bien exportées : 
+
+```
+printenv
+```
+
+aide :
+
+https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-linux
+
+maintenant vous pouvez les utiliser dans properties en faisant :
+
+spring.mail.username=${HOST_EMAIL_USERNAME}
+
+
+n'utilisez pas le champs de properties pour l'import vers java,
+utilisez direcent la variable d'environnement :
+
+
+```java
+@Value("${HOST_EMAIL_USERNAME}")   // Takes the value inside the application.properties file
+    private String sender;
+```

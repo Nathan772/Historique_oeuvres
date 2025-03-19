@@ -14,6 +14,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.FileSystemResource;
 
 import java.util.stream.Stream;
 
@@ -26,7 +28,7 @@ ajoutés manuellement
  */
 @SpringBootApplication
 /*
-nécessaire pourgit  résoudre :
+nécessaire pour git  résoudre :
 Parameter 0 of method init in nate.company.youtube_converter.Application
 
 required a bean of type 'nate.company.youtube_converter.siteTools.UserRepository' that could not be found.
@@ -61,7 +63,18 @@ public class Application {
             System.out.println(" les données en base de données : ");
             userRepository.findAll().forEach(System.out::println);
             movieRepository.findAll().forEach(System.out::println);
-            watchMovieRepository.findAll().forEach(System.out::println);
+            //watchMovieRepository.findAll().forEach(System.out::println);
         };
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        /*
+        it loads .env file
+         */
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        configurer.setLocation(new FileSystemResource("javaForHistory_work/history_work/src/.env"));
+        return configurer;
     }
 }

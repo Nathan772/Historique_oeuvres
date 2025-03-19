@@ -59,7 +59,7 @@ public class EmailServiceIT {
         String body = "the body of our test email";
 
         // act
-        var isMailSent = emailService.sendSimpleMessage(new EmailDetails(toAddress, subject, body));
+        var isMailSent = emailService.sendSimpleMessage(new EmailDetails());
 
         // expect
         MimeMessage[] receivedMessages = smtpServerExtension.getMessages();
@@ -79,9 +79,7 @@ public class EmailServiceIT {
         int amountOfMails = 10;
         String recipient = "";
         List<EmailDetails> mailsToSend = IntStream.range(0, amountOfMails)
-                .mapToObj((index) -> new EmailDetails("receiver@test",
-                        "Mail " + index,
-                        "You've just received the mail " + index + "."))
+                .mapToObj((index) -> new EmailDetails())
                 .toList();
 
         // act

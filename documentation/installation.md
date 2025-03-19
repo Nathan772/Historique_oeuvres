@@ -1,10 +1,10 @@
 Pour angular :
 
 
-lancer le projet :
+lancer le projet:
 0) lancer le fichier Application.java depuis intellij
 1) il faut se placer dans angularclient
-2) tapez : ng serve --open
+2) tapez : ng serve --open (lancer angular)
 
 -npm install -g @angular/cli@1.7.4
 
@@ -102,6 +102,18 @@ n'est pas trouvable directement en lien "yarn", vous pouvez copier texte npm du 
 
 essayez aussi de désinstaller rxjs pour yarn et pour npm.
 Puis de réinstaller si nécessaire.
+
+Pour associer du javascript à un fichier vous devrez l'ajouter dans les fichiers du projet dans le fichier
+
+"/angular/client/angular.json":
+
+```
+
+"scripts": ["path/du/fichier.js"]
+
+```
+
+(voir ci-dessous)
 
 Lorsque le projet est partagé entre plusieurs développeurs, vous aurez 
 peut-être à recréer le fichier angular/angularclient/angular.json :

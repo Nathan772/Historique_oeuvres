@@ -6,14 +6,23 @@ utilisez les apis suivantes :
 
 -série : ???
 
+1) Prioritaire :
 
-1) 
+Ajouter python et django  au projet : 
+
+-machine learning : recommendation par clusterign :
+-llM serviteur qui donne des conseils d'oeuvre personnalisés à l'aide du machine learning
+
+2
+-réseau : ajout d'un système de chat en live pour permettre aux users de communiquer entre eux
+
+3)
 
 (- PRIORITAIRE)
 
 -une version admin de la paga d'accueil avec la possibilité de voir la liste des utilisateurs avec la possibilité de les supprimer.
 
-2) 
+4) 
 
 -ajouter une liste déroulante plutôt qu'un simple bouton pour permettre différents status de films : 
 
@@ -24,13 +33,13 @@ utilisez les apis suivantes :
 -Vérifier, et ajouter si possible des méthodes qui permettent de récupérer des infos sur les repository mais sans faire un parcours entier des éléments présents dans le find.
 
 
-4) Genre :
+5) Genre :
 
 - Créer une wrapperClass pour permettre de récupérer le genre d'un film, et associé 
 
 - un film à ses genres dans la bdd
 
-5) Code couleur :
+6) Code couleur :
 
 -afficher un code couleur selon l'état de lecture d'une oeuvre : 
 

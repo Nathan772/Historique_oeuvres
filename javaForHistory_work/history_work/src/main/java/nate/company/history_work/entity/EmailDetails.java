@@ -28,4 +28,16 @@ public class EmailDetails {
     private String subject;
     @NonNull
     private String bodyContent;
+
+    public String getBodyContent() {
+        return bodyContent;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
 }

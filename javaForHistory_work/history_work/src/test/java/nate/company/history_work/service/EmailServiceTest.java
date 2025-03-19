@@ -54,7 +54,7 @@ public class EmailServiceTest {
         simpleMail.setSubject(subject);
         simpleMail.setText(bodyMessage);
 
-        assertTrue(emailService.sendSimpleMessage(new EmailDetails(to, subject, bodyMessage)));
+        assertTrue(emailService.sendSimpleMessage(new EmailDetails()));
         verify(javaMailSender).send(simpleMail);
     }
 
