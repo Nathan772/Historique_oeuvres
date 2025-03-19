@@ -2,9 +2,10 @@ package nate.company.history_work.siteTools.user;
 
 import jakarta.persistence.*;
 
+import nate.company.history_work.siteTools.movie.Movie;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This is the entity that represents a user.
@@ -36,10 +37,26 @@ public class User {
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="iduser")
     private long id;
+
+    @Column(name="pseudo")
     private String pseudo;
+
+    @Column(name="email")
     private String email;
+    @Column(name="password")
     private String password;
+
+    @Column(name="category")
     private String category = "average";
+
+    /*
+    you must use genereic type for the type just like
+    "List" not arrayList.
+    This list is connected to Movie's "isWatchedBy" field
+     */
+    @ManyToMany(mappedBy="isWatchedBy")
+    //@JoinColumn(name = "idmovie")
+    private Set<Movie> watchMovies = new HashSet<>();
 
     /**
      * constructeur par défaut, c'est à dire, avec 0 arguments, indispensable pour résoudre l'erreur
@@ -84,6 +101,34 @@ public class User {
         this.email = email;
         this.password = password;
         this.category =category;
+    }
+
+    /**
+     * this method adds a movie watched
+     * @param movieWatched
+     * the movie watched
+     */
+    public void addWatchedMovie(Movie movieWatched){
+        Objects.requireNonNull(movieWatched);
+        watchMovies.add(movieWatched);
+    }
+
+    /**
+     * remove a movie from the watch list
+     * @param movieWatched
+     */
+    public void removeFromWatchedMovie(Movie movieWatched){
+        Objects.requireNonNull(movieWatched);
+        watchMovies.remove(movieWatched);
+    }
+
+    public void setWatchMovies(Set<Movie> watchMovies) {
+        Objects.requireNonNull(watchMovies);
+        this.watchMovies = watchMovies;
+    }
+
+    public Set<Movie> getWatchMovies() {
+        return watchMovies;
     }
 
     /**
@@ -178,6 +223,8 @@ public class User {
 
     @Override
     public String toString(){
-        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category;
+        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category
+                +" il suit ou regarde actuellement :"+watchMovies.size()+" films";
     }
+
 }

@@ -7,8 +7,6 @@ import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.user.UserRepository;
-import nate.company.history_work.siteTools.watch_read.WatchMovie;
-import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -46,7 +44,7 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository, MovieRepository movieRepository, WatchMovieRepository watchMovieRepository) {
+    CommandLineRunner init(UserRepository userRepository, MovieRepository movieRepository) {
         return args -> {
             /*pas nécessaire sauf si on veut tester l'ajout en brut
             sans passer par l'application Web*/
@@ -61,8 +59,8 @@ public class Application {
             //même chose, mais pour les vidéos
 
             System.out.println(" les données en base de données : ");
-            userRepository.findAll().forEach(System.out::println);
-            movieRepository.findAll().forEach(System.out::println);
+//            userRepository.findAll().forEach(System.out::println);
+//            movieRepository.findAll().forEach(System.out::println);
             //watchMovieRepository.findAll().forEach(System.out::println);
         };
     }

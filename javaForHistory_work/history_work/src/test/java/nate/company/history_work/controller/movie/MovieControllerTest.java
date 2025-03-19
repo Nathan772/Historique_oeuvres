@@ -39,7 +39,7 @@ public class MovieControllerTest {
     private MovieRepository movieRepository;
 
     @MockBean
-    private WatchMovieRepository watchMovieRepository;
+   // private WatchMovieRepository watchMovieRepository;
 
     @MockBean
     private UserRepository userRepository; // Without this Mock, the test can't be launched
@@ -56,7 +56,7 @@ public class MovieControllerTest {
         var firstWatchMovie = new WatchMovie(1L, 1L, "À regarder plus tard");
         var secondWatchMovie = new WatchMovie(1L, 2L, "À regarder plus tard");
 
-        when(watchMovieRepository.findAll()).thenReturn(List.of(firstWatchMovie, secondWatchMovie));
+        //when(watchMovieRepository.findAll()).thenReturn(List.of(firstWatchMovie, secondWatchMovie));
         when(movieRepository.findById(1L)).thenReturn(Optional.of(firstMovie));
         when(movieRepository.findById(2L)).thenReturn(Optional.of(secondMovie));
 

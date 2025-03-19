@@ -2,9 +2,13 @@ package nate.company.history_work.siteTools.movie;
 
 import jakarta.persistence.*;
 
+import nate.company.history_work.siteTools.user.User;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class is the representation of a movie in the database.
@@ -44,6 +48,20 @@ public class Movie {
     private String imdbID;
     //director of the movie
     private String director;
+
+    /*
+    - One to many means, one set will possess many users but a user will just be
+    - many to many means a user will possess several movies and a movie will possess several users
+    - watchmovies is the name of the field connected in the "user" object to the list
+    of the "User" Object.
+
+     */
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinTable(
+            name = "user_watch_movie",
+            joinColumns = @JoinColumn(name = "movieid"),
+            inverseJoinColumns = @JoinColumn(name = "userid"))
+    private Set<User> isWatchedBy = new HashSet<User>();
 
     /**
      *
@@ -125,7 +143,7 @@ public class Movie {
      *
      * @return the category of the user (admin, average)
      */
-    public String getImdbID(){
+    public String getimdbID(){
         return imdbID;
     }
 
@@ -186,6 +204,39 @@ public class Movie {
     @Override
     public String toString(){
         return "L'id du film : "+id+ ", titre : "+title+", directeur "+director + " année : "+ yearOfRelease;
+    }
+
+    /*
+    this method adds a watcher
+     */
+    public void addIsWatchedBy(User user){
+        Objects.requireNonNull(user);
+        isWatchedBy.add(user);
+    }
+
+    public void removeUserFromWatcher(User user){
+        Objects.requireNonNull(user);
+        isWatchedBy.remove(user);
+
+    }
+
+    public Set<User> getIsWatchedBy() {
+        return isWatchedBy;
+    }
+
+    public void setIsWatchedBy(Set<User> userList){
+        isWatchedBy = userList;
+    }
+
+    public void setId(long id) {
+        if(id < 0){
+            throw new IllegalArgumentException("movie's id cannot be lower than 0");
+        }
+        this.id = id;
+    }
+
+    public String getImdbID() {
+        return imdbID;
     }
 
     /**

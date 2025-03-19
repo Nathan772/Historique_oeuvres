@@ -906,3 +906,119 @@ utilisez direcent la variable d'environnement :
 @Value("${HOST_EMAIL_USERNAME}")   // Takes the value inside the application.properties file
     private String sender;
 ```
+
+Pour les mails il faut mettre dans application.java: 
+
+
+```java
+ @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+        /*
+        it loads .env file
+         */
+        System.out.println("Working Directory = " + System.getProperty("user.dir")); ///juste des tests
+        configurer.setLocation(new FileSystemResource("src/main/java/.env")); //path du .env
+        return configurer;
+    }
+```
+
+ces lignes : 
+
+```java
+
+ @Bean
+    CommandLineRunner init(UserRepository userRepository, CartService cartService, BookService bookService, BookRepository bookRepository, OrderService orderService,
+                           FrenchAddressRepository frenchAddressRepository, MailService mailService) {
+        return args -> {
+            //créé des users randoms et les persists en base
+
+//            Stream.of("RyanGosling", "MarlonB", "BobbyB ").forEach(name -> {
+//                        var user = new User(name, name+"Family", name, new BCryptPasswordEncoder().encode("ADAM$2456"), name + "@gmail.com"
+//                        );
+//                        var frenchAddress = new FrenchAddress(user.getPseudo().length(), "Auguste Rodin", "Champs-Sur-Marne", "77420", user);
+//
+//                        userRepository.save(user);
+//                        frenchAddressRepository.save(frenchAddress);
+//                    });
+//
+//                        var lastJKBook = bookRepository.save(bookService.searchBookByAuthor("J.K. Rowling").getLast());
+//                        var firstJKBook = (bookRepository.save(bookService.searchBookByAuthor("J.K. Rowling").getFirst()));
+//
+//                        System.out.println("les books valent : "+lastJKBook+ " et le deuxième book: "+firstJKBook);
+//////
+////                        //montre les users
+////
+////                        System.out.println("L'ensemble des users en bdd : \n");
+////                        userRepository.findAll().forEach(user -> System.out.println(user));
+//            var user1 = userRepository.findAll().iterator().next();
+//           System.out.println("on vérifie que les infos ont été correctmeent récupérées pour les mails :"+Mail.getUniqueInstance().getDeveloperEmailAddress());
+//        };
+            // }
+
+
+            /**
+             * necessary for mailing
+             * @return
+             */
+
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+//        /*
+//        it loads .env file
+//         */
+//        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+//        configurer.setLocation(new FileSystemResource("src/main/resources/.env"));
+//        return configurer;
+//    }
+            System.out.println("on teste que le mail du chef est bien envoyé par le .env : "+mailService.getDeveloperEmailAddress()
+            +" et le mot de passe :"+mailService.getSmtpPassword());
+
+        };
+    }
+```
+
+doivent permettre de d'afficher correctement le mdp et le mail du développeur à l'activation de application.java.
+
+
+résoudre le problème :
+
+"failed to lazily initialize a collection of role: nate.company.history_work.siteTools.user.User.watchMovies: could not initialize proxy - no Session"
+
+solution :
+
+
+faites le mappedBy de cette façon :
+
+```java
+
+//fichier 1 
+@ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JoinTable(
+            name = "user_watch_movie",
+            joinColumns = @JoinColumn(name = "movieid"),
+            inverseJoinColumns = @JoinColumn(name = "userid"))
+    private Set<User> isWatchedBy = new HashSet<User>();
+
+
+//fichier 2 
+
+ @ManyToMany(mappedBy="isWatchedBy")
+    //@JoinColumn(name = "idmovie")
+    private Set<Movie> watchMovies = new HashSet<>();
+
+```
+
+
+
+Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Cannot invoke "org.hibernate.mapping.ToOne.getReferencedEntityName()" because "toOne" is null
+
+pb :
+
+failed to lazily initialize a collection of role: nate.company.history_work.siteTools.user.User.watchMovies: could not initialize proxy - no Session
+
+solution : 
+
+ne créez pas de nouvelles données et n'en chargez pas depuis la partie "Application.java",
+cela entre en conflit avec le lazy qui prépare les données plus tard et qui donc rend impossible l'utilisation des repositories à ce moment-là
