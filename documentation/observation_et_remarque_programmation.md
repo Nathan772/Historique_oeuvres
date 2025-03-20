@@ -1063,3 +1063,17 @@ Failed to configure a DataSource: 'url' attribute is not specified and no embedd
 solution  : 
 
 MAVEN > CLEAN + COMPILE 
+
+
+problème :
+
+le bug de ce matin c'est que la bdd s'autodétruit à chaque fois que je relance application.java
+
+solution : 
+
+Avec H2 vous avez juste besoin de lancer h2 qui est indépendant de votre projet,
+mais H2 met à jour le create-drop du update, dès que vous le modifiez dans properties.
+
+Mais pour sql-connector, si vous switchez de create-drop à update, pour que cela s'applique il faut rebuild votre project côté maven 
+(pas besoin de clean).
+

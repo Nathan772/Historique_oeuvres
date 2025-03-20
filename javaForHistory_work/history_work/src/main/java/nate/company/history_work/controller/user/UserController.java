@@ -223,7 +223,7 @@ public class UserController {
 
         //already exists
         if(userByPseudo.isPresent()){
-            LOGGER.log(Level.INFO, " on le user est déjà présent : "+userByPseudo.get());
+            LOGGER.log(Level.INFO, " le user est déjà présent : "+userByPseudo.get());
             return userByPseudo.get();
         }
         if(userByMail.isPresent()){
