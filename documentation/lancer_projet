@@ -1,0 +1,12 @@
+côté angular : 
+
+0) lancer le fichier Application.java depuis intellij
+1) il faut se placer dans angularclient
+2) tapez : ng serve --open (lancer angular)
+
+ng serve --open
+
+côté back : 
+
+
+- appuyez simplement sur le bouton play de intellij si le back end a bien été build avant (il n'est nécessaire de ne build qu'une seule fois si tout s'est bien passé lors du premier build).

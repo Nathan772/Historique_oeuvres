@@ -38,6 +38,6 @@ export class AppComponent {
   */
   dataSave(){
     //save user data for long term session
-    sessionStorage.setItem('userId', ""+this.userService.userAccount.id);
+    sessionStorage.setItem('pseudo', ""+this.userService.userAccount.pseudo);
   }
 }

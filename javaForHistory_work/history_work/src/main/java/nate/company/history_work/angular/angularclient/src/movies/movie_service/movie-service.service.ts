@@ -51,15 +51,15 @@ this method retrieve the movies from the database and add them to the user list
 retrieveUserMovies(userAccount:User){
             //empty user movie list to not have copy of the same movie
             this.userMoviesList = [];
-              console.log("on récupère les films du user nommé : "+userAccount.pseudo+" et d'id : "+userAccount.id);
-              this.findAllMoviesFromUserList(userAccount.id).subscribe((movies) => {
+              console.log("on récupère les films du user nommé : "+userAccount.pseudo);
+              this.findAllMoviesFromUserList(userAccount.pseudo).subscribe((movies) => {
                 /*
                    on s'assure que le film a bien été trouvé
                    avant de l'affecter à this.movieFull*/
                     /* on donne à movieFull
                     les infos du film qui nous intéresse*/
                         if (movies != null){
-                          console.log('les films de l\'utilisateur '+userAccount.id+'films ont bien été trouvé');
+                          console.log('les films de l\'utilisateur '+userAccount.pseudo+'films ont bien été trouvé');
                           for(let movie of movies){
                             console.log("on ajoute "+movie.title);
                             console.log("le imdb est : "+movie.imdbID);
@@ -119,7 +119,7 @@ addToWatchList(movie:MovieFullInformations){
 
 
   /* retrieve all the movies from user data present in the database. */
-  public findAllMoviesFromUserList(userId:number):Observable<Movie[]>{
+  public findAllMoviesFromUserList(userPseudo:string):Observable<Movie[]>{
     //deprecated (begin)
     //let params = new URLSearchParams(); deprecated
     //params.append("someParamKey", this.someParamValue)
@@ -146,14 +146,22 @@ addToWatchList(movie:MovieFullInformations){
 
        //l
 
-        interface UserId {
-         id:number;
+        /*interface UserId {
+         pseudo:string;
        }
 
      let userInfo:UserId = {
-       id:userId
-      }
-      return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(userInfo)});
+       pseudo:string
+      }*/
+    const headers = new HttpHeaders().append('header', 'value');
+    /*
+        prepares params source
+        https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+        */
+    const params = new HttpParams().append('pseudo', userPseudo)
+    //params = params.append('email', user.email);
+    return this.HttpClient.get<Movie[]>(this.userMoviesUrl, {headers,params});
+      //return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(user)});
   }
 
   /**
@@ -316,10 +324,10 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
           this.userMoviesList = this.userMoviesList.filter(
             movieKept => movieKept.imdbID != movie.imdbID
           )
-          console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.id+" avec pour IMDB "+movieSimple.imdbID);
+          console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.pseudo+" avec pour IMDB "+movieSimple.imdbID);
           /*
           functional but no checking*/
-          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID)
+          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove/"+user.pseudo+"/"+movieSimple.imdbID)
           .subscribe(response =>
                     {
                       if(response != null){

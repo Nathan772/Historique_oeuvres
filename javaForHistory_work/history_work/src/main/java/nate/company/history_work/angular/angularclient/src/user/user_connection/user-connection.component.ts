@@ -62,7 +62,7 @@ export class UserConnectionComponent implements OnInit {
     */
     //this.alreadyExists = false;
 
-    this.user = {id:51, pseudo:"", email:"", password:"",category:"average"};
+    this.user = {pseudo:"", email:"", password:"",category:"average"};
     this.copyInfo = {passwordCopy:""};
     /*at the inception
     the user is not connected at all...
@@ -82,7 +82,7 @@ export class UserConnectionComponent implements OnInit {
 
           //The user already exists
           if(userFound != null){
-              console.log("le user a été trouvé ! son id : "+userFound.id+ " son pseudo : "+userFound.pseudo);
+              console.log("le user a été trouvé ! son pseudo : "+userFound.pseudo);
 
               //the user exists, starts connexion
               if(userFound.password == this.user.password){
@@ -90,9 +90,9 @@ export class UserConnectionComponent implements OnInit {
                  this.connectionService.isConnected = true;
                  //update the actual user with their true info (notably the uid)
                  this.userService.userAccount = userFound;
-                 console.log("le pseudo du user connecté est : "+userFound);
+                 console.log("les infos du user connecté est : "+userFound);
                  console.log("le pseudo du user connecté est : "+userFound.pseudo);
-                 console.log("l'id du user connecté est : "+userFound.id);
+
                  console.log("le mail du user est : "+userFound.email);
                  console.log("le password du user est : "+userFound.password);
                   console.log("son status est : "+userFound.category);

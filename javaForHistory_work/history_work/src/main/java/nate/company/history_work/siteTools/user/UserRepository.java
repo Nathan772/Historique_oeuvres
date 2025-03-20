@@ -17,6 +17,8 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
     Optional<User> getUserById(long id);
 
+    void removeByPseudo(String pseudo);
+
     //List<User> getAll();
 }
 

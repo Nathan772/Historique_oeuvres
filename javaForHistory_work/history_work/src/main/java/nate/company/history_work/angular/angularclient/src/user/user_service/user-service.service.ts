@@ -12,6 +12,11 @@ import { User } from '../user';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import {ConnectionServiceService} from '../../connection/connection-service.service';
+//enable to convert data into json
+import { Component } from '@angular/core';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { inject } from '@angular/core';
+
 
 @Injectable({
   providedIn:'root'})
@@ -20,7 +25,7 @@ export class UserService {
   router:Router;
   private usersUrl: string;
   private registerUrl: string;
-  public userAccount:User = {id:0,pseudo:"",email:"",password:"",category:"average"};
+  public userAccount:User = {pseudo:"",email:"",password:"",category:"average"};
   private connectUrl:string;
   private userExistsUrl:string;
 
@@ -28,30 +33,11 @@ export class UserService {
     //usersUrl va permettre de faire le lien avec le backend
     //l'@ 8080 est une @ du backend
     this.usersUrl = 'http://localhost:8080/users';
-    this.registerUrl = 'http://localhost:8080/register';
+    this.registerUrl = 'http://localhost:8080/save/user'
     this.connectUrl = 'http://localhost:8080/connect';
     this.userExistsUrl = 'http://localhost:8080/userSearch';
     this.router = routerParam;
   }
-
-
- /**
-  retrieve a user in the data base
-  */
-  /* deprecated, can use sensitive data
-  public findUser(user:User): Observable<User> {
-    //let headers = new Headers();
-    headers.append('Content-Type','application/json');
-    headers.append()
-    //let params = new URLSearchParams();
-    //params.append("",)
-    //let options = user ?
-    { params: new HttpParams().set('userName', user) } : {};
-    //const params = new HttpParams().set('','');
-    return this.http.get<User>(this.userExistsUrl, { params: this.ToHttpParams(user)});
-  }*/
-
-
 
 
 
@@ -63,7 +49,7 @@ export class UserService {
     connectionService.isConnected = false;
     connectionService.alreadyExists = false
     connectionService.mismatchedPassword = false;
-    this.userAccount = {id:0,pseudo:"", password:"", email:"",category:"average"};
+    this.userAccount = {pseudo:"", password:"", email:"",category:"average"};
     this.redirectionToConnectionPage(connectionService);
   }
 
@@ -88,8 +74,18 @@ redirectionToConnectionPage(connectionService:ConnectionServiceService) {
     retrieve a user in the data base
     */
   public findUser(user:User): Observable<User> {
-    return this.http.post<User>(this.userExistsUrl,user);
+    const headers = new HttpHeaders().append('header', 'value');
+    /*
+    prepares params source
+    https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+    */
+    const params = new HttpParams().append('pseudo', user.pseudo).append('email',user.email)
+    //params = params.append('email', user.email);
+    return this.http.get<User>(this.userExistsUrl, {headers,params})
   }
+
+
+
 
 /**
 this method enable to convert
@@ -127,10 +123,11 @@ UserController.java
 
 */
   public save(user: User) {
-    console.log("On sauvegarde un nouvel utilisateur : "+user);
-    return this.http.post<User>(this.usersUrl, user);
+    console.log("On sauvegarde un nouvel utilisateur : "+user.pseudo);
+    var jsonUser = JSON.stringify(user)
+    console.log("show user as json :"+user)
+    return this.http.post<User>(this.registerUrl,jsonUser);
   }
-
 
 /**
  cette méthode permet la suppresion d'un user.
@@ -142,9 +139,9 @@ http://localhost:8080/user
  */
   public delete(user: User) {
     console.log("On supprime un nouvel utilisateur : "+user);
-    console.log("le user a pour id : "+user.id)
+    console.log("le user a pour pseudo : "+user.pseudo)
     //use the url associated deleteMapping of UserController
-    return this.http.delete(this.usersUrl+"/delete/"+user.id);
+    return this.http.delete(this.usersUrl+"/delete/"+user.pseudo);
     //censé marcher : "http://localhost:8080/users/delete/302"
   } /*
      set data for the user, into the service
@@ -193,7 +190,6 @@ http://localhost:8080/user
             //let userPseudo = JSON.parse(sessionStorage.getItem('userPseudo') || '{}');
             let userPseudo = sessionStorage.getItem('userPseudo') || "noUserFound";
             let userSimple:User = {
-                  id:0,
                   pseudo:userPseudo,
                   email:"none@gmail.com",
                   password:"none",
@@ -209,7 +205,7 @@ http://localhost:8080/user
             //let isReady = this.setUser(userDataBase);
 
 
-            console.log("le user récupéré vaut maintenant: "+this.userAccount.pseudo+" et a pour id "+this.userAccount.id);
+            console.log("le user récupéré vaut maintenant: "+this.userAccount.pseudo);
             //set connection "on";
             connectionService.isConnected = true;
           }
@@ -225,3 +221,4 @@ http://localhost:8080/user
 
 
 }
+

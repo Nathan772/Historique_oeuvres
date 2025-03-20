@@ -26,7 +26,7 @@ import static nate.company.history_work.logger.LoggerInfo.LOGGER;
  * @author Dylan DE JESUS
  */
 @RestController
-@CrossOrigin("*") // permet de résoudre le problème de "No Access-control-allow-origin" cors policy error
+// permet de résoudre le problème de "No Access-control-allow-origin" cors policy error
 public class MovieController {
      /*
    necessary constructor for REST API

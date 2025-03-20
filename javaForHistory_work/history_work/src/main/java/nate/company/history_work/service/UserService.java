@@ -65,4 +65,8 @@ public class UserService {
     public void removeById(long userId){
         userRepository.deleteById(userId);
     }
+
+    public void removeByPseudo(String pseudo){
+        userRepository.removeByPseudo(pseudo);
+    }
 }

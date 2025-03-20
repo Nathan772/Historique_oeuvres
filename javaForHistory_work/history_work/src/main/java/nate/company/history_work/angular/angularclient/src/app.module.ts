@@ -35,11 +35,10 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
 
 
 
-
 @NgModule({
    declarations: [
-      AppComponent,
       UserFormComponent,
+      AppComponent,
       UserEntranceComponent,
       UserConnectionComponent,
       MovieCardComponent,

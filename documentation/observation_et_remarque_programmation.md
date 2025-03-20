@@ -766,6 +766,9 @@ au - 1 constructeur qui prend en paramètre tous les champs de la class
 
 
 
+problème  : 
+
+
 cross origin permet de résoudre le problème de :
 
 ```java
@@ -775,15 +778,32 @@ cross origin permet de résoudre le problème de :
 public class UserController {}
 ```
 
-résoudre : 
 
 No 'Access-Control-Allow-Origin'.
 
+solution plus propre : https://stackoverflow.com/questions/44697883/can-you-completely-disable-cors-support-in-spring
 
-Une autre possbilité est que les fichiers de sécurité : 
+```
+/*
+enables to handle security properly
+https://stackoverflow.com/questions/44697883/can-you-completely-disable-cors-support-in-spring
+ */
+@Configuration
+public class WebConfiguration implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
+    }
+}
+```
+
+Une autre possbilité est l'utilisation des fichiers de sécurité : 
 
 "SecurityConfig"
 "AuthController"
+
+
 
 créent une sécurité renforcées qui requiert une authentification.
 Mettez en commentaire l'entierté de ces fichiers hormis la déclaration de la class.
@@ -1022,3 +1042,24 @@ solution :
 
 ne créez pas de nouvelles données et n'en chargez pas depuis la partie "Application.java",
 cela entre en conflit avec le lazy qui prépare les données plus tard et qui donc rend impossible l'utilisation des repositories à ce moment-là
+
+résoudre :
+
+"user-form.component.ts:117 
+ POST http://localhost:8080/userSearch 405 (Method Not Allowed)"
+
+ --> côté angular 
+
+
+ solution :
+
+vérifiez que vous avez bien créé un controller avec ce path là (c'est peut être un ancien path).
+
+pb : 
+
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+solution  : 
+
+MAVEN > CLEAN + COMPILE 

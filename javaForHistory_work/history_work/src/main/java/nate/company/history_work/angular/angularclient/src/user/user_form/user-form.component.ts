@@ -66,7 +66,7 @@ export class UserFormComponent implements OnInit {
     */
     //this.alreadyExists = false;
 
-    this.user = {id:0, pseudo:"", email:"", password:"",category:"average"};
+    this.user = {pseudo:"", email:"", password:"",category:"average"};
     this.copyInfo = {passwordCopy:""};
     /*at the inception
     the user is not connected at all...

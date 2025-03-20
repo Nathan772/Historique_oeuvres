@@ -2,6 +2,9 @@ Lancer mysql avec une session USER :
 
 mysql -u nathanb -p
 
+
+
+
 mdp: 
 
 (voir portable ou dans le dossier dédié)
@@ -14,6 +17,8 @@ DATA BASE :
 -USE databasaName;
 
 -USE historyDB;
+
+SHOW TABLES;
 
 "
 source bddinit.sql

@@ -1,8 +1,15 @@
 package nate.company.history_work.controller.user;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import io.swagger.v3.core.util.Json;
 import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.user.UserCategory;
 import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +27,6 @@ import static nate.company.history_work.logger.LoggerInfo.LOGGER;
  * User controller.
  */
 @RestController
-@CrossOrigin("*")
 public class UserController {
 
     /*
@@ -36,6 +42,9 @@ public class UserController {
     private final UserService userService;
 
     private final MovieService movieService;
+
+    private final ObjectWriter jsonConverter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+    private final ObjectMapper fromJsonConverter = new ObjectMapper();
 
     /**
      * constructor selfmade
@@ -83,11 +92,57 @@ public class UserController {
 
      */
     // rather post than get mapping in order to hide user data
+    //overkill
+//    @GetMapping("/userSearch")
+//    @ResponseBody
+//    public ResponseEntity<?> getUser(@RequestParam(name="id") String userId, @RequestParam(name="pseudo") String userPseudo,
+//                                     @RequestParam(name="email") String email, @RequestParam(name="password") String password
+//                                     ){
+//        var userByEmail = userService.getUserByMail(email);
+//
+//        //the user already exists
+//        if(userByEmail.isPresent()){
+//            return ResponseEntity.ok(userByEmail.get());
+//        }
+//        var userByPseudo = userService.getUserByPseudo(userPseudo);
+//        if(userByPseudo.isPresent()){
+//            return ResponseEntity.ok(userByPseudo.get());
+//        }
+//
+//        //they don't exist
+//        return ResponseEntity.ok().build();
+//    }
+
+
+
+
+
+
+
+    /**
+     * this method retrieve a specific user if exists in database
+     * @param userPseudo pseudo of the user
+     * @param email the email from this user
+     * @return the user searched if found, else null
+     */
+    /*
+    since we use get with parameters,
+    we have to retrieve each parameter one by one.
+    You must match the parameters
+    used in the url with a
+    "(name ="paremeter1InTheUrlName") JavaTypeParameter1 param1NameForJava,
+    etc..."
+    You can check the "right-click + console" to retrieve parameter's names but these are just the names of the fields of the
+    class you defined in your angular class file.
+    You can prevent your api from explictly saying "RequestParam(name='...')" if the java parameters' method name matches, the name of the
+    field of your class (here the class is user). Here it purpesofuly, matches for email and password (for the sake of the example)
+
+     */
+    // rather post than get mapping in order to hide user data
+    //overkill
     @GetMapping("/userSearch")
     @ResponseBody
-    public ResponseEntity<?> getUser(@RequestParam(name="id") String userId, @RequestParam(name="pseudo") String userPseudo,
-                                     @RequestParam(name="email") String email, @RequestParam(name="password") String password
-                                     ){
+    public ResponseEntity<?> getUser(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="email") String email){
         var userByEmail = userService.getUserByMail(email);
 
         //the user already exists
@@ -99,6 +154,8 @@ public class UserController {
             return ResponseEntity.ok(userByPseudo.get());
         }
 
+
+        LOGGER.log(Level.INFO, " le user n'existe pas en bdd");
         //they don't exist
         return ResponseEntity.ok().build();
     }
@@ -123,43 +180,56 @@ public class UserController {
     /**
      * Adds a new user in the database.
      *
-     * @param user the request body that contains data for a new user to add
+     * @param userJson the user as json you want to add.
      * @return the user insterd in the database
      *
      *
      * it needs to be changed by json object that you will parse later
      */
-    @PostMapping("/users")
-    public User addUser(@RequestBody User user){
-        Objects.requireNonNull(user);
-//        LOGGER.log(Level.INFO, " on ajoute le user : "+user);
-//        /*by default every user is average
-//        if the add been add through the website
-//         */
-//        user.setCategory("average");
-//        userRepository.save(user);
-//        User savedUser = null;
-//        //retrieve actual id in database
-//        for(var userInDB:userRepository.findAll()){
-//            if(userInDB.getPseudo().equals(user.getPseudo())){
-//                LOGGER.log(Level.INFO,"user copié en db");
-//                savedUser = userInDB;
-//            }
-//        }
-//        if(savedUser == null) savedUser = user;
-//        LOGGER.log(Level.INFO,"l'id du user sauvegardé est : "+savedUser.getId());
-//        return savedUser;
-        user.setCategory("average");
+    @PostMapping("/save/user")
+    public User addUser(@RequestBody String userJson){
+        Objects.requireNonNull(userJson);
+        //var user = jsonConverter.
+        /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert
+        json in array
+        TypeFactory typeFactory = jsonConverter.getTypeFactory();
+        List<String> someClassList = jsonConverter.readValue(userJson, typeFactory.constructCollectionType(List.class, String.class))
+        */
+
+//        TypeReference<HashMap<String,Object>> typeRef = new TypeReference<HashMap<String,Object>>() {};
+//        HashMap<String,Object> o = fromJsonConverter.readValue(userJson, typeRef);
+//        var user =
+        // source : https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
+        //transform json to ma
+//        Map<String,String> maps = new HashMap<String,String>();
+//        userJson.entrySet().stream().forEach(entry-> maps.put(entry.getKey(), entry.getValue()));
+
+        // convert JSON string to Map
+        // uncheck assignment
+        // Map<String, Object> map = mapper.readValue(json, Map.class);
+
+        // Convert JSON string to Map
+        Map<String, String> map;
+        try {
+            map = fromJsonConverter.readValue(userJson, new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json receveid as user doesn't respect the json format");
+        }
+        LOGGER.info("json user's parsing succeed : "+map);
+        var user = new User(map.get("pseudo"),map.get("email"),map.get("password"));
+        user.setCategory(UserCategory.AVERAGE);
         var userByPseudo =  userService.getUserByPseudo(user.getPseudo());
         var userByMail = userService.getUserByMail(user.getEmail());
 
         //already exists
         if(userByPseudo.isPresent()){
+            LOGGER.log(Level.INFO, " on le user est déjà présent : "+userByPseudo.get());
             return userByPseudo.get();
         }
         if(userByMail.isPresent()){
             return userByMail.get();
         }
+        LOGGER.log(Level.INFO, " le user n'existe pas en bdd on ajoute le user : "+user);
         var newUser = userService.saveUser(user);
         return newUser;
     }
@@ -171,14 +241,15 @@ public class UserController {
      *
      * it needs to bechanged by pseudo in order to prevent from id non secure leaks
      *
-     * @param idUser the id of the user
+     * @param pseudoUser the id of the user
      * @return a response entity
      */    // TODO : Change implementation : 1 - Check whether the id is in the repo | 2 - If it returns a non null value, delete by id otherwise, return NotFOUND code
-    @DeleteMapping("users/delete/{idUser}")
-    public ResponseEntity<String> removeUser(@PathVariable String idUser){
-        var userIdLong = Long.parseLong(idUser);
-        LOGGER.log(Level.INFO,"on supprime le user avec l'id : "+userIdLong);
-        userService.removeById(userIdLong);
+    @DeleteMapping("users/delete/{pseudo}")
+    public ResponseEntity<String> removeUser(@PathVariable String pseudoUser){
+        Objects.requireNonNull(pseudoUser);
+        //var userIdLong = Long.parseLong(idUser);
+        LOGGER.log(Level.INFO,"on supprime le user avec le pseudo : "+pseudoUser);
+        userService.removeByPseudo(pseudoUser);
         /* a necessary rreturn to enable removal
          */
         return ResponseEntity.noContent().build();
@@ -205,7 +276,7 @@ public class UserController {
      *
      * a remove method for an association between a movie and a user.
      *
-     * @param id
+     * @param pseudo
      * the user who watched the movie
      * @param imdbID
      * the movie watch with its imdbID.
@@ -217,10 +288,10 @@ public class UserController {
      */
     //overpowerful deprecated
 
-    @DeleteMapping("/user/movie/remove/{id}/{imdbID}")
-    public ResponseEntity<String> removeMovieFromList(@PathVariable String id, @PathVariable String imdbID){
+    @DeleteMapping("/user/movie/remove/{pseudo}/{imdbID}")
+    public ResponseEntity<String> removeMovieFromList(@PathVariable String pseudo, @PathVariable String imdbID){
 
-        var userOpt = userService.getUserById(Long.parseLong(id));
+        var userOpt = userService.getUserByPseudo(pseudo);
         var movieOpt = movieService.getMovieByImdb(imdbID);
         if(userOpt.isEmpty()){
             LOGGER.log(Level.INFO, "Error : the user that was supposed to be lose the movie from their list hasn't been found !!");

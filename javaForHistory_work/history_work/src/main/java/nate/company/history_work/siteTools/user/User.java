@@ -1,5 +1,6 @@
 package nate.company.history_work.siteTools.user;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 
 import nate.company.history_work.siteTools.movie.Movie;
@@ -47,7 +48,7 @@ public class User {
     private String password;
 
     @Column(name="category")
-    private String category = "average";
+    private UserCategory category = UserCategory.AVERAGE;
 
     /*
     you must use genereic type for the type just like
@@ -58,6 +59,27 @@ public class User {
     //@JoinColumn(name = "idmovie")
     private Set<Movie> watchMovies = new HashSet<>();
 
+    /*
+   necessary for spring init
+   (ID is NECESSARY)
+    */
+    @JsonCreator
+    public User(int id,
+            String pseudo,
+            String password,
+            String email,
+                UserCategory userCategory)
+
+    {
+        Objects.requireNonNull(email);
+        Objects.requireNonNull(pseudo);
+        this.pseudo = pseudo;
+        this.email = email;
+        this.id = id;
+        this.category = userCategory;
+
+    }
+
     /**
      * constructeur par défaut, c'est à dire, avec 0 arguments, indispensable pour résoudre l'erreur
      * "required a bean of type "java.lang.String" that could not be found"
@@ -67,7 +89,7 @@ public class User {
         this.pseudo = "";
         this.email = "";
         this.password = "";
-        this.category ="average";
+        this.category =UserCategory.AVERAGE;
     }
 
     /**
@@ -94,13 +116,13 @@ public class User {
      * @param pseudo the pseudo of the user (credential)
      * @param email the email address (credential)
      * @param password the password (credential)
-     * @param category the category
+     * @param userCategory the category
      */
-    public User(long id,String pseudo, String email, String password, String category){
+    public User(long id,String pseudo, String email, String password, UserCategory userCategory){
         this.id = id;
         this.email = email;
         this.password = password;
-        this.category =category;
+        this.category =userCategory;
     }
 
     /**
@@ -172,7 +194,7 @@ public class User {
      *
      * @return the category of the user (admin, average)
      */
-    public String getCategory(){
+    public UserCategory getCategory(){
         return category;
     }
 
@@ -199,8 +221,8 @@ public class User {
      *
      * @param category the category of the user ("admin" or "average)
      */
-    public void setCategory(String category){
-        category = category;
+    public void setCategory(UserCategory category){
+        this.category = category;
     }
 
     /**
