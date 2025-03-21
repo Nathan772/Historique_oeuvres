@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
@@ -157,7 +159,7 @@ public class UserController {
 
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd");
         //they don't exist
-        return ResponseEntity.ok().build();
+        return ResponseEntity.badRequest().build();
     }
 
 
@@ -170,12 +172,111 @@ public class UserController {
      */
     //@RequestMapping("/users")
     //@GetMapping("/user")
-    /*public User getUser(@RequestBody User user){
 
-        userRepository.find
 
-    }*/
+    /**
+     * The "add movie" add a new movie into the data base.
+     *
+     * @param userJsonAndmovieJson
+     * the user that will have the movie in their list as json. and
+     * the movie that will be added as json.
+     *
+     * @return the retrieved movie
+     */
+    //Requestbody can be used only once,
+    //thereby you use a wrapper class or two request param
+    //you cannot
+    @PostMapping("/user/movie/add")
+    public ResponseEntity<?> addMovie(@RequestBody String userJsonAndmovieJson){
+        //regex searched : {({.*})\,({.*})}
+        LOGGER.log(Level.INFO, " on ajoute le film : "+userJsonAndmovieJson);
+        //save the movie in database
+        Movie movieSaved;
+        //check if movie already exists first :
 
+        Objects.requireNonNull(userJsonAndmovieJson);
+        /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert*/
+        // source : https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
+
+        // Convert JSON string to Map
+       // Map<String, String> mapMovieAndJson;
+
+        // Convert JSON string to Map
+        Map<String, Object> mapUser;
+
+        //convert JSON to Map
+        Map<String, String> mapMovie;
+
+        // String to be scanned to find the pattern.
+        String line = userJsonAndmovieJson;
+        String pattern = "\\{(\\{.*\\})\\,(\\{.*\\})\\}";
+
+        // Create a Pattern object
+        Pattern regex = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher matcher = regex.matcher(line);
+
+        if (!matcher.find( )) {
+            //the string doesn't match the pattern expected for movie and user
+            //as jsons
+            return ResponseEntity.badRequest().build();
+        }
+
+        System.out.println("le groupe 1 récupéré est : "+matcher.group(1));
+        //retrieve user's data
+        try {
+            mapUser = fromJsonConverter.readValue(matcher.group(1), new TypeReference<HashMap<String,Object>>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format");
+        }
+
+        System.out.println("l'élément récupéré est : "+mapUser);
+
+        //retrieve movie's data
+        try {
+            mapMovie = fromJsonConverter.readValue(matcher.group(2), new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json receveid as movie doesn't respect the json format");
+        }
+//
+        LOGGER.info("json user's and movie's parsing succeed : "+mapUser);
+        var user = new User(mapUser.get("pseudo").toString(),mapUser.get("email").toString(),mapUser.get("password").toString());
+        var movie = new Movie(mapMovie.get("title"), Integer.parseInt(mapMovie.get("yearOfRelease")), mapMovie.get("imdbID"), mapMovie.get("director"));
+        user.setCategory(UserCategory.AVERAGE);
+        var userByPseudo =  userService.getUserByPseudo(user.getPseudo());
+
+
+
+        //user not found
+        if(userByPseudo.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        //use the actual user
+        var actualUser = userByPseudo.get();
+        //check if movie already exists in db
+        var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getimdbID());
+
+        if(movieAlreadyExistsOpt.isPresent()){
+            //the movie is already in the data base don't need to recreate with the same imdb
+            var movieChosen = movieAlreadyExistsOpt.get();
+            movieChosen.addIsWatchedBy(actualUser);
+            actualUser.addWatchedMovie(movieChosen);
+            //makes them persistent in db
+            movieService.saveMovie(movieChosen);
+            userService.saveUser(actualUser);
+            return ResponseEntity.ok(movieChosen);
+        }
+
+        //it's a new movie that wasn't in db
+        //we save it in db
+        movie.addIsWatchedBy(actualUser);
+        actualUser.addWatchedMovie(movie);
+        movieService.saveMovie(movie);
+        userService.saveUser(actualUser);
+        LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
+        return ResponseEntity.ok("it works");
+    }
 
     /**
      * Adds a new user in the database.
@@ -189,31 +290,16 @@ public class UserController {
     @PostMapping("/save/user")
     public User addUser(@RequestBody String userJson){
         Objects.requireNonNull(userJson);
-        //var user = jsonConverter.
-        /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert
-        json in array
-        TypeFactory typeFactory = jsonConverter.getTypeFactory();
-        List<String> someClassList = jsonConverter.readValue(userJson, typeFactory.constructCollectionType(List.class, String.class))
-        */
-
-//        TypeReference<HashMap<String,Object>> typeRef = new TypeReference<HashMap<String,Object>>() {};
-//        HashMap<String,Object> o = fromJsonConverter.readValue(userJson, typeRef);
-//        var user =
+        /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert*/
         // source : https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
-        //transform json to ma
-//        Map<String,String> maps = new HashMap<String,String>();
-//        userJson.entrySet().stream().forEach(entry-> maps.put(entry.getKey(), entry.getValue()));
 
-        // convert JSON string to Map
-        // uncheck assignment
-        // Map<String, Object> map = mapper.readValue(json, Map.class);
-
+        System.out.println("le json de sauvegarde du user ressemble à ça en string : "+userJson);
         // Convert JSON string to Map
         Map<String, String> map;
         try {
             map = fromJsonConverter.readValue(userJson, new TypeReference<>() {});
         } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error : the json receveid as user doesn't respect the json format");
+            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format");
         }
         LOGGER.info("json user's parsing succeed : "+map);
         var user = new User(map.get("pseudo"),map.get("email"),map.get("password"));
@@ -264,10 +350,10 @@ public class UserController {
      * @return the list of movie possessed by the user
      */
     @GetMapping("user/movie")
-    public Set<Movie> getUserMovies(@RequestParam(name="id") long userId){
+    public List<Movie> getUserMovies(@RequestParam(name="id") long userId){
         var user = userService.getUserById(userId);
         if(user.isEmpty()){
-            return new HashSet<>();
+            return new ArrayList<>();
         }
        return  user.get().getWatchMovies();
     }

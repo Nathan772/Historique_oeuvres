@@ -3,6 +3,8 @@ package nate.company.history_work;
 /* import proposé au clique sur les différentes annotations en rouge
 
  */
+import nate.company.history_work.service.MovieService;
+import nate.company.history_work.service.UserService;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
 import nate.company.history_work.siteTools.user.User;
@@ -45,7 +47,7 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository, MovieRepository movieRepository) {
+    CommandLineRunner init(UserRepository userRepository, MovieRepository movieRepository, UserService userService, MovieService movieService) {
         return args -> {
             /*pas nécessaire sauf si on veut tester l'ajout en brut
             sans passer par l'application Web*/

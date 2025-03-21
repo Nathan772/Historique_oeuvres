@@ -38,6 +38,8 @@ public class Movie {
     //on ne peut pas mettre de commentaire entre les 2
     @Id
     @Column(name="idmovie")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     private int yearOfRelease;
@@ -56,7 +58,7 @@ public class Movie {
     of the "User" Object.
 
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_watch_movie",
             joinColumns = @JoinColumn(name = "movieid"),
@@ -73,6 +75,30 @@ public class Movie {
         this.yearOfRelease = 0;
         this.imdbID ="sss";
         this.director = "jean";
+    }
+
+    /**
+     * Constructs a movie.
+     *
+     * To make the API work we need at least :
+     *  The standard constructor, getters, setters, toString.
+
+     * @param title the title of the movie
+     * @param yearOfRelease the release year of the movie
+     * @param imdbID the imdb id
+     * @param director the director name of the movie
+     */
+    public Movie(String title, int yearOfRelease, String imdbID, String director){
+        Objects.requireNonNull(title, "the movie's title cannot be null");
+        Objects.requireNonNull(imdbID, "the imdbID cannot be null");
+        Objects.requireNonNull(director, "the movie director cannot be null");
+        if(yearOfRelease < 0){
+            throw new IllegalArgumentException("movie's year cannot be lower than 0");
+        }
+        this.yearOfRelease = yearOfRelease;
+        this.imdbID = imdbID;
+        this.director = director;
+        this.title = title;
     }
 
     /**

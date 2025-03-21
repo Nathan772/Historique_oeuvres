@@ -246,15 +246,41 @@ addToWatchList(movie:MovieFullInformations){
           console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
           /*
           problème ici !!!!! :...
+
           */
-          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{"movie":movieSimple,"user":user})
-                  .subscribe(
-                        movieRetrieved => {
-                          //save succeed
-                          this.addMovieToUserListWithoutDataBase(movie)
-                          return movieRetrieved;
-                        }
-                      );
+
+
+          /*
+          https://stackoverflow.com/questions/46707073/how-to-pass-multiple-json-object-parameters-to-http-post-method-in-angular4
+          prepare jsons as params
+          */
+          //const headers = new HttpHeaders().append('header', 'value');
+              /*
+              prepares params source
+              https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+              */
+
+
+          /*
+          wrapper for two objects in
+          one
+          component
+          */
+
+          /*
+          create wrapper as string
+          */
+          let wrapperAsString:string = "{"+JSON.stringify(user)
+          wrapperAsString +=","+JSON.stringify(movieSimple)+"}"
+
+          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',wrapperAsString)
+                            .subscribe(
+                                  movieRetrieved => {
+                                    //save succeed
+                                    this.addMovieToUserListWithoutDataBase(movie)
+                                    return movieRetrieved;
+                                  }
+                                );
 
     }
 

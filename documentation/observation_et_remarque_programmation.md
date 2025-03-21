@@ -1077,3 +1077,11 @@ mais H2 met à jour le create-drop du update, dès que vous le modifiez dans pro
 Mais pour sql-connector, si vous switchez de create-drop à update, pour que cela s'applique il faut rebuild votre project côté maven 
 (pas besoin de clean).
 
+
+pb :
+
+"detached entity passed to persist: nate.company.history_work.siteTools.user.User"
+
+solution : 
+
+assurez vous que la valeur par défaut de l'id n'est pas 0, cette valeur  fait bugger les autocréateurs d'Entity

@@ -35,9 +35,10 @@ public class User {
     //on ne peut pas mettre de commentaire entre les 2
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="iduser")
-    private long id;
+    private long id = 1;
 
     @Column(name="pseudo")
     private String pseudo;
@@ -55,9 +56,9 @@ public class User {
     "List" not arrayList.
     This list is connected to Movie's "isWatchedBy" field
      */
-    @ManyToMany(mappedBy="isWatchedBy")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy="isWatchedBy")
     //@JoinColumn(name = "idmovie")
-    private Set<Movie> watchMovies = new HashSet<>();
+    private List<Movie> watchMovies = new ArrayList<>();
 
     /*
    necessary for spring init
@@ -74,6 +75,7 @@ public class User {
         Objects.requireNonNull(email);
         Objects.requireNonNull(pseudo);
         this.pseudo = pseudo;
+        this.password = password;
         this.email = email;
         this.id = id;
         this.category = userCategory;
@@ -121,6 +123,7 @@ public class User {
     public User(long id,String pseudo, String email, String password, UserCategory userCategory){
         this.id = id;
         this.email = email;
+        this.pseudo = pseudo;
         this.password = password;
         this.category =userCategory;
     }
@@ -144,12 +147,12 @@ public class User {
         watchMovies.remove(movieWatched);
     }
 
-    public void setWatchMovies(Set<Movie> watchMovies) {
+    public void setWatchMovies(List<Movie> watchMovies) {
         Objects.requireNonNull(watchMovies);
         this.watchMovies = watchMovies;
     }
 
-    public Set<Movie> getWatchMovies() {
+    public List<Movie> getWatchMovies() {
         return watchMovies;
     }
 
@@ -233,6 +236,7 @@ public class User {
     public void setEmail(String newEmail){
          email = newEmail;
     }
+
 
     /**
      * Sets a new pseudo.
