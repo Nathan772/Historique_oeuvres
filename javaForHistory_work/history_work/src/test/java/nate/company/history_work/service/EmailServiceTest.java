@@ -1,4 +1,4 @@
-package nate.company.history_work.service;
+package src.test.java.nate.company.history_work.service;
 
 import nate.company.history_work.entity.EmailDetails;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import src.main.java.nate.company.history_work.service.EmailServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -19,9 +20,9 @@ import static org.mockito.Mockito.verify;
  *
  * @author Dylan DE JESUS
  * @author Nathan BILINGI
- * @see EmailService
- * @see EmailServiceImpl
+ *
  */
+
 @ExtendWith(MockitoExtension.class)
 public class EmailServiceTest {
 

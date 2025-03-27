@@ -1,5 +1,6 @@
-package nate.company.history_work.service;
+package src.test.java.nate.company.history_work.service;
 
+import jakarta.mail.MessagingException;
 import nate.company.history_work.entity.EmailDetails;
 import org.junit.jupiter.api.Test;
 
@@ -9,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import src.main.java.nate.company.history_work.service.EmailServiceImpl;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -28,10 +29,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Dylan DE JESUS
  * @author Nathan BILINGI
- * @see EmailService
+ *
  * @see EmailServiceImpl
- * @see SmtpServerExtension
- * @see com.icegreen.greenmail.util.GreenMail
+ *
  */
 @ExtendWith({SpringExtension.class})
 @SpringBootTest
@@ -65,7 +65,11 @@ public class EmailServiceIT {
         MimeMessage[] receivedMessages = smtpServerExtension.getMessages();
         assertTrue(isMailSent);
         assertEquals(1, receivedMessages.length);
-        assertEquals(subject, receivedMessages[0].getSubject());
+        try {
+            assertEquals(subject, receivedMessages[0].getSubject());
+        } catch (javax.mail.MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -90,11 +94,15 @@ public class EmailServiceIT {
         }
 
         // expect
-        MimeMessage[] receivedMessages = smtpServerExtension.getMessages();
+        javax.mail.internet.MimeMessage[] receivedMessages = smtpServerExtension.getMessages();
         assertTrue(hasMailsBeenSent);
         assertEquals(amountOfMails, receivedMessages.length);
         for(int i = 0; i < amountOfMails; i++){
-            assertEquals(mailsToSend.get(i).getSubject(), receivedMessages[i].getSubject());
+            try {
+                assertEquals(mailsToSend.get(i).getSubject(), receivedMessages[i].getSubject());
+            } catch (javax.mail.MessagingException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

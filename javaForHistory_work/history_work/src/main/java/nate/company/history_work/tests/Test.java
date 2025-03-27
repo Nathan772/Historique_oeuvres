@@ -1,4 +1,4 @@
-package nate.company.history_work.tests;
+package src.main.java.nate.company.history_work.tests;
 
 import java.io.*;
 import java.util.Objects;

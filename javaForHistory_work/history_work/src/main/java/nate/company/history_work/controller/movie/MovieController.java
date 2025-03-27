@@ -1,14 +1,11 @@
-package nate.company.history_work.controller.movie;
+package src.main.java.nate.company.history_work.controller.movie;
 
 import nate.company.history_work.entity.EmailDetails;
 import nate.company.history_work.service.EmailService;
-import nate.company.history_work.service.EmailServiceImpl;
-import nate.company.history_work.siteTools.movie.Movie;
-import nate.company.history_work.siteTools.movie.MovieRepository;
-import nate.company.history_work.siteTools.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import src.main.java.nate.company.history_work.siteTools.movie.MovieRepository;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -17,8 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 
-import static nate.company.history_work.logger.LoggerInfo.LOGGER;
-
 /**
  * Acts like a REST controller that manages the requests about movies.
  *
@@ -26,6 +21,7 @@ import static nate.company.history_work.logger.LoggerInfo.LOGGER;
  * @author Dylan DE JESUS
  */
 @RestController
+@CrossOrigin("*")
 // permet de résoudre le problème de "No Access-control-allow-origin" cors policy error
 public class MovieController {
      /*

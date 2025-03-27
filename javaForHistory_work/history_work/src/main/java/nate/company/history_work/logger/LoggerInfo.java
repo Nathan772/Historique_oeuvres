@@ -1,4 +1,4 @@
-package nate.company.history_work.logger;
+package src.main.java.nate.company.history_work.logger;
 
 import java.util.logging.Logger;
 

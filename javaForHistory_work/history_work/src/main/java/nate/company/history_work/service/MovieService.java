@@ -1,10 +1,8 @@
-package nate.company.history_work.service;
-
-import nate.company.history_work.siteTools.movie.Movie;
-import nate.company.history_work.siteTools.movie.MovieRepository;
-import nate.company.history_work.siteTools.user.UserRepository;
+package src.main.java.nate.company.history_work.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import src.main.java.nate.company.history_work.siteTools.movie.Movie;
+import src.main.java.nate.company.history_work.siteTools.movie.MovieRepository;
 
 import java.util.Objects;
 import java.util.Optional;

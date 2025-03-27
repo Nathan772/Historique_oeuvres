@@ -2,7 +2,8 @@
  * This class is used as an extension by the integration tests for the email service.
  */
 
-package nate.company.history_work.service;
+package src.test.java.nate.company.history_work.service;
+
 
 
 import com.icegreen.greenmail.util.GreenMail;

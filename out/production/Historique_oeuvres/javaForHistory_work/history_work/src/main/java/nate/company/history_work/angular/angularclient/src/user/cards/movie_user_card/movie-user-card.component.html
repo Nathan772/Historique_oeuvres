@@ -1,0 +1,153 @@
+<!-- on affiche les infos du films
+
+elles sont contenues dans
+la variable movie
+que nous avons créé dans
+movie-card component
+-->
+  <!-- cas où le user
+    ne veut pas afficher toutes les infos d'un
+    seul film
+  -->
+
+<head>
+
+
+
+
+</head>
+<!--
+for future features
+<label for="movie-status-select">Choisissez le status de votre film:</label>
+
+<select name="movie-status" id="movie-status-select">
+  <option value="">--Choisissez le nouveau status du film-</option>
+  <option *ngFor let status of movie value="{status}"> {status}</option>
+</select>
+
+  </ng-container>
+</div>-->
+
+
+
+<div class="row">
+  <div class="col s12 m6">
+    <div
+      class="card"
+      [ngClass]="{
+        'blue lighten-1': true
+      }"
+    >
+      <div class="card-content white-text">
+        <span class="card-title">
+
+
+<!-- cas où le user
+   veut afficher toutes les infos d'un film film
+  -->
+    <img src="{{ movieFull.Poster }}" sizes="(max-width: 20px) 20px, 50vw" />
+    <br />
+    Titre : {{ movieFull.Title }} et Année :{{ movieFull.Year }} <br />
+    <br />
+    Catégorie :
+    {{ movieFull.Type }}
+    <br />
+    Genre :
+    {{ movieFull.Genre }}
+    <br />
+    Id:
+    {{ movieFull.imdbID }}
+    <br />
+    <br />
+    Plot:
+    {{ movieFull.Plot }}
+    <br />
+    Director:
+    {{ movieFull.Director }}
+    <br />
+    <br />
+    Awards:
+    {{ movieFull.Awards }}
+
+         <button (click)="this.addToWatchListAndDatabase(movieFull, 'à regarder plus tard')" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
+
+          <!--
+          deprecated, need to be replaced later
+          <div class="ngbDropdownMenu" aria-labelledby="dropdownMap">
+        <ng-container *ngFor="let status of movieService.statusWatching">
+        <button ngbDropdownItem id="statusButton" class="dropdown-item" (click)="this.addToWatchListAndDatabase(movieFull, status)" >
+          {{status}}
+          </button>
+        </ng-container>
+        </div>-->
+
+    <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf=movieService.listMovieContainsMovie(movieFull)> - liste visionnage </button>
+
+
+
+          <!--<div class="dropdown show" id="dropbtn">-->
+<!--
+  <button type="button"  id="statusButton"  class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="click me">
+    Status
+  </button>-->
+            <!-- too complicated, deprecated, need to be replaced by select and option
+
+            depr
+<div class="ngbDropdownMenu" id="status" aria-labelledby="dropdownMap">
+  <ng-container *ngFor="let status of movieService.statusWatching">
+    <button  ngbDropdownItem class="dropdown-item" (click)="this.addToWatchListAndDatabase(movieFull, status)" >
+    <button  ngbDropdownItem class="dropdown-item" >
+      {{status}}
+    </button>
+  </ng-container>
+</div>
+</div>-->
+<!--<button (click)="this.addToWatchListAndDatabase(movieFull,'à regarder plus tard')" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
+ -->
+          <!--source
+https://getbootstrap.com/docs/4.0/components/dropdowns/
+-->
+          <!-- list status possible -->
+
+
+          <!--
+          ICI à corriger la liste voir :
+          https://getbootstrap.com/docs/4.0/components/dropdowns/
+        -->
+
+
+
+
+
+         <!-- <div class="ngbDropdownMenu" aria-labelledby="dropdownMap">
+  <ng-container *ngFor="let status of movieService.statusWatching">
+  <button ngbDropdownItem class="dropdown-item" (click)="this.addToWatchListAndDatabase(movieFull, status)" >
+    {{status}}
+    </button>
+  </ng-container>
+  </div>
+  </div>-->
+<!--
+<i class="material-icons" (click)="edition = true">edit</i>
+     -->
+        </span>
+
+</div>
+    </div>
+  </div>
+  </div>
+
+<script src="movie-user-card.js"></script>
+
+
+
+
+
+
+  <!-- on donne 'l'identifiant
+    imdb du film qui nous intéresse
+    pour savoir avoir plus d'info
+    sur celui-ci-->
+
+
+

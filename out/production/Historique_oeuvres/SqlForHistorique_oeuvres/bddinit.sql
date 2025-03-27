@@ -18,12 +18,11 @@ DROP TABLE IF EXISTS serie CASCADE;
 -- movies 
 
 DROP TABLE IF EXISTS watchmovie CASCADE;
-DROP TABLE IF EXISTS watchmovie CASCADE;
+DROP TABLE IF EXISTS watch_movie CASCADE;
 DROP TABLE IF EXISTS movie CASCADE;
 
 -- other
-DROP TABLE IF EXISTS user cascade;
-DROP TABLE IF EXISTS users cascade;
+DROP TABLE IF EXISTS user_table cascade;
 DROP TABLE IF EXISTS genre CASCADE;
 
 
@@ -51,7 +50,7 @@ DROP TABLE IF EXISTS genre CASCADE;
 -- email like : (qqc)@.com/.fr
 
 -- les noms des tables doivent être entièrement en majuscule pour éviter les conflits avec spring
-CREATE TABLE user(
+CREATE TABLE user_table(
      iduser SERIAL NOT NULL PRIMARY KEY,
      pseudo VARCHAR(100) NOT NULL UNIQUE,
      email VARCHAR(100) NOT NULL UNIQUE,
@@ -74,7 +73,7 @@ CREATE TABLE manga(
 CREATE TABLE movie(
   idmovie SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(300) NOT NULL,
-  year int unsigned,
+  yearOfRelease int unsigned,
   director VARCHAR(300) NOT NULL,
   imdbID VARCHAR(300) NOT NULL UNIQUE
 );

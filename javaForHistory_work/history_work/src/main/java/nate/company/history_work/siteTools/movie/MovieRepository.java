@@ -1,6 +1,7 @@
-package nate.company.history_work.siteTools.movie;
+package src.main.java.nate.company.history_work.siteTools.movie;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import src.main.java.nate.company.history_work.siteTools.movie.Movie;
 
 import java.util.Optional;
 

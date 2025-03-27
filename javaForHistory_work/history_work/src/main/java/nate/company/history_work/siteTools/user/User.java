@@ -1,10 +1,11 @@
-package nate.company.history_work.siteTools.user;
+package src.main.java.nate.company.history_work.siteTools.user;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 
-import nate.company.history_work.siteTools.movie.Movie;
 import org.springframework.stereotype.Component;
+import src.main.java.nate.company.history_work.siteTools.movie.Movie;
+import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
 
 import java.util.*;
 

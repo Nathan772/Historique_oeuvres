@@ -1,9 +1,9 @@
-package nate.company.history_work.service;
+package src.main.java.nate.company.history_work.service;
 
-import nate.company.history_work.siteTools.user.User;
-import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import src.main.java.nate.company.history_work.siteTools.user.User;
+import src.main.java.nate.company.history_work.siteTools.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,12 @@
-package nate.company.history_work.siteTools.movie;
+package src.test.java.nate.company.history_work.siteTools.movie;
 
-import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
-import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.repository.CrudRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import src.main.java.nate.company.history_work.siteTools.movie.Movie;
+import src.main.java.nate.company.history_work.siteTools.movie.MovieRepository;
 
 import java.util.ArrayList;
 
