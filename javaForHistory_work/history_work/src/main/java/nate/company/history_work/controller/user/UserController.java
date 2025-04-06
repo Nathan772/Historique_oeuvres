@@ -28,8 +28,9 @@ import static src.main.java.nate.company.history_work.logger.LoggerInfo.LOGGER;
 /**
  * User controller.
  */
-@RestController
+
 @CrossOrigin(origins = "*")
+@RestController
 public class UserController {
 
     /*
@@ -41,7 +42,7 @@ public class UserController {
      */
     //deprecated approach
     //private final UserRepository userRepository;
-
+    @Autowired
     private final UserService userService;
 
     private final MovieService movieService;

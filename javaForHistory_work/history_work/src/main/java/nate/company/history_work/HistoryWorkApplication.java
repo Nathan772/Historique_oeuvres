@@ -1,4 +1,4 @@
-package nate.company.history_work;
+package src.main.java.nate.company.history_work;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

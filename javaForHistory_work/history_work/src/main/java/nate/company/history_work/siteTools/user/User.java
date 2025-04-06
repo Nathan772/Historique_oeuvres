@@ -58,7 +58,7 @@ public class User {
     This list is connected to Movie's "isWatchedBy" field
      */
     @ManyToMany(fetch = FetchType.LAZY,mappedBy="isWatchedBy")
-    //@JoinColumn(name = "idmovie")
+    //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
     private List<Movie> watchMovies = new ArrayList<>();
 
     /*

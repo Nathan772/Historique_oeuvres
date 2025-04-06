@@ -4,7 +4,7 @@
  * It manages the email sending logic.
  */
 
-package nate.company.history_work.service;
+package src.main.java.nate.company.history_work.service;
 
 import nate.company.history_work.entity.EmailDetails;
 
@@ -15,15 +15,15 @@ import nate.company.history_work.entity.EmailDetails;
  * @author Dylan DE JESUS
  * @author Nathan BILINGI
  */
-public interface EmailService {
-
-    /**
-     * Sends a simple mail. The message is sent to a remote recipient
-     * address with a subject and a simple String body content.
-     *
-     * @param details the data used to send the mail (recipient, subject, body content).
-     * @return true if the mail has been sent successfully, false otherwise.
-     * @see EmailDetails
-     */
-    public boolean sendSimpleMessage(EmailDetails details);
-}
+//public interface EmailService {
+//
+//    /**
+//     * Sends a simple mail. The message is sent to a remote recipient
+//     * address with a subject and a simple String body content.
+//     *
+//     * @param details the data used to send the mail (recipient, subject, body content).
+//     * @return true if the mail has been sent successfully, false otherwise.
+//     * @see EmailDetails
+//     */
+//    public boolean sendSimpleMessage(EmailDetails details);
+//}

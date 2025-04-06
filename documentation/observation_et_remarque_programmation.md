@@ -1085,3 +1085,12 @@ pb :
 solution : 
 
 assurez vous que la valeur par défaut de l'id n'est pas 0, cette valeur  fait bugger les autocréateurs d'Entity
+
+problème : 
+
+"Parameter 2 of method init in src.main.java.nate.company.history_work.Application required a bean of type 'src.main.java.nate.company.history_work.service.UserService' that could not be found."
+
+solution :
+
+pensez à mettre un "component scan" 
+basique plutôt qu'à vouloir préciser le path.

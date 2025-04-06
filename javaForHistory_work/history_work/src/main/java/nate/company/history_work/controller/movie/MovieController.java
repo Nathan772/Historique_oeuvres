@@ -1,7 +1,5 @@
 package src.main.java.nate.company.history_work.controller.movie;
 
-import nate.company.history_work.entity.EmailDetails;
-import nate.company.history_work.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +18,10 @@ import java.util.logging.Level;
  * @author Nathan BILINGI
  * @author Dylan DE JESUS
  */
-@RestController
+
 @CrossOrigin("*")
 // permet de résoudre le problème de "No Access-control-allow-origin" cors policy error
+@RestController
 public class MovieController {
      /*
    necessary constructor for REST API
@@ -32,6 +31,7 @@ public class MovieController {
     /**
      * Repository that stores movies.
      */
+    @Autowired
     private final MovieRepository movieRepository;
 
     /**
@@ -47,6 +47,7 @@ public class MovieController {
      * @param movieRepository the repository that stores all the movies
      *
      */
+    @Autowired
     public MovieController(MovieRepository movieRepository){
         Objects.requireNonNull(movieRepository);
         this.movieRepository = movieRepository;

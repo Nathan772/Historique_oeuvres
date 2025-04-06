@@ -1,5 +1,7 @@
 package src.main.java.nate.company.history_work.service;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import src.main.java.nate.company.history_work.siteTools.movie.Movie;
 import src.main.java.nate.company.history_work.siteTools.movie.MovieRepository;
@@ -8,7 +10,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Component
 public class MovieService {
+    @Autowired
     private final MovieRepository movieRepository;
 
     @Autowired

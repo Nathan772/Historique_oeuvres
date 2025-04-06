@@ -1,6 +1,8 @@
 package src.main.java.nate.company.history_work.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import src.main.java.nate.company.history_work.siteTools.user.User;
 import src.main.java.nate.company.history_work.siteTools.user.UserRepository;
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
+
     private final UserRepository userRepository;
 
     @Autowired
