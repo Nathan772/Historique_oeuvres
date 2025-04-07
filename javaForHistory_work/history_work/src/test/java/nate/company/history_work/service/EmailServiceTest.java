@@ -8,7 +8,7 @@ package src.test.java.nate.company.history_work.service;
 //import org.mockito.junit.jupiter.MockitoExtension;
 //import org.springframework.mail.SimpleMailMessage;
 //import org.springframework.mail.javamail.JavaMailSender;
-//import src.main.java.nate.company.history_work.service.EmailServiceImpl;
+//import src.main.service.EmailServiceImpl;
 //
 //import static org.junit.jupiter.api.Assertions.*;
 //import static org.mockito.Mockito.verify;

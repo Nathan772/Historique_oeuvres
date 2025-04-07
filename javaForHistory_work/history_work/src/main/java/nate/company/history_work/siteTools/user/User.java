@@ -37,9 +37,9 @@ public class User {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="iduser")
-    private long id = 1;
+    private long id;
 
     @Column(name="pseudo")
     private String pseudo;
@@ -57,7 +57,7 @@ public class User {
     "List" not arrayList.
     This list is connected to Movie's "isWatchedBy" field
      */
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy="isWatchedBy")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy="isWatchedBy", cascade = CascadeType.PERSIST)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
     private List<Movie> watchMovies = new ArrayList<>();
 
@@ -88,7 +88,6 @@ public class User {
      * "required a bean of type "java.lang.String" that could not be found"
      */
     public User(){
-        this.id = 3;
         this.pseudo = "";
         this.email = "";
         this.password = "";
@@ -250,8 +249,8 @@ public class User {
 
     @Override
     public String toString(){
-        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category
-                +" il suit ou regarde actuellement :"+watchMovies.size()+" films";
+        //return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category+" il suit ou regarde actuellement :"+watchMovies.size()+" films";
+        return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category;
     }
 
 }

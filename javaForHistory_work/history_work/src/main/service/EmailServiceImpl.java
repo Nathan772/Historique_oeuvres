@@ -4,21 +4,7 @@
  * This implementation of the EmailService class
  */
 
-package src.main.java.nate.company.history_work.service;
-
-import nate.company.history_work.entity.EmailDetails;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-
-import java.util.Objects;
-import java.util.logging.Level;
-
-import static src.main.java.nate.company.history_work.logger.LoggerInfo.LOGGER;
+package src.main.service;
 
 
 /**

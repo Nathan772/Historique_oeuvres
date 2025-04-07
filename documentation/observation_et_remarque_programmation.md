@@ -1,9 +1,9 @@
 
 
--les fichiers dans le dossier angular.angularclient, ont tous été autogénérés.
+-les fichiers dans le dossier angular.src.main.java.nate.company.history_work.angular.angularclient, ont tous été autogénérés.
 Seul une partie des fichiers contenus dans "src" ne sont pas autogénérés.
 
-La commande : "ng generate class user" se lance dans le dossier autogénérés angularclient.
+La commande : "ng generate class user" se lance dans le dossier autogénérés src.main.java.nate.company.history_work.angular.angularclient.
 
 dans le dossier "angular", le dossier "service" a été créé par moi-même.
 
@@ -57,7 +57,7 @@ Contrairement à l'autre format qui est en mode standalone (c'est à dire une se
 
 Si il y a un problème avec rxjs alors qu'il est installé avec yarn et
 npm, alors tenter de supprimer rxjs pour le réinstaller, depuis le dossier
-angular/angularclient : et si ça produit une erreur avec architect/node,
+angular/src.main.java.nate.company.history_work.angular.angularclient : et si ça produit une erreur avec architect/node,
 alors supprimer manuellement en allant directement dans le fichier
 associé, les lignes qui contiennent architect/Node, il peut causer des
 bugs à l'installation.
@@ -1088,9 +1088,21 @@ assurez vous que la valeur par défaut de l'id n'est pas 0, cette valeur  fait b
 
 problème : 
 
-"Parameter 2 of method init in src.main.java.nate.company.history_work.Application required a bean of type 'src.main.java.nate.company.history_work.service.UserService' that could not be found."
+"Parameter 2 of method init in src.main.java.nate.company.history_work.Application required a bean of type 'src.main.service.UserService' that could not be found."
 
 solution :
 
 pensez à mettre un "component scan" 
 basique plutôt qu'à vouloir préciser le path.
+
+problème :
+
+"detached entity passed to persist: src.main.java.nate.company.history_work.siteTools.user.User"
+
+solution :
+
+-Retirez toutes les affectations de l'id dans vos méthodes de constructeurs pour laisser h2 le
+générer lui-même sauf dans la méthode qui prend tous les champs en arguments.
+-mettez l'id en mode "identity"
+-pensez à clean + compile le projet pour qu'il relance toute vos updates.
+-pensez aussi à potentiellement create-drop pour qu'il prenne en compte les changements de la bdd.

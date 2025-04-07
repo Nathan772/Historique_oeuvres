@@ -10,7 +10,7 @@ package src.test.java.nate.company.history_work.service;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.mail.javamail.JavaMailSender;
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
-//import src.main.java.nate.company.history_work.service.EmailServiceImpl;
+//import src.main.service.EmailServiceImpl;
 //
 //import javax.mail.internet.MimeMessage;
 //import java.util.List;

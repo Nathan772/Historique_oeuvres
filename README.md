@@ -55,7 +55,7 @@ It enables to run the database.
 3) in a terminal :
 ```bash 
 cd Historique_oeuvres/javaForHistory_wo
-rk/history_work/src/main/java/nate/company/history_work/angular/angularclient
+rk/history_work/src/main/java/nate/company/history_work/angular/src.main.java.nate.company.history_work.angular.angularclient
 ```
 run the following command : 
 ```bash

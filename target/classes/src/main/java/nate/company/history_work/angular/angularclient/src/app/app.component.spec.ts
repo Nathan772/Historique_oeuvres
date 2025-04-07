@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'angularclient' title`, () => {
+  it(`should have the 'src.main.java.nate.company.history_work.angular.angularclient' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angularclient');
+    expect(app.title).toEqual('src.main.java.nate.company.history_work.angular.angularclient');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angularclient');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, src.main.java.nate.company.history_work.angular.angularclient');
   });
 });

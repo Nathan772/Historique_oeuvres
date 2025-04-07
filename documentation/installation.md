@@ -3,7 +3,7 @@ Pour angular :
 
 lancer le projet:
 0) lancer le fichier Application.java depuis intellij
-1) il faut se placer dans angularclient
+1) il faut se placer dans src.main.java.nate.company.history_work.angular.angularclient
 2) tapez : ng serve --open (lancer angular)
 
 -npm install -g @angular/cli@1.7.4
@@ -45,7 +45,7 @@ lancer cette commande dans le terminal, dans le dossier du projet, pour génére
     ---> "npm install -g @angular/cli" plutôt que "npm install -g @angular/cli@1.7.4"
 
 
-Lancer la commande : "ng new angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
+Lancer la commande : "ng new src.main.java.nate.company.history_work.angular.angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
 (nommé comme vous le souhaitez) afin de générer les fichiers associés à angular automatiquement.
 
 
@@ -116,7 +116,7 @@ Pour associer du javascript à un fichier vous devrez l'ajouter dans les fichier
 (voir ci-dessous)
 
 Lorsque le projet est partagé entre plusieurs développeurs, vous aurez 
-peut-être à recréer le fichier angular/angularclient/angular.json :
+peut-être à recréer le fichier angular/src.main.java.nate.company.history_work.angular.angularclient/angular.json :
 
 ```
 {
@@ -124,7 +124,7 @@ peut-être à recréer le fichier angular/angularclient/angular.json :
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularclient": {
+    "src.main.java.nate.company.history_work.angular.angularclient": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -138,7 +138,7 @@ peut-être à recréer le fichier angular/angularclient/angular.json :
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angularclient",
+            "outputPath": "dist/src.main.java.nate.company.history_work.angular.angularclient",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -185,10 +185,10 @@ peut-être à recréer le fichier angular/angularclient/angular.json :
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angularclient:build:production"
+              "buildTarget": "src.main.java.nate.company.history_work.angular.angularclient:build:production"
             },
             "development": {
-              "buildTarget": "angularclient:build:development"
+              "buildTarget": "src.main.java.nate.company.history_work.angular.angularclient:build:development"
             }
           },
           "defaultConfiguration": "development"

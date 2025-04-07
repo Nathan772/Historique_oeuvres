@@ -16,12 +16,14 @@ import java.util.Set;
  * @author Nathan BILINGI
  * @author Dylan DE JESUS
  */
-@Entity
-@Component
+
+
 /*
 name = movie, enable to be recognized as "movie" in database
  */
+@Component
 @Table(name="movie")
+@Entity
 public class Movie {
     /*
     Id et generatedValue ont été
@@ -38,7 +40,7 @@ public class Movie {
     //on ne peut pas mettre de commentaire entre les 2
     @Id
     @Column(name="idmovie")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
@@ -58,7 +60,7 @@ public class Movie {
     of the "User" Object.
 
      */
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_watch_movie",
             joinColumns = @JoinColumn(name = "movieid"),

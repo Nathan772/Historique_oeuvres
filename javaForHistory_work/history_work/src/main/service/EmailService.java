@@ -4,9 +4,7 @@
  * It manages the email sending logic.
  */
 
-package src.main.java.nate.company.history_work.service;
-
-import nate.company.history_work.entity.EmailDetails;
+package src.main.service;
 
 
 /**

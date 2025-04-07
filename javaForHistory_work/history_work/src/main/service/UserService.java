@@ -1,8 +1,6 @@
-package src.main.java.nate.company.history_work.service;
+package src.main.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import src.main.java.nate.company.history_work.siteTools.user.User;
 import src.main.java.nate.company.history_work.siteTools.user.UserRepository;
@@ -26,7 +24,7 @@ public class UserService {
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
+        System.out.println("l'ensemble des users user trouvé est : " + userRepository.findAll());
         return users;
     }
 
@@ -63,6 +61,7 @@ public class UserService {
 
     public User saveUser(User user){
         Objects.requireNonNull(user);
+        System.out.println("on sauvegarde : "+user);
         return userRepository.save(user);
     }
 

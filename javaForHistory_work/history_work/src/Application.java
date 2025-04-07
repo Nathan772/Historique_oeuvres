@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.FileSystemResource;
-import src.main.OtherService;
-import src.main.java.nate.company.history_work.service.MovieService;
-import src.main.java.nate.company.history_work.service.UserService;
+import src.main.java.nate.company.history_work.siteTools.user.User;
+import src.main.service.MovieService;
+import src.main.service.UserService;
+
+import java.util.stream.Stream;
 
 /**
  * This is the starting point of the application.
@@ -48,11 +50,15 @@ public class Application {
     @Bean
     CommandLineRunner init(UserService userService, MovieService movieService) {
         return args -> {
+
             /*pas nécessaire sauf si on veut tester l'ajout en brut
             sans passer par l'application Web*/
-//            Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(name -> {
-//                userService.saveUser(new User(name, name+"@gmail.com", "666666"));
-//            });
+            Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(
+                    name -> {
+                userService.saveUser(new User(name, name+"@gmail.com", "666666"));
+            });
+
+            System.out.println("tous les utilisateurs sont actuellement : "+userService.getAllUsers());
 //
 //            //même chose, mais pour les vidéos
 //

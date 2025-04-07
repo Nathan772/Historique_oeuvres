@@ -44,11 +44,12 @@
 
 
         <!-- https://mvnrepository.com/artifact/com.icegreen/greenmail -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.icegreen</groupId>
             <artifactId>greenmail</artifactId>
             <scope>test</scope>
         </dependency>
+        -->
 
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
@@ -64,12 +65,12 @@
 
         -->
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.12.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <!--
 
@@ -79,12 +80,16 @@
         -->
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <!--
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
+
+        -->
 
 
 
@@ -206,12 +211,12 @@
 
         -->
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.3.232</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- Ajout de JUNIT comme dépendance pour les tests unitaires-->
         <dependency>
@@ -229,11 +234,11 @@
 
         <!-- Dependency for email sending-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>3.1.5</version>
-        </dependency>
+        </dependency>-->
 
 
 

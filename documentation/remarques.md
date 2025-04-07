@@ -99,13 +99,13 @@ lancer cette commande dans le terminal, dans le dossier du projet, pour génére
     ---> "npm install -g @angular/cli" plutôt que "npm install -g @angular/cli@1.7.4"
 
 
-Lancer la commande : "ng new angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
+Lancer la commande : "ng new src.main.java.nate.company.history_work.angular.angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
 (nommé comme vous le souhaitez) afin de générer les fichiers associés à angular automatiquement.
 
--les fichiers dans le dossier angular.angularclient, ont tous été autogénérés.
+-les fichiers dans le dossier angular.src.main.java.nate.company.history_work.angular.angularclient, ont tous été autogénérés.
 Seul une partie des fichiers contenus dans "src" ne sont pas autogénérés.
 
-La commande : "ng generate class user" se lance dans le dossier autogénérés angularclient.
+La commande : "ng generate class user" se lance dans le dossier autogénérés src.main.java.nate.company.history_work.angular.angularclient.
 
 dans le dossier "angular", le dossier "service" a été créé par moi-même.
 
