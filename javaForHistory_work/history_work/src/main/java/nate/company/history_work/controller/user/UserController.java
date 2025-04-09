@@ -1,16 +1,16 @@
-package src.main.java.nate.company.history_work.controller.user;
+package nate.company.history_work.controller.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import nate.company.history_work.service.MovieService;
+import nate.company.history_work.service.UserService;
+import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import src.main.service.MovieService;
-import src.main.service.UserService;
-import src.main.java.nate.company.history_work.siteTools.movie.Movie;
-import src.main.java.nate.company.history_work.siteTools.user.User;
 import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
 
 import java.util.*;

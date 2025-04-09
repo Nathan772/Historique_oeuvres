@@ -18,7 +18,7 @@ Ils permettront de résoudre:
 
 Il est aussi possible que vous ayez à recréer le fichier :
 
-"java_for_history_work/history_work/src/main/resources/application.properties"
+"java_for_history_work/history_work/src/main/main.resources/application.properties"
 
 si il n'est pas présent.
 

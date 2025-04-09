@@ -75,8 +75,8 @@ censé en avoir à cet endroit qui est supposé être sûr.
 Dans ce cas, c'est peut être un bug d'angular, supprimer puis remettez la partie problématique, cela pourrait refonctionner dans certains cas (c'est déjà arrivé).
 
 Pour updater les données de la base de donnée (bdd) de façon persistante, il faut modifier le fichier
-(non?)"out/production/Historique_oeuvres/main/resources/application.properties"
-(oui)javaForHistory_work/history_work/src/main/resources/application.properties
+(non?)"out/production/Historique_oeuvres/main/main.resources/application.properties"
+(oui)javaForHistory_work/history_work/src/main/main.resources/application.properties
 
 ```properties
 
@@ -261,7 +261,7 @@ com.mysql.cj.jdbc.Driver in either of HikariConfig class loader or Thread contex
 
 résoudre : 
 
--créer le fichier persistence.xml dans resources/META-INF/persistence.xml :
+-créer le fichier persistence.xml dans main.resources/META-INF/persistence.xml :
 persistence.xml : 
 
 ```xml 
@@ -303,7 +303,7 @@ persistence.xml :
 </persistence>
 ```
 
-- créer resources/spy.properties :
+- créer main.resources/spy.properties :
 
 ```properties
 
@@ -360,7 +360,7 @@ application.properties :
 ```
 Il est aussi possible que vous ayez à recréer le fichier :
 
-"main/resources/application.properties"
+"main/main.resources/application.properties"
 
 si il n'est pas présent.
 
@@ -445,7 +445,7 @@ solution 2 (générer automatiquement les tables) :
 # Config bdd H2
 server.port=8080
 server.address=localhost
-spring.datasource.url=jdbc:h2:./src/main/resources/db/db
+spring.datasource.url=jdbc:h2:./src/main/main.resources/db/db
 
 spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.datasource.driverClassName=org.h2.Driver
@@ -479,7 +479,7 @@ Connection for DDL execution [Mauvais nom d'utilisateur ou mot de passe"
 
 Il faut créer le fichier :
 
-src/main/resources/persistence.xml :
+src/main/main.resources/persistence.xml :
 
 ```
 
@@ -560,7 +560,7 @@ server.port=8080
 server.address=localhost
 #enregistre dans des fichiers de façon persistante
 #mais n'affiche pas sur la fenêtre de h2
-#spring.datasource.url=jdbc:h2:./src/main/resources/db/db
+#spring.datasource.url=jdbc:h2:./src/main/main.resources/db/db
 
 #il faut cibler la bdd de la version browser
 # la version du browser
@@ -697,7 +697,7 @@ Pensez à switcher java 21 partout :
 server.port=8080
 server.address=localhost
 #register in files but not in h2
-#spring.datasource.url=jdbc:h2:./src/main/resources/db/db
+#spring.datasource.url=jdbc:h2:./src/main/main.resources/db/db
 
 #il faut cibler la bdd de la version browser
 # la version du browser
@@ -989,7 +989,7 @@ ces lignes :
 //        it loads .env file
 //         */
 //        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-//        configurer.setLocation(new FileSystemResource("src/main/resources/.env"));
+//        configurer.setLocation(new FileSystemResource("src/main/main.resources/.env"));
 //        return configurer;
 //    }
             System.out.println("on teste que le mail du chef est bien envoyé par le .env : "+mailService.getDeveloperEmailAddress()
@@ -1106,3 +1106,10 @@ générer lui-même sauf dans la méthode qui prend tous les champs en arguments
 -mettez l'id en mode "identity"
 -pensez à clean + compile le projet pour qu'il relance toute vos updates.
 -pensez aussi à potentiellement create-drop pour qu'il prenne en compte les changements de la bdd.
+
+problème : 
+
+la sauvegarde en bdd n'est pas persistante, et h2 ne s'affiche pas.
+
+Solution :
+

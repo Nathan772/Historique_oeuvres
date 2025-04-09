@@ -1,9 +1,9 @@
-package src.main.java.nate.company.history_work.siteTools.movie;
+package nate.company.history_work.siteTools.movie;
 
 import jakarta.persistence.*;
 
+import nate.company.history_work.siteTools.user.User;
 import org.springframework.stereotype.Component;
-import src.main.java.nate.company.history_work.siteTools.user.User;
 
 import java.util.HashSet;
 import java.util.List;

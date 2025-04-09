@@ -1,9 +1,9 @@
-package src.main.java.nate.company.history_work.controller.movie;
+package nate.company.history_work.controller.movie;
 
+import nate.company.history_work.siteTools.movie.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import src.main.java.nate.company.history_work.siteTools.movie.MovieRepository;
 
 import java.sql.Date;
 import java.sql.Time;

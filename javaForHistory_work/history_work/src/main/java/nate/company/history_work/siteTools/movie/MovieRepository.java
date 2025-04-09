@@ -1,7 +1,6 @@
-package src.main.java.nate.company.history_work.siteTools.movie;
+package nate.company.history_work.siteTools.movie;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import src.main.java.nate.company.history_work.siteTools.movie.Movie;
 
 import java.util.Optional;
 
@@ -11,6 +10,5 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends CrudRepository<Movie,Long> {
     public Optional<Movie> getById(long id);
-
     public Optional<Movie> getByimdbID(String imdbID);
 }

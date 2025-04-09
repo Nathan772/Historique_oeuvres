@@ -1,4 +1,5 @@
-package src.main.java.nate.company.history_work.siteTools.user;
+package nate.company.history_work.siteTools.user;
+import nate.company.history_work.siteTools.user.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
