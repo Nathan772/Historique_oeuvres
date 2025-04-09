@@ -187,6 +187,7 @@ public class UserController {
     //you cannot
     @PostMapping("/user/movie/add")
     public ResponseEntity<?> addMovie(@RequestBody String userJsonAndmovieJson){
+        System.out.println("on ajoute le film : "+userJsonAndmovieJson);
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userJsonAndmovieJson);
         //save the movie in database
@@ -274,7 +275,7 @@ public class UserController {
         movieService.saveMovie(movie);
         userService.saveUser(actualUser);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
-        return ResponseEntity.ok("it works");
+        return ResponseEntity.ok(movie);
     }
 
     /**

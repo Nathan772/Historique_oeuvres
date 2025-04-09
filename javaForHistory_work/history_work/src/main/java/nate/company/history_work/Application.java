@@ -51,10 +51,10 @@ public class Application {
 
             /*pas nécessaire sauf si on veut tester l'ajout en brut
             sans passer par l'application Web*/
-            Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(
-                    name -> {
-                userService.saveUser(new User(name, name+"@gmail.com", "666666"));
-            });
+//            Stream.of("JohnD", "JulieB", "Jennifer", "Helen", "Rachel").forEach(
+//                    name -> {
+//                userService.saveUser(new User(name, name+"@gmail.com", "666666"));
+//            });
 //
             System.out.println("tous les utilisateurs sont actuellement : "+userService.getAllUsers());
 //

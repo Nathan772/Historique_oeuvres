@@ -24,7 +24,7 @@ public class UserService {
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        System.out.println("l'ensemble des users user trouvé est : " + userRepository.findAll());
+        userRepository.findAll().forEach(user-> users.add(user));
         return users;
     }
 
