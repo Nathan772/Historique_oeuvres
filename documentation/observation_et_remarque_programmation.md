@@ -1107,9 +1107,137 @@ générer lui-même sauf dans la méthode qui prend tous les champs en arguments
 -pensez à clean + compile le projet pour qu'il relance toute vos updates.
 -pensez aussi à potentiellement create-drop pour qu'il prenne en compte les changements de la bdd.
 
+
+"lazy erreur, failed to ..."
+
+solution :
+
+@Transactional //necessary to prevent from lazy failure
+
 problème : 
 
-la sauvegarde en bdd n'est pas persistante, et h2 ne s'affiche pas.
+les mises à jour et h2 sont ignorés :
 
-Solution :
+solution :
 
+vérifiez que votre dossier "ressources" est bien du type ressources et pas autre chose car il peut avoir perdu son type,
+notamment lors de déplacement de dossiers.
+
+pb : 
+
+les classes ne sont pas reconnues.
+
+solution :
+
+vérifiez qu'elles sont biens dans des fichiers de types "sources" et aussi que les noms de packages sont tjrs les bons
+car il est possible qu'ils aient été perdus lors de déplacement de fichier.
+
+problème :
+
+"Your ApplicationContext is unlikely to start due to a @ComponentScan of the default package."
+
+solution :
+
+pensez à vérifier que toutes vos classes ont bien un package associé au tout début de leur définition,
+notamment la classe application.
+
+application.properties :
+
+```properties
+spring.application.name=Historique_oeuvres
+spring.datasource.url=jdbc:h2:tcp://localhost/~/historyDB
+#jdbc:h2:tcp://localhost/~/h2DB
+spring.config.import=optional:file:.env[.properties]
+server.port=8080
+
+#spring.datasource.username=${DATABASE_USERNAME}
+#spring.datasource.password=${DATABASE_PASSWORD}
+
+#spring.datasource.username=${DATABASE_USERNAME}
+#spring.datasource.password=${DATABASE_PASSWORD}
+
+spring.mail.username=${HOST_EMAIL_USERNAME}
+spring.mail.password=${HOST_EMAIL_PASSWORD}
+
+
+#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+spring.jpa.defer-datasource-initialization=true
+hibernate.dialect=org.hibernate.dialect.H2Dialect
+spring.datasource.driverClassName=org.h2.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.h2.console.enabled=true
+
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# This makes spring use the .env file for the app configuration
+#.env is in the src folder
+# but you need "propertySourcesPlaceholderConfigurer" from
+# Application.java file to
+# makes the computer know the path
+
+
+# Mail configuration
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.smtp.debug=true
+```
+
+persistence.xml :
+
+```xml
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="main-persistence-unit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <properties>
+            <!-- proper path but needs java21 -->
+            <!-- it seems to work with version 23 too... so???-->
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:tcp://localhost/~/historyDB"/>
+
+            <!--
+            not the proper path  for h2
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:h2:mem:h2DB"/>
+
+                      -->
+
+            <!-- Credentials -->
+            <property name="jakarta.persistence.jdbc.user"
+                      value="sa"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value=""/>
+
+            <!--not the proper path for h2:
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:p6spy:h2:mem:h2DB" />
+            -->
+            <!-- proper path but needs java21-->
+
+            <!-- Automatic schema export -->
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="drop-and-create"/>
+
+            <!-- SQL statement logging -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
+```
