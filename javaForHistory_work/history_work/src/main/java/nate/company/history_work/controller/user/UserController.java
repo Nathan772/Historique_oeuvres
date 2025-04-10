@@ -4,12 +4,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import com.thoughtworks.qdox.parser.impl.Parser;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
 
@@ -19,6 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 /**
  * User controller.
@@ -201,6 +209,11 @@ public class UserController {
 
 
 
+
+
+
+
+
     /**
      *
      * Retrieve a user based on their pseudo or email.
@@ -214,7 +227,7 @@ public class UserController {
     /**
      * The "add movie" add a new movie into the data base.
      *
-     * @param userJsonAndmovieJson
+     * @param movieJson
      * the user that will have the movie in their list as json. and
      * the movie that will be added as json.
      *
@@ -224,76 +237,42 @@ public class UserController {
     //thereby you use a wrapper class or two request param
     //you cannot
     @PostMapping("/user/movie/add")
-    public ResponseEntity<?> addMovie(@RequestBody String userJsonAndmovieJson){
-        System.out.println("on ajoute le film : "+userJsonAndmovieJson);
+    public ResponseEntity<Movie> addMovie(@RequestBody String movieJson){
+        System.out.println("on ajoute le film : "+movieJson);
         //regex searched : {({.*})\,({.*})}
-        LOGGER.log(Level.INFO, " on ajoute le film : "+userJsonAndmovieJson);
-        //save the movie in database
-        Movie movieSaved;
-        //check if movie already exists first :
-
-        Objects.requireNonNull(userJsonAndmovieJson);
-        /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert*/
-        // source : https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
-
-        // Convert JSON string to Map
-       // Map<String, String> mapMovieAndJson;
-
-        // Convert JSON string to Map
-        Map<String, Object> mapUser;
-
-        //convert JSON to Map
-        Map<String, String> mapMovie;
-
-        // String to be scanned to find the pattern.
-        String line = userJsonAndmovieJson;
-        String pattern = "\\{(\\{.*\\})\\,(\\{.*\\})\\}";
-
-        // Create a Pattern object
-        Pattern regex = Pattern.compile(pattern);
-
-        // Now create matcher object.
-        Matcher matcher = regex.matcher(line);
-
-        if (!matcher.find( )) {
-            //the string doesn't match the pattern expected for movie and user
-            //as jsons
-            return ResponseEntity.badRequest().build();
+        LOGGER.log(Level.INFO, " on ajoute le film : "+movieJson);
+        //user not connected abnormal
+        if(userService.getPrincipal().isEmpty()){
+            System.out.println("on ne trouve pas le user principal");
+            //EMPTY MOVIE RETURNED IF Not connected
+            return ResponseEntity.ok(new Movie());
         }
 
-        System.out.println("le groupe 1 récupéré est : "+matcher.group(1));
-        //retrieve user's data
-        try {
-            mapUser = fromJsonConverter.readValue(matcher.group(1), new TypeReference<HashMap<String,Object>>() {});
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format");
-        }
+        System.out.println("on a trouvé le user principal");
+        //user is connected
+        var currentUser = userService.getPrincipal();
 
-        System.out.println("l'élément récupéré est : "+mapUser);
-
-        //retrieve movie's data
-        try {
-            mapMovie = fromJsonConverter.readValue(matcher.group(2), new TypeReference<>() {});
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error : the json receveid as movie doesn't respect the json format");
-        }
-//
-        LOGGER.info("json user's and movie's parsing succeed : "+mapUser);
-        var user = new User(mapUser.get("pseudo").toString(),mapUser.get("email").toString(),mapUser.get("password").toString());
-        var movie = new Movie(mapMovie.get("title"), Integer.parseInt(mapMovie.get("yearOfRelease")), mapMovie.get("imdbID"), mapMovie.get("director"));
-        user.setCategory(UserCategory.AVERAGE);
-        var userByPseudo =  userService.getUserByPseudo(user.getPseudo());
-
-
-
-        //user not found
-        if(userByPseudo.isEmpty()){
-            return ResponseEntity.badRequest().build();
-        }
         //use the actual user
-        var actualUser = userByPseudo.get();
+        var actualUser = currentUser.get();
         //check if movie already exists in db
-        var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getimdbID());
+        Map<String, String> map;
+        try {
+            map = fromJsonConverter.readValue(movieJson, new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format "+e);
+        }
+        LOGGER.info("json user's parsing succeed : "+map);
+        Movie movie;
+        try {
+            movie = new Movie(map.get("title"), Integer.parseInt(map.get("yearOfRelease")), map.get("imdbID"), map.get("director"));
+        }
+        catch(Exception e){
+            //inconsistent movie data
+            LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
+            //EMPTY MOVIE RETURNED IF Not connected
+            return ResponseEntity.ok(new Movie());
+        }
+        var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
         if(movieAlreadyExistsOpt.isPresent()){
             //the movie is already in the data base don't need to recreate with the same imdb
@@ -323,6 +302,7 @@ public class UserController {
     public ResponseEntity<?> getMoviesWatched(){
         if(userService.getPrincipal().isEmpty()) {
             LOGGER.log(Level.INFO, "l'utilisateur pour lequel on cherche les filmsf, est non connecté");
+            System.out.println("on a pas trouvé le user principal pour la listes des films vus");
             return ResponseEntity.ok(List.of());
         }
         //the user exists
@@ -351,7 +331,7 @@ public class UserController {
         try {
             map = fromJsonConverter.readValue(userJson, new TypeReference<>() {});
         } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format");
+            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format "+e);
         }
         LOGGER.info("json user's parsing succeed : "+map);
         var user = new User(map.get("pseudo"),map.get("email"),map.get("password"));
@@ -416,7 +396,7 @@ public class UserController {
      *
      * a remove method for an association between a movie and a user.
      *
-     * @param pseudo
+     *
      * the user who watched the movie
      * @param imdbID
      * the movie watch with its imdbID.
@@ -428,31 +408,36 @@ public class UserController {
      */
     //overpowerful deprecated
 
-    @DeleteMapping("/user/movie/remove/{pseudo}/{imdbID}")
-    public ResponseEntity<String> removeMovieFromList(@PathVariable String pseudo, @PathVariable String imdbID){
+    @DeleteMapping("/user/movie/remove/{imdbID}")
+    public ResponseEntity<String> removeMovieFromList(@PathVariable String imdbID){
 
-        var userOpt = userService.getUserByPseudo(pseudo);
-        var movieOpt = movieService.getMovieByImdb(imdbID);
-        if(userOpt.isEmpty()){
-            LOGGER.log(Level.INFO, "Error : the user that was supposed to be lose the movie from their list hasn't been found !!");
-            return ResponseEntity.notFound().build();
+        System.out.println(" on entre dans le controller de suppression du film");
+
+        if(userService.getPrincipal().isEmpty()){
+            System.out.println("le user principal n'est pas trouvé");
+            //user not connected
+            return ResponseEntity.ok("user not connected");
         }
+        System.out.println("on va get le principal car il n'est pas empty");
+        User user = userService.getPrincipal().get();
+        System.out.println("on a réussi à récupérer le current User");
+        var movieOpt = movieService.getMovieByImdb(imdbID);
+
         if(movieOpt.isEmpty()){
             LOGGER.log(Level.INFO, "Error : the movie that was supposed to be removed hasn't been found !!");
             return ResponseEntity.notFound().build();
         }
-        var user = userOpt.get();
+        System.out.println("le film n'était pas null en bdd");
         var movie = movieOpt.get();
         //no longer a watcher
         user.removeFromWatchedMovie(movie);
         movie.removeUserFromWatcher(user);
-
         //save update to make it persistent
-
         movieService.saveMovie(movie);
         userService.saveUser(user);
+        System.out.println(" on a réussi à supprimer le film");
         LOGGER.log(Level.INFO, "Success : the movie has been correctly removed !!");
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Success movie removed");
     }
 
 

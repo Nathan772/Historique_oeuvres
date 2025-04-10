@@ -166,14 +166,6 @@ public class Movie {
         return director;
     }
 
-    /**
-     * Retrieves the category.
-     *
-     * @return the category of the user (admin, average)
-     */
-    public String getimdbID(){
-        return imdbID;
-    }
 
     /**
      * Sets a new user's id.
@@ -263,6 +255,10 @@ public class Movie {
         this.id = id;
     }
 
+    /**
+     * get the imdb id of the movie
+     * @return
+     */
     public String getImdbID() {
         return imdbID;
     }

@@ -111,59 +111,75 @@ export class UserFormComponent implements OnInit {
     }
 
 
-  registerNewUser() {
-    console.log("try to register user");
-    //check if user exists in data base
-
-    useless here and causes errors
-    this.userService.checkUserExists(this.user).subscribe(
-      user => {
-        //The user already exists
-        if(user != null){
-          this.connectionService.alreadyExists = true;
-          //back to the page with error message
-          return;
-        }
-      }
-    );
-
-  //mismatched Password
-  if(this.copyInfo.passwordCopy != this.user.password){
-    this.connectionService.mismatchedPassword=true;
-    //back to the page
-    //window.location.reload();
-    return;
-  }
 
 
-    if(this.connectionService.alreadyExists){
-      return;
-    }
-
-    //save the new user
-    this.userService.save(this.user).subscribe(
-      result => {
-        //connect the user
-        this.connectionService.isConnected = true;
-        //update the actual user with their true info (notably the uid)
-        this.userService.userAccount = result;
-        //no, only for admin now
-
-        //long term session user
-        this.dataSave();
-
-        this.gotoUserEntrance()
-        });
-  }
-
-gotoUserEntrance() {
+  gotoUserEntrance() {
     this.router.navigate(['/user/entrance']);
   }
 
   gotoUserList() {
     this.router.navigate(['/users']);
   }
-
   ngOnInit(){}
+
+
+  registerNewUser() {
+    console.log("try to register user");
+    //check if user exists in data base
+    // useless here and causes errors
+    this.userService.checkUserExists(this.user).subscribe(
+      user => {
+        //The user already exists
+        if(user != null){
+        this.connectionService.alreadyExists = true;
+         //back to the page with error message
+              return;
+                  }
+                }
+              );
+
+            //mismatched Password
+            if(this.copyInfo.passwordCopy != this.user.password){
+              this.connectionService.mismatchedPassword=true;
+              //back to the page
+              //window.location.reload();
+              return;
+            }
+
+
+              if(this.connectionService.alreadyExists){
+                return;
+              }
+
+          //save the new user
+          this.userService.save(this.user).subscribe(
+            result => {
+              //connect the user
+              this.connectionService.isConnected = true;
+              //update the actual user with their true info (notably the uid)
+              this.userService.userAccount = result;
+              //no, only for admin now
+
+              //necessary to perfom the request otherwise, it's ignored
+              this.userService.login(this.user).subscribe(
+                //do nothing
+                result =>  {
+                  }
+
+                )
+
+
+
+              //long term session user
+              this.dataSave();
+
+              this.gotoUserEntrance()
+              }
+            )
+
+  }
+
+
+
 }
 

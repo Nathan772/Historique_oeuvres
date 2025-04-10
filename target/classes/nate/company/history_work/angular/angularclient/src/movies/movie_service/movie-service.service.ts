@@ -271,10 +271,8 @@ addToWatchList(movie:MovieFullInformations){
           /*
           create wrapper as string
           */
-          let wrapperAsString:string = "{"+JSON.stringify(user)
-          wrapperAsString +=","+JSON.stringify(movieSimple)+"}"
 
-          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',wrapperAsString)
+          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',JSON.stringify(movieSimple))
                             .subscribe(
                                   movieRetrieved => {
                                     //save succeed
@@ -354,16 +352,15 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
           console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.pseudo+" avec pour IMDB "+movieSimple.imdbID);
           /*
           functional but no checking*/
-          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove/"+user.pseudo+"/"+movieSimple.imdbID)
+          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove/"+movieSimple.imdbID)
           .subscribe(response =>
                     {
-                      if(response != null){
+                      /*if(response != null){
                       //remove from list
-                      /*if(index!==-1){
+                      if(index!==-1){
                         console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
                         this.userMoviesList.splice(index,1);
                       }*/
-                    }
                     //console.log(movie.Title+" a été supprimé de la liste du user : "+this.userService.userAccount)
           });
 

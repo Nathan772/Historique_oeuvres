@@ -28,6 +28,7 @@ export class UserService {
   public userAccount:User = {pseudo:"",email:"",password:"",category:"average"};
   private connectUrl:string;
   private userExistsUrl:string;
+  private loginUrl:string;
 
   constructor(private http: HttpClient, routerParam: Router) {
     //usersUrl va permettre de faire le lien avec le backend
@@ -36,6 +37,7 @@ export class UserService {
     this.registerUrl = 'http://localhost:8080/save/user'
     this.connectUrl = 'http://localhost:8080/connect';
     this.userExistsUrl = 'http://localhost:8080/userSearch';
+    this.loginUrl = 'http://localhost:8080/login';
     this.router = routerParam;
   }
 
@@ -96,6 +98,20 @@ redirectionToConnectionPage(connectionService:ConnectionServiceService) {
     const params = new HttpParams().append('pseudo', user.pseudo).append('email',user.email)
     //params = params.append('email', user.email);
     return this.http.get<Boolean>(this.userExistsUrl+"/boolean", {headers,params})
+  }
+
+  public login(user:User){
+    console.log("on entre dans la fonction du post login pour connexion")
+    //necessary to prevent from cors allow origin
+    //const headers = new HttpHeaders().append('header', 'value');
+    var userPseudo = user.pseudo;
+    var userPassword = user.password;
+
+    let userSimple = {
+               pseudo:user.pseudo,
+               password: user.password
+            };
+    return this.http.post<String>(this.loginUrl , userSimple)
   }
 
 

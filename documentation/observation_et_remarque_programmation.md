@@ -1302,3 +1302,202 @@ solution :
 ```
 
 gestion des autorisations
+
+problème :
+
+comment créer un wrapper en Angular.
+
+solution :
+
+```js
+
+/*
+
+exemple de wrapper
+
+*/
+
+ addMovieToUserInDataBase(movie:MovieFullInformations, status:String, user:User){
+
+          console.log("l'année de sortie du film  est :"+movie.Year+" et son titre est : "+movie.Title);
+          //une solution serait de retirer
+          // le champ genre de movie movieSimple
+          //
+          let movieSimple : Movie = {
+            id:"0",
+            title:movie.Title,
+            yearOfRelease:movie.Year,
+            director:movie.Director,
+            imdbID:movie.imdbID
+          };
+
+          //add movie to movie list
+          //this.userMoviesList.push(movie);
+
+          console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
+          /*
+          problème ici !!!!! :...
+
+          */
+
+
+          /*
+          https://stackoverflow.com/questions/46707073/how-to-pass-multiple-json-object-parameters-to-http-post-method-in-angular4
+          prepare jsons as params
+          */
+          //const headers = new HttpHeaders().append('header', 'value');
+              /*
+              prepares params source
+              https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+              */
+
+
+          /*
+          wrapper for two objects in
+          one
+          component
+          */
+
+          /*
+          create wrapper as string
+          */
+          
+          let wrapperAsString:string = "{"+JSON.stringify(user)
+          wrapperAsString +=","+JSON.stringify(movieSimple)+"}"
+
+          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',wrapperAsString)
+                            .subscribe(
+                                  movieRetrieved => {
+                                    //save succeed
+                                    this.addMovieToUserListWithoutDataBase(movie)
+                                    return movieRetrieved;
+                                  }
+                                );
+
+ }
+ ```
+
+
+problème : 
+
+
+ comment unwrap un wrapper de plusieurs class json 
+ côté java.
+
+solution :
+
+```java
+
+/*
+
+un exemple de unwrapp
+
+*/
+
+/**
+     * The "add movie" add a new movie into the data base.
+     *
+     * @param userJsonAndmovieJson
+     * the user that will have the movie in their list as json. and
+     * the movie that will be added as json.
+     *
+     * @return the retrieved movie
+     */
+    //Requestbody can be used only once,
+    //thereby you use a wrapper class or two request param
+    //you cannot
+    @PostMapping("/user/movie/add")
+    public ResponseEntity<?> addMovie(@RequestBody String movieJson){
+        System.out.println("on ajoute le film : "+movieJson);
+        //regex searched : {({.*})\,({.*})}
+        LOGGER.log(Level.INFO, " on ajoute le film : "+movieJson);
+        //save the movie in database
+        Movie movieSaved;
+        //check if movie already exists first :
+
+        Objects.requireNonNull(movieJson);
+        /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert*/
+        // source : https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
+
+        // Convert JSON string to Map
+       // Map<String, String> mapMovieAndJson;
+
+        // Convert JSON string to Map
+        Map<String, Object> mapUser;
+
+        //convert JSON to Map
+        Map<String, String> mapMovie;
+
+        // String to be scanned to find the pattern.
+        String line = movieJson;
+        String pattern = "\\{(\\{.*\\})\\,(\\{.*\\})\\}";
+
+        // Create a Pattern object
+        Pattern regex = Pattern.compile(pattern);
+
+        // Now create matcher object.
+        Matcher matcher = regex.matcher(line);
+
+        if (!matcher.find( )) {
+            //the string doesn't match the pattern expected for movie and user
+            //as jsons
+            return ResponseEntity.badRequest().build();
+        }
+
+        System.out.println("le groupe 1 récupéré est : "+matcher.group(1));
+        //retrieve user's data
+        try {
+            mapUser = fromJsonConverter.readValue(matcher.group(1), new TypeReference<HashMap<String,Object>>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format");
+        }
+
+        System.out.println("l'élément récupéré est : "+mapUser);
+
+        //retrieve movie's data
+        try {
+            mapMovie = fromJsonConverter.readValue(matcher.group(2), new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json receveid as movie doesn't respect the json format");
+        }
+//
+        LOGGER.info("json user's and movie's parsing succeed : "+mapUser);
+        var user = new User(mapUser.get("pseudo").toString(),mapUser.get("email").toString(),mapUser.get("password").toString());
+        var movie = new Movie(mapMovie.get("title"), Integer.parseInt(mapMovie.get("yearOfRelease")), mapMovie.get("imdbID"), mapMovie.get("director"));
+        user.setCategory(UserCategory.AVERAGE);
+        var userByPseudo =  userService.getUserByPseudo(user.getPseudo());
+
+
+
+        //user not found
+        if(userByPseudo.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        //use the actual user
+        var actualUser = userByPseudo.get();
+        //check if movie already exists in db
+        var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getimdbID());
+
+        if(movieAlreadyExistsOpt.isPresent()){
+            //the movie is already in the data base don't need to recreate with the same imdb
+            var movieChosen = movieAlreadyExistsOpt.get();
+            movieChosen.addIsWatchedBy(actualUser);
+            actualUser.addWatchedMovie(movieChosen);
+            //makes them persistent in db
+            movieService.saveMovie(movieChosen);
+            userService.saveUser(actualUser);
+            return ResponseEntity.ok(movieChosen);
+        }
+
+        //it's a new movie that wasn't in db
+        //we save it in db
+        movie.addIsWatchedBy(actualUser);
+        actualUser.addWatchedMovie(movie);
+        movieService.saveMovie(movie);
+        userService.saveUser(actualUser);
+        LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
+        return ResponseEntity.ok(movie);
+    }
+```
+
+

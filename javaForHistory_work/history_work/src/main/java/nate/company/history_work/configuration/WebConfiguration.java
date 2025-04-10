@@ -1,4 +1,4 @@
-package src.main.java.nate.company.history_work.configuration;
+package nate.company.history_work.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

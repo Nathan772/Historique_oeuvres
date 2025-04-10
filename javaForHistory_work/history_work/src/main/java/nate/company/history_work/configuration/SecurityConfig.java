@@ -4,14 +4,20 @@ package nate.company.history_work.configuration;
 import nate.company.history_work.config.JwtFilter;
 import nate.company.history_work.service.CustomUserDetails;
 import nate.company.history_work.siteTools.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,8 +32,14 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
     private final JwtFilter jwtFilter;
+//    UsernamePasswordAuthenticationToken authReq
+//            = new UsernamePasswordAuthenticationToken(user, pass);
+//    Authentication auth = authManager.authenticate(authReq);
+//    SecurityContext sc = SecurityContextHolder.getContext();
+//    sc.setAuthentication(auth);
 
-    public SecurityConfig(UserRepository userRepository, JwtFilter jwtFilter) {
+
+    public SecurityConfig(UserRepository userRepository, JwtFilter jwtFilter){
         this.userRepository = userRepository;
         this.jwtFilter = jwtFilter;
     }
@@ -51,11 +63,12 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
 
+                /*
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
-                )
+                )*/
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -65,6 +78,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /*
+    enable to track the current user
+     */
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
