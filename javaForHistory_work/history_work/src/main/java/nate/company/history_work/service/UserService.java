@@ -4,6 +4,7 @@ import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,5 +72,21 @@ public class UserService {
 
     public void removeByPseudo(String pseudo){
         userRepository.removeByPseudo(pseudo);
+    }
+
+    /**
+     * this method enables to know the current user who is running
+     * @return
+     * the user with their data
+     */
+    public Optional<User> getPrincipal() {
+        /*CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUser();*/
+        //Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof CustomUserDetails userDetails){
+            return Optional.of(userDetails.getUser());
+        }
+        return Optional.empty();
     }
 }

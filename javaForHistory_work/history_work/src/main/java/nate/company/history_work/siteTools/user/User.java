@@ -41,10 +41,10 @@ public class User {
     @Column(name="iduser")
     private long id;
 
-    @Column(name="pseudo")
+    @Column(name="pseudo", unique = true)
     private String pseudo;
 
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
     @Column(name="password")
     private String password;

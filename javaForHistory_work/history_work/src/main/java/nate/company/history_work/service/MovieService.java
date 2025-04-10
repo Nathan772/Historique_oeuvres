@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
 
 @Service
 @Component
@@ -21,7 +22,13 @@ public class MovieService {
     }
 
     public void saveMovie(Movie movie){
-        movieRepository.save(movie);
+        //save only if the movie is absent
+        if(movieRepository.getByimdbID(movie.getimdbID()).isEmpty()) {
+            movieRepository.save(movie);
+            return;
+        }
+       nate.company.history_work.logger.LoggerInfo.LOGGER.log(Level.INFO, "the movie is already present cannot add it twice to the db");
+
     }
 
     public Optional<Movie> getMovieById(long idMovie){

@@ -18,8 +18,7 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static src.main.java.nate.company.history_work.logger.LoggerInfo.LOGGER;
-
+import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 
 /**
  * User controller.
@@ -138,8 +137,6 @@ public class UserController {
     field of your class (here the class is user). Here it purpesofuly, matches for email and password (for the sake of the example)
 
      */
-    // rather post than get mapping in order to hide user data
-    //overkill
     @GetMapping("/userSearch")
     @ResponseBody
     public ResponseEntity<?> getUser(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="email") String email){
@@ -160,6 +157,47 @@ public class UserController {
         //they don't exist
         return ResponseEntity.badRequest().build();
     }
+
+    /**
+     * this method retrieve a specific user if exists in database
+     * @param userPseudo pseudo of the user
+     * @param email the email from this user
+     * @return the user searched if found, else null
+     */
+    /*
+    since we use get with parameters,
+    we have to retrieve each parameter one by one.
+    You must match the parameters
+    used in the url with a
+    "(name ="paremeter1InTheUrlName") JavaTypeParameter1 param1NameForJava,
+    etc..."
+    You can check the "right-click + console" to retrieve parameter's names but these are just the names of the fields of the
+    class you defined in your angular class file.
+    You can prevent your api from explictly saying "RequestParam(name='...')" if the java parameters' method name matches, the name of the
+    field of your class (here the class is user). Here it purpesofuly, matches for email and password (for the sake of the example)
+
+     */
+    @GetMapping("/userSearch/boolean")
+    @ResponseBody
+    public ResponseEntity<Boolean> checkUserExists(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="email") String email){
+        var userByEmail = userService.getUserByMail(email);
+        System.out.println("on va chercher un user par pseudo");
+        LOGGER.log(Level.INFO, "On va chercher un user");
+        //the user already exists
+        if(userByEmail.isPresent()){
+            return ResponseEntity.ok(true);
+        }
+        var userByPseudo = userService.getUserByPseudo(userPseudo);
+        if(userByPseudo.isPresent()){
+            return ResponseEntity.ok(true);
+        }
+
+
+        LOGGER.log(Level.INFO, " le user n'existe pas en bdd");
+        //they don't exist
+        return ResponseEntity.ok(false);
+    }
+
 
 
 
@@ -278,6 +316,20 @@ public class UserController {
         return ResponseEntity.ok(movie);
     }
 
+    /*
+    this method retrieves all the movies watched by a user, based on their pseudo
+     */
+    @GetMapping("/user/movie")
+    public ResponseEntity<?> getMoviesWatched(){
+        if(userService.getPrincipal().isEmpty()) {
+            LOGGER.log(Level.INFO, "l'utilisateur pour lequel on cherche les filmsf, est non connecté");
+            return ResponseEntity.ok(List.of());
+        }
+        //the user exists
+        LOGGER.log(Level.INFO, " le user a bien été trouvé, on renvoie ses films trouvés en bdd");
+        return ResponseEntity.ok(userService.getPrincipal().get().getWatchMovies());
+    }
+
     /**
      * Adds a new user in the database.
      *
@@ -313,6 +365,7 @@ public class UserController {
             return userByPseudo.get();
         }
         if(userByMail.isPresent()){
+            LOGGER.log(Level.INFO, " le user est déjà présent : "+userByMail.get());
             return userByMail.get();
         }
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd on ajoute le user : "+user);
@@ -349,14 +402,15 @@ public class UserController {
      * @param userId id of the user
      * @return the list of movie possessed by the user
      */
-    @GetMapping("user/movie")
-    public List<Movie> getUserMovies(@RequestParam(name="id") long userId){
-        var user = userService.getUserById(userId);
-        if(user.isEmpty()){
-            return new ArrayList<>();
-        }
-       return  user.get().getWatchMovies();
-    }
+    //DUPLICATED
+//    @GetMapping("user/movie")
+//    public List<Movie> getUserMovies(@RequestParam(name="id") long userId){
+//        var user = userService.getUserById(userId);
+//        if(user.isEmpty()){
+//            return new ArrayList<>();
+//        }
+//       return  user.get().getWatchMovies();
+//    }
 
     /**
      *

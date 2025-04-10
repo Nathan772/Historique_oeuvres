@@ -1241,3 +1241,64 @@ persistence.xml :
 
 </persistence>
 ```
+
+problème :
+
+"Error creating bean with name 'jwtFilter' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/history_work/config/JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'jwtUtil': Injection of autowired dependencies failed"
+
+"Could not resolve placeholder 'jwt.expirationMs' in value "${jwt.expirationMs}""
+
+
+solution :
+
+ajoutez dans application.properties :
+
+```properties 
+
+
+jwt.expirationMs=3600000
+
+```
+
+problème 
+
+"Cors-policy"
+
+les appels back ne sont pas autorisés.
+
+solution : 
+
+```java
+
+//SecurityConfig.java
+
+@Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        /*
+        this method defines the path allowed
+        to receive request front end
+         */
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**")
+                        .permitAll()
+                        .anyRequest().authenticated()
+                )
+
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                )
+
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+```
+
+gestion des autorisations

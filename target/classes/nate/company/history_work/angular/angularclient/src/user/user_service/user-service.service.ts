@@ -84,6 +84,20 @@ redirectionToConnectionPage(connectionService:ConnectionServiceService) {
     return this.http.get<User>(this.userExistsUrl, {headers,params})
   }
 
+ /**
+    retrieve a user in the data base
+    */
+  public checkUserExists(user:User): Observable<Boolean> {
+    const headers = new HttpHeaders().append('header', 'value');
+    /*
+    prepares params source
+    https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+    */
+    const params = new HttpParams().append('pseudo', user.pseudo).append('email',user.email)
+    //params = params.append('email', user.email);
+    return this.http.get<Boolean>(this.userExistsUrl+"/boolean", {headers,params})
+  }
+
 
 
 

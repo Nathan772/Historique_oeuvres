@@ -114,7 +114,9 @@ export class UserFormComponent implements OnInit {
   registerNewUser() {
     console.log("try to register user");
     //check if user exists in data base
-    this.userService.findUser(this.user).subscribe(
+
+    useless here and causes errors
+    this.userService.checkUserExists(this.user).subscribe(
       user => {
         //The user already exists
         if(user != null){

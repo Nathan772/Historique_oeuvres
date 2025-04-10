@@ -153,14 +153,15 @@ addToWatchList(movie:MovieFullInformations){
      let userInfo:UserId = {
        pseudo:string
       }*/
-    const headers = new HttpHeaders().append('header', 'value');
+    //const headers = new HttpHeaders().append('header', 'value');
     /*
         prepares params source
         https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
         */
-    const params = new HttpParams().append('pseudo', userPseudo)
+   // const params = new HttpParams().append('pseudo', userPseudo)
     //params = params.append('email', user.email);
-    return this.HttpClient.get<Movie[]>(this.userMoviesUrl, {headers,params});
+    //current user is know by the backend actually
+    return this.HttpClient.get<Movie[]>(this.userMoviesUrl);
       //return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(user)});
   }
 
@@ -177,9 +178,9 @@ addToWatchList(movie:MovieFullInformations){
               imdbID:movie.imdbID
     };
     for(let i=0;i<this.userMoviesList.length;i++){
-        //console.log("les films présents : "+this.userMoviesList[i].imdbID);
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].imdbID);
         if(this.userMoviesList[i].imdbID === movie.imdbID){
-          //console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
+          console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
           return true
         }
     }
