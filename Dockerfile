@@ -85,7 +85,7 @@ WORKDIR ./javaForHistory_work/history_work/src/main/java/nate/company/history_wo
 
 #start is equivalent
 #for ng serve --host 0.0.0.0 (look at package.json in scipts)
-#RUN npm start --host 
+RUN npm start
 
 #https://jonathanantoine.medium.com/hosting-an-angular-application-inside-a-docker-container-with-nginx-b10f3f0a4c26#:~:text=This%20also%20applies%20to%20docker,use%20ng%20serve%20in%20production.
 #you mustn't run it here... (see upper link)
