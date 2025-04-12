@@ -10,3 +10,35 @@ côté back :
 
 
 - appuyez simplement sur le bouton play de intellij si le back end a bien été build avant (il n'est nécessaire de ne build qu'une seule fois si tout s'est bien passé lors du premier build).
+
+````shell
+java -cp h2-2.3.232.jar org.h2.tools.Server -ifNotExists &
+```
+
+
+avec docker :
+
+```bash
+
+cd "./Historique_oeuvres"
+
+```
+
+(optionnel)
+si le container n'existe pas :
+
+```
+
+docker container create -i -t --name museeoeuvrecontainer openjdk:23-jdk
+
+```
+
+(fin optionnel)
+
+ensuite lancer le container :
+
+```bash
+
+ sudo docker build -t museeoeuvrecontainer .
+
+```
