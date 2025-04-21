@@ -36,7 +36,7 @@ export class MovieServiceService {
 
 
   constructor(private HttpClient: HttpClient) {
-        this.userMoviesUrl = 'http://localhost:8080/user/movie';
+        this.userMoviesUrl = 'http://localhost:8081/user/movie';
         /*this.registerUrl = 'http://localhost:8080/register';
         this.connectUrl = 'http://localhost:8080/connect';
         this.userExistsUrl = 'http://localhost:8080/userSearch';*/
@@ -52,7 +52,7 @@ retrieveUserMovies(userAccount:User){
             //empty user movie list to not have copy of the same movie
             this.userMoviesList = [];
               console.log("on récupère les films du user nommé : "+userAccount.pseudo);
-              this.findAllMoviesFromUserList(userAccount.pseudo).subscribe((movies) => {
+              this.findAllMoviesFromUserList(userAccount.pseudo, userAccount.password).subscribe((movies) => {
                 /*
                    on s'assure que le film a bien été trouvé
                    avant de l'affecter à this.movieFull*/
@@ -119,7 +119,7 @@ addToWatchList(movie:MovieFullInformations){
 
 
   /* retrieve all the movies from user data present in the database. */
-  public findAllMoviesFromUserList(userPseudo:string):Observable<Movie[]>{
+  public findAllMoviesFromUserList(userPseudo:string, userPassword:string):Observable<Movie[]>{
     //deprecated (begin)
     //let params = new URLSearchParams(); deprecated
     //params.append("someParamKey", this.someParamValue)
@@ -153,15 +153,14 @@ addToWatchList(movie:MovieFullInformations){
      let userInfo:UserId = {
        pseudo:string
       }*/
-    //const headers = new HttpHeaders().append('header', 'value');
+    const headers = new HttpHeaders().append('header', 'value');
     /*
         prepares params source
         https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
         */
-   // const params = new HttpParams().append('pseudo', userPseudo)
-    //params = params.append('email', user.email);
+    const params = new HttpParams().set('pseudo', userPseudo).set('password', userPassword);
     //current user is know by the backend actually
-    return this.HttpClient.get<Movie[]>(this.userMoviesUrl);
+    return this.HttpClient.get<Movie[]>(this.userMoviesUrl,  {headers: headers, params: params});
       //return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(user)});
   }
 
@@ -241,6 +240,11 @@ addToWatchList(movie:MovieFullInformations){
             imdbID:movie.imdbID
           };
 
+          let userSimple = {
+                     pseudo:user.pseudo,
+                     password:user.password
+                   };
+
           //add movie to movie list
           //this.userMoviesList.push(movie);
 
@@ -272,7 +276,7 @@ addToWatchList(movie:MovieFullInformations){
           create wrapper as string
           */
 
-          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',JSON.stringify(movieSimple))
+          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{movieSimple,userSimple})
                             .subscribe(
                                   movieRetrieved => {
                                     //save succeed
@@ -346,13 +350,24 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
             imdbID:movie.imdbID
           };
 
+          let userSimple = {
+            pseudo:user.pseudo,
+            password:user.password
+          };
+
           this.userMoviesList = this.userMoviesList.filter(
             movieKept => movieKept.imdbID != movie.imdbID
           )
           console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.pseudo+" avec pour IMDB "+movieSimple.imdbID);
           /*
           functional but no checking*/
-          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove/"+movieSimple.imdbID)
+
+          const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove",{
+            headers,
+            body: {movieSimple, userSimple}
+            })
           .subscribe(response =>
                     {
                       /*if(response != null){

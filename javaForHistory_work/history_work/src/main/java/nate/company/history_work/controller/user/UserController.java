@@ -7,16 +7,25 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.thoughtworks.qdox.parser.impl.Parser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import nate.company.history_work.handle_connection_spring.ActiveUserStore;
+import nate.company.history_work.service.AuthenticationService;
 import nate.company.history_work.service.MovieService;
+import nate.company.history_work.service.MyUserDetailsService;
 import nate.company.history_work.service.UserService;
+import nate.company.history_work.siteTools.authentication.LoginRequest;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
 
@@ -48,10 +57,19 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
+    @Autowired
+    private ActiveUserStore activeUserStore;
+
     private final MovieService movieService;
 
+    @Autowired
+    private final AuthenticationService authenticationService;
+
+    @Autowired
+    private final MyUserDetailsService userDetailsService;
+
     private final ObjectWriter jsonConverter = new ObjectMapper().writer().withDefaultPrettyPrinter();
-    private final ObjectMapper fromJsonConverter = new ObjectMapper();
+    private static final ObjectMapper fromJsonConverter = new ObjectMapper();
 
     /**
      * constructor selfmade
@@ -59,10 +77,14 @@ public class UserController {
      * @param userService the service that enables to handle repositories and treatment
      */
     @Autowired
-    public UserController(UserService userService, MovieService movieService){
+    public UserController(UserService userService, MovieService movieService, AuthenticationService authenticationService,
+                          MyUserDetailsService userDetailsService){
         Objects.requireNonNull(userService);
+        Objects.requireNonNull(userDetailsService);
+        this.userDetailsService = userDetailsService;
         this.userService = userService;
         this.movieService = movieService;
+        this.authenticationService= authenticationService;
     }
 
     /**
@@ -207,7 +229,114 @@ public class UserController {
     }
 
 
+    /**
+     * this method parses a complex json
+     * @param complexJson
+     * the complex json one wants to parse
+     * @return
+     * the data of the complelx json as map of string string
+     */
 
+    public static Map<String, String> parseComplexJson(String complexJson){
+        // Convert JSON string to Map
+        Map<String, Object> map = null;
+        try {
+            map = fromJsonConverter.readValue(complexJson, new TypeReference<Map<String, Object>>() {});
+
+        } catch (JsonProcessingException ex) {
+            throw new AssertionError("failure for parsing json movie-user probably inconsistent writting "+ex);
+        }
+        // Print the Map in an organized manner
+        HashMap<String, String> nestedMap = new HashMap<>();
+        HashMap<String,String> copyNestedEntries = new HashMap<>();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getValue() instanceof Map) {
+                System.out.println(entry.getKey() + " = ");
+                nestedMap = (HashMap<String, String>) entry.getValue();
+                for (Map.Entry<String, String> nestedEntry : nestedMap.entrySet()) {
+                    System.out.println("    " + nestedEntry.getKey() + " = " + nestedEntry.getValue());
+                    copyNestedEntries.put(nestedEntry.getKey(), nestedEntry.getValue());
+                }
+            } else if (entry.getValue() instanceof List) {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
+            } else {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
+            }
+        }
+        return  copyNestedEntries;
+    }
+    /**
+     *
+     * a remove method for an association between a movie and a user.
+     *
+     *
+     * the user who watched the movie
+     * @param imdbIDUserJson
+     * the movie watch with its imdbID.
+     *
+     * the movie and the user who watches this movie.
+     *
+     * @return
+     * a response that precises if everything end up properly.
+     */
+    //overpowerful deprecated
+
+    @DeleteMapping("/user/movie/remove")
+    public ResponseEntity<String> removeMovieFromList(@RequestBody String imdbIDUserJson){
+
+        //System.out.println("on a trouvé le user principal");
+        //user is connected
+        // doesn't work use another approach
+        //var currentUser = userService.getPrincipal();
+        var nestedMap = parseComplexJson(imdbIDUserJson);
+        var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
+        //user doesn't exists
+        if(userOpt.isEmpty()){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
+        }
+
+        //user exists
+        //but false password
+        if(userOpt.get().getPassword().equals(nestedMap.get("password"))){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
+        }
+
+        //user exists and good password
+
+        //use the actual user
+        var actualUser = userOpt.get();//currentUser.get();
+
+        //check if movie already exists in db
+        Movie movie;
+        try {
+            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"));
+        }
+        catch(Exception e){
+            //inconsistent movie fields
+            LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
+            //EMPTY MOVIE RETURNED IF Not connected
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error bad movie format");
+        }
+        var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
+
+        if(movieAlreadyExistsOpt.isPresent()){
+            //the movie is already in the data base don't need to recreate with the same imdb
+            var movieChosen = movieAlreadyExistsOpt.get();
+            movieChosen.removeUserFromWatcher(actualUser);
+            actualUser.removeFromWatchedMovie(movieChosen);
+            //makes them persistent in db
+            movieService.saveMovie(movieChosen);
+            userService.saveUser(actualUser);
+            return ResponseEntity.ok("");
+        }
+        /*
+        movie not found, but it's not a problem
+         */
+        return ResponseEntity.ok("");
+    }
 
 
 
@@ -227,7 +356,7 @@ public class UserController {
     /**
      * The "add movie" add a new movie into the data base.
      *
-     * @param movieJson
+     * @param userMovieJson
      * the user that will have the movie in their list as json. and
      * the movie that will be added as json.
      *
@@ -237,40 +366,56 @@ public class UserController {
     //thereby you use a wrapper class or two request param
     //you cannot
     @PostMapping("/user/movie/add")
-    public ResponseEntity<Movie> addMovie(@RequestBody String movieJson){
-        System.out.println("on ajoute le film : "+movieJson);
+    public ResponseEntity<Movie> addMovie(@RequestBody String userMovieJson){
+        System.out.println("on ajoute le film et le user : "+userMovieJson);
         //regex searched : {({.*})\,({.*})}
-        LOGGER.log(Level.INFO, " on ajoute le film : "+movieJson);
+        LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
         //user not connected abnormal
-        if(userService.getPrincipal().isEmpty()){
-            System.out.println("on ne trouve pas le user principal");
-            //EMPTY MOVIE RETURNED IF Not connected
-            return ResponseEntity.ok(new Movie());
+        // doesn't work for now, use another approach
+//        if(userService.getPrincipal().isEmpty()){
+//            System.out.println("on ne trouve pas le user principal");
+//            //EMPTY MOVIE RETURNED IF Not connected
+//            return ResponseEntity.ok(new Movie());
+//        }
+        var nestedMap = parseComplexJson(userMovieJson);
+        //System.out.println("on a trouvé le user principal");
+        //user is connected
+        // doesn't work use another approach
+        //var currentUser = userService.getPrincipal();
+
+        var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
+        //user doesn't exists
+        if(userOpt.isEmpty()){
+            System.out.println("erreur le user au pseudo: "+nestedMap.get("pseudo")+" n'existe pas ");
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
         }
 
-        System.out.println("on a trouvé le user principal");
-        //user is connected
-        var currentUser = userService.getPrincipal();
+        //user exists
+        //but false password
+        if(userOpt.get().getPassword().equals(nestedMap.get("password"))){
+            System.out.println("erreur le user au password: "+nestedMap.get("password")+" n'existe pas ");
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
+        }
+
+        //user exists and good password
 
         //use the actual user
-        var actualUser = currentUser.get();
+        var actualUser = userOpt.get();//currentUser.get();
+
         //check if movie already exists in db
-        Map<String, String> map;
-        try {
-            map = fromJsonConverter.readValue(movieJson, new TypeReference<>() {});
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format "+e);
-        }
-        LOGGER.info("json user's parsing succeed : "+map);
         Movie movie;
         try {
-            movie = new Movie(map.get("title"), Integer.parseInt(map.get("yearOfRelease")), map.get("imdbID"), map.get("director"));
+            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"));
         }
         catch(Exception e){
-            //inconsistent movie data
+            //inconsistent movie fields
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
+            System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
             //EMPTY MOVIE RETURNED IF Not connected
-            return ResponseEntity.ok(new Movie());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
@@ -297,17 +442,33 @@ public class UserController {
 
     /*
     this method retrieves all the movies watched by a user, based on their pseudo
+    and password
      */
     @GetMapping("/user/movie")
-    public ResponseEntity<?> getMoviesWatched(){
-        if(userService.getPrincipal().isEmpty()) {
-            LOGGER.log(Level.INFO, "l'utilisateur pour lequel on cherche les filmsf, est non connecté");
-            System.out.println("on a pas trouvé le user principal pour la listes des films vus");
-            return ResponseEntity.ok(List.of());
+    public ResponseEntity<?> getMoviesWatched(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="password") String password){
+        //doesn't for now, use another approach
+//        if(userService.getPrincipal().isEmpty()) {
+//            LOGGER.log(Level.INFO, "l'utilisateur pour lequel on cherche les filmsf, est non connecté");
+//            System.out.println("on a pas trouvé le user principal pour la listes des films vus");
+//            return ResponseEntity.ok(List.of());
+//        }
+
+        var userOpt = userService.getUserByPseudo(userPseudo);
+        //user not found
+        if(userOpt.isEmpty() ){
+            ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ArrayList());
+        }
+        /*
+        wrong password
+         */
+        if(!userOpt.get().getPassword().equals(password)){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ArrayList());
         }
         //the user exists
-        LOGGER.log(Level.INFO, " le user a bien été trouvé, on renvoie ses films trouvés en bdd");
-        return ResponseEntity.ok(userService.getPrincipal().get().getWatchMovies());
+        System.out.println("le user a bien été trouvé, on renvoie ses films trouvés en bdd");
+        return ResponseEntity.ok(userOpt.get().getWatchMovies());
     }
 
     /**
@@ -374,131 +535,52 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * This method retrieves all the movies watched by a user from the database
-     *
-     * it needs to bechanged by pseudo in order to prevent from id non secure leaks
-     *
-     * @param userId id of the user
-     * @return the list of movie possessed by the user
-     */
-    //DUPLICATED
-//    @GetMapping("user/movie")
-//    public List<Movie> getUserMovies(@RequestParam(name="id") long userId){
-//        var user = userService.getUserById(userId);
-//        if(user.isEmpty()){
-//            return new ArrayList<>();
-//        }
-//       return  user.get().getWatchMovies();
-//    }
+
+
+
 
     /**
-     *
-     * a remove method for an association between a movie and a user.
-     *
-     *
-     * the user who watched the movie
-     * @param imdbID
-     * the movie watch with its imdbID.
-     *
-     * the movie and the user who watches this movie.
-     *
+     * this method check/show the logged in users
+     * @param locale
+     * @param model
      * @return
-     * a response that precises if everything end up properly.
      */
-    //overpowerful deprecated
-
-    @DeleteMapping("/user/movie/remove/{imdbID}")
-    public ResponseEntity<String> removeMovieFromList(@PathVariable String imdbID){
-
-        System.out.println(" on entre dans le controller de suppression du film");
-
-        if(userService.getPrincipal().isEmpty()){
-            System.out.println("le user principal n'est pas trouvé");
-            //user not connected
-            return ResponseEntity.ok("user not connected");
-        }
-        System.out.println("on va get le principal car il n'est pas empty");
-        User user = userService.getPrincipal().get();
-        System.out.println("on a réussi à récupérer le current User");
-        var movieOpt = movieService.getMovieByImdb(imdbID);
-
-        if(movieOpt.isEmpty()){
-            LOGGER.log(Level.INFO, "Error : the movie that was supposed to be removed hasn't been found !!");
-            return ResponseEntity.notFound().build();
-        }
-        System.out.println("le film n'était pas null en bdd");
-        var movie = movieOpt.get();
-        //no longer a watcher
-        user.removeFromWatchedMovie(movie);
-        movie.removeUserFromWatcher(user);
-        //save update to make it persistent
-        movieService.saveMovie(movie);
-        userService.saveUser(user);
-        System.out.println(" on a réussi à supprimer le film");
-        LOGGER.log(Level.INFO, "Success : the movie has been correctly removed !!");
-        return ResponseEntity.ok("Success movie removed");
+    @GetMapping("/loggedUsers")
+    public String getLoggedUsers(Locale locale, Model model) {
+        model.addAttribute("users", activeUserStore.getUsers());
+        return "users";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Retrieve user from data based, based on their pseudo or their email.
-     * Actually, it can be used to know if the identifier (pseudo and email) can
-     * be used to create a unique User.
-     *
-     * @param userSearched the user few information (email/pseudo)
-     * @return the user complete data
+    /*
+    necessary to track authentified user
+    it doesn't work , it causes issues
      */
-    //deprecated overpowerful
-//    @PostMapping("/userSearch")
-//    public ResponseEntity<?> doesIdentifierExist(@RequestBody User userSearched){
-//        var userPseudo = userSearched.getPseudo();
-//        var email = userSearched.getEmail();
-//        //System.out.println("on entre bien dans la méthode getUser de Java");
-//        var allUsers = userRepository.findAll();
-//        for(var user:allUsers){
-//            //System.out.println("L'id du user : "+user.getId());
-//            LOGGER.log(Level.INFO,"L'id du user recherché user : "+user.getId());
-//            //user found
-//            //pseudo already used or email already used
-//            if(user.getPseudo().equals(userPseudo) || user.getEmail().equals(email) ) {
-//                //System.out.println("Le user a bien été trouvé : ");
-//                LOGGER.log(Level.INFO,"Le user "+userPseudo+" a bien été trouvé");
-//                var userForAngular = new User(user.getId(),user.getPseudo(),user.getEmail(),user.getPassword(),user.getCategory() );
-//                return ResponseEntity.ok(user);
-//
-//            }
-//        }
-//        //user not found (not necessarily an error
-//        //depending on the usage)
-//
-//        LOGGER.log(Level.INFO,"Le user n'a pas été trouvé");
-//        return ResponseEntity.notFound().build();
-//    }
+    /*
+    @PostMapping("/loginPersistent")
+    public ResponseEntity<?> login(@RequestBody String userPseudoAndPassword) {
+        HashMap<String,String> map;
+        System.out.println(" le user and password:  "+userPseudoAndPassword);
+        //return ResponseEntity.ok("ok");
+        try {
+            try {
+                map = fromJsonConverter.readValue(userPseudoAndPassword, HashMap.class);
+                System.out.println("le map obtenu est : "+map);
+            } catch (JsonProcessingException e) {
+                throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format "+e);
+            }
+//            LOGGER.info("json user's parsing succeed : "+map);
+//            //var user = new User(map.get("pseudo"),map.get("email"),map.get("password"));
+            System.out.println(" avant le authentication service");
+            var token = authenticationService.authenticate(map.get("pseudo"), map.get("password"));
+            System.out.println(" après le authentication service");
+            return ResponseEntity.ok(token);
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("error", e.getMessage()));
+        }
+    }*/
 
+
+    private boolean passwordMatches(String rawPassword, String encodedPassword) {
+        return new BCryptPasswordEncoder().matches(rawPassword, encodedPassword);
+    }
 }

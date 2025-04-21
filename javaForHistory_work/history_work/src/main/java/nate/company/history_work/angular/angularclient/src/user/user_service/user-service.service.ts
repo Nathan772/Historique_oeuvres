@@ -33,11 +33,11 @@ export class UserService {
   constructor(private http: HttpClient, routerParam: Router) {
     //usersUrl va permettre de faire le lien avec le backend
     //l'@ 8080 est une @ du backend
-    this.usersUrl = 'http://localhost:8080/users';
-    this.registerUrl = 'http://localhost:8080/save/user'
-    this.connectUrl = 'http://localhost:8080/connect';
-    this.userExistsUrl = 'http://localhost:8080/userSearch';
-    this.loginUrl = 'http://localhost:8080/login';
+    this.usersUrl = 'http://localhost:8081/users';
+    this.registerUrl = 'http://localhost:8081/save/user'
+    this.connectUrl = 'http://localhost:8081/connect';
+    this.userExistsUrl = 'http://localhost:8081/userSearch';
+    this.loginUrl = 'http://localhost:8081/loginPersistent';
     this.router = routerParam;
   }
 
@@ -83,7 +83,7 @@ redirectionToConnectionPage(connectionService:ConnectionServiceService) {
     */
     const params = new HttpParams().append('pseudo', user.pseudo).append('email',user.email)
     //params = params.append('email', user.email);
-    return this.http.get<User>(this.userExistsUrl, {headers,params})
+    return this.http.get<User>(this.userExistsUrl, {params})
   }
 
  /**
@@ -111,7 +111,8 @@ redirectionToConnectionPage(connectionService:ConnectionServiceService) {
                pseudo:user.pseudo,
                password: user.password
             };
-    return this.http.post<String>(this.loginUrl , userSimple)
+          console.log("on va envoyer usersimple : "+userSimple)
+    return this.http.post<String>(this.loginUrl , JSON.stringify(userSimple))
   }
 
 

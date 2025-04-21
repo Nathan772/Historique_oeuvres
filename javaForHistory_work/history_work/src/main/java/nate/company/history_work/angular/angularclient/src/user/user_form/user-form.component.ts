@@ -117,6 +117,7 @@ export class UserFormComponent implements OnInit {
     this.router.navigate(['/user/entrance']);
   }
 
+
   gotoUserList() {
     this.router.navigate(['/users']);
   }
@@ -161,17 +162,23 @@ export class UserFormComponent implements OnInit {
               //no, only for admin now
 
               //necessary to perfom the request otherwise, it's ignored
-              this.userService.login(this.user).subscribe(
+               //enable the back-en to authentificate this user as the current user connected
+               //the back-end associated doesn't work for now
+              /*this.userService.login(this.user).subscribe(
                 //do nothing
                 result =>  {
                   }
 
-                )
+                )*/
 
 
 
               //long term session user
               this.dataSave();
+              //enable the back-en to authentificate this user as the current user connected
+              //deprecated
+              //this.connectInBackEnd();
+
 
               this.gotoUserEntrance()
               }

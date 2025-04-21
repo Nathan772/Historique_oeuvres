@@ -1501,3 +1501,33 @@ un exemple de unwrapp
 ```
 
 
+problème :
+
+"Adresse déjà utilisée"
+
+solution :
+
+dans application.properties :
+
+```properties 
+
+server.port=8081 #changement du port 8080 par 8081
+
+```
+
+problème : 
+
+"
+Access to XMLHttpRequest at 'http://localhost:8081/login' from origin 'http://localhost:4200' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+
+solution :
+
+si vous avez mis à jour le localhost adresse de 8080 à 8081, vérifiez que vous avez reporté le numéro d'appel du côté de angular
+
+
+ressources utiles : 
+
+
+connexion, suivi des users connectés :
+
+-https://www.baeldung.com/spring-security-track-logged-in-users
