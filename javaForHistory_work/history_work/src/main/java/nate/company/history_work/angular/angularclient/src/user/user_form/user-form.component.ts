@@ -18,6 +18,7 @@ import { UserService } from '../user_service/user-service.service';
 import { User,copyData } from '../user';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
 
+
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -66,6 +67,8 @@ export class UserFormComponent implements OnInit {
     */
     //this.alreadyExists = false;
 
+
+
     this.user = {pseudo:"", email:"", password:"",category:"average"};
     this.copyInfo = {passwordCopy:""};
     /*at the inception
@@ -75,6 +78,8 @@ export class UserFormComponent implements OnInit {
     this.connectionService.alreadyExists = false
     this.connectionService.mismatchedPassword = false;
   }
+
+
 
     /*
      see : https://dev-academy.com/angular-session-storage/
