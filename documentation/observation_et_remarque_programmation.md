@@ -1531,3 +1531,19 @@ ressources utiles :
 connexion, suivi des users connectés :
 
 -https://www.baeldung.com/spring-security-track-logged-in-users
+
+problème :
+
+```
+
+cannot invoke "nate.company.history_work.siteTools.movie.Movie.hashCode()" because "this.movie" is null
+
+```
+
+solution : 
+
+```
+
+vérifier dans vos constructeur, notammen ccelui sans argument, que les champs sont remplis et qu'ils sont require non null
+
+```

@@ -70,7 +70,7 @@ movie-card component
     <br />
     Awards:
     {{ movieFull.Awards }}
-<button (click)="this.addToWatchListAndDatabase(movieFull, 'à regarder plus tard')" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
+<button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, watchedMovieStatus.WATCHLATER)" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
 
     <!--
     deprecated, need to be replaced later

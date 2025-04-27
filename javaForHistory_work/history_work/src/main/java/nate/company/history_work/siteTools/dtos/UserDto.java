@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class UserDto {
     This part will handle the jsonification
      */
     @JsonManagedReference
-    private List<MovieDto> watchMovies = new ArrayList<>();
+    private List<WatchedMovieDto> watchMovies = new ArrayList<>();
 
     /*
    necessary for spring init
@@ -38,7 +39,7 @@ public class UserDto {
                 String password,
                 String email,
                 src.main.java.nate.company.history_work.siteTools.user.UserCategory userCategory,
-            List<MovieDto> movieDto)
+            List<WatchedMovieDto> movieWatchedDto)
 
     {
         Objects.requireNonNull(pseudo, "the user's pseudo cannot be null");
@@ -49,7 +50,7 @@ public class UserDto {
         this.password = password;
         this.email = email;
         this.category = userCategory;
-        this.watchMovies = movieDto;
+        this.watchMovies = movieWatchedDto;
 
     }
 
@@ -84,7 +85,7 @@ public class UserDto {
         this.email = user.getEmail();
         this.category = user.getCategory();
         if(!ignore) {
-            this.watchMovies = user.getWatchMovies().stream().map(movie -> new MovieDto(movie)).toList();
+            this.watchMovies = user.getWatchMovies().stream().map(movie -> new WatchedMovieDto(movie)).toList();
         }
 
     }
@@ -97,7 +98,7 @@ public class UserDto {
      * @param movieWatched
      * the movie watched
      */
-    public void addWatchedMovie(MovieDto movieWatched){
+    public void addWatchedMovie(WatchedMovieDto movieWatched){
         Objects.requireNonNull(movieWatched);
         watchMovies.add(movieWatched);
     }
@@ -111,12 +112,12 @@ public class UserDto {
         watchMovies.remove(movieWatched);
     }
 
-    public void setWatchMovies(List<MovieDto> watchMovies) {
+    public void setWatchMovies(List<WatchedMovieDto> watchMovies) {
         Objects.requireNonNull(watchMovies);
         this.watchMovies = watchMovies;
     }
 
-    public List<MovieDto> getWatchMovies() {
+    public List<WatchedMovieDto> getWatchMovies() {
         return watchMovies;
     }
 

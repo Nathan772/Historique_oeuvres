@@ -52,3 +52,22 @@ export interface MovieShortInformations {
 export interface SearchResponse {
   Search: MovieShortInformations[];
 }
+
+export interface watchedMovie {
+  movie:Movie;
+  movieStatus:watchedMovieStatus;
+  time: timeOnly;
+}
+
+export interface timeOnly {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export enum watchedMovieStatus {
+  REWATCH,
+  WATCHLATER,
+  ONWATCHING,
+  WATCHING
+}

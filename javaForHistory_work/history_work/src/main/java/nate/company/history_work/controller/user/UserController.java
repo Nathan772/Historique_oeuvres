@@ -8,15 +8,16 @@ import com.thoughtworks.qdox.parser.impl.Parser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import nate.company.history_work.handle_connection_spring.ActiveUserStore;
-import nate.company.history_work.service.AuthenticationService;
-import nate.company.history_work.service.MovieService;
-import nate.company.history_work.service.MyUserDetailsService;
-import nate.company.history_work.service.UserService;
+import nate.company.history_work.service.*;
 import nate.company.history_work.siteTools.authentication.LoginRequest;
 import nate.company.history_work.siteTools.dtos.MovieDto;
 import nate.company.history_work.siteTools.dtos.UserDto;
+import nate.company.history_work.siteTools.dtos.WatchedMovieDto;
 import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.timeHandler.TimeConverter;
 import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
+import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
+import static nate.company.history_work.siteTools.json.JsonTools.parseKeyValueString;
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 /**
@@ -64,6 +66,8 @@ public class UserController {
 
     private final MovieService movieService;
 
+    private  final WatchMovieService watchedMovieService;
+
     @Autowired
     private final AuthenticationService authenticationService;
 
@@ -80,14 +84,18 @@ public class UserController {
      */
     @Autowired
     public UserController(UserService userService, MovieService movieService, AuthenticationService authenticationService,
-                          MyUserDetailsService userDetailsService){
+                          MyUserDetailsService userDetailsService, WatchMovieService watchedMovieService){
         Objects.requireNonNull(userService);
         Objects.requireNonNull(userDetailsService);
         this.userDetailsService = userDetailsService;
         this.userService = userService;
         this.movieService = movieService;
         this.authenticationService= authenticationService;
+        this.watchedMovieService = watchedMovieService;
+
     }
+
+
 
     /**
      * this method retrieves all the users from the database
@@ -252,18 +260,158 @@ public class UserController {
         HashMap<String, String> nestedMap = new HashMap<>();
         HashMap<String,String> copyNestedEntries = new HashMap<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
+            /*
+            direct key value
+             */
             if (entry.getValue() instanceof Map) {
+
+
+//                try {
+//                    //known as string object
+//                    fromJsonConverter.readValue((String)entry.getValue(), new TypeReference<>() {});
+//
+//                    //add json data
+//                    copyNestedEntries.putAll(parseComplexJson((String)entry.getValue()));
+//                } catch (JsonProcessingException e) {
+//                    throw new IllegalArgumentException("Error : it's not a json "+e);
+//                }
+
                 System.out.println(entry.getKey() + " = ");
                 nestedMap = (HashMap<String, String>) entry.getValue();
                 for (Map.Entry<String, String> nestedEntry : nestedMap.entrySet()) {
                     System.out.println("    " + nestedEntry.getKey() + " = " + nestedEntry.getValue());
                     copyNestedEntries.put(nestedEntry.getKey(), nestedEntry.getValue());
                 }
-            } else if (entry.getValue() instanceof List) {
-                System.out.println(entry.getKey() + " = " + entry.getValue());
-            } else {
+            }
+
+            /*
+            direct key list
+             */
+            else if (entry.getValue() instanceof List) {
                 System.out.println(entry.getKey() + " = " + entry.getValue());
             }
+
+            else {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
+            }
+
+            /*
+            nested map into map
+             */
+        }
+        return  copyNestedEntries;
+    }
+
+    /**
+     * this method is specific for parsing json of
+     * user + watchedMovieContent
+     * @param complexJson
+     * the complex json that possess a watchedMovie and a user
+     * @return
+     *
+     * a map containing the data of the
+     * user and the movie data.
+     */
+    public static Map<String, String> parseComplexJsonForWatchedMovie(String complexJson){
+        // Convert JSON string to Map
+        Map<String, Object> map = null;
+        try {
+            map = fromJsonConverter.readValue(complexJson, new TypeReference<Map<String, Object>>() {});
+
+        } catch (JsonProcessingException ex) {
+            throw new AssertionError("failure for parsing json movie-user probably inconsistent writting "+ex);
+        }
+        // Print the Map in an organized manner
+        HashMap<String, String> nestedMap = new HashMap<>();
+        HashMap<String,String> copyNestedEntries = new HashMap<>();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            /*
+            direct key value
+             */
+            if (entry.getValue() instanceof Map) {
+                var mapTmp = (Map)entry.getValue();
+                /*
+                check if it's a nested JSON
+                 */
+                System.out.println("le contenu des values de entry : "+entry.getValue());
+                //System.out.println("peut-on le convertir en map que l'on parcours ensuite : "+fromJsonConverter(entry.getValue()));
+                //System.out.println("le contenu des values de entry : "+entry.getValue());
+
+                //parse a second time for the nested objects : watchedMovie, userSimple, movieStatus, time
+                String watchedNestedDataAsJson = entry.getValue().toString();
+//                String movieStatusAsJson = entry.getValue()).get("movieStatus").toString();
+//                String timeAsJson = ((Map<?, ?>) entry.getValue()).get("time").toString();
+//                String userSimpleAsJson = ((Map<?, ?>) entry.getValue()).get("userSimple").toString();
+
+                System.out.println("on affiche le simple élément récupéré dans le entry récupéré : "+watchedNestedDataAsJson);
+
+                mapTmp.forEach((key,value)->
+                        //add quotes because they are necessary for json parsing aftewards
+                        copyNestedEntries.put(""+key.toString()+"", value.toString()));
+                        //.stream().forEach(
+                        //(key, value)->
+
+                System.out.println("le nouvel état de copy nested : "+copyNestedEntries);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //fromJsonConverter.readValue(userJson, new TypeReference<>() {}
+//                try {
+//                    //known as string object
+//                    fromJsonConverter.readValue((String)entry.getValue(), new TypeReference<>() {});
+//
+//                    //add json data
+//                    copyNestedEntries.putAll(parseComplexJson((String)entry.getValue()));
+//                } catch (JsonProcessingException e) {
+//                    throw new IllegalArgumentException("Error : it's not a json "+e);
+//                }
+
+                  /*
+                check if it's a nested JSON
+                 */
+//                for(var entry2:((Map<?, ?>) entry.getValue()).entrySet()){
+//                    System.out.println("le contenu des clés de entry : "+entry2.getKey());
+//                    System.out.println("le contenu des values de entry : "+entry2.getValue());
+//                    nestedMap.putAll(parseComplexJson(entry2.getValue());
+//                }
+//                System.out.println(entry.getKey() + " = ");
+//                nestedMap = (HashMap<String, String>) entry.getValue();
+//
+//                for (Map.Entry<String, String> nestedEntry : nestedMap.entrySet()) {
+//                    System.out.println("    " + nestedEntry.getKey() + " = " + nestedEntry.getValue());
+//                    copyNestedEntries.put(nestedEntry.getKey(), nestedEntry.getValue());
+//                }
+            }
+
+            /*
+            direct key list
+             */
+            else if (entry.getValue() instanceof List) {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
+            }
+
+            else {
+                System.out.println(entry.getKey() + " = " + entry.getValue());
+            }
+
+            /*
+            nested map into map
+             */
         }
         return  copyNestedEntries;
     }
@@ -284,7 +432,7 @@ public class UserController {
     //overpowerful deprecated
 
     @DeleteMapping("/user/movie/remove")
-    public ResponseEntity<String> removeMovieFromList(@RequestBody String imdbIDUserJson){
+    public ResponseEntity<String> removeMovieFromList(@RequestBody String imdbIDUserJson) {
 
         //System.out.println("on a trouvé le user principal");
         //user is connected
@@ -293,14 +441,14 @@ public class UserController {
         var nestedMap = parseComplexJson(imdbIDUserJson);
         var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
         //user doesn't exists
-        if(userOpt.isEmpty()){
+        if (userOpt.isEmpty()) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Movie());
         }
 
         //user exists
         //but false password
-        if(userOpt.get().getPassword().equals(nestedMap.get("password"))){
+        if (userOpt.get().getPassword().equals(nestedMap.get("password"))) {
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Movie());
         }
@@ -312,8 +460,16 @@ public class UserController {
 
         //check if movie already exists in db
         Movie movie;
+        TimeConverter.OnlyTime onlyTimeOfMovie;
+        WatchedMovie watchedMovie;
         try {
             movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"), nestedMap.get("poster"));
+            var timeConverter = new TimeConverter();
+            onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(nestedMap.get("hours")),
+                    Long.parseLong(nestedMap.get("minutes")),Long.parseLong(nestedMap.get("seconds")));
+            watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+                    TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+
         }
         catch(Exception e){
             //inconsistent movie fields
@@ -332,6 +488,7 @@ public class UserController {
             //makes them persistent in db
             movieService.saveMovie(movieChosen);
             userService.saveUser(actualUser);
+            watchedMovieService.saveWatchMovie(watchedMovie);
             return ResponseEntity.ok("");
         }
         /*
@@ -368,7 +525,7 @@ public class UserController {
     //thereby you use a wrapper class or two request param
     //you cannot
     @PostMapping("/user/movie/add")
-    public ResponseEntity<MovieDto> addMovie(@RequestBody String userMovieJson){
+    public ResponseEntity<WatchedMovieDto> addMovie(@RequestBody String userMovieJson){
         System.out.println("on ajoute le film et le user : "+userMovieJson);
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
@@ -379,7 +536,52 @@ public class UserController {
 //            //EMPTY MOVIE RETURNED IF Not connected
 //            return ResponseEntity.ok(new Movie());
 //        }
-        var nestedMap = parseComplexJson(userMovieJson);
+        var nestedMap = parseComplexJsonForWatchedMovie(userMovieJson);
+
+        var mapForWatchedMovie = new HashMap<String,String>();
+        var mapForUserWatcher = new HashMap<String,String>();
+        /*
+        load user's data
+         */
+        /*
+        you need to add quotes in order to parse since
+         quotes are necessary for json recognition
+         */
+        mapForUserWatcher.put("password",nestedMap.get("password"));
+        mapForUserWatcher.put("pseudo", nestedMap.get("pseudo"));
+        /*
+        load movie data
+         */
+        //need to be parsed again
+        nestedMap.get("movie");
+
+        //need to be parsed again
+        nestedMap.get("movieStatus");
+
+        //need to be parsed again
+        System.out.println("le contenu de time dans nested est : "+nestedMap.get("time"));
+
+        //parse time as json object for test
+
+        //parse time as json object for test
+        HashMap<String, Object > mapTimeAsJsonString;
+        HashMap<String, String> fromStringToJsonTimeMap;
+        try {
+            fromStringToJsonTimeMap = parseKeyValueString(nestedMap.get("time"));
+        } catch (Exception e) {
+            throw  new IllegalArgumentException("Error : the json received as \"time\" (movie duration) doesn't respect the json format "+e);
+        }
+        System.out.println("le json time en string : "+fromStringToJsonTimeMap);
+        /*try {
+            mapTimeAsJsonString = fromJsonConverter.readValue(fromStringToJsonTime, new TypeReference<HashMap<String, Object>>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format "+e);
+        }*/
+
+        System.out.println(" on a réussi à parser le temps du film comme un string json : "+fromStringToJsonTimeMap);
+
+
+        //mapForWatchedMovie.put("");
         //System.out.println("on a trouvé le user principal");
         //user is connected
         // doesn't work use another approach
@@ -409,37 +611,48 @@ public class UserController {
         //check if movie already exists in db
         Movie movie;
         try {
-            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"), nestedMap.get("poster"));
+            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"),
+                    nestedMap.get("director"),
+                    nestedMap.get("poster"));
         }
+
         catch(Exception e){
             //inconsistent movie fields
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
             System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MovieDto(new Movie()));
+                    .body(new WatchedMovieDto());
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
+
+        var timeConverter = new TimeConverter();
+        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(nestedMap.get("hours")),
+                Long.parseLong(nestedMap.get("minutes")),Long.parseLong(nestedMap.get("seconds")));
+        var watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+                TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
 
         if(movieAlreadyExistsOpt.isPresent()){
             //the movie is already in the data base don't need to recreate with the same imdb
             var movieChosen = movieAlreadyExistsOpt.get();
             movieChosen.addIsWatchedBy(actualUser);
-            actualUser.addWatchedMovie(movieChosen);
+            actualUser.addWatchedMovie(watchedMovie);
             //makes them persistent in db
             movieService.saveMovie(movieChosen);
             userService.saveUser(actualUser);
-            return ResponseEntity.ok(new MovieDto(movieChosen));
+            watchedMovieService.saveWatchMovie(watchedMovie);
+            return ResponseEntity.ok(new WatchedMovieDto(watchedMovie));
         }
 
         //it's a new movie that wasn't in db
         //we save it in db
         movie.addIsWatchedBy(actualUser);
-        actualUser.addWatchedMovie(movie);
         movieService.saveMovie(movie);
         userService.saveUser(actualUser);
+        watchedMovieService.saveWatchMovie(watchedMovie);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
-        return ResponseEntity.ok(new MovieDto(movie));
+        return ResponseEntity.
+                ok(new WatchedMovieDto(watchedMovie));
     }
 
     /*
@@ -471,7 +684,7 @@ public class UserController {
         //the user exists
         System.out.println("le user a bien été trouvé, on renvoie ses films trouvés en bdd");
         System.out.println("les films du user trouvés sont : "+userOpt.get().getWatchMovies());
-        return ResponseEntity.ok(userOpt.get().getWatchMovies().stream().map(movie->new MovieDto(movie)).toList());
+        return ResponseEntity.ok(userOpt.get().getWatchMovies().stream().map(movie->new WatchedMovieDto(movie)).toList());
     }
 
     /**

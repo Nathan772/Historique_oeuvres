@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 
 import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
+import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.stereotype.Component;
 import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
 
@@ -57,9 +59,9 @@ public class User {
     "List" not arrayList.
     This list is connected to Movie's "isWatchedBy" field
      */
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy="isWatchedBy", cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy="watcher", cascade = CascadeType.PERSIST)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
-    private List<Movie> watchMovies = new ArrayList<>();
+    private List<WatchedMovie> watchMovies = new ArrayList<>();
 
     /*
    necessary for spring init
@@ -133,7 +135,17 @@ public class User {
      * @param movieWatched
      * the movie watched
      */
-    public void addWatchedMovie(Movie movieWatched){
+    public void addWatchedMovie(Movie movieWatched, MovieStatus status, long time){
+        Objects.requireNonNull(movieWatched);
+        watchMovies.add(new WatchedMovie(this, movieWatched, status, time));
+    }
+
+    /**
+     * this method adds a movie watched
+     * @param movieWatched
+     * the movie watched
+     */
+    public void addWatchedMovie(WatchedMovie movieWatched){
         Objects.requireNonNull(movieWatched);
         watchMovies.add(movieWatched);
     }
@@ -147,12 +159,12 @@ public class User {
         watchMovies.remove(movieWatched);
     }
 
-    public void setWatchMovies(List<Movie> watchMovies) {
+    public void setWatchMovies(List<WatchedMovie> watchMovies) {
         Objects.requireNonNull(watchMovies);
         this.watchMovies = watchMovies;
     }
 
-    public List<Movie> getWatchMovies() {
+    public List<WatchedMovie> getWatchMovies() {
         return watchMovies;
     }
 
