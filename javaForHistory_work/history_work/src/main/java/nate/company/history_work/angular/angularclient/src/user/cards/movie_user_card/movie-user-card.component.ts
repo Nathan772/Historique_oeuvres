@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MovieFullInformations, MovieShortInformations } from '../../../movies/movie_models/movie_models';
+import { MovieFullInformations, MovieShortInformations, watchedMovieStatus, watchedMovie} from '../../../movies/movie_models/movie_models';
 import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user_service/user-service.service';
@@ -20,9 +20,13 @@ export class MovieUserCardComponent implements OnInit {
   */
   movieService: MovieServiceService;
   @Input()
-  movieFull: MovieFullInformations;
+  movieFull: watchedMovie;
+
+  movieFromApi:MovieFullInformations;
   fullInfoOn: boolean = false;
   userService:UserService;
+  //necessary to use the enum in the html part
+  watchedMovieStatus = watchedMovieStatus;
 
   ngOnInit() {
 
@@ -35,23 +39,36 @@ export class MovieUserCardComponent implements OnInit {
       this.movieService = movieService;
       this.userService = userService;
       this.movieFull = {
-        Title: "",
-          Year: "",
-          Genre: "",
-          Director: "",
-          Plot:"",
-          Awards: "",
-          Poster: "",
-          Ratings: [],
-          imdbID: "",
-          Type: "",
-         };
+                                   movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
+                                   movieStatus:watchedMovieStatus.WATCHLATER,
+                                      time: {
+                                                               hours:0,
+                                                               minutes:0,
+                                                               seconds:0,
+
+                                                               },
+
+                                   };
 
          if(this.movieService.userMoviesList.length == 0){
             this.movieService.retrieveUserMovies(userService.userAccount);
          }
 
-    }
+       this.movieFromApi =
+       {
+          Title: "",
+                   Year: "",
+                   Genre: "",
+                   Director: "",
+                   Plot:"",
+                   Awards: "",
+                   Poster: "",
+                   Ratings: [],
+                   imdbID: "",
+                   Type: "",
+                  };
+
+  }
 
   /* cette fonction donne les infos complètes
    sur un film à la variable movieFullen en se servant d'un service. */
@@ -64,7 +81,7 @@ export class MovieUserCardComponent implements OnInit {
       les infos du film qui nous intéresse*/
       if (data != null) {
         console.log('le film a bien été trouvé');
-        this.movieFull = data;
+        this.movieFromApi = data;
         /* on indique qu'on passe en mode informations complètes*/
         this.fullInfoOn = true;
       }
@@ -74,18 +91,25 @@ export class MovieUserCardComponent implements OnInit {
   /**
    add a movie to user watchList
    */
-    addToWatchListAndDatabase(movie:MovieFullInformations, status:string){
+   /*
+    addToWatchListAndDatabaseFromWatchedMovie(movie:watchedMovie, movieStatus:watchedMovieStatus){
       //this.userService.
-      this.movieService.addMovieToUserInDataBase(movie, status, this.userService.userAccount);
-    }
+      this.movieService.addMovieToUserInDataBaseAsWatchLater(movie, movieStatus, this.userService.userAccount);
+    }*/
 
-    removeFromWatchListAndDataBase(movie:MovieFullInformations){
+    removeFromWatchListAndDataBaseFromWatchedMovie(movie:watchedMovie){
+
+      //retrieve movie full info object
+      this.completeInformations(movie.movie.imdbID);
         //this.userService.
-        this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount);
+        let movieRemoved:watchedMovie = this.movieService.removeMovieFromUserInDataBase(this.movieFromApi, this.userService.userAccount);
+
+
+        //retrieve the movie as a watchedMovie
         //remove movie from movie list
-        let index = this.movieService.userMoviesList.indexOf(movie);
+        let index = this.movieService.userMoviesList.indexOf(movieRemoved);
         if(index!==-1){
-          console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
+          console.log("film retiré de la liste de l'utilisateur : "+movieRemoved.movie.imdbID);
           this.movieService.userMoviesList.splice(index,1);
         }
 

@@ -1317,7 +1317,7 @@ exemple de wrapper
 
 */
 
- addMovieToUserInDataBase(movie:MovieFullInformations, status:String, user:User){
+ addMovieToUserInDataBaseAsWatchLater(movie:MovieFullInformations, status:String, user:User){
 
           console.log("l'année de sortie du film  est :"+movie.Year+" et son titre est : "+movie.Title);
           //une solution serait de retirer

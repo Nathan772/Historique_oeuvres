@@ -62,7 +62,7 @@ export class UserMovieListComponent implements OnInit {
 
           console.log("on passe dans le for des films présents : ");
           for(let i=0;i<this.movieService.userMoviesList.length;i++){
-            console.log("les films présents après la récupération  : "+this.movieService.userMoviesList[i].imdbID);
+            console.log("les films présents après la récupération  : "+this.movieService.userMoviesList[i].movie.imdbID);
           }
 
     }

@@ -8,7 +8,10 @@ import {
   MovieFullInformations,
   MovieShortInformations,
   Movie,
+  timeOnly,
   SearchResponse,
+  watchedMovie,
+  watchedMovieStatus,
 } from '../movie_models/movie_models';
 
 import { User } from '../../user/user';
@@ -21,7 +24,7 @@ import { map } from 'rxjs/operators';
 export class MovieServiceService {
 
   private userMoviesUrl: string;
-  public userMoviesList:MovieFullInformations[] = [];
+  public userMoviesList:watchedMovie[] = [];
   //créer une nouvelle catégorie qui contiendrait les status de visionnage des films
   //pour pouvoir ajouter un jeu de couleur et plus généralement, une correspodance.
   //public userMoviesStatus:MovieStatus[] = [];
@@ -60,27 +63,33 @@ retrieveUserMovies(userAccount:User){
                     les infos du film qui nous intéresse*/
                         if (movies != null){
                           console.log('les films de l\'utilisateur '+userAccount.pseudo+'films ont bien été trouvé');
-                          for(let movie of movies){
-                            console.log("on ajoute "+movie.title);
-                            console.log("le imdb est : "+movie.imdbID);
-                            this.getMovieComplete(movie.imdbID).subscribe((movieComplete) => {
-                              console.log("film trouvé avec l'API : "+movieComplete.imdbID+ " "+movieComplete.Title);
-                              this.addToWatchList(movieComplete);
-                            });
+                          for(let movieWatched of movies){
+                            /*console.log("on ajoute "+movie.title);
+                            console.log("le imdb est : "+movie.imdbID);*/
+                            //this.getMovieComplete(movieWatched.movie.imdbID).subscribe((movieComplete) => {
+                              //console.log("film trouvé avec l'API : "+movieComplete.imdbID+ " "+movieComplete.Title);
+                              this.addToWatchList(movieWatched);
+                            }
+                          //);
                           }
                         }
 
-                    }
+
                   );
-            }
+                }
 
+/*
 
-addToWatchList(movie:MovieFullInformations){
+deprecated
+
+*/
+
+addToWatchList(movie:watchedMovie){
       //this.userService.
       this.addMovieToUserListWithoutDataBase(movie);
       //check if updated worked for user-connection
       for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents : "+this.userMoviesList[i].imdbID);
+        console.log("les films présents : "+this.userMoviesList[i].movie.imdbID);
       }
 }
 
@@ -119,7 +128,7 @@ addToWatchList(movie:MovieFullInformations){
 
 
   /* retrieve all the movies from user data present in the database. */
-  public findAllMoviesFromUserList(userPseudo:string, userPassword:string):Observable<Movie[]>{
+  public findAllMoviesFromUserList(userPseudo:string, userPassword:string):Observable<watchedMovie[]>{
     //deprecated (begin)
     //let params = new URLSearchParams(); deprecated
     //params.append("someParamKey", this.someParamValue)
@@ -160,7 +169,7 @@ addToWatchList(movie:MovieFullInformations){
         */
     const params = new HttpParams().set('pseudo', userPseudo).set('password', userPassword);
     //current user is know by the backend actually
-    return this.HttpClient.get<Movie[]>(this.userMoviesUrl,  {headers: headers, params: params});
+    return this.HttpClient.get<watchedMovie[]>(this.userMoviesUrl,  {headers: headers, params: params});
       //return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(user)});
   }
 
@@ -178,9 +187,9 @@ addToWatchList(movie:MovieFullInformations){
               poster: movie.Poster
     };
     for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents dans la liste user : "+this.userMoviesList[i].imdbID);
-        if(this.userMoviesList[i].imdbID === movie.imdbID){
-          console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID){
+          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
           return true
         }
     }
@@ -196,9 +205,10 @@ addToWatchList(movie:MovieFullInformations){
 
 
   /**
-   This method add a movie into the database
+   This method add a movie from the database*
+   (deprecated ???)
    */
-  addMovieToUserListWithoutDataBase(movie:MovieFullInformations){
+  addMovieToUserListWithoutDataBase(movie:watchedMovie){
 
         //une solution serait de retirer
         // le champ genre de movie movieSimple
@@ -212,12 +222,18 @@ addToWatchList(movie:MovieFullInformations){
         };*/
 
         //add movie to movie list
-        if(this.userMoviesList.findIndex((movieIntoList) => movieIntoList === movie) < 0){
+        if(this.userMoviesList.findIndex((movieIntoList) => movieIntoList.movie.yearOfRelease === movie.movie.yearOfRelease
+        &&
+        movieIntoList.movie.director === movie.movie.director
+        &&
+        movieIntoList.movie.title === movie.movie.title
+
+        ) < 0){
           this.userMoviesList.push(movie);
-          console.log("ajout dans la liste du user du film "+movie.Title+" : succès !");
+          console.log("ajout dans la liste du user du film "+movie.movie.title+" : succès !");
         }
         else{
-          console.log("le film"+movie.Title+"est déjà présent dans la liste, pas de double ajout");
+          console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout");
         }
 
         /*for(let i=0;i<this.userMoviesList.length;i++){
@@ -227,7 +243,7 @@ addToWatchList(movie:MovieFullInformations){
   }
 
 
-  addMovieToUserInDataBase(movie:MovieFullInformations, status:String, user:User){
+  addMovieToUserInDataBaseAsWatchLater(movie:MovieFullInformations, movieActualStatus:watchedMovieStatus, user:User){
 
           console.log("l'année de sortie du film  est :"+movie.Year+" et son titre est : "+movie.Title);
           //une solution serait de retirer
@@ -241,6 +257,18 @@ addToWatchList(movie:MovieFullInformations){
             imdbID:movie.imdbID,
             poster:movie.Poster
           };
+
+          let watchedMovie:watchedMovie = {
+            movie:movieSimple,
+             movieStatus:movieActualStatus,
+              time: {
+                hours:0,
+                minutes:0,
+                seconds:0,
+
+                },
+
+            };
 
           let userSimple = {
                      pseudo:user.pseudo,
@@ -278,11 +306,11 @@ addToWatchList(movie:MovieFullInformations){
           create wrapper as string
           */
 
-          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{movieSimple,userSimple})
+          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{watchedMovie,userSimple})
                             .subscribe(
                                   movieRetrieved => {
                                     //save succeed
-                                    this.addMovieToUserListWithoutDataBase(movie)
+                                    this.addMovieToUserListWithoutDataBase(watchedMovie);
                                     return movieRetrieved;
                                   }
                                 );
@@ -311,7 +339,7 @@ addToWatchList(movie:MovieFullInformations){
 
   /* fonction qui prend un argument le titre d'un film
   et qui récupère un observable qui contient les infos du films : titre, année, etc...*/
-  getMovieShort(searchValue: string): Observable<MovieShortInformations[]> {
+ public getMovieShort(searchValue: string): Observable<MovieShortInformations[]> {
     let myMovieObservable: Observable<MovieShortInformations[]> =
       this.HttpClient.get<SearchResponse>(
         'https://www.omdbapi.com/?apikey=1069fcf1&s=' + searchValue
@@ -341,8 +369,9 @@ addToWatchList(movie:MovieFullInformations){
     console.log("c'est très réel");
   }
 
+
 //can I delete with the same pattern as POST which mean : wrapper ???
-public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
+public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):watchedMovie {
 
           let movieSimple : Movie = {
             id:"0",
@@ -359,7 +388,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
           };
 
           this.userMoviesList = this.userMoviesList.filter(
-            movieKept => movieKept.imdbID != movie.imdbID
+            movieKept => movieKept.movie.imdbID != movie.imdbID
           )
           console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.pseudo+" avec pour IMDB "+movieSimple.imdbID);
           /*
@@ -373,12 +402,36 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
           Solution by chatgpt
 
           */
-          this.HttpClient.delete<String>(this.userMoviesUrl+"/remove",{
+          let movieRemoved:watchedMovie ={
+            movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
+            movieStatus:watchedMovieStatus.WATCHLATER,
+               time: {
+                                        hours:0,
+                                        minutes:0,
+                                        seconds:0,
+
+                                        },
+
+            };
+          /*
+          let movieRemoved:watchedMovie = {
+                      movie:movieSimple,
+                       movieStatus:movieActualStatus,
+                        time: {
+                          hours:0,
+                          minutes:0,
+                          seconds:0,
+
+                          },
+
+                      };*/
+
+           this.HttpClient.delete<watchedMovie>(this.userMoviesUrl+"/remove",{
             headers,
             body: {movieSimple, userSimple}
             })
-          .subscribe(response =>
-                    {
+          .subscribe(movieRemoved2 =>
+                    { movieRemoved = movieRemoved2
                       /*if(response != null){
                       //remove from list
                       if(index!==-1){
@@ -387,6 +440,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
                       }*/
                     //console.log(movie.Title+" a été supprimé de la liste du user : "+this.userService.userAccount)
           });
+        return movieRemoved;
 
         //this.HttpClient.delete<Movie>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID).map(response =>response.json()).pipe(catchError());
 

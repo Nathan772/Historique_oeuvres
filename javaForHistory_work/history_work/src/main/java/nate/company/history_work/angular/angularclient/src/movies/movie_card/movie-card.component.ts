@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MovieFullInformations, MovieShortInformations } from '../movie_models/movie_models';
 import { MovieServiceService } from '../movie_service/movie-service.service';
-import { Movie} from '../movie_models/movie_models';
+import { Movie,watchedMovieStatus} from '../movie_models/movie_models';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user/user_service/user-service.service';
 @Component({
@@ -13,6 +13,7 @@ export class MovieCardComponent implements OnInit {
   @Input()
   //movie: MovieShortInformations;
   movie: MovieShortInformations;
+  watchedMovieStatus = watchedMovieStatus;
   /*
   pour init ce champ, cela ne suffit
   pas il faut aussi l'initialiser au niveau
@@ -79,9 +80,9 @@ export class MovieCardComponent implements OnInit {
   /**
    add a movie to user watchList
    */
-    addToWatchListAndDatabase(movie:MovieFullInformations, status:String){
+    addMovieToUserInDataBaseAsWatchLater(movie:MovieFullInformations, movieStatus:watchedMovieStatus){
       //this.userService.
-      this.movieService.addMovieToUserInDataBase(movie, status, this.userService.userAccount);
+      this.movieService.addMovieToUserInDataBaseAsWatchLater(movie, movieStatus, this.userService.userAccount);
     }
 
     removeFromWatchListAndDataBase(movie:MovieFullInformations){
