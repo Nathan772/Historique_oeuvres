@@ -174,7 +174,8 @@ addToWatchList(movie:MovieFullInformations){
               title:movie.Title,
               yearOfRelease:movie.Year,
               director:movie.Director,
-              imdbID:movie.imdbID
+              imdbID:movie.imdbID,
+              poster: movie.Poster
     };
     for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.userMoviesList[i].imdbID);
@@ -237,7 +238,8 @@ addToWatchList(movie:MovieFullInformations){
             title:movie.Title,
             yearOfRelease:movie.Year,
             director:movie.Director,
-            imdbID:movie.imdbID
+            imdbID:movie.imdbID,
+            poster:movie.Poster
           };
 
           let userSimple = {
@@ -347,7 +349,8 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
             title:movie.Title,
             yearOfRelease:movie.Year,
             director:movie.Director,
-            imdbID:movie.imdbID
+            imdbID:movie.imdbID,
+            poster: movie.Poster
           };
 
           let userSimple = {
@@ -364,6 +367,12 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
 
           const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
+          /*
+
+          it works !
+          Solution by chatgpt
+
+          */
           this.HttpClient.delete<String>(this.userMoviesUrl+"/remove",{
             headers,
             body: {movieSimple, userSimple}
@@ -382,4 +391,6 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User){
         //this.HttpClient.delete<Movie>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID).map(response =>response.json()).pipe(catchError());
 
     }
+
+
 }

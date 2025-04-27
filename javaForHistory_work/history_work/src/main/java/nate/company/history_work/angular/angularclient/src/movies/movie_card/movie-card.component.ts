@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MovieFullInformations, MovieShortInformations } from '../movie_models/movie_models';
 import { MovieServiceService } from '../movie_service/movie-service.service';
+import { Movie} from '../movie_models/movie_models';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user/user_service/user-service.service';
 @Component({
@@ -10,6 +11,7 @@ import { UserService } from '../../user/user_service/user-service.service';
 })
 export class MovieCardComponent implements OnInit {
   @Input()
+  //movie: MovieShortInformations;
   movie: MovieShortInformations;
   /*
   pour init ce champ, cela ne suffit
@@ -46,8 +48,8 @@ export class MovieCardComponent implements OnInit {
           Title: "",
            Year: "",
            imdbID: "",
+           Poster: "",
            Type: "",
-           Poster: ""
            }
 
          if(this.movieService.userMoviesList.length == 0){

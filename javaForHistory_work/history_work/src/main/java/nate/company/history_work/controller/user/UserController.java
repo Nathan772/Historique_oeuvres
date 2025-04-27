@@ -13,6 +13,8 @@ import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.MyUserDetailsService;
 import nate.company.history_work.service.UserService;
 import nate.company.history_work.siteTools.authentication.LoginRequest;
+import nate.company.history_work.siteTools.dtos.MovieDto;
+import nate.company.history_work.siteTools.dtos.UserDto;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +97,7 @@ public class UserController {
      */
     //@RequestMapping("/users")
     @GetMapping("/users")
-    public List<User> getUsers(){
+    public List<UserDto> getUsers(){
         return userService.getAllUsers();
     }
 
@@ -311,7 +313,7 @@ public class UserController {
         //check if movie already exists in db
         Movie movie;
         try {
-            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"));
+            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"), nestedMap.get("poster"));
         }
         catch(Exception e){
             //inconsistent movie fields
@@ -366,7 +368,7 @@ public class UserController {
     //thereby you use a wrapper class or two request param
     //you cannot
     @PostMapping("/user/movie/add")
-    public ResponseEntity<Movie> addMovie(@RequestBody String userMovieJson){
+    public ResponseEntity<MovieDto> addMovie(@RequestBody String userMovieJson){
         System.out.println("on ajoute le film et le user : "+userMovieJson);
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
@@ -407,7 +409,7 @@ public class UserController {
         //check if movie already exists in db
         Movie movie;
         try {
-            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"));
+            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"), nestedMap.get("poster"));
         }
         catch(Exception e){
             //inconsistent movie fields
@@ -415,7 +417,7 @@ public class UserController {
             System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new Movie());
+                    .body(new MovieDto(new Movie()));
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
@@ -427,7 +429,7 @@ public class UserController {
             //makes them persistent in db
             movieService.saveMovie(movieChosen);
             userService.saveUser(actualUser);
-            return ResponseEntity.ok(movieChosen);
+            return ResponseEntity.ok(new MovieDto(movieChosen));
         }
 
         //it's a new movie that wasn't in db
@@ -437,7 +439,7 @@ public class UserController {
         movieService.saveMovie(movie);
         userService.saveUser(actualUser);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
-        return ResponseEntity.ok(movie);
+        return ResponseEntity.ok(new MovieDto(movie));
     }
 
     /*
@@ -468,7 +470,8 @@ public class UserController {
         }
         //the user exists
         System.out.println("le user a bien été trouvé, on renvoie ses films trouvés en bdd");
-        return ResponseEntity.ok(userOpt.get().getWatchMovies());
+        System.out.println("les films du user trouvés sont : "+userOpt.get().getWatchMovies());
+        return ResponseEntity.ok(userOpt.get().getWatchMovies().stream().map(movie->new MovieDto(movie)).toList());
     }
 
     /**

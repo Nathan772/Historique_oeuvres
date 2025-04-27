@@ -6,6 +6,7 @@ import { MovieCardComponent } from '../movie_card/movie-card.component';
 import { MovieShortInformations, SearchResponse, MovieFullInformations, Rating} from '../movie_models/movie_models';
 import {UserService } from '../../user/user_service/user-service.service';
 import {ConnectionServiceService } from '../../connection/connection-service.service';
+import { Movie} from '../movie_models/movie_models';
 
 @Component({
   selector: 'app-movie-search',
@@ -16,7 +17,8 @@ export class MovieSearchComponent {
 
    /* cette variable va stocker les films
     retrouvés suite à la recherche */
-    listMovies: MovieShortInformations[] = [];
+    listMoviesTransfer: MovieShortInformations[] = [];
+    //listMovieTransfer:Movie[] = [];
     /* cette instance est nécessaire pour
     pouvoir utiliser les fonctions de type film-service.
     Mais attention ce n'est pas suffisant,
@@ -56,13 +58,27 @@ export class MovieSearchComponent {
         if (data != null && data.length > 0) {
           console.log("la liste est non-vide");
           //Only accept movies and no other kind
-          this.listMovies = data.filter(movie=>movie.Type === "movie");
+          this.listMoviesTransfer= data.filter(movie=>movie.Type === "movie");
+
+          //Deprecated
+          //for(var movie of this.listMovies){
+            /*
+            id:string;
+              title: string;
+              yearOfRelease: string;
+              director: string;
+              imdbID: string;
+              poster:string;
+              */
+             //let movie1 = new Movie(movie.Title, movie.Year, movie.Director,movie.imdbID, movie.Poster);
+            //this.listMovieTransfer.push(movie1);
+          //}
         }
       });
 
       /* on va émettre mais seulement si la liste de
       films est non-vide*/
-        this.arrayFound.emit(this.listMovies);
+        this.arrayFound.emit(this.listMoviesTransfer);
     }
 
          /* l'initialisation

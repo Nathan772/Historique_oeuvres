@@ -36,6 +36,7 @@ export interface Movie {
   yearOfRelease: string;
   director: string;
   imdbID: string;
+  poster:string;
 }
 
 

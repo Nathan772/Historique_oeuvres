@@ -1,5 +1,7 @@
 package nate.company.history_work.service;
 
+import nate.company.history_work.siteTools.dtos.MovieDto;
+import nate.company.history_work.siteTools.dtos.UserDto;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,28 @@ public class UserService {
 
     }
 
-    public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(user-> users.add(user));
+    public List<UserDto> getAllUsers() {
+        List<UserDto> users = new ArrayList<>();
+        userRepository.findAll().forEach(user-> users.add(new UserDto(user)));
         return users;
+    }
+
+    public List<MovieDto>getMoviesWatchedDtoBasedOnUser(String pseudo, String password){
+        var user = getUserByPseudo(pseudo);
+        /*
+        pseudo not found
+         */
+        if(user.isEmpty()){
+            return new ArrayList<>();
+        }
+        /*
+        password not found
+         */
+        if(!user.get().getPassword().equals(password)){
+            return new ArrayList<>();
+        }
+        return user.get().getWatchMovies().stream().map(movie->new MovieDto(movie)).toList();
+
     }
 
     public Optional<User> getUserByPseudo(String pseudo){
