@@ -564,7 +564,13 @@ public class UserController {
         //parse time as json object for test
 
         //parse time as json object for test
-        HashMap<String, Object > mapTimeAsJsonString;
+        //HashMap<String, Object > mapTimeAsJsonString;
+
+
+        HashMap<String, String> fromStringToJsonMovieStatusMap;
+
+        HashMap<String, String> fromStringToJsonMovieMap;
+
         HashMap<String, String> fromStringToJsonTimeMap;
         try {
             fromStringToJsonTimeMap = parseKeyValueString(nestedMap.get("time"));
@@ -578,7 +584,21 @@ public class UserController {
             throw new IllegalArgumentException("Error : the json received as user doesn't respect the json format "+e);
         }*/
 
-        System.out.println(" on a réussi à parser le temps du film comme un string json : "+fromStringToJsonTimeMap);
+        try {
+            fromStringToJsonMovieMap = parseKeyValueString(nestedMap.get("movie"));
+        } catch (Exception e) {
+            throw  new IllegalArgumentException("Error : the json received movie doesn't respect the json format "+e);
+        }
+        System.out.println("le json du movie en string : "+fromStringToJsonMovieMap);
+
+        try {
+            fromStringToJsonMovieStatusMap = parseKeyValueString(nestedMap.get("movieStatus"));
+        } catch (Exception e) {
+            throw  new IllegalArgumentException("Error : the json received as \"movieStatus\" doesn't respect the json format "+e);
+        }
+        System.out.println("le json du movie en string : "+fromStringToJsonMovieStatusMap);
+
+
 
 
         //mapForWatchedMovie.put("");
