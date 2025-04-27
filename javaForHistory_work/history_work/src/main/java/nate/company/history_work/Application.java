@@ -4,7 +4,9 @@
 package nate.company.history_work;
 import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
+import nate.company.history_work.siteTools.movie.MovieRepository;
 import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -46,7 +48,7 @@ public class Application {
     //UserService userService, MovieService movieService
 
     @Bean
-    CommandLineRunner init(UserService userService, MovieService movieService) {
+    CommandLineRunner init(UserService userService, MovieService movieService, UserRepository userRepository, MovieRepository movieRepository) {
         return args -> {
 
             /*pas nécessaire sauf si on veut tester l'ajout en brut
@@ -56,13 +58,13 @@ public class Application {
 //                userService.saveUser(new User(name, name+"@gmail.com", "666666"));
 //            });
 //
-            System.out.println("tous les utilisateurs sont actuellement : "+userService.getAllUsers());
+            //System.out.println("tous les utilisateurs sont actuellement : "+userService.getAllUsers());
 //
 //            //même chose, mais pour les vidéos
 //
 //            System.out.println(" les données en base de données : ");
-//            userRepository.findAll().forEach(System.out::println);
-//            movieRepository.findAll().forEach(System.out::println);
+            System.out.println("Tous les users en bdd :"+userRepository.findAll());
+            System.out.println("tous les films en bdd :"+movieRepository.findAll());
             //watchMovieRepository.findAll().forEach(System.out::println);
         };
     }

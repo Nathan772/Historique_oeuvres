@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterOutlet } from '@angular/router';
 import {UserListComponent} from '../user/user_list/user-list.component';
+import {Location} from '@angular/common';
 
 //for data storage
 
@@ -24,7 +25,7 @@ export class AppComponent {
   movieService:MovieServiceService;
 
 
-  constructor(userService:UserService, movieService:MovieServiceService) {
+  constructor(userService:UserService, movieService:MovieServiceService,private _location: Location) {
     this.isConnected = false;
     this.title = "Historique d'oeuvres artistiques";
     this.userService = userService;
@@ -39,5 +40,13 @@ export class AppComponent {
   dataSave(){
     //save user data for long term session
     sessionStorage.setItem('pseudo', ""+this.userService.userAccount.pseudo);
+  }
+
+/*
+
+handle the action of going to the previous page
+*/
+ backClicked() {
+    this._location.back();
   }
 }
