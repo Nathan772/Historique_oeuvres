@@ -12,14 +12,14 @@ public class WatchedMovieDto {
     private final MovieDto movie;
     private final UserDto watcherDto;
     private final long timeAsLong;
-    private final MovieStatus movieStatus;
+    private final int movieStatus;
 
     public WatchedMovieDto(){
         this.id = 0;
         this.movie = new MovieDto(new Movie());
         this.watcherDto = new UserDto(new User());
         this.timeAsLong = 0;
-        this.movieStatus = MovieStatus.WATCHLATER;
+        this.movieStatus = MovieStatus.WATCHLATER.ordinal();
     }
 
     @JsonCreator
@@ -28,14 +28,14 @@ public class WatchedMovieDto {
         this.movie = movie;
         this.watcherDto = watcherDto;
         this.timeAsLong =  timeAsLong;
-        this.movieStatus = movieStatus;
+        this.movieStatus = movieStatus.ordinal();
     }
     public WatchedMovieDto(WatchedMovie watchedMovie){
         this.id = watchedMovie.getId();
         this.movie = new MovieDto(watchedMovie.getMovie());
         this.watcherDto = new UserDto(watchedMovie.getWatcher(), true);
         this.timeAsLong =  watchedMovie.getTimeAsLong();
-        this.movieStatus = watchedMovie.getMovieStatus();
+        this.movieStatus = watchedMovie.getMovieStatus().ordinal();
     }
 
     /*
@@ -53,7 +53,7 @@ public class WatchedMovieDto {
         return movie;
     }
 
-    public MovieStatus getMovieStatus() {
+    public int getMovieStatus() {
         return movieStatus;
     }
 

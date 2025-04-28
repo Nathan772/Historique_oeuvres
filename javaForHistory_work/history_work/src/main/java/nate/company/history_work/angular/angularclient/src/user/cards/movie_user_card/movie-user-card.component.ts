@@ -181,12 +181,29 @@ export class MovieUserCardComponent implements OnInit {
               imdbID:movieWatched.movie.imdbID,
               poster: movieWatched.movie.poster
     };
-    for(let i=0;i<this.movieService.userMoviesList.length;i++){
+    /*for(let i=0;i<this.movieService.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.movieService.userMoviesList[i].movie.imdbID);
         if(this.movieService.userMoviesList[i].movie.imdbID === movieSimple.imdbID && this.movieService.userMoviesList[i].movieStatus === movieStatus){
-          console.log("le film est déjà présent : "+this.movieService.userMoviesList[i].movie.imdbID);
+          console.log("le film est déjà présent : "+this.movieService.userMoviesList[i].movie.imdbID+" il a pour status : "+this.movieService.userMoviesList[i].movieStatus);
           return true
         }
+    }*/
+    let statusAsNumber: number = +movieStatus;
+    if (typeof movieWatched.movieStatus === "number") {
+        // do something
+        console.log("c'est bien un watchedMovieStatus")
+    }
+  else  {
+          // do something
+          console.log("ce n'est pas un watchedMovieStatus")
+      }
+    let status2AsNb : number = + movieWatched.movieStatus.valueOf();
+    if(status2AsNb === statusAsNumber){
+      return true;
+    }
+    else{
+      console.log("le status de movieStatus est : quant à lui :"+statusAsNumber);
+      console.log("le status du film est "+status2AsNb);
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
