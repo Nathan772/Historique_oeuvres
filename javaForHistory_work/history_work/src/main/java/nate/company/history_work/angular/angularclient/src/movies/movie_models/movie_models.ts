@@ -66,8 +66,7 @@ export interface timeOnly {
 }
 
 export enum watchedMovieStatus {
-  REWATCH,
   WATCHLATER,
-  ONWATCHING,
-  WATCHING
+  WATCHING,
+  REWATCH,
 }

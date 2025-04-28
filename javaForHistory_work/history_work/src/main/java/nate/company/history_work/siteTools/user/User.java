@@ -135,10 +135,10 @@ public class User {
      * @param movieWatched
      * the movie watched
      */
-    public void addWatchedMovie(Movie movieWatched, MovieStatus status, long time){
+    /*public void addWatchedMovie(Movie movieWatched, MovieStatus status, long time){
         Objects.requireNonNull(movieWatched);
-        watchMovies.add(new WatchedMovie(this, movieWatched, status, time));
-    }
+        watchMovies.removeIf(new WatchedMovie(this, movieWatched, status, time));
+    }*/
 
     /**
      * this method adds a movie watched
@@ -147,6 +147,10 @@ public class User {
      */
     public void addWatchedMovie(WatchedMovie movieWatched){
         Objects.requireNonNull(movieWatched);
+        //remove the old state
+        watchMovies.remove(movieWatched);
+
+        //add the new state
         watchMovies.add(movieWatched);
     }
 

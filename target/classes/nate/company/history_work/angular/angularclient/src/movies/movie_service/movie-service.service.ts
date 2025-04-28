@@ -173,6 +173,55 @@ addToWatchList(movie:watchedMovie){
       //return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(user)});
   }
 
+
+
+
+
+
+
+
+
+
+
+  /**
+   this method checks if the list of movie of the user in their watch list contains the movie
+   and if the movie is currently watched.
+   */
+  public listMovieContainsWatching(movie:MovieFullInformations){
+    let movieSimple : Movie = {
+              id:"0",
+              title:movie.Title,
+              yearOfRelease:movie.Year,
+              director:movie.Director,
+              imdbID:movie.imdbID,
+              poster: movie.Poster
+    };
+    for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHING){
+          console.log("le film est déjà présent en mode à revoir : "+this.userMoviesList[i].movie.imdbID);
+          return true;
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /**
    this method checks if the list of movie of the user in their watch list contains the movie.
 
@@ -188,7 +237,7 @@ addToWatchList(movie:watchedMovie){
     };
     for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
-        if(this.userMoviesList[i].movie.imdbID === movie.imdbID){
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHLATER){
           console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
           return true
         }

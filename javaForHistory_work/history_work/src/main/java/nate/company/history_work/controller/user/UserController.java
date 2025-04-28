@@ -683,11 +683,60 @@ public class UserController {
          */
 
         if(movieAlreadyExistsOpt.isPresent()){
+
+
+            //retrieve and update if it already exists
+            var alreadyWatchedMovieOpt =watchedMovieService.findByUserAndMovie(userOpt.get(),movieAlreadyExistsOpt.get());
+
+            //the movie is already in the data base don't need to recreate with the same imdb
+            var movieChosen = movieAlreadyExistsOpt.get();
+
+            //Already exists in database, just update data then
+            if(alreadyWatchedMovieOpt.isPresent()){
+                System.out.println("le film est déjà dans la watchlist, on a juste mettre à jour son statut : "
+                        +alreadyWatchedMovieOpt.get());
+                var alreadyWatchedMovie = alreadyWatchedMovieOpt.get();
+
+                //update "watched status"
+                alreadyWatchedMovie.setMovieStatus(MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")));
+
+                actualUser.addWatchedMovie(alreadyWatchedMovie);
+                movieChosen.addIsWatchedBy(actualUser);
+
+                //makes them persistent in db
+                movieService.saveMovie(movieChosen);
+                //this specific order is compulsory
+                watchedMovieService.saveWatchMovie(alreadyWatchedMovie);
+                userService.saveUser(actualUser);
+
+                // Getting organisation object as a json string
+                String jsonStr;
+                try {
+                    jsonStr = fromJsonConverter.writeValueAsString(new WatchedMovieDto(alreadyWatchedMovie));
+                } catch (JsonProcessingException e) {
+                    throw new AssertionError("not proper json format for watch movie :" +e);
+                }
+
+                return ResponseEntity.
+                        ok(jsonStr);
+
+
+            }
+
+
+
+
+
+
+            //new watchMovie object instantiate (there was nothing in db)
+
             var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
                     TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
             System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
-            //the movie is already in the data base don't need to recreate with the same imdb
-            var movieChosen = movieAlreadyExistsOpt.get();
+
+
+
+
             movieChosen.addIsWatchedBy(actualUser);
             actualUser.addWatchedMovie(watchedMovie);
             //makes them persistent in db

@@ -70,7 +70,9 @@ movie-card component
     <br />
     Awards:
     {{ movieFull.Awards }}
-<button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, watchedMovieStatus.WATCHLATER)" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + liste visionnage</button>
+<button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, watchedMovieStatus.WATCHLATER)" *ngIf=!movieService.listMovieContainsMovie(movieFull)> + voir plus tard</button>
+    <!--<button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, watchedMovieStatus.WATCHING)" *ngIf=!movieService.listMovieContainsMovie(movieFull) && > + en cours de visionnage</button>-->
+    <button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, watchedMovieStatus.REWATCH)" *ngIf=!movieService.listMovieContainsWatching(movieFull)> + à revoir visionnage</button>
 
     <!--
     deprecated, need to be replaced later
@@ -83,6 +85,7 @@ movie-card component
   </div>-->
 
     <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf=movieService.listMovieContainsMovie(movieFull)> - liste visionnage </button>
+    <button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, watchedMovieStatus.REWATCH)" *ngIf=movieService.listMovieContainsWatching(movieFull)> - à revoir visionnage</button>
     <button (click)="this.disableFull()">- d'infos</button>
   </span>
 <!--

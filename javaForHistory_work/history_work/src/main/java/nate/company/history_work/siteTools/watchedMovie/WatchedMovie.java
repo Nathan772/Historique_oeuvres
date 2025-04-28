@@ -111,14 +111,12 @@ public class WatchedMovie {
 
     @Override
     public int hashCode() {
-        return movie.hashCode()^watcher.hashCode()^movieStatus.hashCode()^Long.hashCode(id);
+        return movie.hashCode()^watcher.hashCode()^Long.hashCode(id);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof WatchedMovie watchedMovie && watchedMovie.movieStatus.equals(movieStatus)
-                && watchedMovie.movie.equals(watchedMovie.movie) && watchedMovie.timeAsLong == timeAsLong
-                && watchedMovie.watcher.equals(watcher);
+        return obj instanceof WatchedMovie watchedMovie && watchedMovie.movie.equals(watchedMovie.movie) && watchedMovie.watcher.equals(watcher);
     }
 
     public void setId(long id) {
