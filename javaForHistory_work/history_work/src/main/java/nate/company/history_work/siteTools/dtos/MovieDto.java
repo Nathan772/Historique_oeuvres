@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -80,6 +81,8 @@ public class MovieDto {
         this.director = movie.getDirector();
         this.title = movie.getTitle();
         this.poster = movie.getPoster();
+        //cause error for now...
+        //this.isWatchedBy = new HashSet<>();
         this.isWatchedBy = movie.getIsWatchedBy().stream().map(user -> new UserDto(user, true)).collect(Collectors.toSet());
     }
     /**

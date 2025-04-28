@@ -84,7 +84,9 @@ public class UserDto {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.category = user.getCategory();
+        System.out.println("on est censé ignorer le watch Movie du user");
         if(!ignore) {
+            System.out.println("on a pas ignoré le watch Movie du user");
             this.watchMovies = user.getWatchMovies().stream().map(movie -> new WatchedMovieDto(movie)).toList();
         }
 

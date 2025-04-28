@@ -32,7 +32,7 @@ public class WatchedMovieDto {
     public WatchedMovieDto(WatchedMovie watchedMovie){
         this.id = watchedMovie.getId();
         this.movie = new MovieDto(watchedMovie.getMovie());
-        this.watcherDto = new UserDto(watchedMovie.getWatcher());
+        this.watcherDto = new UserDto(watchedMovie.getWatcher(), true);
         this.timeAsLong =  watchedMovie.getTimeAsLong();
         this.movieStatus = watchedMovie.getMovieStatus();
     }

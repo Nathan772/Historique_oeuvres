@@ -631,9 +631,9 @@ public class UserController {
         //check if movie already exists in db
         Movie movie;
         try {
-            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"),
-                    nestedMap.get("director"),
-                    nestedMap.get("poster"));
+            movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
+                    fromStringToJsonMovieMap.get("director"),
+                    fromStringToJsonMovieMap.get("poster"));
         }
 
         catch(Exception e){
@@ -646,11 +646,13 @@ public class UserController {
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
+        System.out.println("avant time converter");
         var timeConverter = new TimeConverter();
-        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(nestedMap.get("hours")),
-                Long.parseLong(nestedMap.get("minutes")),Long.parseLong(nestedMap.get("seconds")));
+        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(fromStringToJsonTimeMap.get("hours")),
+                Long.parseLong(fromStringToJsonTimeMap.get("minutes")),Long.parseLong(fromStringToJsonTimeMap.get("seconds")));
         var watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
                 TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+        System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
 
         if(movieAlreadyExistsOpt.isPresent()){
             //the movie is already in the data base don't need to recreate with the same imdb
@@ -661,6 +663,7 @@ public class UserController {
             movieService.saveMovie(movieChosen);
             userService.saveUser(actualUser);
             watchedMovieService.saveWatchMovie(watchedMovie);
+            System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
             return ResponseEntity.ok(new WatchedMovieDto(watchedMovie));
         }
 
@@ -671,6 +674,7 @@ public class UserController {
         userService.saveUser(actualUser);
         watchedMovieService.saveWatchMovie(watchedMovie);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
+        System.out.println("juste avant le responseEntity de watchedmovieDto");
         return ResponseEntity.
                 ok(new WatchedMovieDto(watchedMovie));
     }
