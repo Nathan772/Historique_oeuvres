@@ -220,11 +220,34 @@ addToWatchList(movie:watchedMovie){
 
 
 
+/**
+   this method checks if the list of movie of the user in their rewatch list contains the movie.
+
+   */
+  public listMovieContainsMovieRewatchLater(movie:MovieFullInformations){
+    let movieSimple : Movie = {
+              id:"0",
+              title:movie.Title,
+              yearOfRelease:movie.Year,
+              director:movie.Director,
+              imdbID:movie.imdbID,
+              poster: movie.Poster
+    };
+    for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.REWATCH){
+          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          return true
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
+  }
 
 
 
   /**
-   this method checks if the list of movie of the user in their watch list contains the movie.
+   this method checks if the list of movie of the user in their watch later list contains the movie.
 
    */
   public listMovieContainsMovieWatchLater(movie:MovieFullInformations){
@@ -283,12 +306,13 @@ addToWatchList(movie:watchedMovie){
           console.log("ajout dans la liste du user du film "+movie.movie.title+" : succès !");
         }
         else{
+          //remove the old element
           this.userMoviesList = this.userMoviesList.filter(movieComplex => movieComplex.movie.director === movie.movie.director
             && movieComplex.movie.title === movie.movie.title
             && movieComplex.movie.yearOfRelease === movie.movie.yearOfRelease
             );
           this.userMoviesList.push(movie);
-          console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout");
+          console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout, donc on supprime l'ancien avant de remplacer");
         }
 
         /*for(let i=0;i<this.userMoviesList.length;i++){

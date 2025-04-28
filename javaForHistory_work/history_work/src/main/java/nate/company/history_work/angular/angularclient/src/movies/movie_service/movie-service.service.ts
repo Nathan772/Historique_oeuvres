@@ -306,12 +306,13 @@ addToWatchList(movie:watchedMovie){
           console.log("ajout dans la liste du user du film "+movie.movie.title+" : succès !");
         }
         else{
+          //remove the old element
           this.userMoviesList = this.userMoviesList.filter(movieComplex => movieComplex.movie.director === movie.movie.director
             && movieComplex.movie.title === movie.movie.title
             && movieComplex.movie.yearOfRelease === movie.movie.yearOfRelease
             );
           this.userMoviesList.push(movie);
-          console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout");
+          console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout, donc on supprime l'ancien avant de remplacer");
         }
 
         /*for(let i=0;i<this.userMoviesList.length;i++){
