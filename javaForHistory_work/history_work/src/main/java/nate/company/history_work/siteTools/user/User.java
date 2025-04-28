@@ -154,7 +154,7 @@ public class User {
      * remove a movie from the watch list
      * @param movieWatched
      */
-    public void removeFromWatchedMovie(Movie movieWatched){
+    public void removeFromWatchedMovie(WatchedMovie movieWatched){
         Objects.requireNonNull(movieWatched);
         watchMovies.remove(movieWatched);
     }

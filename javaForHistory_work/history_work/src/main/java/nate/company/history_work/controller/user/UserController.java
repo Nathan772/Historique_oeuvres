@@ -421,8 +421,8 @@ public class UserController {
      *
      *
      * the user who watched the movie
-     * @param imdbIDUserJson
-     * the movie watch with its imdbID.
+     * @param movieDataUserJson
+     * the movie watch with its data.
      *
      * the movie and the user who watches this movie.
      *
@@ -432,13 +432,13 @@ public class UserController {
     //overpowerful deprecated
 
     @DeleteMapping("/user/movie/remove")
-    public ResponseEntity<String> removeMovieFromList(@RequestBody String imdbIDUserJson) {
+    public ResponseEntity<String> removeMovieFromList(@RequestBody String movieDataUserJson) {
 
         //System.out.println("on a trouvé le user principal");
         //user is connected
         // doesn't work use another approach
         //var currentUser = userService.getPrincipal();
-        var nestedMap = parseComplexJson(imdbIDUserJson);
+        var nestedMap = parseComplexJson(movieDataUserJson);
         var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
         //user doesn't exists
         if (userOpt.isEmpty()) {
@@ -464,11 +464,11 @@ public class UserController {
         WatchedMovie watchedMovie;
         try {
             movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"), nestedMap.get("poster"));
-            var timeConverter = new TimeConverter();
-            onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(nestedMap.get("hours")),
-                    Long.parseLong(nestedMap.get("minutes")),Long.parseLong(nestedMap.get("seconds")));
-            watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
-                    TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+//            var timeConverter = new TimeConverter();
+//            onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(nestedMap.get("hours")),
+//                    Long.parseLong(nestedMap.get("minutes")),Long.parseLong(nestedMap.get("seconds")));
+//            watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+//                    TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
 
         }
         catch(Exception e){
@@ -481,17 +481,31 @@ public class UserController {
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
         if(movieAlreadyExistsOpt.isPresent()){
+
+            //remove the watched movie line from database
+            var watchedToRemoveOpt = watchedMovieService.findByUserAndMovie(actualUser, movieAlreadyExistsOpt.get());
+            /*
+            movie not found, but it's not a problem
+             */
+            if(watchedToRemoveOpt.isEmpty()){
+                return ResponseEntity.ok("");
+            }
+            /*
+            movie found, you remove this
+             */
+            watchedMovieService.removeByIdMovie(watchedToRemoveOpt.get().getId());
             //the movie is already in the data base don't need to recreate with the same imdb
             var movieChosen = movieAlreadyExistsOpt.get();
+            actualUser.removeFromWatchedMovie(watchedToRemoveOpt.get());
             movieChosen.removeUserFromWatcher(actualUser);
-            actualUser.removeFromWatchedMovie(movieChosen);
-            //makes them persistent in db
+
+
+            //update with the removal of the movie in the lists
             movieService.saveMovie(movieChosen);
             userService.saveUser(actualUser);
-            watchedMovieService.saveWatchMovie(watchedMovie);
             //send the movie as json
             try {
-                return ResponseEntity.ok(fromJsonConverter.writeValueAsString(watchedMovie));
+                return ResponseEntity.ok(fromJsonConverter.writeValueAsString(new WatchedMovieDto(watchedToRemoveOpt.get())));
             } catch (JsonProcessingException e) {
                 throw new AssertionError("not proper json format for watch movie : "+e);
             }

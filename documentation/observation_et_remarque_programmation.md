@@ -1547,3 +1547,22 @@ solution :
 vérifier dans vos constructeur, notammen ccelui sans argument, que les champs sont remplis et qu'ils sont require non null
 
 ```
+
+
+problème :
+
+```
+
+expecting a SELECT Query [org.hibernate.query.sqm.tree.select.SqmSelectStatement], but found org.hibernate.query.sqm.tree.delete
+
+```
+
+solution 
+
+```java
+
+@Modifying --> cette ligne
+@Transactional --> cette ligne aussi
+@Query("DELETE FROM WatchedMovie wm WHERE wm.id = :idWatchMovie")
+public void removeById(long idWatchMovie);
+```
