@@ -445,11 +445,14 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
                                   };
                                 */
-                      console.log("le film removed data :"+movieRemoved2.data | json );
-                      let jsonMovieRemoved = JSON.parse(movieRemoved2.data | json)
-                      console.log("l'état de jsonMovieRemoved : "+jsonMovieRemoved);
-                      movieRemoved.movie.id = jsonMovieRemoved.movie.id;
-                      console.log("l'état de movieRemoved après avoir reçu des données : "+movieRemoved);
+                     // console.log("le film removed data :"+ {{ movieRemoved2 | json }});
+                      //let jsonMovieRemoved = JSON.parse(movieRemoved2 | JSON)
+                      /*deprecated
+                      let jsonMovieRemoved = JSON.parse(movieRemoved2)
+                      */
+                      //console.log("l'état de jsonMovieRemoved : "+jsonMovieRemoved);
+                      //movieRemoved.movie.id = jsonMovieRemoved.movie.id;
+                      //console.log("l'état de movieRemoved après avoir reçu des données : "+movieRemoved);
                       /*if(response != null){
                       //remove from list
                       if(index!==-1){

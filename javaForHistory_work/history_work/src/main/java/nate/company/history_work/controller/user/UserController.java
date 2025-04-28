@@ -495,6 +495,7 @@ public class UserController {
             /*
             movie found, you remove this
              */
+            System.out.println("le watch movie à supprimer est : "+watchedToRemoveOpt.get());
             watchedMovieService.removeByIdMovie(watchedToRemoveOpt.get().getId());
             //the movie is already in the data base don't need to recreate with the same imdb
             var movieChosen = movieAlreadyExistsOpt.get();
@@ -675,22 +676,38 @@ public class UserController {
         var timeConverter = new TimeConverter();
         var onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(fromStringToJsonTimeMap.get("hours")),
                 Long.parseLong(fromStringToJsonTimeMap.get("minutes")),Long.parseLong(fromStringToJsonTimeMap.get("seconds")));
-        var watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
-                TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
-        System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
+
+
+        /*
+        the movie is already registered in data base
+         */
 
         if(movieAlreadyExistsOpt.isPresent()){
+            var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+                    TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+            System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
             //the movie is already in the data base don't need to recreate with the same imdb
             var movieChosen = movieAlreadyExistsOpt.get();
             movieChosen.addIsWatchedBy(actualUser);
             actualUser.addWatchedMovie(watchedMovie);
             //makes them persistent in db
             movieService.saveMovie(movieChosen);
-            userService.saveUser(actualUser);
+            //this specific order is compulsory
             watchedMovieService.saveWatchMovie(watchedMovie);
+            userService.saveUser(actualUser);
             System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
             return ResponseEntity.ok("{}");
         }
+
+        /*
+        it's a new movie that is registered in data base
+         */
+
+        var watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+                TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+        System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
+
+
 
         //it's a new movie that wasn't in db
         //we save it in db

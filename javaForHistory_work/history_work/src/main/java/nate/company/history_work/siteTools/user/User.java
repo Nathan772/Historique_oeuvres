@@ -156,7 +156,7 @@ public class User {
      */
     public void removeFromWatchedMovie(WatchedMovie movieWatched){
         Objects.requireNonNull(movieWatched);
-        watchMovies.remove(movieWatched);
+        watchMovies.removeIf(movieWatched1->movieWatched1.getMovie().getImdbID().equals(movieWatched.getMovie().getImdbID()));
     }
 
     public void setWatchMovies(List<WatchedMovie> watchMovies) {

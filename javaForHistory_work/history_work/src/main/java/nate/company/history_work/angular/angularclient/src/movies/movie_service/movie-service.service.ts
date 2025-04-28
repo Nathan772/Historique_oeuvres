@@ -445,7 +445,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
                                   };
                                 */
-                      console.log("le film removed data :"+ {{ movieRemoved2 | json }});
+                     // console.log("le film removed data :"+ {{ movieRemoved2 | json }});
                       //let jsonMovieRemoved = JSON.parse(movieRemoved2 | JSON)
                       /*deprecated
                       let jsonMovieRemoved = JSON.parse(movieRemoved2)
