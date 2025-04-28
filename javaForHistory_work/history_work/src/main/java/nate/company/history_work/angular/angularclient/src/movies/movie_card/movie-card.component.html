@@ -19,12 +19,37 @@ movie-card component
 
 <div class="row" id="movieCard-display">
   <div class="col s10 m12">
+
+    <!--
+    show in blue as default color.
+    Otherwise :
+
+    orange : for watch later
+    yellow : for rewatch later
+    red : for currently watching
+    -->
     <div
       class="card"
       [ngClass]="{
-        'blue lighten-1': true
-      }"
+    'orange lighten-1': movieService.listMovieContainsMovieWatchLater(movieFull),
+    'yellow lighten-1': movieService.listMovieContainsMovieRewatchLater(movieFull),
+    'blue lighten-1': !movieService.listMovieContainsMovieRewatchLater(movieFull) && !movieService.listMovieContainsMovieWatchLater(movieFull)
+  }"
     >
+      <!--
+   show in red if it's rewatch
+   -->
+      <!--
+      <div
+        class="card"
+        [ngClass]="{
+        'red lighten-1': true
+      }"
+        *ngIf=movieService.listMovieContainsMovieRewatchLater(movieFull)
+      >-->
+
+
+
       <div class="card-content white-text">
         <span class="card-title">
 
