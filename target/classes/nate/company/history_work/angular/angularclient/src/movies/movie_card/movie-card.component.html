@@ -111,8 +111,8 @@ movie-card component
   </div>-->
 
     <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER))"> - à voir plus tard </button>
-    <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING))"> - à revoir </button>
-        <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.REWATCH))"> - en cours de visionnage</button>
+    <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.REWATCH))"> - à revoir </button>
+        <button (click)="this.removeFromWatchListAndDataBase(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING))"> - en cours de visionnage</button>
     <button (click)="this.disableFull()">- d'infos</button>
   </span>
 <!--

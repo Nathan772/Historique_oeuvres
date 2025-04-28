@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MovieFullInformations, MovieShortInformations, watchedMovieStatus, watchedMovie} from '../../../movies/movie_models/movie_models';
+import { MovieFullInformations, MovieShortInformations, watchedMovieStatus, watchedMovie, Movie } from '../../../movies/movie_models/movie_models';
 import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user_service/user-service.service';
@@ -165,6 +165,31 @@ export class MovieUserCardComponent implements OnInit {
   information*/
   disableFull() {
     this.fullInfoOn = false;
+  }
+
+ /**
+   this method checks if the list of movie of the user in their watch later/watching/rewatch (depending
+     on the argument sent) list contains the movie.
+
+   */
+  public listMovieContainsMovieWatchLater(movieWatched:watchedMovie, movieStatus:watchedMovieStatus){
+    let movieSimple : Movie = {
+              id:"0",
+              title:movieWatched.movie.title,
+              yearOfRelease:movieWatched.movie.yearOfRelease,
+              director:movieWatched.movie.director,
+              imdbID:movieWatched.movie.imdbID,
+              poster: movieWatched.movie.poster
+    };
+    for(let i=0;i<this.movieService.userMoviesList.length;i++){
+        console.log("les films présents dans la liste user : "+this.movieService.userMoviesList[i].movie.imdbID);
+        if(this.movieService.userMoviesList[i].movie.imdbID === movieSimple.imdbID && this.movieService.userMoviesList[i].movieStatus === movieStatus){
+          console.log("le film est déjà présent : "+this.movieService.userMoviesList[i].movie.imdbID);
+          return true
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
   }
 
 
