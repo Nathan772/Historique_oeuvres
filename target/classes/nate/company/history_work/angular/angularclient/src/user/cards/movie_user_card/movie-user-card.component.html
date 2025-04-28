@@ -84,10 +84,11 @@ for future features
         </ng-container>
         </div>-->
 
-    <button (click)="this.removeFromWatchListAndDataBaseFromWatchedMovie(movieFull)" *ngIf=movieService.listMovieContainsMovie(movieFromApi)> - liste visionnage </button>
-
-
-
+          <!--
+     <button (click)="this.removeFromWatchListAndDataBase(movieFull.movie)" *ngIf=movieService.listMovieContainsMovieWatchLater(movieFull)> - à voir plus tard </button>
+    <button (click)="this.removeFromWatchListAndDataBase(movieFull.movie)" *ngIf=movieService.listMovieContainsMovieRewatchLater(movieFull)> - à revoir </button>
+        <button (click)="this.removeFromWatchListAndDataBase(movieFull.movie)" *ngIf=movieService.listMovieContainsMovieWatching(movieFull) && > - en cours de visionnage</button>
+-->
           <!--<div class="dropdown show" id="dropbtn">-->
 <!--
   <button type="button"  id="statusButton"  class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="click me">

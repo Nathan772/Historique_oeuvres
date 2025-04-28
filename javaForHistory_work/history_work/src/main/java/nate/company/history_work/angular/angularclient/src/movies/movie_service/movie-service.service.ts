@@ -224,6 +224,7 @@ addToWatchList(movie:watchedMovie){
    this method checks if the list of movie of the user in their rewatch list contains the movie.
 
    */
+   /*
   public listMovieContainsMovieRewatchLater(movie:MovieFullInformations){
     let movieSimple : Movie = {
               id:"0",
@@ -242,15 +243,16 @@ addToWatchList(movie:watchedMovie){
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
-  }
+  }*/
 
 
 
   /**
-   this method checks if the list of movie of the user in their watch later list contains the movie.
+   this method checks if the list of movie of the user in their watch later/watching/rewatch (depending
+     on the argument sent) list contains the movie.
 
    */
-  public listMovieContainsMovieWatchLater(movie:MovieFullInformations){
+  public listMovieContainsMovieWatchLater(movie:MovieFullInformations, movieStatus:watchedMovieStatus){
     let movieSimple : Movie = {
               id:"0",
               title:movie.Title,
@@ -261,7 +263,7 @@ addToWatchList(movie:watchedMovie){
     };
     for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
-        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHLATER){
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === movieStatus){
           console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
           return true
         }
@@ -269,6 +271,33 @@ addToWatchList(movie:watchedMovie){
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
   }
+
+
+/**
+   this method checks if the list of movie of the user in their
+   "currently watching list" contains the movie.
+
+   */
+   /*
+  public listMovieContainsMovieWatching(movie:MovieFullInformations){
+    let movieSimple : Movie = {
+              id:"0",
+              title:movie.Title,
+              yearOfRelease:movie.Year,
+              director:movie.Director,
+              imdbID:movie.imdbID,
+              poster: movie.Poster
+    };
+    for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHING){
+          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          return true
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
+  }*/
 /**
    This method add a movie into the database
    */
