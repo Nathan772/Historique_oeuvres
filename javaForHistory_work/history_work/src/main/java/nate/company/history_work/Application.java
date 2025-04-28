@@ -66,10 +66,11 @@ public class Application {
 //            //même chose, mais pour les vidéos
 //
 //            System.out.println(" les données en base de données : ");
-            System.out.println("Tous les users en bdd :"+userRepository.findAll());
-            System.out.println("tous les films en bdd :"+movieRepository.findAll());
-            System.out.println("tous les films regardés par des users en bdd :"+watchedMovieRepository.findAll());
+//            System.out.println("Tous les users en bdd :"+userRepository.findAll());
+//            System.out.println("tous les films en bdd :"+movieRepository.findAll());
+//            System.out.println("tous les films regardés par des users en bdd :"+watchedMovieRepository.findAll());
             //watchMovieRepository.findAll().forEach(System.out::println);
+            System.out.println("let's start everything !!!");
         };
     }
 
