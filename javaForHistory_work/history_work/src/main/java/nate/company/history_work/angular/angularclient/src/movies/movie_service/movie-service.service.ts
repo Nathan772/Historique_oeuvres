@@ -306,12 +306,12 @@ addToWatchList(movie:watchedMovie){
           create wrapper as string
           */
 
-          this.HttpClient.post<Movie>(this.userMoviesUrl+'/add',{watchedMovie,userSimple})
+          this.HttpClient.post<String>(this.userMoviesUrl+'/add',{watchedMovie,userSimple})
                             .subscribe(
-                                  movieRetrieved => {
+                                  movieRetrievedAsJson => {
                                     //save succeed
                                     this.addMovieToUserListWithoutDataBase(watchedMovie);
-                                    return movieRetrieved;
+                                    return movieRetrievedAsJson;
                                   }
                                 );
 
@@ -426,12 +426,29 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
                       };*/
 
-           this.HttpClient.delete<watchedMovie>(this.userMoviesUrl+"/remove",{
+           this.HttpClient.delete<string>(this.userMoviesUrl+"/remove",{
             headers,
             body: {movieSimple, userSimple}
             })
           .subscribe(movieRemoved2 =>
-                    { movieRemoved = movieRemoved2
+                    { //movieRemoved
+                      //= movieRemoved2
+                      /*
+                      movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
+                                  movieStatus:watchedMovieStatus.WATCHLATER,
+                                     time: {
+                                                              hours:0,
+                                                              minutes:0,
+                                                              seconds:0,
+
+                                                              },
+
+                                  };
+                                */
+                      let jsonMovieRemoved = JSON.parse(movieRemoved2)
+                      console.log("l'état de jsonMovieRemoved : "+jsonMovieRemoved);
+                      movieRemoved.movie.id = jsonMovieRemoved.movie.id;
+                      console.log("l'état de movieRemoved après avoir reçu des données : "+movieRemoved);
                       /*if(response != null){
                       //remove from list
                       if(index!==-1){

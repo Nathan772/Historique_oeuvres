@@ -489,7 +489,12 @@ public class UserController {
             movieService.saveMovie(movieChosen);
             userService.saveUser(actualUser);
             watchedMovieService.saveWatchMovie(watchedMovie);
-            return ResponseEntity.ok("");
+            //send the movie as json
+            try {
+                return ResponseEntity.ok(fromJsonConverter.writeValueAsString(watchedMovie));
+            } catch (JsonProcessingException e) {
+                throw new AssertionError("not proper json format for watch movie : "+e);
+            }
         }
         /*
         movie not found, but it's not a problem
@@ -525,7 +530,7 @@ public class UserController {
     //thereby you use a wrapper class or two request param
     //you cannot
     @PostMapping("/user/movie/add")
-    public ResponseEntity<WatchedMovieDto> addMovie(@RequestBody String userMovieJson){
+    public ResponseEntity<String> addMovie(@RequestBody String userMovieJson){
         System.out.println("on ajoute le film et le user : "+userMovieJson);
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
@@ -642,7 +647,7 @@ public class UserController {
             System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new WatchedMovieDto());
+                    .body("{}");
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
@@ -664,7 +669,7 @@ public class UserController {
             userService.saveUser(actualUser);
             watchedMovieService.saveWatchMovie(watchedMovie);
             System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
-            return ResponseEntity.ok(new WatchedMovieDto(watchedMovie));
+            return ResponseEntity.ok("{}");
         }
 
         //it's a new movie that wasn't in db
@@ -675,8 +680,17 @@ public class UserController {
         watchedMovieService.saveWatchMovie(watchedMovie);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
         System.out.println("juste avant le responseEntity de watchedmovieDto");
+
+        // Getting organisation object as a json string
+        String jsonStr;
+        try {
+            jsonStr = fromJsonConverter.writeValueAsString(new WatchedMovieDto(watchedMovie));
+        } catch (JsonProcessingException e) {
+            throw new AssertionError("not proper json format for watch movie :" +e);
+        }
+
         return ResponseEntity.
-                ok(new WatchedMovieDto(watchedMovie));
+                ok(jsonStr);
     }
 
     /*
@@ -708,6 +722,9 @@ public class UserController {
         //the user exists
         System.out.println("le user a bien été trouvé, on renvoie ses films trouvés en bdd");
         System.out.println("les films du user trouvés sont : "+userOpt.get().getWatchMovies());
+
+
+
         return ResponseEntity.ok(userOpt.get().getWatchMovies().stream().map(movie->new WatchedMovieDto(movie)).toList());
     }
 

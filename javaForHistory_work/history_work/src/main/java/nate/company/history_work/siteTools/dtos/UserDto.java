@@ -205,6 +205,7 @@ public class UserDto {
         pseudo = newPseudo;
     }
 
+
     @Override
     public String toString(){
         //return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category+" il suit ou regarde actuellement :"+watchMovies.size()+" films";

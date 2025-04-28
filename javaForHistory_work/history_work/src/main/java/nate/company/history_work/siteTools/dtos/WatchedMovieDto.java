@@ -1,11 +1,12 @@
 package nate.company.history_work.siteTools.dtos;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WatchedMovieDto {
     private final long id;
     private final MovieDto movie;
@@ -37,5 +38,26 @@ public class WatchedMovieDto {
         this.movieStatus = watchedMovie.getMovieStatus();
     }
 
+    /*
+    getter are necessary for json creator
+     */
+    public long getId() {
+        return id;
+    }
 
+    public UserDto getWatcherDto() {
+        return watcherDto;
+    }
+
+    public MovieDto getMovie() {
+        return movie;
+    }
+
+    public MovieStatus getMovieStatus() {
+        return movieStatus;
+    }
+
+    public long getTimeAsLong() {
+        return timeAsLong;
+    }
 }
