@@ -445,7 +445,8 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
                                   };
                                 */
-                      let jsonMovieRemoved = JSON.parse(movieRemoved2)
+                      console.log("le film removed data :"+movieRemoved2.data | json );
+                      let jsonMovieRemoved = JSON.parse(movieRemoved2.data | json)
                       console.log("l'état de jsonMovieRemoved : "+jsonMovieRemoved);
                       movieRemoved.movie.id = jsonMovieRemoved.movie.id;
                       console.log("l'état de movieRemoved après avoir reçu des données : "+movieRemoved);

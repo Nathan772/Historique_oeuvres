@@ -442,15 +442,17 @@ public class UserController {
         var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
         //user doesn't exists
         if (userOpt.isEmpty()) {
+            System.out.println("on envoie le json classique 0");
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new Movie());
+                    .body("{}");
         }
 
         //user exists
         //but false password
         if (userOpt.get().getPassword().equals(nestedMap.get("password"))) {
+            System.out.println("on envoie le json classique 1");
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new Movie());
+                    .body("{}");
         }
 
         //user exists and good password
@@ -476,7 +478,7 @@ public class UserController {
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error bad movie format");
+                    .body("{}");
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
@@ -488,7 +490,7 @@ public class UserController {
             movie not found, but it's not a problem
              */
             if(watchedToRemoveOpt.isEmpty()){
-                return ResponseEntity.ok("");
+                return ResponseEntity.ok("{}");
             }
             /*
             movie found, you remove this
@@ -505,7 +507,10 @@ public class UserController {
             userService.saveUser(actualUser);
             //send the movie as json
             try {
-                return ResponseEntity.ok(fromJsonConverter.writeValueAsString(new WatchedMovieDto(watchedToRemoveOpt.get())));
+                System.out.println("on envoie le json classique 2");
+                var jsonStr = fromJsonConverter.writeValueAsString(new WatchedMovieDto(watchedToRemoveOpt.get()));
+                System.out.println("l'état du json produit :"+jsonStr);
+                return ResponseEntity.ok(jsonStr);
             } catch (JsonProcessingException e) {
                 throw new AssertionError("not proper json format for watch movie : "+e);
             }
@@ -513,6 +518,7 @@ public class UserController {
         /*
         movie not found, but it's not a problem
          */
+        System.out.println("on envoie le json classique 3");
         return ResponseEntity.ok("");
     }
 
