@@ -199,8 +199,9 @@ addToWatchList(movie:watchedMovie){
     for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
         if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHING){
+
           console.log("le film est déjà présent en mode à revoir : "+this.userMoviesList[i].movie.imdbID);
-          return true;
+          //return true;
         }
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
@@ -226,7 +227,7 @@ addToWatchList(movie:watchedMovie){
    this method checks if the list of movie of the user in their watch list contains the movie.
 
    */
-  public listMovieContainsMovie(movie:MovieFullInformations){
+  public listMovieContainsMovieWatchLater(movie:MovieFullInformations){
     let movieSimple : Movie = {
               id:"0",
               title:movie.Title,
@@ -282,6 +283,11 @@ addToWatchList(movie:watchedMovie){
           console.log("ajout dans la liste du user du film "+movie.movie.title+" : succès !");
         }
         else{
+          this.userMoviesList = this.userMoviesList.filter(movieComplex => movieComplex.movie.director === movie.movie.director
+            && movieComplex.movie.title === movie.movie.title
+            && movieComplex.movie.yearOfRelease === movie.movie.yearOfRelease
+            );
+          this.userMoviesList.push(movie);
           console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout");
         }
 
@@ -327,7 +333,8 @@ addToWatchList(movie:watchedMovie){
           //add movie to movie list
           //this.userMoviesList.push(movie);
 
-          console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID);
+          console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID
+            +"le status du watch later est : "+movieActualStatus);
           /*
           problème ici !!!!! :...
 
