@@ -104,9 +104,12 @@ path
       }
     console.log('On entre dans OnSubmit pause time, le contenu de pause time est : '+this.pauseTime);
     let tmpHour:number = +(Array.from(this.pauseTime)[0]+Array.from(this.pauseTime)[1]);
+    let tmpMinutes:number = +(Array.from(this.pauseTime)[3]+Array.from(this.pauseTime)[4]);
+    let tmpSeconds:number = +(Array.from(this.pauseTime)[6]+Array.from(this.pauseTime)[7]);
     movieWatched.time.hours = tmpHour
+    movieWatched.time.minutes = tmpMinutes
+    movieWatched.time.seconds = tmpSeconds
     //movieWatched.timeOnly.minutes = Array.from(this.pauseTime.[0]
-
     this.movieService.updateMovieToUserInDataBaseWatchingTimeWatchedMovie(movieWatched,this.userService.userAccount);
 
 

@@ -80,20 +80,21 @@ for future features
           the movie :
           when the user
           has stopped during their last viewing
+
           -->
+
 <form (ngSubmit)="onSubmitPauseTime(movieFull)" #varForm="ngForm">
 
           <input
             type="time"
             required
-            min="00:00"
-            max="24:59"
+            step="1"
+            min="00:00:00"
+            max="24:59:59"
             name="pause"
             [(ngModel)]="pauseTime"
             #pauseTimeController="ngModel"
           />
-
-    <small>update time of pause </small>
 
   <!-- Désactive le bouton si le formulaire n'est pas valide -->
       <button type="submit" [disabled]="varForm.invalid">
