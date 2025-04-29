@@ -228,8 +228,8 @@ public class MovieController {
 
     @PostMapping("/user/movie/react")
     public ResponseEntity<String> reactMovie(@RequestBody String userMovieReactJson){
-        System.out.println("on ajoute le film et le user : "+userMovieReactJson);
-        LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieReactJson);
+        System.out.println("on ajoute le film et le user en react: "+userMovieReactJson);
+        LOGGER.log(Level.INFO, " on ajoute le film: "+userMovieReactJson);
         //user not connected abnormal
         var nestedMap = parseComplexJsonForWatchedMovie(userMovieReactJson);
 
@@ -475,7 +475,7 @@ public class MovieController {
     //you cannot
     @PostMapping("/user/movie/add")
     public ResponseEntity<String> addMovie(@RequestBody String userMovieJson){
-        System.out.println("on ajoute le film et le user : "+userMovieJson);
+        System.out.println("on ajoute le film et le user dans movie/add: "+userMovieJson);
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
         //user not connected abnormal
