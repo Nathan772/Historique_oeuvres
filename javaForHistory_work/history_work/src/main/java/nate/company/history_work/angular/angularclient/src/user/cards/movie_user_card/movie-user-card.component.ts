@@ -91,6 +91,9 @@ export class MovieUserCardComponent implements OnInit {
   /**
    add a movie to user watchList
    */
+   addMovieToUserInDataBaseAsWatchLater(movieFull:watchedMovie, movieStatus:watchedMovieStatus){
+     this.movieService.addMovieToUserInDataBaseAsWatchLaterWatchedMovie(movieFull, movieStatus, this.userService.userAccount);
+   }
    /*
     addToWatchListAndDatabaseFromWatchedMovie(movie:watchedMovie, movieStatus:watchedMovieStatus){
       //this.userService.
