@@ -94,13 +94,18 @@ export class MovieUserCardComponent implements OnInit {
    addMovieToUserInDataBaseAsWatchLater(movieFull:watchedMovie, movieStatus:watchedMovieStatus){
      this.movieService.addMovieToUserInDataBaseAsWatchLaterWatchedMovie(movieFull, movieStatus, this.userService.userAccount);
    }
+
+
    /*
     addToWatchListAndDatabaseFromWatchedMovie(movie:watchedMovie, movieStatus:watchedMovieStatus){
       //this.userService.
       this.movieService.addMovieToUserInDataBaseAsWatchLater(movie, movieStatus, this.userService.userAccount);
     }*/
 
-    removeFromWatchListAndDataBaseFromWatchedMovie(movie:watchedMovie){
+  /**
+     remove from watchlater/watching/rewatch list
+     */
+    removeFromWatchListAndDataBaseAsWatchLater(movie:watchedMovie){
 
       //retrieve movie full info object
       this.completeInformations(movie.movie.imdbID);
@@ -115,21 +120,6 @@ export class MovieUserCardComponent implements OnInit {
           console.log("film retiré de la liste de l'utilisateur : "+movieRemoved.movie.imdbID);
           this.movieService.userMoviesList.splice(index,1);
         }
-
-        /*for(let i=0;i<this.movieService.userMoviesList.length;i++){
-                //console.log("les films présents : "+this.userMoviesList[i].imdbID);
-                if(this.movieService.userMoviesList[i].imdbID === movie.imdbID){
-                  //console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
-                  let index = this.movieService.userMoviesList.indexOf(movie);
-                  if(index!==-1){
-                    console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
-                    this.movieService.userMoviesList.splice(index,1);
-                  }
-                  else{
-                    console.log("le film qui doit être retiré n'a pas été trouvé");
-                  }
-                }
-              }*/
 
     }
 

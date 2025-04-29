@@ -133,7 +133,12 @@ https://getbootstrap.com/docs/4.0/components/dropdowns/
         <button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER)" *ngIf="!(movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.WATCHLATER))"> + voir plus tard</button>
         <button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, this.watchedMovieStatus.WATCHING)" *ngIf="!(movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.WATCHING))"> + en cours de visionnage</button>
         <button (click)="this.addMovieToUserInDataBaseAsWatchLater(movieFull, this.watchedMovieStatus.REWATCH)" *ngIf="!(movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.REWATCH))"> + à revoir</button>
-</div>
+
+        <button (click)="this.removeFromWatchListAndDataBaseAsWatchLater(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.WATCHLATER))"> - à voir plus tard </button>
+        <button (click)="this.removeFromWatchListAndDataBaseAsWatchLater(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.REWATCH))"> - à revoir </button>
+        <button (click)="this.removeFromWatchListAndDataBaseAsWatchLater(movieFull)" *ngIf="(movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.WATCHING))"> - en cours de visionnage</button>
+
+      </div>
     </div>
   </div>
   </div>
