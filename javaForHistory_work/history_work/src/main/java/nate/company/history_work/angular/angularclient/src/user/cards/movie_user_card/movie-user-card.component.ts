@@ -3,6 +3,8 @@ import { MovieFullInformations, MovieShortInformations, watchedMovieStatus, watc
 import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user_service/user-service.service';
+//import { CommonFunctionalityComponent } from '../../common-functionality-component/common-functionality-component.component';
+import { CommonFunctionalityComponent } from '../../../common-functionality-component/common-functionality-component.component';
 //declare function greet():void;
 //declare function showHiddenStatus():void;
 @Component({
@@ -10,7 +12,7 @@ import { UserService } from '../../user_service/user-service.service';
   templateUrl: './movie-user-card.component.html',
   styleUrls: ['./movie-user-card.component.css'],
 })
-export class MovieUserCardComponent implements OnInit {
+export class MovieUserCardComponent implements OnInit  {
   //@Input()
   //movie: MovieShortInformations;
   /*
@@ -35,7 +37,9 @@ export class MovieUserCardComponent implements OnInit {
   /* l'initialisation
     du service dans le constructeur
     est indispensable*/
-    constructor(movieService: MovieServiceService, userService:UserService) {
+    constructor(movieService: MovieServiceService, userService:UserService,
+      ) {
+            //super(router);
       this.movieService = movieService;
       this.userService = userService;
       this.movieFull = {
@@ -94,7 +98,7 @@ export class MovieUserCardComponent implements OnInit {
    addMovieToUserInDataBaseAsWatchLater(movieFull:watchedMovie, movieStatus:watchedMovieStatus){
      this.movieService.addMovieToUserInDataBaseAsWatchLaterWatchedMovie(movieFull, movieStatus, this.userService.userAccount);
      //relaod component to keep consistent page
-     window.location.reload();
+     this.reloadParentListComponent()
    }
 
 
@@ -124,7 +128,7 @@ export class MovieUserCardComponent implements OnInit {
         }
 
       //reload component to keep consistent page
-           window.location.reload();
+      this.reloadParentListComponent()
 
     }
 
@@ -205,6 +209,17 @@ export class MovieUserCardComponent implements OnInit {
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
+  }
+
+  /*
+  this method reload the list containing
+  all the movies.
+  It's necessary when you update a movie data
+  to keep the display consistent
+  */
+  reloadParentListComponent(){
+    //this.reloadComponent(false,"user/entrance/menuMovieChoice/listMovies")
+    console.log("ok");
   }
 
 
