@@ -160,6 +160,8 @@ public class User {
         watchMovies.add(movieWatched);
     }
 
+
+
     public void setReactions(Set<MovieReaction> reactions) {
         Objects.requireNonNull(reactions);
         this.reactions = reactions;
@@ -291,17 +293,26 @@ public class User {
      */
     public void reactMovie(MovieReaction movieReaction){
         Objects.requireNonNull(movieReaction);
-        reactions.add(movieReaction);
+        //double like or double dislike
+        //therefore : unreact
+        var alreadyHere = unReactMovie(movieReaction);
+
+        //add new reaction
+        if(!alreadyHere) {
+            reactions.add(movieReaction);
+        }
     }
 
     /**
      * remove a reaction to a movie : like or dislike
      * @param movieReaction
      *
+     * @return
+     * true if it unreact, otherwise false.
      */
-    public void unReactMovie(MovieReaction movieReaction){
+    public boolean unReactMovie(MovieReaction movieReaction){
         Objects.requireNonNull(movieReaction);
-        reactions.removeIf(movieReaction1-> movieReaction.getMovieReacted().equals(movieReaction1.getMovieReacted()));
+        return reactions.removeIf(movieReaction1-> movieReaction.getMovieReacted().equals(movieReaction1.getMovieReacted()));
     }
 
 }

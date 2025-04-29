@@ -59,11 +59,22 @@ export interface watchedMovie {
   time: timeOnly;
 }
 
+export interface reactedMovie {
+  movie:Movie;
+  reactionChoice:ReactionChoices;
+}
+
 export interface timeOnly {
   hours: number;
   minutes: number;
   seconds: number;
 }
+
+export enum ReactionChoices {
+  Like,
+  Dislike,
+}
+
 
 export enum watchedMovieStatus {
   WATCHLATER,

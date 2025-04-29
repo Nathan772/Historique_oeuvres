@@ -2,12 +2,15 @@ package nate.company.history_work.controller.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import nate.company.history_work.service.MovieReactionService;
 import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
 import nate.company.history_work.service.WatchMovieService;
+import nate.company.history_work.siteTools.dtos.MovieDto;
 import nate.company.history_work.siteTools.dtos.WatchedMovieDto;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.reaction.MovieReaction;
 import nate.company.history_work.siteTools.timeHandler.TimeConverter;
 import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
@@ -25,6 +28,7 @@ import static nate.company.history_work.controller.ControllerResources.FROMJSONC
 import static nate.company.history_work.controller.user.UserController.parseComplexJson;
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 import static nate.company.history_work.siteTools.json.JsonTools.parseKeyValueString;
+import static nate.company.history_work.siteTools.reaction.ReactionChoices.fromStringToReactionStatus;
 
 /**
  * Acts like a REST controller that manages the requests about movies.
@@ -55,6 +59,8 @@ public class MovieController {
 
     private  final WatchMovieService watchedMovieService;
 
+    private final MovieReactionService movieReactionService;
+
 
     /**
      * Repository that stores movies watched by a user.
@@ -72,13 +78,15 @@ public class MovieController {
     @Autowired
     public MovieController(MovieRepository movieRepository, UserService userService, MovieService movieService,
 
-                           WatchMovieService watchedMovieService){
+                           WatchMovieService watchedMovieService,
+                           MovieReactionService movieReactionService){
         Objects.requireNonNull(movieRepository);
         Objects.requireNonNull(userService);
         this.movieRepository = movieRepository;
         this.userService = userService;
         this.watchedMovieService = watchedMovieService;
         this.movieService = movieService;
+        this.movieReactionService = movieReactionService;
     }
 
     /**
@@ -188,6 +196,259 @@ public class MovieController {
         System.out.println("on envoie le json classique 3");
         return ResponseEntity.ok("");
     }
+
+
+
+
+
+
+
+    /**
+     *
+     * Retrieve a user based on their pseudo or email.
+     * @param user the you user you want to retrieve
+     * @return the user object.
+     */
+    //@RequestMapping("/users")
+    //@GetMapping("/user")
+
+
+    /**
+     * This method add a reaction to a movie into the data base.
+     *
+     * @param userMovieReactJson
+     * the user that will react to the movie
+     * the movie that will receive the as json.
+     * the reaction itself.
+     *
+     * @return the retrieved movie
+     *
+     */
+
+    @PostMapping("/user/movie/react")
+    public ResponseEntity<String> reactMovie(@RequestBody String userMovieReactJson){
+        System.out.println("on ajoute le film et le user : "+userMovieReactJson);
+        LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieReactJson);
+        //user not connected abnormal
+        var nestedMap = parseComplexJsonForWatchedMovie(userMovieReactJson);
+
+        var mapForWatchedMovie = new HashMap<String,String>();
+        var mapForUserWatcher = new HashMap<String,String>();
+        /*
+        load user's data
+         */
+        /*
+        you need to add quotes in order to parse since
+         quotes are necessary for json recognition
+         */
+        mapForUserWatcher.put("password",nestedMap.get("password"));
+        mapForUserWatcher.put("pseudo", nestedMap.get("pseudo"));
+        /*
+        load movie data
+         */
+        //need to be parsed again
+        nestedMap.get("movie");
+
+        //need to be parsed again
+        System.out.println("le contenu de la reaction nested est : "+nestedMap.get("reactionChoice"));
+
+        //parse time as json object for test
+
+
+        HashMap<String, String> fromStringToJsonMovieMap;
+
+        HashMap<String, String> fromStringToJsonReactMap;
+        /*
+        retrieve movie data into map
+         */
+        try {
+            fromStringToJsonMovieMap = parseKeyValueString(nestedMap.get("movie"));
+        } catch (Exception e) {
+            throw  new IllegalArgumentException("Error : the json received movie doesn't respect the json format "+e);
+        }
+        System.out.println("le json du movie en string : "+fromStringToJsonMovieMap);
+
+
+        /*
+        retrieve reaction data into map
+         */
+        try {
+            fromStringToJsonReactMap = parseKeyValueString(nestedMap.get("reactionChoice"));
+        } catch (Exception e) {
+            throw  new IllegalArgumentException("Error : the json received as \"movieStatus\" doesn't respect the json format "+e);
+        }
+
+
+
+
+        //mapForWatchedMovie.put("");
+        //System.out.println("on a trouvé le user principal");
+        //user is connected
+        // doesn't work use another approach
+        //var currentUser = userService.getPrincipal();
+
+        var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
+        //user doesn't exists
+        if(userOpt.isEmpty()){
+            System.out.println("erreur le user au pseudo: "+nestedMap.get("pseudo")+" n'existe pas ");
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
+        }
+
+        //user exists
+        //but false password
+        if(userOpt.get().getPassword().equals(nestedMap.get("password"))){
+            System.out.println("erreur le user au password: "+nestedMap.get("password")+" n'existe pas ");
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new Movie());
+        }
+
+        //user exists and good password
+
+        //use the actual user
+        var actualUser = userOpt.get();//currentUser.get();
+
+        //check if movie already exists in db
+        Movie movie;
+        try {
+            movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
+                    fromStringToJsonMovieMap.get("director"),
+                    fromStringToJsonMovieMap.get("poster"));
+        }
+
+        catch(Exception e){
+            //inconsistent movie fields
+            LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
+            System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
+            //EMPTY MOVIE RETURNED IF Not connected
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{}");
+        }
+        var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
+
+        System.out.println("avant time converter");
+
+        /*
+        the movie is already registered in data base
+         */
+
+        if(movieAlreadyExistsOpt.isPresent()){
+
+
+            //retrieve and update if it already exists
+            var alreadyReactedMovieOpt =movieReactionService.findByUserAndMovie(userOpt.get(),movieAlreadyExistsOpt.get());
+
+            //the movie is already in the data base don't need to recreate with the same imdb
+            var movieChosen = movieAlreadyExistsOpt.get();
+
+            //Already exists in database, just update data then
+            if(alreadyReactedMovieOpt.isPresent()){
+                System.out.println("le film est déjà dans la reactionList, on a juste mettre à jour son statut : "
+                        +alreadyReactedMovieOpt.get());
+                var alreadyReactedMovie = alreadyReactedMovieOpt.get();
+
+                //update "watched status"
+                alreadyReactedMovie.setReaction(fromStringToReactionStatus(nestedMap.get("reactionChoice")));
+
+                actualUser.reactMovie(alreadyReactedMovie);
+                movieChosen.reactUser(alreadyReactedMovie);
+
+                //makes them persistent in db
+                movieService.saveMovie(movieChosen);
+                //this specific order is compulsory
+                movieReactionService.save(alreadyReactedMovie);
+                userService.saveUser(actualUser);
+
+                // Getting organisation object as a json string
+                String jsonStr;
+                try {
+                    jsonStr = FROMJSONCONVERTER.writeValueAsString(new MovieDto(movieChosen));
+                } catch (JsonProcessingException e) {
+                    throw new AssertionError("not proper json format for watch movie :" +e);
+                }
+
+                return ResponseEntity.
+                        ok(jsonStr);
+
+
+            }
+
+
+
+
+
+
+            //new reaction object instantiate (there was nothing in db)
+
+            var reacted = new MovieReaction(actualUser,fromStringToReactionStatus(nestedMap.get("reactionChoice")),movieAlreadyExistsOpt.get());
+            System.out.println("l'état de watched movie avant la création du dto : "+reacted);
+
+
+
+
+            movieChosen.reactUser(reacted);
+            actualUser.reactMovie(reacted);
+            //makes them persistent in db
+            movieService.saveMovie(movieChosen);
+            //this specific order is compulsory
+            movieReactionService.save(reacted);
+            userService.saveUser(actualUser);
+            System.out.println("l'état de reaction movie avant la création du dto : "+reacted);
+            return ResponseEntity.ok("{}");
+        }
+
+        /*
+        it's a new watched movie that is registered in data base
+         */
+
+        var reacted = new MovieReaction(actualUser,fromStringToReactionStatus(nestedMap.get("reactionChoice")),movie);
+        System.out.println("l'état de watched movie avant la création du dto : "+reacted);
+
+
+
+        //it's a new movie that wasn't in db
+        //we save it in db
+        movie.reactUser(reacted);
+        movieService.saveMovie(movie);
+        userService.saveUser(actualUser);
+        movieReactionService.save(reacted);
+        LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
+        System.out.println("juste avant le responseEntity de watchedmovieDto");
+
+        // Getting organisation object as a json string
+        String jsonStr;
+        try {
+            jsonStr = FROMJSONCONVERTER.writeValueAsString(new MovieDto(movie));
+        } catch (JsonProcessingException e) {
+            throw new AssertionError("not proper json format for watch movie :" +e);
+        }
+
+        return ResponseEntity.
+                ok(jsonStr);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      *
@@ -422,6 +683,7 @@ public class MovieController {
         //it's a new movie that wasn't in db
         //we save it in db
         movie.addIsWatchedBy(actualUser);
+        actualUser.addWatchedMovie(watchedMovie);
         movieService.saveMovie(movie);
         userService.saveUser(actualUser);
         watchedMovieService.saveWatchMovie(watchedMovie);

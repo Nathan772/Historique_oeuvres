@@ -335,7 +335,14 @@ public class Movie {
      */
     public void reactUser(MovieReaction movieReaction){
         Objects.requireNonNull(movieReaction);
-        reactions.add(movieReaction);
+        //double like or double dislike
+        //therefore : unreact
+        var alreadyHere = unReactUser(movieReaction);
+
+        //add new reaction
+        if(!alreadyHere) {
+            reactions.add(movieReaction);
+        }
     }
 
     /**
@@ -343,9 +350,9 @@ public class Movie {
      * @param movieReaction
      *
      */
-    public void unReactUser(MovieReaction movieReaction){
+    public boolean unReactUser(MovieReaction movieReaction){
         Objects.requireNonNull(movieReaction);
-        reactions.removeIf(movieReaction1-> movieReaction.getReactioner().equals(movieReaction1.getReactioner()));
+        return reactions.removeIf(movieReaction1-> movieReaction.getReactioner().equals(movieReaction1.getReactioner()));
     }
 }
 

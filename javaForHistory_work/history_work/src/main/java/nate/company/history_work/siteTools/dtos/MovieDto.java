@@ -2,15 +2,10 @@ package nate.company.history_work.siteTools.dtos;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+import nate.company.history_work.siteTools.dtos.reaction.MovieReactionDto;
 import nate.company.history_work.siteTools.movie.Movie;
-import nate.company.history_work.siteTools.user.User;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MovieDto {
@@ -39,6 +34,9 @@ public class MovieDto {
 
 
     private String poster;
+
+    @JsonBackReference
+    private Set<MovieReactionDto> reactions = new LinkedHashSet<>();
 
     /**
      * Constructs a movie.
