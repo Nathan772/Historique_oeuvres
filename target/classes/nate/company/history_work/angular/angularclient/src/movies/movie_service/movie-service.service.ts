@@ -372,8 +372,7 @@ addToWatchList(movie:watchedMovie){
 
 
   /**
-   This method add a movie from the database*
-   (deprecated ???)
+   This method add a movie from the database
    */
   addMovieToUserListWithoutDataBase(movie:watchedMovie){
 
@@ -387,8 +386,9 @@ addToWatchList(movie:watchedMovie){
           director:movie.Director,
           imdbID:movie.imdbID
         };*/
+        console.log("les données de temps du film sont, hours : "+movie.time.hours )
 
-        //add movie to movie list
+        //add movie to movie list as a completely new movie
         if(this.userMoviesList.findIndex((movieIntoList) => movieIntoList.movie.yearOfRelease === movie.movie.yearOfRelease
         &&
         movieIntoList.movie.director === movie.movie.director
@@ -396,16 +396,21 @@ addToWatchList(movie:watchedMovie){
         movieIntoList.movie.title === movie.movie.title
 
         ) < 0){
+          console.log("la size de la liste avant le simple push sans élimination de doublon : "+this.userMoviesList.length);
           this.userMoviesList.push(movie);
-          console.log("ajout dans la liste du user du film "+movie.movie.title+" : succès !");
+           console.log("la size de la liste après le simple push sans élimination de doublon : "+this.userMoviesList.length);
+          console.log("ajout dans la liste du user du film comme un nouveau film "+movie.movie.title+" : succès !");
         }
         else{
           //remove the old element
+          console.log("la size de la liste avant le filter du statut : "+this.userMoviesList.length);
           this.userMoviesList = this.userMoviesList.filter(movieComplex => movieComplex.movie.director === movie.movie.director
             && movieComplex.movie.title === movie.movie.title
             && movieComplex.movie.yearOfRelease === movie.movie.yearOfRelease
             );
+          console.log("la size de la liste après le filter du statut mais avant l'ajout : "+this.userMoviesList.length);
           this.userMoviesList.push(movie);
+          console.log("la size de la liste après le filter du statut et après l'ajout : "+this.userMoviesList.length);
           console.log("le film"+movie.movie.title+"est déjà présent dans la liste, pas de double ajout, donc on supprime l'ancien avant de remplacer");
         }
 
@@ -416,6 +421,12 @@ addToWatchList(movie:watchedMovie){
   }
 
 
+/*
+
+add
+or update the movie
+in the user list for the database
+*/
   addMovieToUserInDataBaseAsWatchLater(movie:MovieFullInformations, movieActualStatus:watchedMovieStatus, user:User){
 
           console.log("l'année de sortie du film  est :"+movie.Year+" et son titre est : "+movie.Title);

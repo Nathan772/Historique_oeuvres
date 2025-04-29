@@ -5,17 +5,28 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class TimeConverter {
 
     public static class OnlyTime {
-        private long seconds;
-        private long minutes;
-        private long hours;
+        private int seconds;
+        private int minutes;
+        private int hours;
 
         @JsonCreator
-        public OnlyTime(long seconds, long minutes, long hour){
+        public OnlyTime(int seconds, int minutes, int hour){
             this.seconds = seconds;
             this.minutes = minutes;
             this.hours = hour;
         }
 
+        public int getHours() {
+            return hours;
+        }
+
+        public int getSeconds() {
+            return seconds;
+        }
+
+        public int getMinutes() {
+            return minutes;
+        }
     }
 
     public static long fromMinutesToSeconds(long minutes){
@@ -31,9 +42,9 @@ public class TimeConverter {
     }
 
     public static OnlyTime fromSecondToOnlyTimeObject(long timeAsSeconds){
-        long hours = timeAsSeconds / 3600;
-        long minutes = (timeAsSeconds % 3600) / 60;
-        long seconds = timeAsSeconds % 60;
+        int hours = Math.toIntExact(timeAsSeconds / 3600);
+        int minutes = Math.toIntExact((timeAsSeconds % 3600) / 60);
+        int seconds = Math.toIntExact(timeAsSeconds % 60);
         return new OnlyTime(seconds,minutes,hours);
     }
 }

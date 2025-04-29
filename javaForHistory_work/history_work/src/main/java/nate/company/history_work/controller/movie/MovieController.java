@@ -596,8 +596,8 @@ public class MovieController {
 
         System.out.println("avant time converter");
         var timeConverter = new TimeConverter();
-        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(fromStringToJsonTimeMap.get("hours")),
-                Long.parseLong(fromStringToJsonTimeMap.get("minutes")),Long.parseLong(fromStringToJsonTimeMap.get("seconds")));
+        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Integer.parseInt(fromStringToJsonTimeMap.get("hours")),
+                Integer.parseInt(fromStringToJsonTimeMap.get("minutes")),Integer.parseInt(fromStringToJsonTimeMap.get("seconds")));
 
 
         /*

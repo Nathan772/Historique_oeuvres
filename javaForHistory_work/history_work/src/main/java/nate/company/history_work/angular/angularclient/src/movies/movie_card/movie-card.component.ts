@@ -86,6 +86,8 @@ export class MovieCardComponent implements OnInit {
    */
     addMovieToUserInDataBaseAsWatchLater(movie:MovieFullInformations, movieStatus:watchedMovieStatus){
       //this.userService.
+      //remove from watch list if previous instances existed
+      //this.removeFromWatchListAndDataBase(movie);
       this.movieService.addMovieToUserInDataBaseAsWatchLater(movie, movieStatus, this.userService.userAccount);
       //reload component to keep consistent page
                  //window.location.reload();

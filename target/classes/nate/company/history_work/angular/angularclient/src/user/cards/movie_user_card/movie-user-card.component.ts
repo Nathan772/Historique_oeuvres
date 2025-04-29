@@ -105,7 +105,10 @@ path
    addMovieToUserInDataBaseAsWatchLater(movieFull:watchedMovie, movieStatus:watchedMovieStatus){
      this.movieService.addMovieToUserInDataBaseAsWatchLaterWatchedMovie(movieFull, movieStatus, this.userService.userAccount);
      //relaod component to keep consistent page
-     this.reloadParentListComponent()
+     //this.reloadParentListComponent()
+     //this.reloadCurrent();
+     this.reloadPage();
+
    }
 
 
@@ -135,7 +138,9 @@ path
         }
 
       //reload component to keep consistent page
-      this.reloadParentListComponent()
+      //this.reloadParentListComponent()
+      //this.reloadCurrent();
+      this.reloadPage();
 
     }
 

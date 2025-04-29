@@ -55,7 +55,8 @@ public class Application {
     CommandLineRunner init(UserService userService, MovieService movieService, UserRepository userRepository, MovieRepository movieRepository,
                            WatchMovieService watchMovieService, WatchedMovieRepository watchedMovieRepository,
                            MovieReactionRepository movieReactionRepository,
-                           ReactionRepository reactionRepository) {
+                           ReactionRepository reactionRepository
+    ) {
         return args -> {
 
             /*pas nécessaire sauf si on veut tester l'ajout en brut
