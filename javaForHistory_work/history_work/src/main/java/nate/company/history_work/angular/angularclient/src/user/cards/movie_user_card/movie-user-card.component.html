@@ -86,17 +86,17 @@ for future features
           <input
             type="time"
             required
-            id="pauseTime"
-            [(ngModel)]="pauseTime"
-            #pauseTimeController="ngModel"
             min="00:00"
             max="24:59"
+            name="pause"
+            [(ngModel)]="pauseTime"
+            #pauseTimeController="ngModel"
           />
 
     <small>update time of pause </small>
 
   <!-- Désactive le bouton si le formulaire n'est pas valide -->
-      <button type="submit" [disabled]="!varForm.invalid">
+      <button type="submit" [disabled]="varForm.invalid">
         update pause time
       </button>
 

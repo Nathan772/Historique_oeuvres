@@ -39,7 +39,7 @@ connectionService:ConnectionServiceService;
   //necessary to use the enum in the html part
   watchedMovieStatus = watchedMovieStatus;
 
-  pauseTime: string = '';
+  pauseTime:string = '00:00';
 
 /*
 override
@@ -99,6 +99,9 @@ path
   of time of pause of the user
   */
   onSubmitPauseTime(){
+    if(this.pauseTime == null){
+      console.log("pause time vaut null et n'a pas été rempli"+this.pauseTime)
+      }
     console.log('On entre dans OnSubmit pause time, le contenu de pause time est : '+this.pauseTime);
 
   }
