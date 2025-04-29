@@ -707,7 +707,8 @@ public class MovieController {
     and password
      */
     @GetMapping("/user/movie")
-    public ResponseEntity<?> getMoviesWatched(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="password") String password){
+
+    public ResponseEntity<String> getMoviesWatched(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="password") String password){
         //doesn't for now, use another approach
 //        if(userService.getPrincipal().isEmpty()) {
 //            LOGGER.log(Level.INFO, "l'utilisateur pour lequel on cherche les filmsf, est non connecté");
@@ -734,7 +735,17 @@ public class MovieController {
 
 
 
-        return ResponseEntity.ok(userOpt.get().getWatchMovies().stream().map(movie->new WatchedMovieDto(movie)).toList());
+        //return the list of movies as a string array
+        var watchedMovies = userOpt.get().getWatchMovies().stream().map(movie->new WatchedMovieDto(movie)).toList();
+        try {
+            var jsonStr = FROMJSONCONVERTER.writeValueAsString(watchedMovies);
+            return ResponseEntity.ok(jsonStr);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
 
     /**

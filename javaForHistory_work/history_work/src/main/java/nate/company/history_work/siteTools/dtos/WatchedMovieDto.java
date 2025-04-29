@@ -81,4 +81,8 @@ public class WatchedMovieDto {
     public TimeConverter.OnlyTime getHours() {
         return time;
     }
+
+    public TimeConverter.OnlyTime getTime() {
+        return time;
+    }
 }

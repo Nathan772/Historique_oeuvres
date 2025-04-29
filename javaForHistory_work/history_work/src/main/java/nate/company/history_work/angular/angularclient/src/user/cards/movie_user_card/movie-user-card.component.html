@@ -63,10 +63,19 @@ for future features
     {{ movieFull.movie.director }}
     <br />
 
-          <!--
+          <span *ngIf="movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.WATCHING)">
           Pause at :
 
-            hour : {{ movieFull.time.hours }}-->
+          <br/>
+          hour : {{ movieFull.time.hours }}
+          <br/>
+          minutes : {{ movieFull.time.minutes }}
+          <br/>
+          seconds : {{ movieFull.time.seconds }}
+            </span>
+
+
+
           <!--
            minutes : {{ movieFull.time.minutes }}
            seconds : {{ movieFull.time.seconds }}

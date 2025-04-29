@@ -68,6 +68,7 @@ retrieveUserMovies(userAccount:User){
                             console.log("le imdb est : "+movie.imdbID);*/
                             //this.getMovieComplete(movieWatched.movie.imdbID).subscribe((movieComplete) => {
                               //console.log("film trouvé avec l'API : "+movieComplete.imdbID+ " "+movieComplete.Title);
+                              console.log("l'heure de movie watched est : "+movieWatched.time.hours)
                               this.addToWatchList(movieWatched);
                             }
                           //);
@@ -169,7 +170,13 @@ addToWatchList(movie:watchedMovie){
         */
     const params = new HttpParams().set('pseudo', userPseudo).set('password', userPassword);
     //current user is know by the backend actually
+
+    //old doesn't use json format
+    //return this.HttpClient.get<watchedMovie[]>(this.userMoviesUrl,  {headers: headers, params: params});
+    //new use JsonFormat
+    console.log("on passe bien par get service watched movies qu'on a modifié");
     return this.HttpClient.get<watchedMovie[]>(this.userMoviesUrl,  {headers: headers, params: params});
+     //jsonStr = FROMJSONCONVERTER.writeValueAsString(new WatchedMovieDto(alreadyWatchedMovie));
       //return this.HttpClient.get<Movie[]>(this.userMoviesUrl,{params:this.ToHttpParams(user)});
   }
 
@@ -386,7 +393,7 @@ addToWatchList(movie:watchedMovie){
           director:movie.Director,
           imdbID:movie.imdbID
         };*/
-        console.log("les données de temps du film sont, hours : "+movie.time.hours )
+        //console.log("les données de temps du film sont, hours : "+movie.time.hours )
 
         //add movie to movie list as a completely new movie
         if(this.userMoviesList.findIndex((movieIntoList) => movieIntoList.movie.yearOfRelease === movie.movie.yearOfRelease
@@ -579,6 +586,7 @@ in the user list for the database
                                                                   .subscribe(
                                                                         movieRetrievedAsJson => {
                                                                           //save succeed
+                                                                          console.log("on sauvegarde le nouvel état non vide du film : "+movieRetrievedAsJson)
                                                                           this.addMovieToUserListWithoutDataBase(watchedMovie);
                                                                           return movieRetrievedAsJson;
                                                                         }
