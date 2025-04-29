@@ -1,9 +1,3 @@
-<!--
-
-useless ?? deprecated ???
-
--->
-<h1>Votre liste de films </h1>
 
 
 <!--
@@ -47,6 +41,12 @@ exemple -->
 <!--
 "movieFull" comes from movie-user-card component
 -->
+
+<app-movie-search>
+
+</app-movie-search>
+
+<h1>Votre liste de films : </h1>
 
 <app-movie-user-card *ngFor="let movieInfo of movieService.userMoviesList" [movieFull]="movieInfo">
 </app-movie-user-card>
