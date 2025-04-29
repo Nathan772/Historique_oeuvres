@@ -40,8 +40,4 @@ export class CommonFunctionalityComponent implements OnInit {
     window.location.reload()
   }
 
-reloadCurrent(){
-    this.reloadComponent(true);
-  }
-
 }

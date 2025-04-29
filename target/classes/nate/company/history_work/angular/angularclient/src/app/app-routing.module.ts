@@ -51,7 +51,7 @@ const routes: Routes = [
    //search movie page
   {path: 'user/entrance/menuMovieChoice/SearchMovie' , component: MovieSearchComponent},
 
-   //search movie page
+   //user's movie ist
    {path: 'user/entrance/menuMovieChoice/listMovies' , component: UserMovieListComponent},
 
    {path: 'user/entrance/listUsers' , component: UserListComponent},

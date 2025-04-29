@@ -3,14 +3,17 @@ import { MovieFullInformations, MovieShortInformations, watchedMovieStatus, watc
 import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user_service/user-service.service';
+//import { CommonFunctionalityComponent } from '../../common-functionality-component/common-functionality-component.component';
+import { CommonFunctionalityComponent } from '../../../common-functionality-component/common-functionality-component.component';
 //declare function greet():void;
 //declare function showHiddenStatus():void;
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-movie-user-card',
   templateUrl: './movie-user-card.component.html',
   styleUrls: ['./movie-user-card.component.css'],
 })
-export class MovieUserCardComponent implements OnInit {
+export class MovieUserCardComponent  extends CommonFunctionalityComponent implements OnInit  {
   //@Input()
   //movie: MovieShortInformations;
   /*
@@ -28,14 +31,22 @@ export class MovieUserCardComponent implements OnInit {
   //necessary to use the enum in the html part
   watchedMovieStatus = watchedMovieStatus;
 
-  ngOnInit() {
+/*
+override
+is necessary due to router
+path
+*/
+
+  override ngOnInit() {
 
   }
 
   /* l'initialisation
     du service dans le constructeur
     est indispensable*/
-    constructor(movieService: MovieServiceService, userService:UserService) {
+    constructor(movieService: MovieServiceService, userService:UserService,
+      public override router:Router) {
+        super(router);
       this.movieService = movieService;
       this.userService = userService;
       this.movieFull = {
@@ -91,13 +102,23 @@ export class MovieUserCardComponent implements OnInit {
   /**
    add a movie to user watchList
    */
+   addMovieToUserInDataBaseAsWatchLater(movieFull:watchedMovie, movieStatus:watchedMovieStatus){
+     this.movieService.addMovieToUserInDataBaseAsWatchLaterWatchedMovie(movieFull, movieStatus, this.userService.userAccount);
+     //relaod component to keep consistent page
+     this.reloadParentListComponent()
+   }
+
+
    /*
     addToWatchListAndDatabaseFromWatchedMovie(movie:watchedMovie, movieStatus:watchedMovieStatus){
       //this.userService.
       this.movieService.addMovieToUserInDataBaseAsWatchLater(movie, movieStatus, this.userService.userAccount);
     }*/
 
-    removeFromWatchListAndDataBaseFromWatchedMovie(movie:watchedMovie){
+  /**
+     remove from watchlater/watching/rewatch list
+     */
+    removeFromWatchListAndDataBaseAsWatchLater(movie:watchedMovie){
 
       //retrieve movie full info object
       this.completeInformations(movie.movie.imdbID);
@@ -113,20 +134,8 @@ export class MovieUserCardComponent implements OnInit {
           this.movieService.userMoviesList.splice(index,1);
         }
 
-        /*for(let i=0;i<this.movieService.userMoviesList.length;i++){
-                //console.log("les films présents : "+this.userMoviesList[i].imdbID);
-                if(this.movieService.userMoviesList[i].imdbID === movie.imdbID){
-                  //console.log("le film est déjà présent : "+this.userMoviesList[i].imdbID);
-                  let index = this.movieService.userMoviesList.indexOf(movie);
-                  if(index!==-1){
-                    console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
-                    this.movieService.userMoviesList.splice(index,1);
-                  }
-                  else{
-                    console.log("le film qui doit être retiré n'a pas été trouvé");
-                  }
-                }
-              }*/
+      //reload component to keep consistent page
+      this.reloadParentListComponent()
 
     }
 
@@ -207,6 +216,18 @@ export class MovieUserCardComponent implements OnInit {
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
+  }
+
+  /*
+  this method reload the list containing
+  all the movies.
+  It's necessary when you update a movie data
+  to keep the display consistent
+  */
+  reloadParentListComponent(){
+    console.log("ok for reload parent");
+    this.reloadComponent(false,"user/entrance/menuMovieChoice/listMovies")
+
   }
 
 

@@ -6,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user/user_service/user-service.service';
 //import { CommonFunctionalityComponent } from '../../common-functionality-component/common-functionality.component';
 import { CommonFunctionalityComponent } from '../../common-functionality-component/common-functionality-component.component';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',

@@ -275,6 +275,42 @@ addToWatchList(movie:watchedMovie){
 
 
 
+
+
+
+
+
+
+/**
+   this method checks if the list of movie of the user in their watch later/watching/rewatch (depending
+     on the argument sent) list contains the movie.
+     It's a necessary to have two methods,
+     because movieFull, only is fueled when you click on the full info button,
+     before that it's empty.
+
+   */
+  public listMovieContainsMovieWatchLaterWatchedMovie(watchedMovie:watchedMovie, movieStatus:watchedMovieStatus){
+    let movieSimple : Movie = {
+              id:"0",
+              title:watchedMovie.movie.title,
+              yearOfRelease:watchedMovie.movie.yearOfRelease,
+              imdbID:watchedMovie.movie.imdbID,
+              poster: watchedMovie.movie.poster,
+              director: "unknown"
+    };
+    for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        if(this.userMoviesList[i].movie.imdbID === watchedMovie.movie.imdbID && this.userMoviesList[i].movieStatus === movieStatus){
+          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          return true
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
+  }
+
+
+
   /**
    this method checks if the list of movie of the user in their watch later/watching/rewatch (depending
      on the argument sent) list contains the movie.
@@ -455,6 +491,82 @@ addToWatchList(movie:watchedMovie){
 
     }
 
+  addMovieToUserInDataBaseAsWatchLaterWatchedMovie(watchedMovie1:watchedMovie, movieActualStatus:watchedMovieStatus, user:User){
+
+                                                console.log("l'année de sortie du film  est :"+watchedMovie1.movie.yearOfRelease+" et son titre est : "+watchedMovie1.movie.
+                                                  title);
+                                                //une solution serait de retirer
+                                                // le champ genre de movie movieSimple
+                                                //
+                                                let movieSimple : Movie = {
+                                                  id:"0",
+                                                  title:watchedMovie1.movie.title,
+                                                  yearOfRelease:watchedMovie1.movie.yearOfRelease,
+                                                  director:watchedMovie1.movie.director,
+                                                  imdbID:watchedMovie1.movie.imdbID,
+                                                  poster:watchedMovie1.movie.poster
+                                                };
+
+                                                let watchedMovie:watchedMovie = {
+                                                  movie:movieSimple,
+                                                   movieStatus:movieActualStatus,
+                                                    time: {
+                                                      hours:0,
+                                                      minutes:0,
+                                                      seconds:0,
+
+                                                      },
+
+                                                  };
+
+                                                let userSimple = {
+                                                           pseudo:user.pseudo,
+                                                           password:user.password
+                                                         };
+
+                                                //add movie to movie list
+                                                //this.userMoviesList.push(movie);
+
+                                                console.log("On sauvegarde le film dans la liste des films de l'utilisateur : "+movieSimple.title+" avec pour IMDB "+movieSimple.imdbID
+                                                  +"le status du watch later est : "+movieActualStatus);
+                                                /*
+                                                problème ici !!!!! :...
+
+                                                */
+
+
+                                                /*
+                                                https://stackoverflow.com/questions/46707073/how-to-pass-multiple-json-object-parameters-to-http-post-method-in-angular4
+                                                prepare jsons as params
+                                                */
+                                                //const headers = new HttpHeaders().append('header', 'value');
+                                                    /*
+                                                    prepares params source
+                                                    https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+                                                    */
+
+
+                                                /*
+                                                wrapper for two objects in
+                                                one
+                                                component
+                                                */
+
+                                                /*
+                                                create wrapper as string
+                                                */
+
+                                                this.HttpClient.post<String>(this.userMoviesUrl+'/add',{watchedMovie,userSimple})
+                                                                  .subscribe(
+                                                                        movieRetrievedAsJson => {
+                                                                          //save succeed
+                                                                          this.addMovieToUserListWithoutDataBase(watchedMovie);
+                                                                          return movieRetrievedAsJson;
+                                                                        }
+                                                                      );
+
+                                          }
+
 
 
 
@@ -475,7 +587,7 @@ addToWatchList(movie:watchedMovie){
 
 
 
-  /* fonction qui prend un argument le titre d'un film
+  /* foncion qui prend un argument le titre d'un film
   et qui récupère un observable qui contient les infos du films : titre, année, etc...*/
  public getMovieShort(searchValue: string): Observable<MovieShortInformations[]> {
     let myMovieObservable: Observable<MovieShortInformations[]> =

@@ -3,6 +3,15 @@ sources:
 https://www.w3schools.com/howto/howto_js_dropdown.asp
 
 */
+
+/*This makes the movie cards be displayed side by side (two cards per row)*/
+div#movieCard-display {
+  display : inline-block; /*divs will be displayed side by side*/
+  width : 50%;
+  vertical-align : top; /*when a card is displayed in full information mode,
+                        it will be displayed at the same height of its neighbour*/
+}
+
 /* Dropdown Button */
 #status {
    color: white;
@@ -57,3 +66,5 @@ après être passé dessus */
 */
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 /*.show {display:block;}*/
+
+
