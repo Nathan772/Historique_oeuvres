@@ -386,7 +386,7 @@ addToWatchList(movie:watchedMovie){
           director:movie.Director,
           imdbID:movie.imdbID
         };*/
-        console.log("les données de temps du film sont, hours : "+movie.time.hours )
+        //console.log("les données de temps du film sont, hours : "+movie.time.hours )
 
         //add movie to movie list as a completely new movie
         if(this.userMoviesList.findIndex((movieIntoList) => movieIntoList.movie.yearOfRelease === movie.movie.yearOfRelease
@@ -579,6 +579,7 @@ in the user list for the database
                                                                   .subscribe(
                                                                         movieRetrievedAsJson => {
                                                                           //save succeed
+                                                                          console.log("on sauvegarde le nouvel état non vide du film : "+movieRetrievedAsJson)
                                                                           this.addMovieToUserListWithoutDataBase(watchedMovie);
                                                                           return movieRetrievedAsJson;
                                                                         }

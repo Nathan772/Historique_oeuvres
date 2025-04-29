@@ -404,10 +404,18 @@ addToWatchList(movie:watchedMovie){
         else{
           //remove the old element
           console.log("la size de la liste avant le filter du statut : "+this.userMoviesList.length);
-          this.userMoviesList = this.userMoviesList.filter(movieComplex => movieComplex.movie.director === movie.movie.director
-            && movieComplex.movie.title === movie.movie.title
+          this.userMoviesList = this.userMoviesList.filter(movieComplex =>
+            !(
+            movieComplex.movie.director === movie.movie.director &&
+            movieComplex.movie.title === movie.movie.title
             && movieComplex.movie.yearOfRelease === movie.movie.yearOfRelease
-            );
+            ));
+          /*for(let movieWatched of this.userMoviesList){
+            console.log("le watched movie contenu dans la liste a pour ttitre est : "+movieWatched.movie.title);
+          }*/
+          console.log("les infos du movie problématique : title : "+movie.movie.title+ " year of release "+movie.movie.yearOfRelease+
+            " director : "+movie.movie.director);
+
           console.log("la size de la liste après le filter du statut mais avant l'ajout : "+this.userMoviesList.length);
           this.userMoviesList.push(movie);
           console.log("la size de la liste après le filter du statut et après l'ajout : "+this.userMoviesList.length);
