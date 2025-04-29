@@ -29,16 +29,16 @@ public class TimeConverter {
         }
     }
 
-    public static long fromMinutesToSeconds(long minutes){
+    public static int fromMinutesToSeconds(int minutes){
         return minutes*60;
     }
 
-    public static long fromHourToSeconds(long hour){
+    public static int fromHourToSeconds(int hour){
         return hour*60*60;
     }
 
     public static long fromOnlyTimeToSeconds(OnlyTime onlyTime){
-        return fromHourToSeconds(onlyTime.hours)+fromMinutesToSeconds(onlyTime.seconds)+onlyTime.seconds;
+        return fromHourToSeconds(onlyTime.getHours())+fromMinutesToSeconds(onlyTime.getMinutes())+onlyTime.getSeconds();
     }
 
     public static OnlyTime fromSecondToOnlyTimeObject(long timeAsSeconds){

@@ -62,11 +62,53 @@ for future features
     Director:
     {{ movieFull.movie.director }}
     <br />
+
+          <span *ngIf="movieService.listMovieContainsMovieWatchLaterWatchedMovie(movieFull, this.watchedMovieStatus.WATCHING)">
+          Pause at :
+
+          <br/>
+          hour : {{ movieFull.time.hours }}
+          <br/>
+          minutes : {{ movieFull.time.minutes }}
+          <br/>
+          seconds : {{ movieFull.time.seconds }}
+            </span>
+
           <!--
-          Pause at zz : hour : {{ movieFull.time.hours }}
+          this form
+          handle the time of
+          the movie :
+          when the user
+          has stopped during their last viewing
+
           -->
 
+<form (ngSubmit)="onSubmitPauseTime(movieFull)" #varForm="ngForm">
 
+          <input
+            type="time"
+            required
+            step="1"
+            min="00:00:00"
+            max="24:59:59"
+            name="pause"
+            [(ngModel)]="pauseTime"
+            #pauseTimeController="ngModel"
+          />
+
+  <!-- Désactive le bouton si le formulaire n'est pas valide -->
+      <button type="submit" [disabled]="varForm.invalid">
+        update pause time
+      </button>
+
+</form>
+
+          <!--
+          <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <input type="text" name="username" ngModel required>
+      <input type="password" name="password" ngModel required>
+      <button type="submit">Login</button>
+    </form>-->
 
           <!--
            minutes : {{ movieFull.time.minutes }}

@@ -29,6 +29,7 @@ import static nate.company.history_work.controller.user.UserController.parseComp
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 import static nate.company.history_work.siteTools.json.JsonTools.parseKeyValueString;
 import static nate.company.history_work.siteTools.reaction.ReactionChoices.fromStringToReactionStatus;
+import static nate.company.history_work.siteTools.timeHandler.TimeConverter.fromOnlyTimeToSeconds;
 
 /**
  * Acts like a REST controller that manages the requests about movies.
@@ -595,9 +596,10 @@ public class MovieController {
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
         System.out.println("avant time converter");
-        var timeConverter = new TimeConverter();
-        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Integer.parseInt(fromStringToJsonTimeMap.get("hours")),
-                Integer.parseInt(fromStringToJsonTimeMap.get("minutes")),Integer.parseInt(fromStringToJsonTimeMap.get("seconds")));
+        //var timeConverter = new TimeConverter();
+        //convert string of time to actual time object
+        var onlyTimeOfMovie = new TimeConverter.OnlyTime(Integer.parseInt(fromStringToJsonTimeMap.get("seconds")), Integer.parseInt(fromStringToJsonTimeMap.get("minutes")),
+                Integer.parseInt(fromStringToJsonTimeMap.get("hours")));
 
 
         /*
@@ -618,6 +620,9 @@ public class MovieController {
                 System.out.println("le film est déjà dans la watchlist, on a juste mettre à jour son statut : "
                         +alreadyWatchedMovieOpt.get());
                 var alreadyWatchedMovie = alreadyWatchedMovieOpt.get();
+
+                //retrieve the new time of the movie (moment of pause for its user)
+                alreadyWatchedMovie.setTimeAsLong(fromOnlyTimeToSeconds(onlyTimeOfMovie));
 
                 //update "watched status"
                 alreadyWatchedMovie.setMovieStatus(MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")));
@@ -653,7 +658,7 @@ public class MovieController {
             //new watchMovie object instantiate (there was nothing in db)
 
             var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
-                    TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+                    fromOnlyTimeToSeconds(onlyTimeOfMovie));
             System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
 
 
@@ -675,7 +680,7 @@ public class MovieController {
          */
 
         var watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
-                TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
+                fromOnlyTimeToSeconds(onlyTimeOfMovie));
         System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
 
 

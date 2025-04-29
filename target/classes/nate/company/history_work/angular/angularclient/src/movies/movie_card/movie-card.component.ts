@@ -93,6 +93,8 @@ export class MovieCardComponent implements OnInit {
                  //window.location.reload();
     }
 
+
+
     removeFromWatchListAndDataBase(movie:MovieFullInformations){
         //this.userService.
         this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount);
