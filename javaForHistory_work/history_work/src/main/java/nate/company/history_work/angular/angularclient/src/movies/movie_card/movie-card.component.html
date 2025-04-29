@@ -31,10 +31,10 @@ movie-card component
     <div
       class="card"
       [ngClass]="{
-    'orange lighten-1': movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER),
-    'yellow lighten-1': movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.REWATCH),
-     'red lighten-1': movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING),
-    'blue lighten-1': !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.REWATCH) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING)
+    'orange lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHLATER),
+    'yellow lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.REWATCH),
+     'red lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHING),
+    'blue lighten-1': !movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.REWATCH) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING)
   }"
     >
       <!--
@@ -54,6 +54,9 @@ movie-card component
       <div class="card-content white-text">
         <span class="card-title">
 
+          <!--
+            small card
+          -->
   <div *ngIf="!fullInfoOn">
     <!-- <img src="{{ movie.Poster }}" sizes="(max-width: 10px) 200px, 50vw" /> -->
     <img src="{{ movie.Poster }}" width="100px" height="100px" />

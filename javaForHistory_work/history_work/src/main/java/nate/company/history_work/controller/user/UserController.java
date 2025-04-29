@@ -204,15 +204,18 @@ public class UserController {
         LOGGER.log(Level.INFO, "On va chercher un user");
         //the user already exists
         if(userByEmail.isPresent()){
+            System.out.println("le user "+userByEmail.get()+" existe déjà");
             return ResponseEntity.ok(true);
         }
         var userByPseudo = userService.getUserByPseudo(userPseudo);
         if(userByPseudo.isPresent()){
+            System.out.println("le user "+userByPseudo.get()+" existe déjà");
             return ResponseEntity.ok(true);
         }
 
 
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd");
+        System.out.println("le user n' existe pas en bdd");
         //they don't exist
         return ResponseEntity.ok(false);
     }
@@ -304,6 +307,7 @@ public class UserController {
      */
     @PostMapping("/save/user")
     public User addUser(@RequestBody String userJson){
+        System.out.println("on entre dans adduser");
         Objects.requireNonNull(userJson);
         /* https://stackoverflow.com/questions/7246157/how-to-parse-a-json-string-to-an-array-using-jackson : convert*/
         // source : https://stackoverflow.com/questions/29313687/trying-to-use-spring-boot-rest-to-read-json-string-from-post
@@ -332,6 +336,7 @@ public class UserController {
             return userByMail.get();
         }
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd on ajoute le user : "+user);
+        System.out.println("on arrive à la fin dans adduser");
         var newUser = userService.saveUser(user);
         return newUser;
     }

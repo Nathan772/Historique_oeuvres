@@ -64,7 +64,7 @@ public class User {
      */
     @ManyToMany(fetch = FetchType.LAZY,mappedBy="watcher", cascade = CascadeType.PERSIST)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
-    private LinkedHashSet<WatchedMovie> watchMovies = new LinkedHashSet<>();
+    private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy="reactioner", cascade = CascadeType.ALL, targetEntity = Reaction.class)
     private Set<MovieReaction> reactions = new LinkedHashSet<>();
@@ -180,12 +180,12 @@ public class User {
         watchMovies.removeIf(movieWatched1->movieWatched1.getMovie().getImdbID().equals(movieWatched.getMovie().getImdbID()));
     }
 
-    public void setWatchMovies(LinkedHashSet<WatchedMovie> watchMovies) {
+    public void setWatchMovies(Set<WatchedMovie> watchMovies) {
         Objects.requireNonNull(watchMovies);
         this.watchMovies = watchMovies;
     }
 
-    public LinkedHashSet<WatchedMovie> getWatchMovies() {
+    public Set<WatchedMovie> getWatchMovies() {
         return watchMovies;
     }
 
