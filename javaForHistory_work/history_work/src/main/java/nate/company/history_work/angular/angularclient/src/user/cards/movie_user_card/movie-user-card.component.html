@@ -74,7 +74,40 @@ for future features
           seconds : {{ movieFull.time.seconds }}
             </span>
 
+          <!--
+          this form
+          handle the time of
+          the movie :
+          when the user
+          has stopped during their last viewing
+          -->
+<form (ngSubmit)="onSubmitPauseTime()" #varForm="ngForm">
 
+          <input
+            type="time"
+            required
+            id="pauseTime"
+            [(ngModel)]="pauseTime"
+            #pauseTimeController="ngModel"
+            min="00:00"
+            max="24:59"
+          />
+
+    <small>update time of pause </small>
+
+  <!-- Désactive le bouton si le formulaire n'est pas valide -->
+      <button type="submit" [disabled]="!varForm.invalid">
+        update pause time
+      </button>
+
+</form>
+
+          <!--
+          <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <input type="text" name="username" ngModel required>
+      <input type="password" name="password" ngModel required>
+      <button type="submit">Login</button>
+    </form>-->
 
           <!--
            minutes : {{ movieFull.time.minutes }}

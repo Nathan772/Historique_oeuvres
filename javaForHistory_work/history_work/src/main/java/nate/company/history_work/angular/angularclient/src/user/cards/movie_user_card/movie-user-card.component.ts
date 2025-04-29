@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, viewChild } from '@angular/core';
 import { MovieFullInformations, MovieShortInformations, watchedMovieStatus, watchedMovie, Movie } from '../../../movies/movie_models/movie_models';
 import { MovieServiceService } from '../../../movies/movie_service/movie-service.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,12 +8,19 @@ import { CommonFunctionalityComponent } from '../../../common-functionality-comp
 //declare function greet():void;
 //declare function showHiddenStatus():void;
 import { Router } from '@angular/router';
+import { NgForm, FormsModule } from '@angular/forms';
+import {ConnectionServiceService } from '../../../connection/connection-service.service';
 @Component({
   selector: 'app-movie-user-card',
   templateUrl: './movie-user-card.component.html',
   styleUrls: ['./movie-user-card.component.css'],
 })
 export class MovieUserCardComponent  extends CommonFunctionalityComponent implements OnInit  {
+
+
+  // create a signal that monitor the creation of a movie
+  //formPauseTime = viewChild<NgForm>('formPauseTime');
+
   //@Input()
   //movie: MovieShortInformations;
   /*
@@ -25,11 +32,14 @@ export class MovieUserCardComponent  extends CommonFunctionalityComponent implem
   @Input()
   movieFull: watchedMovie;
 
+connectionService:ConnectionServiceService;
   movieFromApi:MovieFullInformations;
   fullInfoOn: boolean = false;
   userService:UserService;
   //necessary to use the enum in the html part
   watchedMovieStatus = watchedMovieStatus;
+
+  pauseTime: string = '';
 
 /*
 override
@@ -45,7 +55,7 @@ path
     du service dans le constructeur
     est indispensable*/
     constructor(movieService: MovieServiceService, userService:UserService,
-      public override router:Router) {
+      public override router:Router, connectionService:ConnectionServiceService ) {
         super(router);
       this.movieService = movieService;
       this.userService = userService;
@@ -65,6 +75,9 @@ path
             this.movieService.retrieveUserMovies(userService.userAccount);
          }
 
+       //prepare user data to keep the connection
+             this.connectionService = connectionService;
+             this.userService.prepareConnection(this.connectionService);
        this.movieFromApi =
        {
           Title: "",
@@ -80,6 +93,17 @@ path
                   };
 
   }
+
+/*
+  this handle the update
+  of time of pause of the user
+  */
+  onSubmitPauseTime(){
+    console.log('On entre dans OnSubmit pause time, le contenu de pause time est : '+this.pauseTime);
+
+  }
+
+
 
   /* cette fonction donne les infos complètes
    sur un film à la variable movieFullen en se servant d'un service. */

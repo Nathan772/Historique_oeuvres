@@ -21,6 +21,11 @@ div#movieCard-display {
    cursor: pointer;
  }
 
+ small {
+  color:white;
+
+ }
+
 /*
 #statusButton:active + #status {
   display:contents;
