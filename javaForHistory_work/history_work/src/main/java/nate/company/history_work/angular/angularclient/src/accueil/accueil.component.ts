@@ -12,7 +12,7 @@ export class AccueilComponent {
 
   constructor() {
     //this.isConnected = false;
-    this.title = "Historique d'oeuvres artistiques";
+    this.title = "Musée d'oeuvres artistiques";
     this.isConnected = false;
   }
 }

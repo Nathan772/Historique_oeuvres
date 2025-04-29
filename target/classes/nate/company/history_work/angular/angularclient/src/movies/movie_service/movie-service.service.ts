@@ -245,6 +245,34 @@ addToWatchList(movie:watchedMovie){
     return false;
   }*/
 
+/**
+   this method checks if the list of movie of the user in their watch later/watching/rewatch (depending
+     on the argument sent) list contains the movie.
+     It's a necessary to have two methods,
+     because movieFull, only is fueled when you click on the full info button,
+     before that it's empty.
+
+   */
+  public listMovieContainsMovieWatchLater(movie:MovieShortInformations, movieStatus:watchedMovieStatus){
+    let movieSimple : Movie = {
+              id:"0",
+              title:movie.Title,
+              yearOfRelease:movie.Year,
+              imdbID:movie.imdbID,
+              poster: movie.Poster,
+              director: "unknown"
+    };
+    for(let i=0;i<this.userMoviesList.length;i++){
+        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === movieStatus){
+          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          return true
+        }
+    }
+    //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
+    return false;
+  }
+
 
 
   /**
@@ -252,6 +280,7 @@ addToWatchList(movie:watchedMovie){
      on the argument sent) list contains the movie.
 
    */
+   /*
   public listMovieContainsMovieWatchLater(movie:MovieFullInformations, movieStatus:watchedMovieStatus){
     let movieSimple : Movie = {
               id:"0",
@@ -270,7 +299,7 @@ addToWatchList(movie:watchedMovie){
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
-  }
+  }*/
 
 
 /**

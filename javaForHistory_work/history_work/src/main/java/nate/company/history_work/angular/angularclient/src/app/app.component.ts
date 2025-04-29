@@ -27,7 +27,7 @@ export class AppComponent {
 
   constructor(userService:UserService, movieService:MovieServiceService,private _location: Location) {
     this.isConnected = false;
-    this.title = "Historique d'oeuvres artistiques";
+    this.title = "Musée d'oeuvres artistiques";
     this.userService = userService;
     this.movieService = movieService;
     console.log("on passe par le constructeur de app...");
