@@ -98,11 +98,17 @@ path
   this handle the update
   of time of pause of the user
   */
-  onSubmitPauseTime(){
+  onSubmitPauseTime(movieWatched:watchedMovie){
     if(this.pauseTime == null){
       console.log("pause time vaut null et n'a pas été rempli"+this.pauseTime)
       }
     console.log('On entre dans OnSubmit pause time, le contenu de pause time est : '+this.pauseTime);
+    let tmpHour:number = +(Array.from(this.pauseTime)[0]+Array.from(this.pauseTime)[1]);
+    movieWatched.time.hours = tmpHour
+    //movieWatched.timeOnly.minutes = Array.from(this.pauseTime.[0]
+
+    this.movieService.updateMovieToUserInDataBaseWatchingTimeWatchedMovie(movieWatched,this.userService.userAccount);
+
 
   }
 

@@ -603,6 +603,24 @@ in the user list for the database
 
 
 
+  updateMovieToUserInDataBaseWatchingTimeWatchedMovie(watchedMovie1:watchedMovie, user:User){
+
+                                                console.log("on met à jour le film en cours de visionnage. L'année de sortie du film  est :"+watchedMovie1.movie.yearOfRelease+" et son titre est : "+watchedMovie1.movie.title);
+
+                                                //add movie to movie list of user
+                                                //this.userMoviesList.push(movie);
+                                                this.HttpClient.post<String>(this.userMoviesUrl+'/add',{watchedMovie1,user})
+                                                                  .subscribe(
+                                                                        movieRetrievedAsJson => {
+                                                                          //save succeed
+                                                                          console.log("on sauvegarde le nouvel état non vide du film : "+movieRetrievedAsJson)
+                                                                          this.addMovieToUserListWithoutDataBase(watchedMovie1);
+                                                                          return movieRetrievedAsJson;
+                                                                        }
+                                                                      );
+
+                                          }
+
 
 
 
