@@ -4,6 +4,8 @@ import { MovieServiceService } from '../movie_service/movie-service.service';
 import { Movie,watchedMovieStatus} from '../movie_models/movie_models';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../../user/user_service/user-service.service';
+//import { CommonFunctionalityComponent } from '../../common-functionality-component/common-functionality.component';
+import { CommonFunctionalityComponent } from '../../common-functionality-component/common-functionality-component.component';
 @Component({
   selector: 'app-movie-card',
   templateUrl: './movie-card.component.html',
@@ -83,11 +85,15 @@ export class MovieCardComponent implements OnInit {
     addMovieToUserInDataBaseAsWatchLater(movie:MovieFullInformations, movieStatus:watchedMovieStatus){
       //this.userService.
       this.movieService.addMovieToUserInDataBaseAsWatchLater(movie, movieStatus, this.userService.userAccount);
+      //reload component to keep consistent page
+                 //window.location.reload();
     }
 
     removeFromWatchListAndDataBase(movie:MovieFullInformations){
         //this.userService.
         this.movieService.removeMovieFromUserInDataBase(movie, this.userService.userAccount);
+        //reload component to keep consistent page
+                   //window.location.reload();
         //remove movie from movie list
         /*let index = this.movieService.userMoviesList.indexOf(movie);
         if(index!==-1){
@@ -151,3 +157,6 @@ export class MovieCardComponent implements OnInit {
 
 
 }
+/*
+ng generate component CommonFunctionalityComponent
+*/

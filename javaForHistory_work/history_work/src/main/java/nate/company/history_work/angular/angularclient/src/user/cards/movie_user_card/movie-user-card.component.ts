@@ -93,6 +93,8 @@ export class MovieUserCardComponent implements OnInit {
    */
    addMovieToUserInDataBaseAsWatchLater(movieFull:watchedMovie, movieStatus:watchedMovieStatus){
      this.movieService.addMovieToUserInDataBaseAsWatchLaterWatchedMovie(movieFull, movieStatus, this.userService.userAccount);
+     //relaod component to keep consistent page
+     window.location.reload();
    }
 
 
@@ -120,6 +122,9 @@ export class MovieUserCardComponent implements OnInit {
           console.log("film retiré de la liste de l'utilisateur : "+movieRemoved.movie.imdbID);
           this.movieService.userMoviesList.splice(index,1);
         }
+
+      //reload component to keep consistent page
+           window.location.reload();
 
     }
 
