@@ -10,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Component
+@Table(name="watched_movie_table")
 public class WatchedMovie {
 
     @Id

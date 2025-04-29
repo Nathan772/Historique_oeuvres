@@ -1566,3 +1566,20 @@ solution
 @Query("DELETE FROM WatchedMovie wm WHERE wm.id = :idWatchMovie")
 public void removeById(long idWatchMovie);
 ```
+
+problème : 
+"Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userService' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/history_work/service/UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in nate.company.history_work.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+"
+
++
+
+
+" Could not determine recommended JdbcType for Java type 'nate.company.history_work.siteTools.user.User"
+
+solution :
+
+pensez à ajouter les annotations : 
+
+"@OneToMany et @ManyToOne" manquantes, vous en avez probablement oubliées...
+
+

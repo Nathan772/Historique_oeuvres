@@ -2,13 +2,12 @@ package nate.company.history_work.siteTools.movie;
 
 import jakarta.persistence.*;
 
+import nate.company.history_work.siteTools.reaction.MovieReaction;
+import nate.company.history_work.siteTools.reaction.Reaction;
 import nate.company.history_work.siteTools.user.User;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class is the representation of a movie in the database.
@@ -22,7 +21,7 @@ import java.util.Set;
 name = movie, enable to be recognized as "movie" in database
  */
 @Component
-@Table(name="movie")
+@Table(name="movie_table")
 @Entity
 public class Movie {
     /*
@@ -71,6 +70,13 @@ public class Movie {
 
     @Column(name="movie_poster")
     private String poster;
+
+
+    /*
+    targetEntity : enable to find subclass
+     */
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="movieReacted", cascade = CascadeType.ALL)
+    private Set<MovieReaction> reactions = new LinkedHashSet<>();
 
     /**
      *
@@ -292,6 +298,15 @@ public class Movie {
         return imdbID;
     }
 
+    public void setReactions(Set<MovieReaction> reactions) {
+        Objects.requireNonNull(reactions);
+        this.reactions = reactions;
+    }
+
+    public Set<MovieReaction> getReactions() {
+        return reactions;
+    }
+
     /**
      * Indicates whether some other object is "equal to" this Movie.
      *
@@ -311,6 +326,26 @@ public class Movie {
     @Override
     public int hashCode() {
         return Long.hashCode(id)^title.hashCode()^yearOfRelease^imdbID.hashCode()^director.hashCode()^poster.hashCode();
+    }
+
+    /**
+     * add a reaction to a movie : like or dislike
+     * @param movieReaction
+     *
+     */
+    public void reactUser(MovieReaction movieReaction){
+        Objects.requireNonNull(movieReaction);
+        reactions.add(movieReaction);
+    }
+
+    /**
+     * remove a reaction to a movie : like or dislike
+     * @param movieReaction
+     *
+     */
+    public void unReactUser(MovieReaction movieReaction){
+        Objects.requireNonNull(movieReaction);
+        reactions.removeIf(movieReaction1-> movieReaction.getReactioner().equals(movieReaction1.getReactioner()));
     }
 }
 

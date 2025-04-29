@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 
 import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.reaction.MovieReaction;
+import nate.company.history_work.siteTools.reaction.Reaction;
+import nate.company.history_work.siteTools.reaction.ReactionChoices;
 import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.stereotype.Component;
@@ -61,7 +64,10 @@ public class User {
      */
     @ManyToMany(fetch = FetchType.LAZY,mappedBy="watcher", cascade = CascadeType.PERSIST)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
-    private List<WatchedMovie> watchMovies = new ArrayList<>();
+    private LinkedHashSet<WatchedMovie> watchMovies = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="reactioner", cascade = CascadeType.ALL, targetEntity = Reaction.class)
+    private Set<MovieReaction> reactions = new LinkedHashSet<>();
 
     /*
    necessary for spring init
@@ -154,6 +160,15 @@ public class User {
         watchMovies.add(movieWatched);
     }
 
+    public void setReactions(Set<MovieReaction> reactions) {
+        Objects.requireNonNull(reactions);
+        this.reactions = reactions;
+    }
+
+    public Set<MovieReaction> getReactions() {
+        return reactions;
+    }
+
     /**
      * remove a movie from the watch list
      * @param movieWatched
@@ -163,12 +178,12 @@ public class User {
         watchMovies.removeIf(movieWatched1->movieWatched1.getMovie().getImdbID().equals(movieWatched.getMovie().getImdbID()));
     }
 
-    public void setWatchMovies(List<WatchedMovie> watchMovies) {
+    public void setWatchMovies(LinkedHashSet<WatchedMovie> watchMovies) {
         Objects.requireNonNull(watchMovies);
         this.watchMovies = watchMovies;
     }
 
-    public List<WatchedMovie> getWatchMovies() {
+    public LinkedHashSet<WatchedMovie> getWatchMovies() {
         return watchMovies;
     }
 
@@ -267,6 +282,26 @@ public class User {
     public String toString(){
         //return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category+" il suit ou regarde actuellement :"+watchMovies.size()+" films";
         return "Utilisateur numéro : "+id+ ", pseudo : "+pseudo+", email "+email + " statut : "+category;
+    }
+
+    /**
+     * add a reaction to a movie : like or dislike
+     * @param movieReaction
+     *
+     */
+    public void reactMovie(MovieReaction movieReaction){
+        Objects.requireNonNull(movieReaction);
+        reactions.add(movieReaction);
+    }
+
+    /**
+     * remove a reaction to a movie : like or dislike
+     * @param movieReaction
+     *
+     */
+    public void unReactMovie(MovieReaction movieReaction){
+        Objects.requireNonNull(movieReaction);
+        reactions.removeIf(movieReaction1-> movieReaction.getMovieReacted().equals(movieReaction1.getMovieReacted()));
     }
 
 }

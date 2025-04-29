@@ -6,6 +6,8 @@ import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
 import nate.company.history_work.service.WatchMovieService;
 import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.reaction.MovieReactionRepository;
+import nate.company.history_work.siteTools.reaction.ReactionRepository;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.user.UserRepository;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovieRepository;
@@ -51,7 +53,9 @@ public class Application {
 
     @Bean
     CommandLineRunner init(UserService userService, MovieService movieService, UserRepository userRepository, MovieRepository movieRepository,
-                           WatchMovieService watchMovieService, WatchedMovieRepository watchedMovieRepository) {
+                           WatchMovieService watchMovieService, WatchedMovieRepository watchedMovieRepository,
+                           MovieReactionRepository movieReactionRepository,
+                           ReactionRepository reactionRepository) {
         return args -> {
 
             /*pas nécessaire sauf si on veut tester l'ajout en brut
