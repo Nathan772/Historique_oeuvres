@@ -23,6 +23,8 @@ from django.views import View
 import json
 from models import UserTable
 
+from . import mychatbot
+
 # source :
 # https://stackoverflow.com/questions/58779929/django-url-to-specific-request-method
 # https://docs.djangoproject.com/en/5.1/ref/class-based-views/base/
@@ -45,31 +47,26 @@ class ChatbotView(View):
     # the user for chatbot ArtistAI
     def get(self, request, id=None):
         if request.method == "GET":
-            #user = my_user.User("jean", "pazzword","jean@gmail.com")
             #permet de gérer les get requests en envoyannt le user
             HttpResponse(request.GET.items())
-            print("on a reçu via une requête get d'un user 1 : "+ str(request.body))
-            print("on a reçu via une requête get d'un user 2 : "+ str(request.GET.items()))
-            testStr = '{"content":"test", "content2":"value2"}'
-
-            jsonObject = json.loads(request.body.decode("utf-8"))
             #works out
-            #jsonObject = json.loads(testStr)
-            #print("le type de mon json : "+str(type(jsonObject)))
-            #for key,value in jsonObject:
+            jsonObject = json.loads(request.body.decode("utf-8"))
             print("on a reçu via une requête get d'un user 3 : "+jsonObject["content"])
-        
+            userRequest = jsonObject["content"]
             try:
-                print("hello requête")
+                print("Traitement en cours par l'IA...")
+
+                #prepare the answer of the llm
+                answer = prepare_answer(userRequest)
+                strResponse = '{"response":'+answer+'}'
+                print("L'IA a fini sa réponse !")
+                return HttpResponse(strResponse, content_type='application/json')
+
+                #answer for the user
             except Exception as e:
                 print("échec de la gestion de la requête du user")
-            #request.body = "réponse à la requête du user !"
+                return HttpResponse("Erreur lors du traitement de votre requête, navrée !", content_type='application/json')
 
-            #prepare and send the answer
-
-            strResponse = '{"response":"test text random json"}'
-            return HttpResponse(strResponse, content_type='application/json')
-            # HttpResponse(request.body, content_type='application/json')
 
     
     #@csrf_exempt
