@@ -23,6 +23,7 @@ urlpatterns = [
     #même quand on a édité les path
     path('', debug.default_urlconf),
     path('', include('users.urls')),
+    path('', include('chatbot.urls')),
     path('admin/', admin.site.urls),
 ]
 

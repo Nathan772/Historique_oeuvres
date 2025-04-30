@@ -5,7 +5,7 @@ python.
 Ici on import 
 "user.py."
 """
-# from . import my_user
+from . import my_user
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 #import models

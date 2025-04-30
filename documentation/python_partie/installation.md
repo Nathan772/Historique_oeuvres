@@ -351,3 +351,61 @@ class UserTable(models.Model):
         ### cette ligne avec le nom du répertoire de models : my_moview_review
         app_label = 'my_movie_review'
 ```
+
+
+installer python 3.9 :
+
+
+https://askubuntu.com/questions/1318846/how-do-i-install-python-3-9
+
+pour pouvoir utiliser et installer llama (le llm) :
+
+https://pypi.org/project/ollama/
+
+il faut aussi pull le modèle que vous souhaitez utiliser (source : chatgpt): 
+
+
+
+```shell
+
+ollama pull llama3
+
+```
+
+dans votre venv.
+
+
+Pour aller dans votre venv :
+
+aller dans  : 
+
+```sh
+cd tp_llm/llama
+```
+
+
+```sh
+source llama_env
+```
+
+remarque sur les venv :
+
+When you delete the venv directory the modules installed in it are deleted.
+
+Where as you have those modules in your Python3.7/Scripts directory also.
+
+So, you can access them even if you delete venv directory.
+
+
+---> https://stackoverflow.com/questions/62137579/does-deleting-venv-delete-installed-modules
+
+
+problème :
+
+"WARNINGS:
+?: (urls.W005) URL namespace 'moview_review' isn't unique. You may not be able to reverse all URLs in this namespace"
+
+solution : 
+
+-regardez dans vos fichiers "urls.py" de chacun de vos composants. (chatbot, users,...),
+il faut que app-name="..." soit unique à chaque composant

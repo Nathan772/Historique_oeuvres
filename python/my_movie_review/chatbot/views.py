@@ -49,11 +49,18 @@ class ChatbotView(View):
             #permet de gérer les get requests en envoyannt le user
             HttpResponse(request.GET.items())
             print("on a reçu via une requête get d'un user : "+ str(request.body))
+            
             try:
                 print("hello requête")
             except Exception as e:
                 print("échec de la gestion de la requête du user")
-                return HttpResponse(request.body, content_type='application/json')
+            #request.body = "réponse à la requête du user !"
+
+            #prepare and send the answer
+
+            strResponse = '{"response":"test text random json"}'
+            return HttpResponse(strResponse, content_type='application/json')
+            # HttpResponse(request.body, content_type='application/json')
 
     
     #@csrf_exempt

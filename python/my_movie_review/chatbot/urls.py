@@ -8,7 +8,8 @@ to the folder named
 "chatbot"
 """
 
-app_name = "moview_review"
+#unique for each component
+app_name = "chatbot"
 
 urlpatterns = [
     path('chatbot/',views.ChatbotView.as_view(http_method_names=['get'])),
