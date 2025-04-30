@@ -193,24 +193,6 @@
         //loop: true,
         delay: 75,
       });
-
-      //type writer for questions
-      //write the waiting sentences and the beginning sentence
-      /*if(!this.hasStarted){
-        //define the beginning sentence
-        console.log("on passe dans le hasStarted");
-        this.textLastAIMessageContent = "Ask me about anything related to art !"
-        this.hasStarted = true;
-      }*/
-    /*
-    define the waiting sentence
-    */
-    /*
-      else{
-        this.textLastAIMessageContent = "(I'm thinking)"
-
-      }*/
-      //enable to remove old content
       typewriter.erasable = true
 
       typewriter
@@ -221,32 +203,6 @@
         .pauseFor(1500)
         .start();
 
-        /*
-
-        update for next turn
-
-        */
-
-          /*
-          not working properb
-          */
-        /*
-        enable to not remove old content
-        */
-
-        //not working properly
-        /*
-        this.textLastMessageContent = "(I'm thinking)"
-        */
-        /*
-        typewriter
-                .typeString(this.aiName+" (chatbot) : ")
-                .pauseFor(1500)
-                //.deleteAll()
-                .typeString(" "+this.textLastMessageContent)
-                .pauseFor(1500)*/
     }
 
   }
-
-
