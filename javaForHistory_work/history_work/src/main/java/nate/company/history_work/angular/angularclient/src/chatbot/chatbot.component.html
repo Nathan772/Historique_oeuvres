@@ -11,8 +11,11 @@
       <div #typewriterElement></div>
       <li *ngFor="let message of messages; let i = index">
 
-        <div #typewriterElement></div>
-        <!--<strong>{{message.authorId}}:</strong> {{message.text}}-->
+<!--        <div #typewriterElement></div>-->
+
+       <!--div #typewriterElement></div> -->
+        <span *ngIf="message.authorId !==this.aiName"><strong>{{message.authorId}}:</strong> {{message.text}}
+        </span>
 
       </li>
 

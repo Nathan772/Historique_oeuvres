@@ -19,7 +19,7 @@ export class ChatbotComponent implements OnInit {
 
   aiName:string="ArtisteAI";
    messages = [
-      { text: "Demande-moi ce que tu veux !", authorId: 'aiName' }
+      { text: "Demande-moi ce que tu veux !", authorId: this.aiName}
     ];
 
     textLastMessageContent = 'Demandes-moi ce que tu veux !';
@@ -62,9 +62,25 @@ export class ChatbotComponent implements OnInit {
         /*
         add user request
         */
-        this.messages.push({text:this.textLastMessageContent , authorId:this.userService.userAccount.pseudo});
-        this.messages.push({text:"OK, la réponse est... Demande-moi ce que tu veux !",authorId:this.aiName })
-        this.textLastMessageContent = '';
+        this.messages.push({text:this.typeMessageUser , authorId:this.userService.userAccount.pseudo});
+
+
+        this.messages.push({text:"OK, la réponse est... Demande-moi ce que tu veux !",authorId:this.aiName });
+
+        const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+              //loop: true,
+              delay: 75,
+            });
+
+        typewriter
+              .typeString(this.aiName)
+              .pauseFor(1500)
+              //.deleteAll()
+              .typeString(" "+this.textLastMessageContent)
+              .pauseFor(1500)
+              .start();
+
+        this.typeMessageUser = '';
 
       }
     }

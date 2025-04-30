@@ -1593,3 +1593,10 @@ dans ./angularclient :
 ```shell
 npm install socket.io-client
 ```
+
+problème :
+
+"Cannot find module 'angular-typing-animation' or its corresponding type declarations."
+
+solution :
+
