@@ -8,16 +8,21 @@
       <div class="close" (click)="closeChat()"></div>
     </div>
     <div class="message-box">
-      <div #typewriterElement></div>
+      <!--<div #typewriterElement></div>-->
+      <!--        <div #typewriterElement></div>-->
+
       <li *ngFor="let message of messages; let i = index">
 
-<!--        <div #typewriterElement></div>-->
-
-       <!--div #typewriterElement></div> -->
-        <span *ngIf="message.authorId !==this.aiName"><strong>{{message.authorId}}:</strong> {{message.text}}
+        <span *ngIf="message.authorId !==this.aiName || i < messages.length-1"><strong>{{message.authorId}} says:</strong> {{message.text}}
         </span>
 
+        <!--ignore IA pour écrire progressivement à la place -->
+        <!--<span *ngIf="message.authorId !==this.aiName  messages.length"><strong>{{message.authorId}} says:</strong> {{message.text}}
+        </span>-->
+
       </li>
+
+      <!--<span *ngIf="message.authorId==this.aiName"#typewriterElement></span>-->
 
 
     </div>

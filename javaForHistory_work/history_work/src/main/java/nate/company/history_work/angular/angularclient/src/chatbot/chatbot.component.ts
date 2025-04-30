@@ -16,6 +16,7 @@ import {Socket} from 'socket.io-client';
 export class ChatbotComponent implements OnInit {
 
    @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
+   @ViewChild('typewriterElement2', { static: false }) typewriterElement2!: ElementRef;
 
   aiName:string="ArtisteAI";
    messages = [
@@ -64,7 +65,7 @@ export class ChatbotComponent implements OnInit {
         */
         this.messages.push({text:this.typeMessageUser , authorId:this.userService.userAccount.pseudo});
 
-
+        //ignore chatbot answer
         this.messages.push({text:"OK, la réponse est... Demande-moi ce que tu veux !",authorId:this.aiName });
 
         const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
@@ -72,11 +73,22 @@ export class ChatbotComponent implements OnInit {
               delay: 75,
             });
 
+          const typewriter2 = new Typewriter(this.typewriterElement2.nativeElement, {
+                        //loop: true,
+                        delay: 75,
+                      });
+
+        /*
+        run at the same
+        placeholder after the first message of the After
+        THE FIRST message of the user
+        rather than user last
+        message */
         typewriter
-              .typeString(this.aiName)
+              .typeString(this.aiName+" says : ")
               .pauseFor(1500)
               //.deleteAll()
-              .typeString(" "+this.textLastMessageContent)
+              .typeString(" "+this.textLastMessageContent+ "aaaaaapres")
               .pauseFor(1500)
               .start();
 
@@ -106,7 +118,7 @@ ngOnInit() {
     });
 
     typewriter
-      .typeString(this.aiName)
+      .typeString(this.aiName+" says : ")
       .pauseFor(1500)
       //.deleteAll()
       .typeString(" "+this.textLastMessageContent)
