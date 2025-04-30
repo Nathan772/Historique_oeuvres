@@ -81,7 +81,7 @@ export class ChatbotComponent implements OnInit {
         rather than user last
         message */
         typewriter
-              .typeString(this.aiName+" says : ")
+              .typeString(this.aiName+ " (chatbot) "+ "says : ")
               .pauseFor(1500)
               //.deleteAll()
               .typeString(" "+this.textLastMessageContent+ "aaaaaapres")
@@ -114,7 +114,7 @@ ngOnInit() {
     });
 
     typewriter
-      .typeString(this.aiName+" says : ")
+      .typeString(this.aiName+" (chatbot) : ")
       .pauseFor(1500)
       //.deleteAll()
       .typeString(" "+this.textLastMessageContent)

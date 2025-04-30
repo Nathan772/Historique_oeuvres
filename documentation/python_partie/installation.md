@@ -101,7 +101,7 @@ si le projet vous renvoie un
 1)
 pensez à installer 
 
-```
+```shell
 
 pip install django.cors.headers
 ```
