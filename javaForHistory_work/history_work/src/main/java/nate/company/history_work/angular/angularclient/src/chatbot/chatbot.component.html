@@ -11,16 +11,24 @@
       <!--<div #typewriterElement></div>-->
       <!--        <div #typewriterElement></div>-->
 
+      <!--
+        previous messages or user's message
+      -->
       <li *ngFor="let message of messages; let i = index">
 
         <span *ngIf="message.authorId !==this.aiName || i < messages.length-1"><strong>{{message.authorId}} says:</strong> {{message.text}}
         </span>
+
 
         <!--ignore IA pour écrire progressivement à la place -->
         <!--<span *ngIf="message.authorId !==this.aiName  messages.length"><strong>{{message.authorId}} says:</strong> {{message.text}}
         </span>-->
 
       </li>
+
+      <!-- ai progressive message
+      -->
+      <div #typewriterElement></div>
 
       <!--<span *ngIf="message.authorId==this.aiName"#typewriterElement></span>-->
 

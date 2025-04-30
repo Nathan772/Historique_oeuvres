@@ -15,8 +15,8 @@ import {Socket} from 'socket.io-client';
 })
 export class ChatbotComponent implements OnInit {
 
-   @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
-   @ViewChild('typewriterElement2', { static: false }) typewriterElement2!: ElementRef;
+  //you need to put to false to enable type writer to be updated !!
+   @ViewChild('typewriterElement', { static: false }) typewriterElement!: ElementRef;
 
   aiName:string="ArtisteAI";
    messages = [
@@ -73,10 +73,6 @@ export class ChatbotComponent implements OnInit {
               delay: 75,
             });
 
-          const typewriter2 = new Typewriter(this.typewriterElement2.nativeElement, {
-                        //loop: true,
-                        delay: 75,
-                      });
 
         /*
         run at the same
