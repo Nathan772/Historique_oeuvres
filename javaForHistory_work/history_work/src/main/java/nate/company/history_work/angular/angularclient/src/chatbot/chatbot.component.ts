@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserService } from '../user/user_service/user-service.service';
+import Typewriter from 'typewriter-effect/dist/core';
+//import Typewriter from 't-writer.js';
 /*import * as io from 'socket.io-client';
 import {Socket} from 'socket.io-client';
 */
@@ -12,13 +14,27 @@ import {Socket} from 'socket.io-client';
   styleUrl: './chatbot.component.css'
 })
 export class ChatbotComponent implements OnInit {
+
+   @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
+
   aiName:string="ArtisteAI";
    messages = [
       { text: "Demande-moi ce que tu veux !", authorId: 'aiName' }
     ];
 
-    textLastMessageContent = '';
+    textLastMessageContent = 'Demandes-moi ce que tu veux !';
+    messageIntro = 'écris-lui !';
+    /*
+    it needs
+    to be set to empty everytime
+    you're done with it,
+    in order
+    to enable
+    the box to show default message.
+    */
+    typeMessageUser = "";
     isOpen = false;
+    startWriting: boolean = false
     userService:UserService;
 
     //connection:Socket;
@@ -52,6 +68,36 @@ export class ChatbotComponent implements OnInit {
 
       }
     }
-ngOnInit() {}
+ngOnInit() {
+   // Start after 1 second + 1 second of startDelay
+      //setTimeout(() => this.startWriting = true, 1000)}
+
+//necessary for progressive writing
+       /*@ViewChild('tw') typewriterElement;
+       const target = this.typewriterElement.nativeElement
+       const writer = new Typewriter(target, {
+            loop: true,
+            typeColor: 'blue'
+          })*/
 }
+
+
+//necessary for progressive writing
+  ngAfterViewInit(): void {
+    const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+      //loop: true,
+      delay: 75,
+    });
+
+    typewriter
+      .typeString(this.aiName)
+      .pauseFor(1500)
+      //.deleteAll()
+      .typeString(" "+this.textLastMessageContent)
+      .pauseFor(1500)
+      .start();
+  }
+
+}
+
 

@@ -4,6 +4,7 @@ généré manuellement + baeldung
 */
 
 import { BrowserModule } from '@angular/platform-browser';
+//import { TypingAnimationModule } from "angular-typing-animation";
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app/app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -59,7 +60,8 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      RouterModule
+      RouterModule,
+
     ],
   providers: [UserService, ConnectionServiceService, MovieServiceService],
   bootstrap:[AppComponent],
