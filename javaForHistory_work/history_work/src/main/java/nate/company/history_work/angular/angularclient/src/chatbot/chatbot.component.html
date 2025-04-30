@@ -18,10 +18,10 @@
       <ng-container *ngFor="let message of messages; let i = index">
 
 
-        <li *ngIf="message.authorId !==this.aiName"><strong>{{message.authorId}} (chatbot) said:</strong> {{message.text}}
+        <li *ngIf="message.authorId !==this.aiName"><strong>{{message.authorId}} (you) said:</strong> {{message.text}}
         </li>
 
-        <li *ngIf="message.authorId ==this.aiName && i < messages.length-1"><strong>{{message.authorId}} (you) said:</strong> {{message.text}}
+        <li *ngIf="message.authorId ==this.aiName && i < messages.length-1"><strong>{{message.authorId}} (chabot) said:</strong> {{message.text}}
         </li>
 
 
@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf="waitingChatBotAnswer" class="chatbot-typing">
-    🤖 Le chatbot est en train d'écrire...
+    🤖 the chatbot is thinking about its answer... 🧠
   </div>
 
   <div class="bubble" (click)="openChat()" [class.hidden]="isOpen === true">

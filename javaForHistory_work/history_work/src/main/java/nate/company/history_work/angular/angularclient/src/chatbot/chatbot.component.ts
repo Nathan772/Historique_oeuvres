@@ -21,9 +21,8 @@
      //@ViewChild('typewriterElementAnswer', { static: false }) typewriterElement!: ElementRef;
 
 
-    aiName:string="ArtisteAI";
-    hasStarted = false;
-    waitingChatBotAnswer = true;
+    aiName:string="ArtistAI";
+    waitingChatBotAnswer = false;
     chatbotService:ChatbotService;
     textLastAIMessageContent = "Ask me about anything";
     //textReactionAnswerAIMessageContent = "";
@@ -73,6 +72,7 @@
         console.log("on entre dans send message");
         console.log("la phrase enregistrée est : "+this.typeMessageUser)
         this.waitingChatBotAnswer = true;
+        console.log("la valeur de disable keyboard dans sendmessage : "+this.waitingChatBotAnswer)
         if (this.textLastAIMessageContent.trim() !== "") {
           //this.connection.emit('chat message', { text: this.textareaValue, authorId: "Domka" });
           /*
@@ -130,10 +130,9 @@
                   .pauseFor(1500)
                   //.deleteAll()
                   .typeString(" "+this.textLastAIMessageContent)
-                  .pauseFor(1500)
                   .start();
              //disable user keyboard while waiting for answer
-            this.waitingChatBotAnswer = false;
+
             this.typeMessageUser = '';
             //message after request
             //this.textLastMessageContent = ''
@@ -163,13 +162,15 @@
                           .pauseFor(1500)
                           //.deleteAll()
                           .typeString(" "+this.textLastAIMessageContent)
-                          .pauseFor(1500)
                           .start();
 
                     this.typeMessageUser = '';
                     }
-
           }
+          //enable to answer again
+          //after the response is ready but only it's ready
+          this.waitingChatBotAnswer = false;
+
 
       }
   ngOnInit() {
@@ -195,19 +196,20 @@
 
       //type writer for questions
       //write the waiting sentences and the beginning sentence
-      if(!this.hasStarted){
+      /*if(!this.hasStarted){
         //define the beginning sentence
         console.log("on passe dans le hasStarted");
         this.textLastAIMessageContent = "Ask me about anything related to art !"
         this.hasStarted = true;
-      }
+      }*/
     /*
     define the waiting sentence
     */
+    /*
       else{
         this.textLastAIMessageContent = "(I'm thinking)"
 
-      }
+      }*/
       //enable to remove old content
       typewriter.erasable = true
 
@@ -233,7 +235,7 @@
         */
 
         //not working properly
-        /*typewriter.erasable = false
+        /*
         this.textLastMessageContent = "(I'm thinking)"
         */
         /*

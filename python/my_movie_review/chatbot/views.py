@@ -61,8 +61,9 @@ class ChatbotView(View):
                 userRequest = userRequest.replace("%20", " ")
                 print("réecriture de la question du user : "+userRequest+" Traitement en cours par l'IA...")
                 #prepare the answer of the llm
-                #answer = mychatbot.prepare_answer(userRequest)
-                answer = "une phrase random wesh wesh"
+                answer = mychatbot.prepare_answer(userRequest)
+                #answer for quick test without long loading
+                #answer = "une phrase random wesh wesh (c'est une phrase de test (voir views.py))"
                 answer = mychatbot.remove_impurity_for_front_end_json(answer)
                 print("on affiche la vraie réponse pour voir sa forme : "+answer)
                 answer2= "(I'm thinking, wait...)"
