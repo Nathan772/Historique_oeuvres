@@ -61,11 +61,11 @@ class ChatbotView(View):
                 userRequest = userRequest.replace("%20", " ")
                 print("réecriture de la question du user : "+userRequest+" Traitement en cours par l'IA...")
                 #prepare the answer of the llm
-                answer = mychatbot.prepare_answer(userRequest)
-                #cause issues ...
+                #answer = mychatbot.prepare_answer(userRequest)
+                answer = "une phrase random wesh wesh"
                 answer = mychatbot.remove_impurity_for_front_end_json(answer)
                 print("on affiche la vraie réponse pour voir sa forme : "+answer)
-                answer2= "reponse préfaite mais avec attente llm"
+                answer2= "(I'm thinking, wait...)"
                 strResponse = '{"response":'+'"'+answer+'"'+'}'
                 print("L'IA a fini sa réponse !")
                 print("sa réponse est : "+strResponse)

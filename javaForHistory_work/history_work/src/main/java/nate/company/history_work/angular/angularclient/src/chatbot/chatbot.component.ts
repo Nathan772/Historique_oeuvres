@@ -18,15 +18,18 @@
 
     //you need to put to false to enable type writer to be updated !!
      @ViewChild('typewriterElement', { static: false }) typewriterElement!: ElementRef;
+     //@ViewChild('typewriterElementAnswer', { static: false }) typewriterElement!: ElementRef;
 
 
     aiName:string="ArtisteAI";
+    hasStarted = false;
+    waitingChatBotAnswer = true;
     chatbotService:ChatbotService;
+    textLastAIMessageContent = "Ask me about anything";
+    //textReactionAnswerAIMessageContent = "";
      messages = [
-        { text: "Demande-moi ce que tu veux !", authorId: this.aiName}
+        { text: this.textLastAIMessageContent, authorId: this.aiName}
       ];
-
-      textLastMessageContent = 'Demandes-moi ce que tu veux !';
       messageIntro = 'écris-lui !';
       /*
       it needs
@@ -40,6 +43,7 @@
       isOpen = false;
       startWriting: boolean = false
       userService:UserService;
+
 
       //connection:Socket;
 
@@ -66,7 +70,10 @@
       await is necessary to wait server (llm) response
       */
       async sendMessage() {
-        if (this.textLastMessageContent.trim() !== "") {
+        console.log("on entre dans send message");
+        console.log("la phrase enregistrée est : "+this.typeMessageUser)
+        this.waitingChatBotAnswer = true;
+        if (this.textLastAIMessageContent.trim() !== "") {
           //this.connection.emit('chat message', { text: this.textareaValue, authorId: "Domka" });
           /*
           add user request
@@ -84,8 +91,11 @@
 
         //wait for response of the llm
          // let responseFromLLM = '{"content":"failure for json"}'
-
+        //message for the moment the AI is thinking its answer
+          this.textLastAIMessageContent = "I'm thinking 2"
          try {
+           //disable user keyboard while waiting for answer
+            this.waitingChatBotAnswer = true;
            let responseFromLLM =
             await this.chatbotService.sendRequestToChatbot("I am the questioner, my name is : "+
               this.userService.userAccount.pseudo+", my question is : "+this.typeMessageUser).toPromise() || '{"content": "failure for json"}'
@@ -105,9 +115,10 @@
                   delay: 75,
                 });
 
-            this.textLastMessageContent = myJsonResponse
+            this.textLastAIMessageContent = myJsonResponse
 
-
+            //message associated to the response to the request
+            //this.textLastMessageContent = '...'
             /*
             run at the same
             placeholder after the first message of the After
@@ -118,11 +129,14 @@
                   .typeString(this.aiName+ " (chatbot) "+ "says : ")
                   .pauseFor(1500)
                   //.deleteAll()
-                  .typeString(" "+this.textLastMessageContent)
+                  .typeString(" "+this.textLastAIMessageContent)
                   .pauseFor(1500)
                   .start();
-
+             //disable user keyboard while waiting for answer
+            this.waitingChatBotAnswer = false;
             this.typeMessageUser = '';
+            //message after request
+            //this.textLastMessageContent = ''
             }
           catch {
               //let myJsonResponse = JSON.parse(responseFromLLM)
@@ -137,7 +151,7 @@
                                 delay: 75,
                               });
 
-                          this.textLastMessageContent = myJsonResponse
+                          this.textLastAIMessageContent = myJsonResponse
          /*
                     run at the same
                     placeholder after the first message of the After
@@ -148,7 +162,7 @@
                           .typeString(this.aiName+ " (chatbot) "+ "says : ")
                           .pauseFor(1500)
                           //.deleteAll()
-                          .typeString(" "+this.textLastMessageContent)
+                          .typeString(" "+this.textLastAIMessageContent)
                           .pauseFor(1500)
                           .start();
 
@@ -179,13 +193,56 @@
         delay: 75,
       });
 
+      //type writer for questions
+      //write the waiting sentences and the beginning sentence
+      if(!this.hasStarted){
+        //define the beginning sentence
+        console.log("on passe dans le hasStarted");
+        this.textLastAIMessageContent = "Ask me about anything related to art !"
+        this.hasStarted = true;
+      }
+    /*
+    define the waiting sentence
+    */
+      else{
+        this.textLastAIMessageContent = "(I'm thinking)"
+
+      }
+      //enable to remove old content
+      typewriter.erasable = true
+
       typewriter
         .typeString(this.aiName+" (chatbot) : ")
         .pauseFor(1500)
         //.deleteAll()
-        .typeString(" "+this.textLastMessageContent)
+        .typeString(" "+this.textLastAIMessageContent)
         .pauseFor(1500)
         .start();
+
+        /*
+
+        update for next turn
+
+        */
+
+          /*
+          not working properb
+          */
+        /*
+        enable to not remove old content
+        */
+
+        //not working properly
+        /*typewriter.erasable = false
+        this.textLastMessageContent = "(I'm thinking)"
+        */
+        /*
+        typewriter
+                .typeString(this.aiName+" (chatbot) : ")
+                .pauseFor(1500)
+                //.deleteAll()
+                .typeString(" "+this.textLastMessageContent)
+                .pauseFor(1500)*/
     }
 
   }

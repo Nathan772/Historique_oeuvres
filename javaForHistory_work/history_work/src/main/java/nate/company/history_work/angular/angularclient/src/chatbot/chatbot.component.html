@@ -4,7 +4,7 @@
 <div class="wrapper">
   <div class="chat-box" [class.hidden]="isOpen === true">
     <div class="header">
-      <h1>Tu veux une recommendation pour un film ?</h1>
+      <h1>Do you want a movie recommendation ? : {{ userService.userAccount.pseudo}} </h1>
       <div class="close" (click)="closeChat()"> </div>
 
     </div>
@@ -40,9 +40,13 @@
 
     </div>
     <section>
-      <textarea [(ngModel)]="typeMessageUser" placeholder="écris-lui !" (keyup.enter)="sendMessage()"></textarea>
-      <button (click)="sendMessage()" mat-raised-button>Send</button>
+      <textarea [(ngModel)]="typeMessageUser"  [disabled]="waitingChatBotAnswer" placeholder="écris-lui !" (keyup.enter)="sendMessage()"></textarea>
+      <button (click)="sendMessage()"  mat-raised-button>Send</button>
     </section>
+  </div>
+
+  <div *ngIf="waitingChatBotAnswer" class="chatbot-typing">
+    🤖 Le chatbot est en train d'écrire...
   </div>
 
   <div class="bubble" (click)="openChat()" [class.hidden]="isOpen === true">
