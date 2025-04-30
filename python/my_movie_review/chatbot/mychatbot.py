@@ -24,6 +24,7 @@ def prepare_answer(userPrompt1:str):
     },])
     #print(response.message.content)
     return response.message.content
+    #return "quick answer"
 
 if __name__ == "__main__":
     question = "qui est le plus bel acteur de hollywood en 2024 ?"

@@ -57,7 +57,7 @@ class ChatbotView(View):
                 print("Traitement en cours par l'IA...")
 
                 #prepare the answer of the llm
-                answer = prepare_answer(userRequest)
+                answer = mychatbot.prepare_answer(userRequest)
                 strResponse = '{"response":'+answer+'}'
                 print("L'IA a fini sa réponse !")
                 return HttpResponse(strResponse, content_type='application/json')
