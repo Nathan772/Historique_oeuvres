@@ -23,13 +23,14 @@ import { ConnectionServiceService } from './connection/connection-service.servic
 import { UserEntranceComponent} from './user/user_entrance/user-entrance.component';
 import { UserConnectionComponent } from './user/user_connection/user-connection.component';
 
-
+import {ChatbotComponent } from './chatbot/chatbot.component';
 //about movies
 import { MovieServiceService } from './movies/movie_service/movie-service.service';
 import { NavbarMoviesComponent } from './movies/navbar/navbar-movies.component';
 import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
+
 
 
 
@@ -50,6 +51,8 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       MovieUserCardComponent,
       UserListComponent,
       CommonFunctionalityComponent,
+      ChatbotComponent,
+
     ],
   imports: [
       BrowserModule,

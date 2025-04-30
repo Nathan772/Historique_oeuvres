@@ -1,0 +1,21 @@
+
+
+<div class="wrapper">
+  <div class="chat-box" [class.hidden]="isOpen === true">
+    <div class="header">
+      <h1>Tu veux une recommendation pour un film ?</h1>
+      <div class="close" (click)="closeChat()"></div>
+    </div>
+    <div class="message-box">
+      <li *ngFor="let message of messages; let i = index"><strong>{{message.authorId}}:</strong> {{message.text}}</li>
+    </div>
+    <section>
+      <textarea [(ngModel)]="textLastMessageContent" placeholder="say hi!" (keyup.enter)="sendMessage()"></textarea>
+      <button (click)="sendMessage()" mat-raised-button>Send</button>
+    </section>
+  </div>
+
+  <div class="bubble" (click)="openChat()" [class.hidden]="isOpen === true">
+
+  </div>
+</div>

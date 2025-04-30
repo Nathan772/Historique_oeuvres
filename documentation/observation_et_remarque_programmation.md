@@ -1582,4 +1582,14 @@ pensez à ajouter les annotations :
 
 "@OneToMany et @ManyToOne" manquantes, vous en avez probablement oubliées...
 
+problème :
 
+" Cannot find module 'socket.io-client' or its corresponding type declarations"
+
+solution :
+
+dans ./angularclient :
+
+```shell
+npm install socket.io-client
+```

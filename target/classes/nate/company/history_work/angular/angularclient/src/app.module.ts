@@ -30,6 +30,7 @@ import { NavbarMoviesComponent } from './movies/navbar/navbar-movies.component';
 import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
+import {ChatbotComponent } from './chatbot/chatbot/chatbot.component';
 
 
 
@@ -50,6 +51,7 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       MovieUserCardComponent,
       UserListComponent,
       CommonFunctionalityComponent,
+      ChatbotComponent
     ],
   imports: [
       BrowserModule,

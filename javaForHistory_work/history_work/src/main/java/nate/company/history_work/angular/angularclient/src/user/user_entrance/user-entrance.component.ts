@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user_service/user-service.service';
 import { User } from '../user';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
-
+import { ChatbotComponent } from "../../chatbot/chatbot.component";
 @Component({
   selector: 'app-user-entrance',
   templateUrl: './user-entrance.component.html',

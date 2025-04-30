@@ -323,3 +323,18 @@ si vous ne l'êtes pas : reconnecté vous, puis quittez et relancer le building.
 ```bash
 docker run -p 4200:80 --name museeoeuvrecontainer openjdk:23-jdk
 ```
+
+problème :
+
+"supprimer les images dockers qui prennent de la place."
+
+solution :
+
+```shell
+
+docker images
+
+
+docker rmi fd484f19954f-->  fd484f19954f === img id
+
+```
