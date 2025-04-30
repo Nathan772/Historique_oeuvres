@@ -84,45 +84,79 @@
 
         //wait for response of the llm
          // let responseFromLLM = '{"content":"failure for json"}'
-         let responseFromLLM =
-          await this.chatbotService.sendRequestToChatbot("I am the questioner, my name is : "+
-            this.userService.userAccount.pseudo+", my question is : "+this.typeMessageUser).toPromise() || '{"content": "failure for json"}'
 
-        /*
-        it works out with a valid json.
-        */
-          //let myJsonResponse = JSON.parse(responseFromLLM)
-          let myJsonResponse = Object.values(responseFromLLM)[0]
-
-            console.log("la réponse du llm est : "+myJsonResponse)
-
-          this.messages.push({text:myJsonResponse,authorId:this.aiName });
-
-          const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
-                //loop: true,
-                delay: 75,
-              });
-
-          this.textLastMessageContent = myJsonResponse
-
+         try {
+           let responseFromLLM =
+            await this.chatbotService.sendRequestToChatbot("I am the questioner, my name is : "+
+              this.userService.userAccount.pseudo+", my question is : "+this.typeMessageUser).toPromise() || '{"content": "failure for json"}'
 
           /*
-          run at the same
-          placeholder after the first message of the After
-          THE FIRST message of the user
-          rather than user last
-          message */
-          typewriter
-                .typeString(this.aiName+ " (chatbot) "+ "says : ")
-                .pauseFor(1500)
-                //.deleteAll()
-                .typeString(" "+this.textLastMessageContent)
-                .pauseFor(1500)
-                .start();
+          it works out with a valid json.
+          */
+            //let myJsonResponse = JSON.parse(responseFromLLM)
+            let myJsonResponse = Object.values(responseFromLLM)[0]
 
-          this.typeMessageUser = '';
+              console.log("la réponse du llm est : "+myJsonResponse)
 
-        }
+            this.messages.push({text:myJsonResponse,authorId:this.aiName });
+
+            const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+                  //loop: true,
+                  delay: 75,
+                });
+
+            this.textLastMessageContent = myJsonResponse
+
+
+            /*
+            run at the same
+            placeholder after the first message of the After
+            THE FIRST message of the user
+            rather than user last
+            message */
+            typewriter
+                  .typeString(this.aiName+ " (chatbot) "+ "says : ")
+                  .pauseFor(1500)
+                  //.deleteAll()
+                  .typeString(" "+this.textLastMessageContent)
+                  .pauseFor(1500)
+                  .start();
+
+            this.typeMessageUser = '';
+            }
+          catch {
+              //let myJsonResponse = JSON.parse(responseFromLLM)
+                          let myJsonResponse = "Je suis désolé j'ai un problème avec mon serveur qui me sert de cerveau... Réessayez plus tard !"
+
+                            console.log("la réponse en cas d'échec de requête est : "+myJsonResponse)
+
+                          this.messages.push({text:myJsonResponse,authorId:this.aiName });
+
+                          const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+                                //loop: true,
+                                delay: 75,
+                              });
+
+                          this.textLastMessageContent = myJsonResponse
+         /*
+                    run at the same
+                    placeholder after the first message of the After
+                    THE FIRST message of the user
+                    rather than user last
+                    message */
+                    typewriter
+                          .typeString(this.aiName+ " (chatbot) "+ "says : ")
+                          .pauseFor(1500)
+                          //.deleteAll()
+                          .typeString(" "+this.textLastMessageContent)
+                          .pauseFor(1500)
+                          .start();
+
+                    this.typeMessageUser = '';
+                    }
+
+          }
+
       }
   ngOnInit() {
      // Start after 1 second + 1 second of startDelay

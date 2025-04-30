@@ -16,15 +16,27 @@ def prepare_answer(userPrompt1:str):
     """
     #while True:
     #the user questions 
-    # userPrompt = userPrompt1
-    # #the AI preparing the response
-    # response: ChatResponse = chat(model='llama3', messages=[{
-    #         'role': 'user',
-    #         'content': headline+" "+userPrompt,
-    # },])
-    # return response.message.content
+    userPrompt = userPrompt1
+    #the AI preparing the response
+    response: ChatResponse = chat(model='llama3', messages=[{
+            'role': 'user',
+            'content': headline+" "+userPrompt,
+    },])
+    return response.message.content
     #necessary for tests
-    return "quick answer"
+    #return "quick answer"
+
+
+#enable to answer to the user
+# remove inconsistent data for front end expecting json object
+def remove_impurity_for_front_end_json(AIImpurAnswer:str):
+    #removes end of line and #replaces quotes
+    #newAnswer = AIImpurAnswer
+    newAnswer = AIImpurAnswer.replace("\n", "")
+    newAnswer = newAnswer.replace("\"", "''")
+    return newAnswer
+    #necessary for tests
+    #return "quick answer"
 
 if __name__ == "__main__":
     question = "qui est le plus bel acteur de hollywood en 2024 ?"
