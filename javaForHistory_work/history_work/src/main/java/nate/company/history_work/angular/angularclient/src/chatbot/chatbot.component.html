@@ -5,7 +5,8 @@
   <div class="chat-box" [class.hidden]="isOpen === true">
     <div class="header">
       <h1>Tu veux une recommendation pour un film ?</h1>
-      <div class="close" (click)="closeChat()"></div>
+      <div class="close" (click)="closeChat()"> </div>
+
     </div>
     <div class="message-box">
       <!--<div #typewriterElement></div>-->
@@ -14,17 +15,18 @@
       <!--
         previous messages or user's message
       -->
-      <li *ngFor="let message of messages; let i = index">
+      <ng-container *ngFor="let message of messages; let i = index">
 
-        <span *ngIf="message.authorId !==this.aiName || i < messages.length-1"><strong>{{message.authorId}} says:</strong> {{message.text}}
-        </span>
+
+        <li *ngIf="message.authorId !==this.aiName || i < messages.length-1"><strong>{{message.authorId}} says:</strong> {{message.text}}
+        </li>
 
 
         <!--ignore IA pour écrire progressivement à la place -->
         <!--<span *ngIf="message.authorId !==this.aiName  messages.length"><strong>{{message.authorId}} says:</strong> {{message.text}}
         </span>-->
 
-      </li>
+      </ng-container>
 
       <!-- ai progressive message
       -->
