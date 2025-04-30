@@ -1,0 +1,51 @@
+
+
+
+<div class="wrapper">
+  <div class="chat-box" [class.hidden]="isOpen === true">
+    <div class="header">
+      <h1>Tu veux une recommendation pour un film ?</h1>
+      <div class="close" (click)="closeChat()"> </div>
+
+    </div>
+    <div class="message-box">
+      <!--<div #typewriterElement></div>-->
+      <!--        <div #typewriterElement></div>-->
+
+      <!--
+        previous messages or user's message
+      -->
+      <ng-container *ngFor="let message of messages; let i = index">
+
+
+        <li *ngIf="message.authorId !==this.aiName"><strong>{{message.authorId}} (chatbot) said:</strong> {{message.text}}
+        </li>
+
+        <li *ngIf="message.authorId ==this.aiName && i < messages.length-1"><strong>{{message.authorId}} (you) said:</strong> {{message.text}}
+        </li>
+
+
+        <!--ignore IA pour écrire progressivement à la place -->
+        <!--<span *ngIf="message.authorId !==this.aiName  messages.length"><strong>{{message.authorId}} says:</strong> {{message.text}}
+        </span>-->
+
+      </ng-container>
+
+      <!-- ai progressive message
+      -->
+      <div #typewriterElement></div>
+
+      <!--<span *ngIf="message.authorId==this.aiName"#typewriterElement></span>-->
+
+
+    </div>
+    <section>
+      <textarea [(ngModel)]="typeMessageUser" placeholder="écris-lui !" (keyup.enter)="sendMessage()"></textarea>
+      <button (click)="sendMessage()" mat-raised-button>Send</button>
+    </section>
+  </div>
+
+  <div class="bubble" (click)="openChat()" [class.hidden]="isOpen === true">
+
+  </div>
+</div>

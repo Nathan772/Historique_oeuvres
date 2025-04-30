@@ -210,7 +210,7 @@ http://localhost:8080/user
     public async prepareConnection(connectionService:ConnectionServiceService){
       //the user is not connected redirection to connection page
           //reload user from the same session (BEGIN)
-          if(connectionService.isConnected == false && sessionStorage.getItem('userPseudo') == null){
+          if(connectionService.isConnected == false && sessionStorage.getItem('userPseudo') == null ){
             console.log("l'utilisateur n'est pas connecté")
             this.redirectionToConnectionPage(connectionService);
           }
@@ -233,6 +233,10 @@ http://localhost:8080/user
             source : https://stackoverflow.com/questions/63136965/how-to-wait-for-function-with-subscribe-to-finish-in-angular-8
             */
             this.userAccount = await this.findUser(userSimple).toPromise() || userSimple;
+
+            if(this.userAccount.pseudo === "" || this.userAccount.pseudo === null){
+              this.redirectionToConnectionPage(connectionService);
+             }
             //let isReady = this.setUser(userDataBase);
 
 
@@ -248,6 +252,7 @@ http://localhost:8080/user
           connectionService.alreadyExists = false;
           connectionService.mismatchedPassword = false;
           //reload user from the same session (END)
+
     }
 
 

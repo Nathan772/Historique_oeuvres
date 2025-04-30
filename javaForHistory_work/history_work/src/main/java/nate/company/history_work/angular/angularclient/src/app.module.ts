@@ -16,6 +16,7 @@ import { UserMovieListComponent } from './user/user_movie_list/user-movie-list.c
 import { AccueilComponent } from './accueil/accueil.component';
 import { MovieMenuUserComponent } from './user/movie_menu_user/movie-menu-user.component';
 import { UserService } from './user/user_service/user-service.service';
+import {ChatbotService} from './chatbot/chatbot_service/chatbot.service'
 import { CommonFunctionalityComponent } from './common-functionality-component/common-functionality-component.component';
 import {RouterModule} from '@angular/router';
 

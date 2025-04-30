@@ -4,6 +4,7 @@ généré manuellement + baeldung
 */
 
 import { BrowserModule } from '@angular/platform-browser';
+//import { TypingAnimationModule } from "angular-typing-animation";
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app/app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,7 @@ import { UserMovieListComponent } from './user/user_movie_list/user-movie-list.c
 import { AccueilComponent } from './accueil/accueil.component';
 import { MovieMenuUserComponent } from './user/movie_menu_user/movie-menu-user.component';
 import { UserService } from './user/user_service/user-service.service';
+import {ChatbotService} from './chatbot/chatbot_service/chatbot.service'
 import { CommonFunctionalityComponent } from './common-functionality-component/common-functionality-component.component';
 import {RouterModule} from '@angular/router';
 
@@ -23,14 +25,14 @@ import { ConnectionServiceService } from './connection/connection-service.servic
 import { UserEntranceComponent} from './user/user_entrance/user-entrance.component';
 import { UserConnectionComponent } from './user/user_connection/user-connection.component';
 
-
+import {ChatbotComponent } from './chatbot/chatbot.component';
 //about movies
 import { MovieServiceService } from './movies/movie_service/movie-service.service';
 import { NavbarMoviesComponent } from './movies/navbar/navbar-movies.component';
 import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
-import {ChatbotComponent } from './chatbot/chatbot/chatbot.component';
+
 
 
 
@@ -51,14 +53,16 @@ import {ChatbotComponent } from './chatbot/chatbot/chatbot.component';
       MovieUserCardComponent,
       UserListComponent,
       CommonFunctionalityComponent,
-      ChatbotComponent
+      ChatbotComponent,
+
     ],
   imports: [
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
-      RouterModule
+      RouterModule,
+
     ],
   providers: [UserService, ConnectionServiceService, MovieServiceService],
   bootstrap:[AppComponent],

@@ -48,18 +48,23 @@ class ChatbotView(View):
     def get(self, request, id=None):
         if request.method == "GET":
             #permet de gérer les get requests en envoyannt le user
-            HttpResponse(request.GET.items())
+            #HttpResponse(request.GET.items())
             #works out
-            jsonObject = json.loads(request.body.decode("utf-8"))
-            print("on a reçu via une requête get d'un user 3 : "+jsonObject["content"])
-            userRequest = jsonObject["content"]
+            #jsonObject = json.loads(request.body.decode("utf-8"))
+            #print("on a reçu via une requête get d'un user 3 : "+jsonObject["content"])
+            #retrieve the field "content" value
+            print("on a reçu via une requête get d'un user 3 : "+request.GET.get('content', 'request failed'))
+            userRequest = request.GET.get('content', 'request failed')
+            #jsonObject["content"]
             try:
                 print("Traitement en cours par l'IA...")
 
                 #prepare the answer of the llm
                 answer = mychatbot.prepare_answer(userRequest)
-                strResponse = '{"response":'+answer+'}'
+                strResponse = '{"response":'+'"'+answer+'"'+'}'
                 print("L'IA a fini sa réponse !")
+                print("sa réponse est : "+strResponse)
+                #return HttpResponse(strResponse, content_type='application/json')
                 return HttpResponse(strResponse, content_type='application/json')
 
                 #answer for the user
