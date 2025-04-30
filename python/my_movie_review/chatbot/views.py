@@ -48,8 +48,17 @@ class ChatbotView(View):
             #user = my_user.User("jean", "pazzword","jean@gmail.com")
             #permet de gérer les get requests en envoyannt le user
             HttpResponse(request.GET.items())
-            print("on a reçu via une requête get d'un user : "+ str(request.body))
-            
+            print("on a reçu via une requête get d'un user 1 : "+ str(request.body))
+            print("on a reçu via une requête get d'un user 2 : "+ str(request.GET.items()))
+            testStr = '{"content":"test", "content2":"value2"}'
+
+            jsonObject = json.loads(request.body.decode("utf-8"))
+            #works out
+            #jsonObject = json.loads(testStr)
+            #print("le type de mon json : "+str(type(jsonObject)))
+            #for key,value in jsonObject:
+            print("on a reçu via une requête get d'un user 3 : "+jsonObject["content"])
+        
             try:
                 print("hello requête")
             except Exception as e:
