@@ -1,5 +1,6 @@
-import { Component , Input, OnInit} from '@angular/core';
+import { Component , Input, OnInit , AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import Typewriter from 'typewriter-effect/dist/core';
 
 import { User } from '../user';
 import {MovieUserCardComponent } from '../cards/movie_user_card/movie-user-card.component';
@@ -25,6 +26,9 @@ export class UserMovieListComponent implements OnInit {
       movieService:MovieServiceService;
       connectionService:ConnectionServiceService
       userService:UserService;
+
+      //static true means the sentences cannot change
+        @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
 
       constructor(service:MovieServiceService, userService:UserService, connectionService:ConnectionServiceService){
         this.movieService = service;
@@ -71,4 +75,23 @@ export class UserMovieListComponent implements OnInit {
 
 
       ngOnInit() {}
+
+      //necessary for progressive writing
+      ngAfterViewInit(): void {
+            const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+              loop: true,
+              delay: 75,
+            });
+            typewriter.erasable = true
+
+            typewriter
+               .pauseFor(500)
+              .typeString("Préparez vous... ")
+              .pauseFor(1000)
+              .deleteAll()
+              .typeString("Voici votre liste de films : ")
+              .pauseFor(1000)
+              .start();
+
+        }
 }
