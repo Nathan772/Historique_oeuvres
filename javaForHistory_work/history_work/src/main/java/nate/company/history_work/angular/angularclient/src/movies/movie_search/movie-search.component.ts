@@ -34,6 +34,8 @@ export class MovieSearchComponent {
     movieService: MovieServiceService;
     userService:UserService;
     connectionService:ConnectionServiceService;
+    hideSearchResult:boolean = false;
+    statusSearch:string = "cacher?";
      /*on va utiliser cet émeteur pour émettre un tableau
     qui correspond à la liste de films
     trouvée par l'utilisateur lors de sa recherche.
@@ -46,6 +48,12 @@ export class MovieSearchComponent {
     arrayFound = new EventEmitter<MovieShortInformations[]>();
 
     startSearch(chaine: string) {
+      //in this state search is forbidden
+      if(this.hideSearchResult)
+      {
+        return;
+      }
+    //search is allowed
       console.log('le user a recherché ' + chaine);
       /* Il faudra appeler une fonction du service movie-service
        this.search et l'utiliser pour faire la recherche dans la bdd*/
@@ -95,6 +103,21 @@ export class MovieSearchComponent {
       this.connectionService = connectionService;
       this.userService.prepareConnection(this.connectionService);
       console.log("les données ont bien été récupérées, le user a pour pseudo :"+this.userService.userAccount.pseudo);
+
     }
-    ngOnInit() {}
+  changeHideStatus(){
+    //reverse the status
+    this.hideSearchResult = !this.hideSearchResult;
+    if(this.hideSearchResult === true){
+      this.statusSearch = "afficher ?"
+    }
+  else {
+          this.statusSearch = "cacher ?"
+        }
+
+  }
+
+    ngOnInit() {
+      this.hideSearchResult = false;
+    }
 }

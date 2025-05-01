@@ -45,6 +45,12 @@ export class DefaultUserComponent {
       }
 
   ngOnInit(){
+    //retrieve old data if reload of page
+    //the user data or default values
+    this.userService.userAccount.pseudo = localStorage.getItem('userAccountSavedPseudo') || ""
+    this.userService.userAccount.password = localStorage.getItem('userAccountSavedPassword')  || ""
+    this.userService.userAccount.category = localStorage.getItem('userAccountSavedCategory') || ""
+    this.userService.userAccount.email = localStorage.getItem('userAccountSavedEmail')  || ""
     if(this.userService.userAccount.pseudo === ""){
       this.redirectionToConnectionPage()
       }

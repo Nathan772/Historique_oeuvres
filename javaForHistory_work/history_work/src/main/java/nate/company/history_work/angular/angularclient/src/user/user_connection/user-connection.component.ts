@@ -96,6 +96,12 @@ export class UserConnectionComponent implements OnInit {
                  console.log("le mail du user est : "+userFound.email);
                  console.log("le password du user est : "+userFound.password);
                   console.log("son status est : "+userFound.category);
+
+                  //prepare data for page refresh
+                  localStorage.setItem('userAccountSavedPseudo', this.userService.userAccount.pseudo);
+                      localStorage.setItem('userAccountSavedPassword', this.userService.userAccount.password);
+                      localStorage.setItem('userAccountSavedCategory', this.userService.userAccount.category);
+                      localStorage.setItem('userAccountSavedEmail', this.userService.userAccount.email);
                 //user homepage
                 this.gotoUserEntrance()
               }

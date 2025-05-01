@@ -89,9 +89,9 @@ addToWatchList(movie:watchedMovie){
       //this.userService.
       this.addMovieToUserListWithoutDataBase(movie);
       //check if updated worked for user-connection
-      for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents : "+this.userMoviesList[i].movie.imdbID);
-      }
+      /*for(let i=0;i<this.userMoviesList.length;i++){
+        //console.log("les films présents : "+this.userMoviesList[i].movie.imdbID);
+      }*/
 }
 
 
@@ -203,6 +203,7 @@ addToWatchList(movie:watchedMovie){
               imdbID:movie.imdbID,
               poster: movie.Poster
     };
+  /* useless, just for tests
     for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
         if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHING){
@@ -210,7 +211,7 @@ addToWatchList(movie:watchedMovie){
           console.log("le film est déjà présent en mode à revoir : "+this.userMoviesList[i].movie.imdbID);
           //return true;
         }
-    }
+    }*/
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
   }
@@ -306,9 +307,9 @@ addToWatchList(movie:watchedMovie){
               director: "unknown"
     };
     for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        //console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
         if(this.userMoviesList[i].movie.imdbID === watchedMovie.movie.imdbID && this.userMoviesList[i].movieStatus === movieStatus){
-          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          //console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
           return true
         }
     }
