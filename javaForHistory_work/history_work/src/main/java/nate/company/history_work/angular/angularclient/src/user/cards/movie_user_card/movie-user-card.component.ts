@@ -160,9 +160,9 @@ path
     removeFromWatchListAndDataBaseAsWatchLater(movie:watchedMovie){
 
       //retrieve movie full info object
-      this.completeInformations(movie.movie.imdbID);
+      //this.completeInformations(movie.movie.imdbID);
         //this.userService.
-        let movieRemoved:watchedMovie = this.movieService.removeMovieFromUserInDataBase(this.movieFromApi, this.userService.userAccount);
+        let movieRemoved:watchedMovie = this.movieService.removeMovieFromUserInDataBaseWithMovieObject(movie.movie, this.userService.userAccount);
 
 
         //retrieve the movie as a watchedMovie

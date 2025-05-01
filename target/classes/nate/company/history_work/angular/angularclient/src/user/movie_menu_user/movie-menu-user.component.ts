@@ -3,6 +3,7 @@ import { MovieServiceService } from '../../movies/movie_service/movie-service.se
 import { UserService } from '../user_service/user-service.service';
 import { User } from '../user';
 import {ConnectionServiceService} from '../../connection/connection-service.service';
+import { DefaultUserComponent} from '../../default_user_menu/default-user.component';
 
 @Component({
   selector: 'app-movie-menu-user',

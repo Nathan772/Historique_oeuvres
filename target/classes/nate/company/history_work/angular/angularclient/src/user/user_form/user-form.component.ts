@@ -162,6 +162,7 @@ export class UserFormComponent implements OnInit {
             result => {
               //connect the user
               this.connectionService.isConnected = true;
+
               //update the actual user with their true info (notably the uid)
               this.userService.userAccount = result;
               //no, only for admin now
@@ -175,6 +176,12 @@ export class UserFormComponent implements OnInit {
                   }
 
                 )*/
+
+              //prepare data for refresh
+              localStorage.setItem('userAccountSavedPseudo', this.userService.userAccount.pseudo);
+                  localStorage.setItem('userAccountSavedPassword', this.userService.userAccount.password);
+                  localStorage.setItem('userAccountSavedCategory', this.userService.userAccount.category);
+                  localStorage.setItem('userAccountSavedEmail', this.userService.userAccount.email);
 
 
 

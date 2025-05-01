@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../user/user_service/user-service.service';
 
 /*
 
@@ -20,7 +21,11 @@ https://javascript.plainenglish.io/angular-how-you-can-reload-refresh-a-single-c
 })
 export class CommonFunctionalityComponent implements OnInit {
 
-  constructor(public router:Router) { }
+  userService:UserService;
+
+  constructor(userService:UserService,public router:Router) {
+    this.userService = userService;
+    }
 
   ngOnInit(): void {
   }
@@ -36,11 +41,27 @@ export class CommonFunctionalityComponent implements OnInit {
     })
   }
 
+
   reloadPage(){
+    /*
+
+    it cause data loss :
+
+    https://stackoverflow.com/questions/62834093/angular-data-loss-when-page-refresh
+
+    */
+
+    //prepare data in order to not loss them during "reload"
+    //user data
+    localStorage.setItem('userAccountSavedPseudo', this.userService.userAccount.pseudo);
+    localStorage.setItem('userAccountSavedPassword', this.userService.userAccount.password);
+    localStorage.setItem('userAccountSavedCategory', this.userService.userAccount.category);
+    localStorage.setItem('userAccountSavedEmail', this.userService.userAccount.email);
     window.location.reload()
   }
 
 reloadCurrent(){
+
     this.reloadComponent(true);
   }
 

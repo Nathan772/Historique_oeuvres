@@ -2,15 +2,12 @@
   Ravi de te voir {{ userService.userAccount.pseudo }} !
 </h1>-->
 
+<app-default-user>
+
+</app-default-user>
 <!-- user progressive message
      -->
 <div #typewriterElement></div>
-
-<form (ngSubmit)="userService.disconnect(connectionService)">
-
-<button type="submit" class="btn btn-info"> Déconnexion ? </button>
-
-</form>
 
 <div class="container">
   <div class="row">

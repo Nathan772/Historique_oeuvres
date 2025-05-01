@@ -89,9 +89,9 @@ addToWatchList(movie:watchedMovie){
       //this.userService.
       this.addMovieToUserListWithoutDataBase(movie);
       //check if updated worked for user-connection
-      for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents : "+this.userMoviesList[i].movie.imdbID);
-      }
+      /*for(let i=0;i<this.userMoviesList.length;i++){
+        //console.log("les films présents : "+this.userMoviesList[i].movie.imdbID);
+      }*/
 }
 
 
@@ -203,6 +203,7 @@ addToWatchList(movie:watchedMovie){
               imdbID:movie.imdbID,
               poster: movie.Poster
     };
+  /* useless, just for tests
     for(let i=0;i<this.userMoviesList.length;i++){
         console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
         if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === watchedMovieStatus.WATCHING){
@@ -210,7 +211,7 @@ addToWatchList(movie:watchedMovie){
           console.log("le film est déjà présent en mode à revoir : "+this.userMoviesList[i].movie.imdbID);
           //return true;
         }
-    }
+    }*/
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
   }
@@ -306,9 +307,9 @@ addToWatchList(movie:watchedMovie){
               director: "unknown"
     };
     for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+        //console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
         if(this.userMoviesList[i].movie.imdbID === watchedMovie.movie.imdbID && this.userMoviesList[i].movieStatus === movieStatus){
-          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          //console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
           return true
         }
     }
@@ -647,10 +648,10 @@ in the user list for the database
 
   /* fonction qui prend un argument l'id d'un film
   et qui récupère un observable qui contient les infos complète du films : titre, année, etc...*/
-  getMovieComplete(idFilm: string): Observable<MovieFullInformations> {
+  getMovieComplete(imdbID: string): Observable<MovieFullInformations> {
     let myMovieObservable: Observable<MovieFullInformations> =
       this.HttpClient.get<MovieFullInformations>(
-        'https://www.omdbapi.com/?apikey=1069fcf1&i=' + idFilm
+        'https://www.omdbapi.com/?apikey=1069fcf1&i=' + imdbID
       ).pipe(map((MovieFullInformations) => MovieFullInformations));
 
     return myMovieObservable;
@@ -708,59 +709,69 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
                                         },
 
             };
-          /*
-          let movieRemoved:watchedMovie = {
-                      movie:movieSimple,
-                       movieStatus:movieActualStatus,
-                        time: {
-                          hours:0,
-                          minutes:0,
-                          seconds:0,
 
-                          },
-
-                      };*/
+             console.log("les infos du film à supprimer sont : imdb : "+movieSimple.imdbID+" title : "+movieSimple.title)
 
            this.HttpClient.delete<string>(this.userMoviesUrl+"/remove",{
             headers,
             body: {movieSimple, userSimple}
             })
           .subscribe(movieRemoved2 =>
-                    { //movieRemoved
-                      //= movieRemoved2
-                      /*
-                      movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
-                                  movieStatus:watchedMovieStatus.WATCHLATER,
-                                     time: {
-                                                              hours:0,
-                                                              minutes:0,
-                                                              seconds:0,
-
-                                                              },
-
-                                  };
-                                */
-                     // console.log("le film removed data :"+ {{ movieRemoved2 | json }});
-                      //let jsonMovieRemoved = JSON.parse(movieRemoved2 | JSON)
-                      /*deprecated
-                      let jsonMovieRemoved = JSON.parse(movieRemoved2)
-                      */
-                      //console.log("l'état de jsonMovieRemoved : "+jsonMovieRemoved);
-                      //movieRemoved.movie.id = jsonMovieRemoved.movie.id;
-                      //console.log("l'état de movieRemoved après avoir reçu des données : "+movieRemoved);
-                      /*if(response != null){
-                      //remove from list
-                      if(index!==-1){
-                        console.log("film retiré de la liste de l'utilisateur : "+movie.imdbID);
-                        this.userMoviesList.splice(index,1);
-                      }*/
-                    //console.log(movie.Title+" a été supprimé de la liste du user : "+this.userService.userAccount)
+                    {
           });
         return movieRemoved;
 
-        //this.HttpClient.delete<Movie>(this.userMoviesUrl+"/remove/"+user.id+"/"+movieSimple.imdbID).map(response =>response.json()).pipe(catchError());
-
     }
+
+  //can I delete with the same pattern as POST which mean : wrapper ???
+  public removeMovieFromUserInDataBaseWithMovieObject(movie:Movie, user:User):watchedMovie {
+
+            let movieSimple = movie;
+
+            let userSimple = {
+              pseudo:user.pseudo,
+              password:user.password
+            };
+
+            this.userMoviesList = this.userMoviesList.filter(
+              movieKept => movieKept.movie.imdbID != movie.imdbID
+            )
+            console.log("On supprime le film dans la liste des films de l'utilisateur : "+user.pseudo+" avec pour IMDB "+movieSimple.imdbID);
+            /*
+            functional but no checking*/
+
+            const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+            /*
+
+            it works !
+            Solution by chatgpt
+
+            */
+            let movieRemoved:watchedMovie ={
+              movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
+              movieStatus:watchedMovieStatus.WATCHLATER,
+                 time: {
+                                          hours:0,
+                                          minutes:0,
+                                          seconds:0,
+
+                                          },
+
+              };
+
+               console.log("les infos du film à supprimer sont : imdb : "+movieSimple.imdbID+" title : "+movieSimple.title)
+
+             this.HttpClient.delete<string>(this.userMoviesUrl+"/remove",{
+              headers,
+              body: {movieSimple, userSimple}
+              })
+            .subscribe(movieRemoved2 =>
+                      {
+            });
+          return movieRemoved;
+
+      }
 
 
 }

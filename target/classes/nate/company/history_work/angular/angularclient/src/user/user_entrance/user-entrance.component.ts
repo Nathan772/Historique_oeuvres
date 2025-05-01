@@ -5,6 +5,8 @@ import { User } from '../user';
   import Typewriter from 'typewriter-effect/dist/core';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
 import { ChatbotComponent } from "../../chatbot/chatbot.component";
+import { DefaultUserComponent} from '../../default_user_menu/default-user.component';
+
 @Component({
   selector: 'app-user-entrance',
   templateUrl: './user-entrance.component.html',

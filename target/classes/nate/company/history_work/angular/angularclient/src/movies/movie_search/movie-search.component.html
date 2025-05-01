@@ -8,7 +8,7 @@ remplace main.component.ts
   à startSearch (qui) l'élément qu'il doit chercher-->
 <app-navbar-movies (searchActivate)="startSearch($event)"> </app-navbar-movies>
 
-<app-chatbot> </app-chatbot>
+<button (click)="this.changeHideStatus()">{{ statusSearch }}</button>
 
 <!-- on va donner
   le contenu du champ
@@ -16,9 +16,13 @@ remplace main.component.ts
   au champ "ListFilm"
   de movielist
   movielist-->
-<app-movie-list [listMovies]="listMoviesTransfer">
+
+<app-movie-list *ngIf="!hideSearchResult"[listMovies]="listMoviesTransfer">
 
 </app-movie-list>
+
+
+
 
 
 

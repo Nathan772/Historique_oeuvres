@@ -7,6 +7,7 @@ import {MovieUserCardComponent } from '../cards/movie_user_card/movie-user-card.
 import { MovieShortInformations } from '../../movies/movie_models/movie_models';
 import { MovieCardComponent } from '../../movies/movie_card/movie-card.component';
 import { MovieFullInformations } from '../../movies/movie_models/movie_models';
+import { DefaultUserComponent} from '../../default_user_menu/default-user.component';
 
 
 //service
@@ -61,9 +62,9 @@ export class UserMovieListComponent implements OnInit {
 
 
           console.log("on passe dans le for des films présents : ");
-          for(let i=0;i<this.movieService.userMoviesList.length;i++){
+          /*for(let i=0;i<this.movieService.userMoviesList.length;i++){
             console.log("les films présents après la récupération  : "+this.movieService.userMoviesList[i].movie.imdbID);
-          }
+          }*/
 
     }
 

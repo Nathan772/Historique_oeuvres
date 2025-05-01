@@ -108,7 +108,7 @@ public class MovieController {
 
     @DeleteMapping("/user/movie/remove")
     public ResponseEntity<String> removeMovieFromList(@RequestBody String movieDataUserJson) {
-
+        System.out.println("les infos du json en brut sont : "+movieDataUserJson);
         //System.out.println("on a trouvé le user principal");
         //user is connected
         // doesn't work use another approach
@@ -159,12 +159,14 @@ public class MovieController {
 
         if(movieAlreadyExistsOpt.isPresent()){
 
+            System.out.println("le film a bien été "+movie+" ( found)");
             //remove the watched movie line from database
             var watchedToRemoveOpt = watchedMovieService.findByUserAndMovie(actualUser, movieAlreadyExistsOpt.get());
             /*
             movie not found, but it's not a problem
              */
             if(watchedToRemoveOpt.isEmpty()){
+                System.out.println("le film à supprimer n'a pas été trouvé pour le user "+actualUser+ " "+movie+" (not found)");
                 return ResponseEntity.ok("{}");
             }
             /*

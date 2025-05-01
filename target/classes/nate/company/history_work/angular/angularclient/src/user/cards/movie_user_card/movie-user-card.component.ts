@@ -35,7 +35,7 @@ export class MovieUserCardComponent  extends CommonFunctionalityComponent implem
 connectionService:ConnectionServiceService;
   movieFromApi:MovieFullInformations;
   fullInfoOn: boolean = false;
-  userService:UserService;
+  //userService:UserService;
   //necessary to use the enum in the html part
   watchedMovieStatus = watchedMovieStatus;
 
@@ -54,9 +54,9 @@ path
   /* l'initialisation
     du service dans le constructeur
     est indispensable*/
-    constructor(movieService: MovieServiceService, userService:UserService,
+    constructor(movieService: MovieServiceService, public override userService:UserService,
       public override router:Router, connectionService:ConnectionServiceService ) {
-        super(router);
+        super(userService,router);
       this.movieService = movieService;
       this.userService = userService;
       this.movieFull = {
@@ -160,9 +160,9 @@ path
     removeFromWatchListAndDataBaseAsWatchLater(movie:watchedMovie){
 
       //retrieve movie full info object
-      this.completeInformations(movie.movie.imdbID);
+      //this.completeInformations(movie.movie.imdbID);
         //this.userService.
-        let movieRemoved:watchedMovie = this.movieService.removeMovieFromUserInDataBase(this.movieFromApi, this.userService.userAccount);
+        let movieRemoved:watchedMovie = this.movieService.removeMovieFromUserInDataBaseWithMovieObject(movie.movie, this.userService.userAccount);
 
 
         //retrieve the movie as a watchedMovie
@@ -239,21 +239,9 @@ path
         }
     }*/
     let statusAsNumber: number = +movieStatus;
-    if (typeof movieWatched.movieStatus === "number") {
-        // do something
-        console.log("c'est bien un watchedMovieStatus")
-    }
-  else  {
-          // do something
-          console.log("ce n'est pas un watchedMovieStatus")
-      }
     let status2AsNb : number = + movieWatched.movieStatus.valueOf();
     if(status2AsNb === statusAsNumber){
       return true;
-    }
-    else{
-      console.log("le status de movieStatus est : quant à lui :"+statusAsNumber);
-      console.log("le status du film est "+status2AsNb);
     }
     //console.log("on va vérifier si le film : "+movie.imdbID+" title : "+movie.Title);
     return false;
