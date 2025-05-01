@@ -8,6 +8,19 @@
   width: 500px;
 }
 
+/*
+.chat-box {
+    position:relative;
+}*/
+.chat-box {
+    /*position:absolute;*/
+    position:fixed;
+    bottom:20;
+    right:0;
+    overflow-y:scroll;
+}
+
+
 .chat-box {
   margin: 0 auto;
   width: 400px;

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user_service/user-service.service';
 import { User } from '../user';
+  import Typewriter from 'typewriter-effect/dist/core';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
 import { ChatbotComponent } from "../../chatbot/chatbot.component";
 @Component({
@@ -18,6 +19,10 @@ export class UserEntranceComponent {
   le user service du constructeur permet d'être utilisé
   pour utiliser le user offert.
   */
+
+  //static true means the sentences cannot change
+  @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
+
   constructor(routerParam: Router,userService: UserService, connectionService:ConnectionServiceService ) {
     console.log("on passe par le constructeur de user-entrance...");
     this.userService = userService;
@@ -61,7 +66,30 @@ export class UserEntranceComponent {
     this.router.navigate(['/userEntrance']);
   }
 
+
+
   ngOnInit(){}
 
+//necessary for progressive writing
+ngAfterViewInit(): void {
+      const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+        //loop: true,
+        delay: 75,
+      });
+      typewriter.erasable = true
+
+      typewriter
+         .pauseFor(1000)
+        .typeString("Ravi de te voir ")
+        .pauseFor(1500)
+        //.deleteAll()
+        .typeString(this.userService.userAccount.pseudo+ " !")
+        .pauseFor(1500)
+        .start();
+
+  }
 
 }
+
+
+
