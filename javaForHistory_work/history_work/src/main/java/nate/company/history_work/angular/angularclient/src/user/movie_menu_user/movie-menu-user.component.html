@@ -1,10 +1,16 @@
 
-
+<!--
+deprecated, moved to default user
 <form (ngSubmit)="userService.disconnect(connectionService)">
 
   <button type="submit" class="btn btn-info"> Déconnexion ? </button>
 
 </form>
+-->
+
+<app-default-user>
+
+</app-default-user>
 
 <div class="container">
   <div class="row">
@@ -19,15 +25,18 @@
             <br>
 
             <li>
-              <a routerLink="listMovies" class="btn btn-info"> consulter ma liste de films ?</a>
+              <a routerLink="listMovies" class="btn btn-info"> consulter/ajouter à ma liste de films ?</a>
             </li>
 
             <br>
             <br>
 
+            <!-- deprecated it has been merged
             <li>
               <a routerLink="SearchMovie" class="btn btn-info"> ajouter un film ? </a>
             </li>
+
+            -->
 
             <br>
             <br>

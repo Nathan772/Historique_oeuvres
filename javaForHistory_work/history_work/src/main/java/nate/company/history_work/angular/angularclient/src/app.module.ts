@@ -19,6 +19,7 @@ import { UserService } from './user/user_service/user-service.service';
 import {ChatbotService} from './chatbot/chatbot_service/chatbot.service'
 import { CommonFunctionalityComponent } from './common-functionality-component/common-functionality-component.component';
 import {RouterModule} from '@angular/router';
+import { DefaultUserComponent } from './default_user_menu/default-user.component';
 
 import {MovieUserCardComponent } from './user/cards/movie_user_card/movie-user-card.component';
 import { ConnectionServiceService } from './connection/connection-service.service';
@@ -54,6 +55,7 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       UserListComponent,
       CommonFunctionalityComponent,
       ChatbotComponent,
+      DefaultUserComponent,
 
     ],
   imports: [
