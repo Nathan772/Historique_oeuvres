@@ -110,10 +110,17 @@ export class UserConnectionComponent implements OnInit {
                                   this.gotoUserEntrance()
 
 
-                  })
+                  }
+
+
+                )
 
 
              }
+
+           else {
+                             console.log("le user n'a pas été trouvé, échec de l'authentification")
+                           }
           })
 
 

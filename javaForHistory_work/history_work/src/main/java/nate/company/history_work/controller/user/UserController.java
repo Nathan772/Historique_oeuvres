@@ -205,11 +205,11 @@ public class UserController {
         var userByPseudo = userService.getUserByPseudo(userPseudo);
         if(userByPseudo.isPresent()){
             //converter to compare raw password to encoded password
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(5);
-
-            System.out.println("le password en version encodé pour la récupération du compte est : "+password);
-            if(encoder.matches(password,userByPseudo.get().getPassword())){
-                System.out.println("bon mot dee passe pour le user : "+userPseudo);
+            //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+            System.out.println("le password en version non encodé pour la récupération du compte est : "+password);
+            System.out.println("le mot de passe encodé vaut : "+userByPseudo.get().getPassword());
+            if(passwordMatches(password,userByPseudo.get().getPassword())){
+                System.out.println("bon mot de passe pour le user : "+userPseudo);
                 /*
                 connection with spring security
                  */
@@ -220,7 +220,8 @@ public class UserController {
 
                 //set user and password in db
                 UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(userPseudo,
-                        userByPseudo.get().getPassword());
+                        password);
+
 //                Authentication authenticationRequest =
 //                        UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
                 System.out.println("on essaye d'authentifier le user 2 ");
@@ -231,10 +232,10 @@ public class UserController {
                 System.out.println("le user a été authentifié correctmeent !! 4");
                 sc.setAuthentication(authenticationResponse);
                 USER_CHOSEN.setUserDetails((UserDetails) sc.getAuthentication().getPrincipal());
-                System.out.println("le user a été authentifié correctmeent !! 5 il est enregistré comme : "+USER_CHOSEN.getPseudo());
+                System.out.println("le user a été authentifié correctmeent !! 5 +++ il est enregistré comme : "+USER_CHOSEN.getPseudo());
                 ResponseEntity.ok(true);
             }
-            System.out.println("mauvais mot de passe pour le user : "+userPseudo);
+            System.out.println("mauvais mot de passe pour le user zzzzz test : "+userPseudo);
             //wrong password
             return ResponseEntity.ok(false);
         }
@@ -414,7 +415,7 @@ public class UserController {
         }
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd on ajoute le user : "+user);
         System.out.println("on arrive à la fin dans adduser");
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(5);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
         //change password to encoded password
         //encoder.encode(user.getPassword()
         //user.setPassword();
