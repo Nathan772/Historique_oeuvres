@@ -1647,3 +1647,14 @@ attente infini lors de l'authentification.
 
 solution :
 
+
+regardez le mdp et le pseudo que vous avez donnés lors du :
+
+```java
+//use the non encoded password for the test
+        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getPseudo(),
+                user.getPassword());
+```
+
+il faut utiliser le vrai pseudo en premier argument 
+et le raw password (celui qui n'est pas caché) en deuxième.
