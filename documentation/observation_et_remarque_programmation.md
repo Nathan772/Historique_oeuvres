@@ -1594,9 +1594,56 @@ dans ./angularclient :
 npm install socket.io-client
 ```
 
+
 problème :
 
-"Cannot find module 'angular-typing-animation' or its corresponding type declarations."
+erreur lors de l'authentification avec spring security
+"
+java.lang.StackOverflowError: null
+	at java.base/java.lang.ReflectiveOperationException.<init>(ReflectiveOperationException.java:90) ~[na:na]
+	at java.base/java.lang.reflect.InvocationTargetException.<init>(InvocationTargetException.java:68) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:118) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.12.jar:6.1.12]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:216) ~[spring-aop-6.1.12.jar:6.1.12]
+	at jdk.proxy2/jdk.proxy2.$Proxy143.authenticate(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+
+"
+
+solution : 
+
+https://stackoverflow.com/questions/73498503/authenticationmanager-throws-stackoverflowerror
+
+```java
+
+  @Configuration
+    @EnableWebSecurity
+    public class SecurityConfig{
+    
+        //rewrite loadByUsername in UserDetailsServiceImpl and I inject it in Spring Container
+        @Autowired
+        UserDetailsService userDetailsService;
+
+        @Bean
+        public PasswordEncoder passwordEncoder(){
+            return new BCryptPasswordEncoder();
+        }
+    
+        @Bean
+        public AuthenticationManager authenticationManagerBean(HttpSecurity http) throws Exception {
+            AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+            authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+            return authenticationManagerBuilder.build();
+        }
+}
+
+
+```
+
+problème :
+
+attente infini lors de l'authentification.
 
 solution :
 

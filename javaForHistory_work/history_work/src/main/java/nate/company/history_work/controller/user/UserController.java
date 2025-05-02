@@ -4,17 +4,26 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import static nate.company.history_work.service.UserService.USER_CHOSEN;
+import nate.company.history_work.configuration.SecurityConfig;
 import nate.company.history_work.handle_connection_spring.ActiveUserStore;
 import nate.company.history_work.service.*;
 import nate.company.history_work.siteTools.dtos.UserDto;
 import nate.company.history_work.siteTools.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
 
+import java.security.Principal;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -54,6 +63,11 @@ public class UserController {
     @Autowired
     private final MyUserDetailsService userDetailsService;
 
+    @Autowired
+    private final AuthenticationManager authenticationManager;
+
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
 
     /**
@@ -63,7 +77,8 @@ public class UserController {
      */
     @Autowired
     public UserController(UserService userService, MovieService movieService, AuthenticationService authenticationService,
-                          MyUserDetailsService userDetailsService, WatchMovieService watchedMovieService){
+                          MyUserDetailsService userDetailsService, WatchMovieService watchedMovieService,
+                          AuthenticationManager authenticationManager){
         Objects.requireNonNull(userService);
         Objects.requireNonNull(userDetailsService);
         this.userDetailsService = userDetailsService;
@@ -71,6 +86,7 @@ public class UserController {
         this.movieService = movieService;
         this.authenticationService= authenticationService;
         this.watchedMovieService = watchedMovieService;
+        this.authenticationManager = authenticationManager;
 
     }
 
@@ -138,7 +154,10 @@ public class UserController {
 
 
     /**
-     * this method retrieve a specific user if exists in database
+     * this method retrieve a specific user if exists in database based only on pseudo
+     * or email.
+     * it let the front end choose if the user is valid based on the comparison
+     * between the data related to this user data and the actual data.
      * @param userPseudo pseudo of the user
      * @param email the email from this user
      * @return the user searched if found, else null
@@ -164,11 +183,60 @@ public class UserController {
         LOGGER.log(Level.INFO, "On va chercher un user");
         //the user already exists
         if(userByEmail.isPresent()){
+
+
             return ResponseEntity.ok(userByEmail.get());
         }
         var userByPseudo = userService.getUserByPseudo(userPseudo);
         if(userByPseudo.isPresent()){
             return ResponseEntity.ok(userByPseudo.get());
+        }
+
+
+        LOGGER.log(Level.INFO, " le user n'existe pas en bdd");
+        //they don't exist
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/validAuthentication")
+    @ResponseBody
+    public ResponseEntity<Boolean>validAuthenticationUser(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="password") String password){
+        System.out.println("on va chercher un user par pseudo");
+        var userByPseudo = userService.getUserByPseudo(userPseudo);
+        if(userByPseudo.isPresent()){
+            //converter to compare raw password to encoded password
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(5);
+
+            System.out.println("le password en version encodé pour la récupération du compte est : "+password);
+            if(encoder.matches(password,userByPseudo.get().getPassword())){
+                System.out.println("bon mot dee passe pour le user : "+userPseudo);
+                /*
+                connection with spring security
+                 */
+                System.out.println("on essaye d'authentifier le user 1 ");
+                //crypt the password
+//                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+//                String passwordCrypted = encoder.encode(password);
+
+                //set user and password in db
+                UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(userPseudo,
+                        userByPseudo.get().getPassword());
+//                Authentication authenticationRequest =
+//                        UsernamePasswordAuthenticationToken.unauthenticated(loginRequest.username(), loginRequest.password());
+                System.out.println("on essaye d'authentifier le user 2 ");
+                Authentication authenticationResponse =
+                        this.authenticationManager.authenticate(authReq);
+                System.out.println("le user a été authentifié correctmeent !! 3");
+                SecurityContext sc = SecurityContextHolder.getContext();
+                System.out.println("le user a été authentifié correctmeent !! 4");
+                sc.setAuthentication(authenticationResponse);
+                USER_CHOSEN.setUserDetails((UserDetails) sc.getAuthentication().getPrincipal());
+                System.out.println("le user a été authentifié correctmeent !! 5 il est enregistré comme : "+USER_CHOSEN.getPseudo());
+                ResponseEntity.ok(true);
+            }
+            System.out.println("mauvais mot de passe pour le user : "+userPseudo);
+            //wrong password
+            return ResponseEntity.ok(false);
         }
 
 
@@ -216,6 +284,15 @@ public class UserController {
 
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd");
         System.out.println("le user n' existe pas en bdd");
+
+        //handle spring security authentication :
+        /*
+        UsernamePasswordAuthenticationToken authReq
+                = new UsernamePasswordAuthenticationToken(user, pass);
+        Authentication auth = authManager.authenticate(authReq);
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(auth);*/
+
         //they don't exist
         return ResponseEntity.ok(false);
     }
@@ -337,7 +414,33 @@ public class UserController {
         }
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd on ajoute le user : "+user);
         System.out.println("on arrive à la fin dans adduser");
-        var newUser = userService.saveUser(user);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(5);
+        //change password to encoded password
+        //encoder.encode(user.getPassword()
+        //user.setPassword();
+
+        var userCopy = new User(user.getPseudo(), user.getEmail(), user.getPassword());
+
+        //encode password
+        userCopy.setPassword(encoder.encode(userCopy.getPassword()));
+        //save
+        var newUser = userService.saveUser(userCopy);
+
+
+
+        //perform a spring session for a user session
+        //use the non encoded password for the test
+        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(user.getPseudo(),
+                user.getPassword());
+        System.out.println("on essaye d'authentifier après avoir ajouté le user 2 ");
+        Authentication authenticationResponse =
+                this.authenticationManager.authenticate(authReq);
+        System.out.println("on essaye d'authentifier après avoir ajouté le user !! 3");
+        SecurityContext sc = SecurityContextHolder.getContext();
+        System.out.println("on essaye d'authentifier après avoir ajouté le user !! 4");
+        sc.setAuthentication(authenticationResponse);
+        USER_CHOSEN.setUserDetails((UserDetails) sc.getAuthentication().getPrincipal());
+        System.out.println("le user a été authentifié correctmeent !! 5 il est enregistré comme : "+USER_CHOSEN.getPseudo());
         return newUser;
     }
 
@@ -361,6 +464,15 @@ public class UserController {
          */
         return ResponseEntity.noContent().build();
     }
+
+
+    /*
+    get the current connected user
+     */
+//    @GetMapping("/username")
+//    public String currentUserName(Principal principal) {
+//        return principal.getName();
+//    }
 
 
 

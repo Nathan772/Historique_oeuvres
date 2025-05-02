@@ -77,49 +77,47 @@ export class UserConnectionComponent implements OnInit {
   connectUser() {
     console.log("try to connect user");
     //check if user exists in data base
-    this.userService.findUser(this.user).subscribe(
+    this.userService.validAuthenticationUser(this.user).subscribe(
         userFound => {
+          //The user already exists and you sent the proper password & id
+          if(userFound === true){
+              console.log("le user a été trouvé ! son pseudo : "+this.user.pseudo);
 
-          //The user already exists
-          if(userFound != null){
-              console.log("le user a été trouvé ! son pseudo : "+userFound.pseudo);
 
-              //the user exists, starts connexion
-              if(userFound.password == this.user.password){
-                 //connect the user + retrieve infos
-                 this.connectionService.isConnected = true;
-                 //update the actual user with their true info (notably the uid)
-                 this.userService.userAccount = userFound;
-                 console.log("les infos du user connecté est : "+userFound);
-                 console.log("le pseudo du user connecté est : "+userFound.pseudo);
+             //retrieve complete data thanks to db
+             this.userService.findUser(this.user).subscribe(
+               userFound2 => {
+                         this.user = userFound2;
+              //find user complete data
+               // this.userService.findUser(this.user).subscribe(
+                 this.userService.userAccount = this.user;
 
-                 console.log("le mail du user est : "+userFound.email);
-                 console.log("le password du user est : "+userFound.password);
-                  console.log("son status est : "+userFound.category);
+                  this.connectionService.isConnected = true;
+                  //update the actual user with their true info (notably the uid)
+                  this.userService.userAccount = this.user;
+                  console.log("les infos du user connecté est : "+userFound2);
+                  console.log("le pseudo du user connecté est : "+userFound2.pseudo);
 
-                  //prepare data for page refresh
-                  localStorage.setItem('userAccountSavedPseudo', this.userService.userAccount.pseudo);
-                      localStorage.setItem('userAccountSavedPassword', this.userService.userAccount.password);
-                      localStorage.setItem('userAccountSavedCategory', this.userService.userAccount.category);
-                      localStorage.setItem('userAccountSavedEmail', this.userService.userAccount.email);
-                //user homepage
-                this.gotoUserEntrance()
-              }
-              //error return
-              else{
-                this.connectionService.alreadyExists = true;
-                this.connectionService.mismatchedPassword = true
-                return;
-              }
-          }
+                 console.log("le mail du user est : "+userFound2.email);
+                  console.log("le password du user est : "+userFound2.password);
+                  console.log("son status est : "+userFound2.category);
+                   //prepare data for page refresh
+                                    localStorage.setItem('userAccountSavedPseudo', this.userService.userAccount.pseudo);
+                                        localStorage.setItem('userAccountSavedPassword', this.userService.userAccount.password);
+                                        localStorage.setItem('userAccountSavedCategory', this.userService.userAccount.category);
+                                        localStorage.setItem('userAccountSavedEmail', this.userService.userAccount.email);
+                                  //user homepage
+                                  this.gotoUserEntrance()
 
-          else{
-            console.log("le user n'a pas été trouvé !")
-            this.alreadyTried = true;
-            this.connectionService.alreadyExists = false;
-            return;
-          }
-        },
+
+                  })
+
+
+             }
+          })
+
+
+      /*
 
         // This function handles error cases (for instance, if the back sends a 404 error code)
         error => {
@@ -127,7 +125,7 @@ export class UserConnectionComponent implements OnInit {
           this.alreadyTried = true;
           this.connectionService.alreadyExists = false;
         }
-    );
+    ); */
   }
   /*
   retrieveUserMovies(){

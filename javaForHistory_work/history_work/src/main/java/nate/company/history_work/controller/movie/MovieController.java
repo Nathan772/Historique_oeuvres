@@ -2,6 +2,7 @@ package nate.company.history_work.controller.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.jsonwebtoken.security.Jwks;
 import nate.company.history_work.service.MovieReactionService;
 import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
@@ -12,11 +13,15 @@ import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
 import nate.company.history_work.siteTools.timeHandler.TimeConverter;
+import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -27,6 +32,7 @@ import java.util.logging.Level;
 import static nate.company.history_work.controller.ControllerResources.FROMJSONCONVERTER;
 import static nate.company.history_work.controller.user.UserController.parseComplexJson;
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
+import static nate.company.history_work.service.UserService.USER_CHOSEN;
 import static nate.company.history_work.siteTools.json.JsonTools.parseKeyValueString;
 import static nate.company.history_work.siteTools.reaction.ReactionChoices.fromStringToReactionStatus;
 import static nate.company.history_work.siteTools.timeHandler.TimeConverter.fromOnlyTimeToSeconds;
@@ -61,7 +67,6 @@ public class MovieController {
     private  final WatchMovieService watchedMovieService;
 
     private final MovieReactionService movieReactionService;
-
 
     /**
      * Repository that stores movies watched by a user.
@@ -114,7 +119,17 @@ public class MovieController {
         // doesn't work use another approach
         //var currentUser = userService.getPrincipal();
         var nestedMap = parseComplexJson(movieDataUserJson);
-        var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
+
+        Optional<User> userOpt;
+        //get user thanks to back end save of persistent session
+        if(USER_CHOSEN.getPseudo() != null && USER_CHOSEN.getPseudo().isEmpty() == false){
+            System.out.println(" on récupère les infos du user grâce au back end et pas le front end");
+            userOpt = userService.getUserByPseudo(USER_CHOSEN.getPseudo());
+        }
+        //use the request to retrieve user's information (password + pseudo)
+        else {
+             userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
+        }
         //user doesn't exists
         if (userOpt.isEmpty()) {
             System.out.println("on envoie le json classique 0");
@@ -478,6 +493,9 @@ public class MovieController {
     @PostMapping("/user/movie/add")
     public ResponseEntity<String> addMovie(@RequestBody String userMovieJson){
         System.out.println("on ajoute le film et le user dans movie/add: "+userMovieJson);
+
+        System.out.println("l'actuel user connecté est : "+USER_CHOSEN.getPseudo());
+
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
         //user not connected abnormal
@@ -722,6 +740,8 @@ public class MovieController {
 //            System.out.println("on a pas trouvé le user principal pour la listes des films vus");
 //            return ResponseEntity.ok(List.of());
 //        }
+
+        System.out.println("l'actuel user connecté est : "+USER_CHOSEN.getPseudo());
 
         var userOpt = userService.getUserByPseudo(userPseudo);
         //user not found

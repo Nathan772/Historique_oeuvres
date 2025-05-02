@@ -136,7 +136,7 @@ export class UserFormComponent implements OnInit {
     this.userService.checkUserExists(this.user).subscribe(
       user => {
         //The user already exists
-        if(user != null){
+        if(user !== false){
         this.connectionService.alreadyExists = true;
          //back to the page with error message
               return;

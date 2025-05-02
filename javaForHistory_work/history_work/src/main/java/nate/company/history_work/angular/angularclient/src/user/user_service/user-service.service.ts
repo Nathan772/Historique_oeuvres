@@ -28,6 +28,7 @@ export class UserService {
   public userAccount:User = {pseudo:"",email:"",password:"",category:"average"};
   private connectUrl:string;
   private userExistsUrl:string;
+  private validAuthenticationUrl:string;
   private loginUrl:string;
 
   constructor(private http: HttpClient, routerParam: Router) {
@@ -38,6 +39,7 @@ export class UserService {
     this.connectUrl = 'http://localhost:8081/connect';
     this.userExistsUrl = 'http://localhost:8081/userSearch';
     this.loginUrl = 'http://localhost:8081/loginPersistent';
+    this.validAuthenticationUrl='http://localhost:8081/validAuthentication';
     this.router = routerParam;
   }
 
@@ -84,6 +86,23 @@ redirectionToConnectionPage(connectionService:ConnectionServiceService) {
     const params = new HttpParams().append('pseudo', user.pseudo).append('email',user.email)
     //params = params.append('email', user.email);
     return this.http.get<User>(this.userExistsUrl, {params})
+  }
+
+/**
+  check if the user data are valide and says:
+
+  true if the user is connected.
+  false if it failed and the user is still disconnected.
+    */
+  public validAuthenticationUser(user:User): Observable<boolean> {
+    const headers = new HttpHeaders().append('header', 'value');
+    /*
+    prepares params source
+    https://stackoverflow.com/questions/44280303/angular-http-get-with-parameter
+    */
+    const params = new HttpParams().append('pseudo', user.pseudo).append('password',user.password)
+    //params = params.append('email', user.email);
+    return this.http.get<boolean>(this.validAuthenticationUrl, {params})
   }
 
  /**

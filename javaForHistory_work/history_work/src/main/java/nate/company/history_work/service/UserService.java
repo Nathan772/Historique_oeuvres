@@ -6,6 +6,8 @@ import nate.company.history_work.siteTools.dtos.WatchedMovieDto;
 import nate.company.history_work.siteTools.user.User;
 import nate.company.history_work.siteTools.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -20,6 +22,29 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public static final UserForSession USER_CHOSEN = new UserForSession();
+
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    String currentPrincipalName = authentication.getName();
+
+    public static class UserForSession {
+
+        private UserDetails userDetails;
+
+        /*
+        set the user with its data for the session
+         */
+        public void setUserDetails(UserDetails userDetails) {
+            Objects.requireNonNull(userDetails);
+            this.userDetails = userDetails;
+        }
+
+        public String getPseudo(){
+            return userDetails.getUsername();
+        }
+
+
+    }
     @Autowired
     public UserService(UserRepository userRepository){
         this.userRepository = userRepository;

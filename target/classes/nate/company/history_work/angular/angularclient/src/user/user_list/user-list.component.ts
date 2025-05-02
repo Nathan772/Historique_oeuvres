@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user_service/user-service.service';
 import { ConnectionServiceService } from "../../connection/connection-service.service";
-
+import Typewriter from 'typewriter-effect/dist/core';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -31,6 +31,9 @@ export class UserListComponent implements OnInit {
   userService:UserService;
   router:Router;
   connectionService:ConnectionServiceService;
+
+  //static true means the sentences cannot change
+    @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
 
 
   constructor(routerParam: Router, service: UserService,  connectionService:ConnectionServiceService) {
@@ -82,6 +85,25 @@ in the database.
     this.userService.findAll().subscribe(data => {
               this.users = data;
             });
+
+  }
+
+//necessary for progressive writing
+ngAfterViewInit(): void {
+      const typewriter = new Typewriter(this.typewriterElement.nativeElement, {
+        loop: true,
+        delay: 75,
+      });
+      typewriter.erasable = true
+
+      typewriter
+         .pauseFor(500)
+        .typeString("Préparez vous... ")
+        .pauseFor(1000)
+        .deleteAll()
+        .typeString("Voici votre liste de films : ")
+        .pauseFor(1000)
+        .start();
 
   }
 }
