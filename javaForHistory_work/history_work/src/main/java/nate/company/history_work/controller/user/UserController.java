@@ -233,11 +233,13 @@ public class UserController {
                 sc.setAuthentication(authenticationResponse);
                 USER_CHOSEN.setUserDetails((UserDetails) sc.getAuthentication().getPrincipal());
                 System.out.println("le user a été authentifié correctmeent !! 5 +++ il est enregistré comme : "+USER_CHOSEN.getPseudo());
-                ResponseEntity.ok(true);
+                return ResponseEntity.ok(true);
             }
-            System.out.println("mauvais mot de passe pour le user zzzzz test : "+userPseudo);
-            //wrong password
-            return ResponseEntity.ok(false);
+            else {
+                System.out.println("mauvais mot de passe pour le user zzzzz test : " + userPseudo);
+                //wrong password
+                return ResponseEntity.ok(false);
+            }
         }
 
 
