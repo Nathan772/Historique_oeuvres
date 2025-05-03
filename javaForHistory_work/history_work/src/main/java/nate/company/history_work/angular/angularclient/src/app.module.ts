@@ -33,7 +33,8 @@ import { NavbarMoviesComponent } from './movies/navbar/navbar-movies.component';
 import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
-
+import { LowerCasePipeComponent } from './lower-case-pipe/lower-case-pipe.component';
+import { OrderByPipe } from "./order-by/order-by.pipe";
 
 
 
@@ -56,6 +57,8 @@ import { MovieSearchComponent } from './movies/movie_search/movie-search.compone
       CommonFunctionalityComponent,
       ChatbotComponent,
       DefaultUserComponent,
+      LowerCasePipeComponent,
+      OrderByPipe,
 
     ],
   imports: [

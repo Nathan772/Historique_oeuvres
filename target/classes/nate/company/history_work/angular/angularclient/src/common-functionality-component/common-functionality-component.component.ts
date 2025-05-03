@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user_service/user-service.service';
+import { LowerCasePipeComponent } from '../lower-case-pipe/lower-case-pipe.component';
+import { OrderByPipe } from '../order-by/order-by.pipe';
 
 /*
 

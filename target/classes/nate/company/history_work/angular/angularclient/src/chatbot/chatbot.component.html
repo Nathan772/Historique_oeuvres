@@ -5,6 +5,7 @@
   <div class="chat-box" [class.hidden]="isOpen === true">
     <div class="header">
       <h1>Do you want a movie recommendation ? : {{ userService.userAccount.pseudo}} </h1>
+
       <div class="close" (click)="closeChat()"> </div>
 
     </div>
@@ -35,19 +36,22 @@
       -->
       <div #typewriterElement></div>
 
+      <div *ngIf="waitingChatBotAnswer" class="chatbot-typing">
+        🤖 the chatbot is thinking about its answer... 🧠
+      </div>
+
       <!--<span *ngIf="message.authorId==this.aiName"#typewriterElement></span>-->
 
 
     </div>
     <section>
       <textarea [(ngModel)]="typeMessageUser"  [disabled]="waitingChatBotAnswer" placeholder="écris-lui !" (keyup.enter)="sendMessage()"></textarea>
+
       <button (click)="sendMessage()"  mat-raised-button>Send</button>
     </section>
   </div>
 
-  <div *ngIf="waitingChatBotAnswer" class="chatbot-typing">
-    🤖 the chatbot is thinking about its answer... 🧠
-  </div>
+
 
   <div class="bubble" (click)="openChat()" [class.hidden]="isOpen === true">
 

@@ -77,7 +77,7 @@ export enum ReactionChoices {
 
 
 export enum watchedMovieStatus {
-  WATCHLATER,
   WATCHING,
+  WATCHLATER,
   REWATCH,
 }

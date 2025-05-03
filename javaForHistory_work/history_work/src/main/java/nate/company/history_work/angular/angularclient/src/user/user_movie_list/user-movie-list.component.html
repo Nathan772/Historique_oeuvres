@@ -53,12 +53,20 @@ exemple -->
 
 <h3 #typewriterElement></h3>
 <br/>
+
+
 <app-movie-user-card *ngFor="let movieInfo of this.movieService.userMoviesList.slice(currentPage*numberPerPage, currentPage*numberPerPage+3)" [movieFull]="movieInfo">
 </app-movie-user-card>
 
 <br/>
 
+
 <div class="list_arrows">
+
+  actuel : {{ currentPage*numberPerPage + 1}} / {{ this.movieService.userMoviesList.length}}
+  total à voir : {{ this.movieService.userMoviesList.length }}
+
+  <br/>
 <button (click)="decreasesPages()" class="btn btn-primary btn-lg">
   <i class="bi bi-arrow-return-left"> </i>
 </button>
