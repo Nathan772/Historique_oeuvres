@@ -31,9 +31,10 @@ movie-card component
     <div
       class="card"
       [ngClass]="{
+      'red lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHING),
     'orange lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHLATER),
     'yellow lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.REWATCH),
-     'red lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHING),
+
     'blue lighten-1': !movieService.listMovieContainsMovieWatchLater(movie , this.watchedMovieStatus.REWATCH) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING)
   }"
     >

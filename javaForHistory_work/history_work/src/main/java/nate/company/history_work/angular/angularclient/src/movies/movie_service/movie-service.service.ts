@@ -271,9 +271,9 @@ addToWatchList(movie:watchedMovie){
               director: "unknown"
     };
     for(let i=0;i<this.userMoviesList.length;i++){
-        console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
+       // console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
         if(this.userMoviesList[i].movie.imdbID === movie.imdbID && this.userMoviesList[i].movieStatus === movieStatus){
-          console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
+          //console.log("le film est déjà présent : "+this.userMoviesList[i].movie.imdbID);
           return true
         }
     }
