@@ -57,25 +57,25 @@ export class MovieListComponent implements OnInit {
     return moviesPerPage;
   }
 
-/**
+ /**
 
-go to the next page of movies
-   */
-  increasesPages() {
-    if((this.currentPage+1)*this.numberPerPage > this.listMovies.length){
-      this.currentPage+=1;
-    }
-  }
+      go to the next page of movies
+         */
+        increasesPages() {
+          if((this.currentPage+1)*this.numberPerPage < this.listMovies.length){
+            this.currentPage+=1;
+          }
+        }
 
-/**
+      /**
 
-go to the previous page of movies
-   */
-  decreasesPages() {
-    if((this.currentPage+1)*this.numberPerPage < this.listMovies.length){
-      this.currentPage-=1;
-    }
-  }
+      go to the previous page of movies
+         */
+        decreasesPages() {
+          if((this.currentPage-1)*this.numberPerPage >= 0){
+            this.currentPage-=1;
+          }
+        }
 
 
   displayMovies(films: MovieShortInformations[]) {}
