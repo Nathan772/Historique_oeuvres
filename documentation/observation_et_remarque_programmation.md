@@ -1658,3 +1658,13 @@ regardez le mdp et le pseudo que vous avez donnés lors du :
 
 il faut utiliser le vrai pseudo en premier argument 
 et le raw password (celui qui n'est pas caché) en deuxième.
+
+
+
+problème : 
+
+"l'image bootstrap ne s'affiche pas du tout"
+
+solution :
+
+pensez à importer tous les bootstrap librairies nécessaires (il y a des librairies pour les icônes, et d'autres pour d'autres choses).
