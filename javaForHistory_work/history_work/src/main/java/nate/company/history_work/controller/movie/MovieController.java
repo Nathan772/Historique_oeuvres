@@ -742,8 +742,13 @@ public class MovieController {
 //        }
 
         System.out.println("l'actuel user connecté est : "+USER_CHOSEN.getPseudo());
-
-        var userOpt = userService.getUserByPseudo(userPseudo);
+        Optional<User> userOpt;
+        if(USER_CHOSEN.getPseudo() != null && !USER_CHOSEN.getPseudo().isEmpty()){
+            userOpt = userService.getUserByPseudo(USER_CHOSEN.getPseudo());
+        }
+        else {
+            userOpt = userService.getUserByPseudo(userPseudo);
+        }
         //user not found
         if(userOpt.isEmpty() ){
             ResponseEntity.status(HttpStatus.NOT_FOUND)

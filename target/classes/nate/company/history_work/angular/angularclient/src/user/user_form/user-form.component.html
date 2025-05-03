@@ -109,7 +109,7 @@
       -->
 
 
-      <button type="submit" [disabled]="!userForm.form.valid"
+      <button type="submit" [disabled]="!userForm.form.valid || waitServer"
               class="btn btn-info">S'inscrire </button>
 
 

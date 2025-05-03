@@ -21,6 +21,9 @@ export class MovieListComponent implements OnInit {
 
   movieService: MovieServiceService;
   userService : UserService;
+  currentPage:number;
+  numberPerPage:number;
+
 
   constructor(userService:UserService,movieService:MovieServiceService) {
     /*
@@ -30,6 +33,10 @@ export class MovieListComponent implements OnInit {
     this.listMovies = [];
     this.movieService = movieService;
     this.userService = userService;
+    this.currentPage = 0;
+    this.numberPerPage = 3;
+
+
     /* deprecated
     this.movieService.findAllMoviesFromUserList(userService.userAccount.pseudo, userService.userAccount.password).subscribe(
           list => this.listMovies = list);
@@ -39,6 +46,37 @@ export class MovieListComponent implements OnInit {
   /* c'est dans cette partie que le fils peut
   utiliser les éléments du père*/
   ngOnInit(): void {}
+
+  /**
+   this method returns some movies by a number of pages*/
+  MoviesByPage() {
+    let moviesPerPage:MovieShortInformations[] = []
+    for(let i = this.currentPage*this.numberPerPage;i<(this.currentPage+1)*this.numberPerPage;i++){
+      moviesPerPage.push(this.listMovies[i])
+    }
+    return moviesPerPage;
+  }
+
+ /**
+
+      go to the next page of movies
+         */
+        increasesPages() {
+          if((this.currentPage+1)*this.numberPerPage < this.listMovies.length){
+            this.currentPage+=1;
+          }
+        }
+
+      /**
+
+      go to the previous page of movies
+         */
+        decreasesPages() {
+          if((this.currentPage-1)*this.numberPerPage >= 0){
+            this.currentPage-=1;
+          }
+        }
+
 
   displayMovies(films: MovieShortInformations[]) {}
 }

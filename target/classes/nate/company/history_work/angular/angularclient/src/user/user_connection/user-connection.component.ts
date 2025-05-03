@@ -39,6 +39,7 @@ export class UserConnectionComponent implements OnInit {
   connectionService:ConnectionServiceService;
   alreadyTried:Boolean;
   movieService:MovieServiceService;
+  waitServer:boolean;
 
 
   /*
@@ -51,6 +52,7 @@ export class UserConnectionComponent implements OnInit {
     this.userService =service;
     this.connectionService = connectionService;
     this.movieService = movieService;
+    this.waitServer = false;
     //this.mismatchedPassword = false;
     /*nécessaire même si sera remplacé
     car cela correspond aux valeurs par défaut de l'utilisateur
@@ -78,6 +80,7 @@ export class UserConnectionComponent implements OnInit {
     console.log("try to connect user");
     //check if user exists in data base
     let properAuthentication = false;
+    this.waitServer = true;
     this.userService.validAuthenticationUser(this.user).subscribe(
         userFound => {
           //The user already exists and you sent the proper password & id
@@ -118,6 +121,7 @@ export class UserConnectionComponent implements OnInit {
            }
 
            else {
+             this.waitServer = false;
                              console.log("le user n'a pas été trouvé, échec de l'authentification")
                            }
           })

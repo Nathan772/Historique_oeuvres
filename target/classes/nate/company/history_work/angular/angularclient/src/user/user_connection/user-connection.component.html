@@ -64,7 +64,7 @@
       -->
 
 
-      <button type="submit" [disabled]="!userConnectionForm.form.valid"
+      <button type="submit" [disabled]="!userConnectionForm.form.valid || waitServer"
               class="btn btn-info">Se connecter </button>
 
 

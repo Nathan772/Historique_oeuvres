@@ -5,7 +5,8 @@ import Typewriter from 'typewriter-effect/dist/core';
 import { User } from '../user';
 import {MovieUserCardComponent } from '../cards/movie_user_card/movie-user-card.component';
 //movie component
-import { MovieShortInformations } from '../../movies/movie_models/movie_models';
+import { MovieShortInformations, watchedMovie,
+                                   watchedMovieStatus, } from '../../movies/movie_models/movie_models';
 import { MovieCardComponent } from '../../movies/movie_card/movie-card.component';
 import { MovieFullInformations } from '../../movies/movie_models/movie_models';
 import { DefaultUserComponent} from '../../default_user_menu/default-user.component';
@@ -27,6 +28,9 @@ export class UserMovieListComponent implements OnInit {
       connectionService:ConnectionServiceService
       userService:UserService;
 
+      currentPage:number;
+        numberPerPage:number;
+
       //static true means the sentences cannot change
         @ViewChild('typewriterElement', { static: true }) typewriterElement!: ElementRef;
 
@@ -36,6 +40,8 @@ export class UserMovieListComponent implements OnInit {
         //prepare user data to keep the connection
         this.connectionService = connectionService;
         this.prepareUser();
+        this.currentPage = 0;
+        this.numberPerPage = 3;
 
 
       }
@@ -93,5 +99,37 @@ export class UserMovieListComponent implements OnInit {
               .pauseFor(1000)
               .start();
 
+        }
+
+       /**
+         this method returns some movies by a number of pages*/
+        /* deprecated
+        MoviesByPage() {
+          let moviesPerPage:watchedMovie[] = []
+          console.log("on entre dans movies by page")
+          for(let i = this.currentPage*this.numberPerPage;i<(this.currentPage+1)*this.numberPerPage;i++){
+            moviesPerPage.push(this.movieService.userMoviesList[i])
+          }
+          return moviesPerPage;
+        }*/
+
+      /**
+
+      go to the next page of movies
+         */
+        increasesPages() {
+          if((this.currentPage+1)*this.numberPerPage < this.movieService.userMoviesList.length){
+            this.currentPage+=1;
+          }
+        }
+
+      /**
+
+      go to the previous page of movies
+         */
+        decreasesPages() {
+          if((this.currentPage-1)*this.numberPerPage >= 0){
+            this.currentPage-=1;
+          }
         }
 }

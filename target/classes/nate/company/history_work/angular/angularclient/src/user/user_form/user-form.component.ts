@@ -44,6 +44,9 @@ export class UserFormComponent implements OnInit {
   //mismatchedPassword:Boolean;
   //alreadyExists:Boolean;
   connectionService:ConnectionServiceService;
+  waitServer:boolean;
+
+
 
 
   /*
@@ -53,6 +56,7 @@ export class UserFormComponent implements OnInit {
   */
   constructor(routerParam: Router,service: UserService, connectionService:ConnectionServiceService) {
     this.router = routerParam;
+    this.waitServer = false;
     this.userService =service;
     this.connectionService = connectionService;
 
@@ -131,12 +135,14 @@ export class UserFormComponent implements OnInit {
 
   registerNewUser() {
     console.log("try to register user");
+    this.waitServer = true;
     //check if user exists in data base
     // useless here and causes errors
     this.userService.checkUserExists(this.user).subscribe(
       user => {
         //The user already exists
         if(user !== false){
+          this.waitServer = false;
         this.connectionService.alreadyExists = true;
          //back to the page with error message
               return;

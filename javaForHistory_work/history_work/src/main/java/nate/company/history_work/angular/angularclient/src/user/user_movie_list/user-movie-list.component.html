@@ -53,8 +53,18 @@ exemple -->
 
 <h3 #typewriterElement></h3>
 <br/>
-<app-movie-user-card *ngFor="let movieInfo of movieService.userMoviesList" [movieFull]="movieInfo">
+<app-movie-user-card *ngFor="let movieInfo of this.movieService.userMoviesList.slice(currentPage*numberPerPage, currentPage*numberPerPage+3)" [movieFull]="movieInfo">
 </app-movie-user-card>
+
+<br/>
+
+  <button (click)="decreasesPages()" class="btn btn-primary btn-lg">
+    <i class="bi bi-arrow-left"><-- </i>
+  </button>
+
+<button (click)="increasesPages()" class="btn btn-primary btn-lg">
+  <i class="x-bi-arrow-return-right"> --> </i>
+</button>
 
 <!--</div>-->
 
