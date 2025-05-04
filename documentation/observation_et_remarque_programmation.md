@@ -1668,3 +1668,23 @@ problème :
 solution :
 
 pensez à importer tous les bootstrap librairies nécessaires (il y a des librairies pour les icônes, et d'autres pour d'autres choses).
+
+problème :
+
+"
+infinite loop
+
+heap size 1001 json hashmap
+"
+
+solution :
+
+vérifiez que votre front n'envoie pas des données nested infinite ou très très longue.
+vérifiez que vous ignorer lors de la création du json côté back, les champs qui sont auto-référentiels avec les bonnes annotations.
+Pensez à ignorer les champs lorsque vous faites des copies pour vos dto classes sinon il y aura aussi ce problème.
+
+```java
+@JsonBackReference
+@JsonIgnoreProperties
+@JsonManagedReference
+```
