@@ -1,5 +1,6 @@
 package nate.company.history_work.siteTools.dtos.reaction;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import nate.company.history_work.siteTools.dtos.MovieDto;
 import nate.company.history_work.siteTools.dtos.UserDto;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 public class MovieReactionDto extends ReactionDto {
 
+    @JsonBackReference
     private MovieDto movieReacted;
 
     @JsonCreator

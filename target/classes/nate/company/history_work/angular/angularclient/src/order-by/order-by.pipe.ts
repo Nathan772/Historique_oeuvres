@@ -5,12 +5,41 @@ import { Movie, watchedMovie} from '../movies/movie_models/movie_models';
 })
 export class OrderByPipe implements PipeTransform {
 
-  transform(value:watchedMovie[], order: "asc" | "desc" = "asc"): watchedMovie[] {
-      return value.sort((a, b) => {
+/**
+(values)
+function for orderby (order a list):
+(order)
+type of list with its elements
+order
+choice for the order of the element (ascendent, or descedant)
+
+
+*/
+  transform(values:watchedMovie[], order: "asc" | "desc" = "asc"): watchedMovie[] {
+      return values.sort((a, b) => {
         if (order === "asc") {
-          return a.movieStatus - b.movieStatus;
-        } else if (order === "desc") {
-          return a.movieStatus - b.movieStatus;
+          //compare status status
+          if(a.movieStatus !=b.movieStatus){
+            return a.movieStatus-b.movieStatus
+            }
+          //compare movies names if status are alike
+          else {
+            if(a.movie.title <= b.movie.title){
+              return -1;
+            }
+          }
+        }
+        else if (order === "desc") {
+          //status first the same meaning
+           if(a.movieStatus !=b.movieStatus){
+                      return a.movieStatus-b.movieStatus
+           }
+          //compare movies names if status are alike but in reverse order
+                    else {
+                      if(a.movie.title >= b.movie.title){
+                        return -1;
+                      }
+                    }
         }
         return 0;
       });

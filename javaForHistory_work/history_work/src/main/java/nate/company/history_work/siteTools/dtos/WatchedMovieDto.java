@@ -1,5 +1,6 @@
 package nate.company.history_work.siteTools.dtos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nate.company.history_work.siteTools.movie.Movie;
@@ -13,7 +14,13 @@ import static nate.company.history_work.siteTools.timeHandler.TimeConverter.from
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WatchedMovieDto {
     private final long id;
+    //Overkill, and it causes issues because movie doesn't refers to watched moviedto
+    //@JsonBackReference
     private final MovieDto movie;
+    /*
+    prevent from "1001 depth" infinite reference
+     */
+    @JsonBackReference
     private final UserDto watcherDto;
 
     /*
@@ -54,6 +61,22 @@ public class WatchedMovieDto {
         this.id = watchedMovie.getId();
         this.movie = new MovieDto(watchedMovie.getMovie());
         this.watcherDto = new UserDto(watchedMovie.getWatcher(), true);
+        var actualTime = fromSecondToOnlyTimeObject(watchedMovie.getTimeAsLong());
+        this.time = new TimeConverter.OnlyTime(actualTime.getSeconds(), actualTime.getMinutes(),actualTime.getHours());
+        this.movieStatus = watchedMovie.getMovieStatus().ordinal();
+    }
+
+    public WatchedMovieDto(WatchedMovie watchedMovie, boolean ignore){
+        this.id = watchedMovie.getId();
+        //ignore if necessary to prevent from nested (infinite) loop
+        if(!ignore) {
+            this.watcherDto = new UserDto(watchedMovie.getWatcher(), true);
+            this.movie = new MovieDto(watchedMovie.getMovie());
+        }
+        else {
+            watcherDto = null;
+            movie = null;
+        }
         var actualTime = fromSecondToOnlyTimeObject(watchedMovie.getTimeAsLong());
         this.time = new TimeConverter.OnlyTime(actualTime.getSeconds(), actualTime.getMinutes(),actualTime.getHours());
         this.movieStatus = watchedMovie.getMovieStatus().ordinal();

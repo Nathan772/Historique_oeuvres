@@ -83,6 +83,19 @@ public class MovieDto {
         //this.isWatchedBy = new HashSet<>();
         this.isWatchedBy = movie.getIsWatchedBy().stream().map(user -> new UserDto(user, true)).collect(Collectors.toSet());
     }
+    public MovieDto(Movie movie, boolean ignore) {
+        Objects.requireNonNull(movie, "the movie cannot be null");
+        this.id = movie.getId();
+        this.yearOfRelease = movie.getYearOfRelease();
+        this.imdbID = movie.getImdbID();
+        this.director = movie.getDirector();
+        this.title = movie.getTitle();
+        this.poster = movie.getPoster();
+        //ignore copy of set
+        if(!ignore) {
+            this.isWatchedBy = movie.getIsWatchedBy().stream().map(user -> new UserDto(user, true)).collect(Collectors.toSet());
+        }
+    }
     /**
      * Retrieves the title of the movie.
      * @return the title

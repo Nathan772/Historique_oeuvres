@@ -34,9 +34,7 @@ movie-card component
       'red lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHING),
     'orange lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHLATER),
     'yellow lighten-1': movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.REWATCH),
-
-    'blue lighten-1': !movieService.listMovieContainsMovieWatchLater(movie , this.watchedMovieStatus.REWATCH) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHLATER) && !movieService.listMovieContainsMovieWatchLater(movieFull, this.watchedMovieStatus.WATCHING)
-  }"
+    'blue lighten-1': !movieService.listMovieContainsMovieWatchLater(movie , this.watchedMovieStatus.REWATCH) && !movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHLATER) && !movieService.listMovieContainsMovieWatchLater(movie, this.watchedMovieStatus.WATCHING)}"
     >
       <!--
    show in red if it's rewatch

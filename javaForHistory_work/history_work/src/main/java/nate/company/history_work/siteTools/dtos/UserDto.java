@@ -88,9 +88,7 @@ public class UserDto {
         System.out.println("on est censé ignorer le watch Movie du user");
         if(!ignore) {
             System.out.println("on a pas ignoré le watch Movie du user");
-            this.watchMovies = user.getWatchMovies().stream().map(movie -> new WatchedMovieDto(movie)).sorted(Comparator.comparing(
-                    (movie1)->movie1.getMovieStatus())
-            ).toList();
+            this.watchMovies = user.getWatchMovies().stream().map(movie -> new WatchedMovieDto(movie, true)).toList();
         }
 
     }

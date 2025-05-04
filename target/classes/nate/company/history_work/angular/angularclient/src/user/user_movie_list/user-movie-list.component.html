@@ -63,7 +63,7 @@ exemple -->
 
 <div class="list_arrows">
 
-  actuel : {{ currentPage*numberPerPage + 1}} / {{ this.movieService.userMoviesList.length}}
+  actuel : {{ ((currentPage)*numberPerPage) +(this.movieService.userMoviesList.length%3) }} / {{ this.movieService.userMoviesList.length}}
   total à voir : {{ this.movieService.userMoviesList.length }}
 
   <br/>
