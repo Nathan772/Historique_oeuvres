@@ -261,6 +261,7 @@ addToWatchList(movie:watchedMovie){
      because movieFull, only is fueled when you click on the full info button,
      before that it's empty.
 
+
    */
   public listMovieContainsMovieWatchLater(movie:MovieShortInformations, movieStatus:watchedMovieStatus){
     let movieSimple : Movie = {
@@ -615,14 +616,35 @@ in the user list for the database
 
                                                 console.log("on met à jour le film en cours de visionnage. L'année de sortie du film  est :"+watchedMovie1.movie.yearOfRelease+" et son titre est : "+watchedMovie1.movie.title);
 
+
+                          /*
+                          this copy
+                          prevent from the copy of infinite nested
+                          1001
+                          */
+                                                 let watchedMovie2:watchedMovie = {
+                                                   movie:watchedMovie1.movie,
+                                                   movieStatus:watchedMovie1.movieStatus,
+                                                    time:watchedMovie1.time,
+
+                                                                                                     };
+
+                                               let userSimple = {
+                                                 pseudo:user.pseudo,
+                                                 password:user.password
+                                               };
+
+
+
+
                                                 //add movie to movie list of user
                                                 //this.userMoviesList.push(movie);
-                                                this.HttpClient.post<String>(this.userMoviesUrl+'/add',{watchedMovie1,user})
+                                                this.HttpClient.post<String>(this.userMoviesUrl+'/add',{watchedMovie2,userSimple})
                                                                   .subscribe(
                                                                         movieRetrievedAsJson => {
                                                                           //save succeed
                                                                           console.log("on sauvegarde le nouvel état non vide du film : "+movieRetrievedAsJson)
-                                                                          this.addMovieToUserListWithoutDataBase(watchedMovie1);
+                                                                          this.addMovieToUserListWithoutDataBase(watchedMovie2);
                                                                           return movieRetrievedAsJson;
                                                                         }
                                                                       );

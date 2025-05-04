@@ -57,13 +57,20 @@ public class WatchedMovieDto {
         this.time = new TimeConverter.OnlyTime(seconds,minutes,hours);
         this.movieStatus = movieStatus.ordinal();
     }
-    public WatchedMovieDto(WatchedMovie watchedMovie){
+    /*private WatchedMovieDto(WatchedMovie watchedMovie){
         this.id = watchedMovie.getId();
         this.movie = new MovieDto(watchedMovie.getMovie());
         this.watcherDto = new UserDto(watchedMovie.getWatcher(), true);
         var actualTime = fromSecondToOnlyTimeObject(watchedMovie.getTimeAsLong());
         this.time = new TimeConverter.OnlyTime(actualTime.getSeconds(), actualTime.getMinutes(),actualTime.getHours());
         this.movieStatus = watchedMovie.getMovieStatus().ordinal();
+    }*/
+
+    /*
+    by default, ignore field to prevent from infinite loop
+     */
+    public WatchedMovieDto(WatchedMovie watchedMovie){
+        this(watchedMovie, true);
     }
 
     public WatchedMovieDto(WatchedMovie watchedMovie, boolean ignore){
@@ -75,7 +82,7 @@ public class WatchedMovieDto {
         }
         else {
             watcherDto = null;
-            movie = null;
+            this.movie = new MovieDto(watchedMovie.getMovie());
         }
         var actualTime = fromSecondToOnlyTimeObject(watchedMovie.getTimeAsLong());
         this.time = new TimeConverter.OnlyTime(actualTime.getSeconds(), actualTime.getMinutes(),actualTime.getHours());
