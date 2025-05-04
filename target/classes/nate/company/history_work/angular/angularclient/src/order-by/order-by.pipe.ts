@@ -8,9 +8,9 @@ export class OrderByPipe implements PipeTransform {
   transform(value:watchedMovie[], order: "asc" | "desc" = "asc"): watchedMovie[] {
       return value.sort((a, b) => {
         if (order === "asc") {
-          return a.movie.title.localeCompare(b.movie.title);
+          return a.movieStatus - b.movieStatus;
         } else if (order === "desc") {
-          return a.movie.title.localeCompare(b.movie.title);
+          return a.movieStatus - b.movieStatus;
         }
         return 0;
       });

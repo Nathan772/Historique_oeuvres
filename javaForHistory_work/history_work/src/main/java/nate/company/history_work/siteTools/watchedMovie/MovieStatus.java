@@ -1,9 +1,9 @@
 package nate.company.history_work.siteTools.watchedMovie;
 
 public enum MovieStatus {
-    WATCHLATER,
-    WATCHING,
 
+    WATCHING,
+    WATCHLATER,
     REWATCH;
 
 
@@ -14,8 +14,8 @@ public enum MovieStatus {
             case "WATCHLATER" -> WATCHLATER;
             case "WATCHING" -> WATCHING;
             case "2" -> REWATCH;
-            case "0" -> WATCHLATER;
-            case "1" -> WATCHING;
+            case "1" -> WATCHLATER;
+            case "0" -> WATCHING;
             default -> WATCHLATER;
         };
     }

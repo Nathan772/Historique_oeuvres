@@ -14,15 +14,18 @@ import {
   watchedMovieStatus,
 } from '../movie_models/movie_models';
 
+import { OrderByPipe } from '../../order-by/order-by.pipe';
+
 import { User } from '../../user/user';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root' /* indispensable
-  permet de dire où chercher la racine du projet*/,
+  providedIn: 'root', /* indispensable
+  permet de dire où chercher la racine du projet*/
 })
 export class MovieServiceService {
 
+  private orderBy:OrderByPipe;
   private userMoviesUrl: string;
   public userMoviesList:watchedMovie[] = [];
   //créer une nouvelle catégorie qui contiendrait les status de visionnage des films
@@ -38,14 +41,12 @@ export class MovieServiceService {
 
 
 
-  constructor(private HttpClient: HttpClient) {
+  constructor(private HttpClient: HttpClient, orderBy:OrderByPipe) {
         this.userMoviesUrl = 'http://localhost:8081/user/movie';
         /*this.registerUrl = 'http://localhost:8080/register';
         this.connectUrl = 'http://localhost:8080/connect';
         this.userExistsUrl = 'http://localhost:8080/userSearch';*/
-        if(this.userMoviesList){
-
-          }
+        this.orderBy = orderBy;
   }
 
 /*
@@ -433,6 +434,12 @@ addToWatchList(movie:watchedMovie){
         /*for(let i=0;i<this.userMoviesList.length;i++){
               console.log("les films présents : "+this.userMoviesList[i].imdbID);
         }*/
+
+      /*
+      order the list in the asc direction
+      */
+
+      this.userMoviesList = this.orderBy.transform(this.userMoviesList, 'asc')
 
   }
 

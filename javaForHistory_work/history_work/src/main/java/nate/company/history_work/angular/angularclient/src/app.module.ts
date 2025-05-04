@@ -69,7 +69,7 @@ import { OrderByPipe } from "./order-by/order-by.pipe";
       RouterModule,
 
     ],
-  providers: [UserService, ConnectionServiceService, MovieServiceService],
+  providers: [UserService, ConnectionServiceService, MovieServiceService, OrderByPipe],
   bootstrap:[AppComponent],
 })
 export class AppModule { }
