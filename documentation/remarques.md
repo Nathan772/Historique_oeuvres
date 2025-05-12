@@ -99,6 +99,28 @@ lancer cette commande dans le terminal, dans le dossier du projet, pour génére
     ---> "npm install -g @angular/cli" plutôt que "npm install -g @angular/cli@1.7.4"
 
 
+    vérifiez que votre version de node est pas trop poussée par rapport à angular :
+
+    -https://github.com/angular-eslint/angular-eslint/issues/175
+
+    -https://angular.dev/reference/versions --> les version d'angular et leurs compatibilités
+
+    -https://blog.logrocket.com/how-switch-node-js-versions-nvm/ --> changer la version de node
+
+voir la version de node :
+
+```sh
+    node --version
+```
+
+utiliser une certaine version de node & une version par défaut :
+
+```sh
+nvm use 22.0.0
+
+nvm alias default v22.0.0
+```
+
 Lancer la commande : "ng new src.main.java.nate.company.history_work.angular.angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
 (nommé comme vous le souhaitez) afin de générer les fichiers associés à angular automatiquement.
 

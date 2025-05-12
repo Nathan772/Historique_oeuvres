@@ -406,14 +406,18 @@ public class UserController {
         var userByPseudo =  userService.getUserByPseudo(user.getPseudo());
         var userByMail = userService.getUserByMail(user.getEmail());
 
-        //already exists
+        //already exists inconsistent state
         if(userByPseudo.isPresent()){
             LOGGER.log(Level.INFO, " le user est déjà présent : "+userByPseudo.get());
-            return userByPseudo.get();
+            System.out.println("le user est déjà présent ");
+            //return empty user as a already exists response
+            var user1 = new User();
+            return user1;
         }
         if(userByMail.isPresent()){
             LOGGER.log(Level.INFO, " le user est déjà présent : "+userByMail.get());
-            return userByMail.get();
+            System.out.println("le user est déjà présent ");
+            return new User();
         }
         LOGGER.log(Level.INFO, " le user n'existe pas en bdd on ajoute le user : "+user);
         System.out.println("on arrive à la fin dans adduser");
