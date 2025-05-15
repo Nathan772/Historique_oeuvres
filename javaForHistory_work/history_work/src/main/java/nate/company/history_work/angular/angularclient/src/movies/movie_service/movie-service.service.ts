@@ -662,7 +662,7 @@ in the user list for the database
 
 
 
-  /* foncion qui prend un argument le titre d'un film
+  /* fonction qui prend un argument le titre d'un film
   et qui récupère un observable qui contient les infos du films : titre, année, etc...*/
  public getMovieShort(searchValue: string): Observable<MovieShortInformations[]> {
     let myMovieObservable: Observable<MovieShortInformations[]> =
@@ -728,7 +728,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
           */
           let movieRemoved:watchedMovie ={
-            movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
+            movie:movieSimple,
             movieStatus:watchedMovieStatus.WATCHLATER,
                time: {
                                         hours:0,
@@ -743,7 +743,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
            this.HttpClient.delete<string>(this.userMoviesUrl+"/remove",{
             headers,
-            body: {movieSimple, userSimple}
+            body: {movieRemoved, userSimple}
             })
           .subscribe(movieRemoved2 =>
                     {
@@ -778,7 +778,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
             */
             let movieRemoved:watchedMovie ={
-              movie:{id:"",title:"",yearOfRelease:"",director:"",imdbID:"",poster:""},
+              movie:movieSimple,
               movieStatus:watchedMovieStatus.WATCHLATER,
                  time: {
                                           hours:0,
@@ -793,7 +793,7 @@ public removeMovieFromUserInDataBase(movie:MovieFullInformations, user:User):wat
 
              this.HttpClient.delete<string>(this.userMoviesUrl+"/remove",{
               headers,
-              body: {movieSimple, userSimple}
+              body: {movieRemoved, userSimple}
               })
             .subscribe(movieRemoved2 =>
                       {

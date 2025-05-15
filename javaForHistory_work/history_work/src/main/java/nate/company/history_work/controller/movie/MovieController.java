@@ -117,8 +117,7 @@ public class MovieController {
         //System.out.println("on a trouvé le user principal");
         //user is connected
         // doesn't work use another approach
-        //var currentUser = userService.getPrincipal();
-        var nestedMap = parseComplexJson(movieDataUserJson);
+        //var currentUser = userService.getPrincipal()
 
         Optional<User> userOpt;
         //get user thanks to back end save of persistent session
@@ -128,22 +127,24 @@ public class MovieController {
         }
         //use the request to retrieve user's information (password + pseudo)
         else {
-             userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
-        }
-        //user doesn't exists
-        if (userOpt.isEmpty()) {
-            System.out.println("on envoie le json classique 0");
-            ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("{}");
+            //deprecated
+             //userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
+
+            //user doesn't exists
+            System.out.println("on envoie le json classique 0 : user not connected");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("{}");
+
+            //deprecated
+            //user exists
+            //but false password
+            /*if (userOpt.get().getPassword().equals(nestedMap.get("password"))) {
+                System.out.println("on envoie le json classique 1");
+                ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("{}");
+            }*/
         }
 
-        //user exists
-        //but false password
-        if (userOpt.get().getPassword().equals(nestedMap.get("password"))) {
-            System.out.println("on envoie le json classique 1");
-            ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("{}");
-        }
 
         //user exists and good password
 
@@ -154,22 +155,33 @@ public class MovieController {
         Movie movie;
         TimeConverter.OnlyTime onlyTimeOfMovie;
         WatchedMovie watchedMovie;
-        try {
-            movie = new Movie(nestedMap.get("title"), Integer.parseInt(nestedMap.get("yearOfRelease")), nestedMap.get("imdbID"), nestedMap.get("director"), nestedMap.get("poster"));
-//            var timeConverter = new TimeConverter();
-//            onlyTimeOfMovie = new TimeConverter.OnlyTime(Long.parseLong(nestedMap.get("hours")),
-//                    Long.parseLong(nestedMap.get("minutes")),Long.parseLong(nestedMap.get("seconds")));
-//            watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
-//                    TimeConverter.fromOnlyTimeToSeconds(onlyTimeOfMovie));
 
+        var nestedMap = parseComplexJsonForWatchedMovie(movieDataUserJson);
+
+        //map of movie data
+        HashMap<String,String> fromStringToJsonMovieMap;
+
+        try {
+            //retrieve movie data
+            fromStringToJsonMovieMap = parseKeyValueString(nestedMap.get("movie"));
+        } catch (Exception e) {
+            throw  new IllegalArgumentException("Error : the json received movie doesn't respect the json format "+e);
         }
+        try {
+            movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
+                    fromStringToJsonMovieMap.get("director"),
+                    fromStringToJsonMovieMap.get("poster"));
+        }
+
         catch(Exception e){
             //inconsistent movie fields
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
+            System.out.println("Error : the json received as movie doesn't respect the json format");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{}");
         }
+        System.out.println("l'état du movie récupéré grâce au json et au parsing est :"+movie);
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
         if(movieAlreadyExistsOpt.isPresent()){
@@ -522,10 +534,10 @@ public class MovieController {
         load movie data
          */
         //need to be parsed again
-        nestedMap.get("movie");
+        //nestedMap.get("movie");
 
         //need to be parsed again
-        nestedMap.get("movieStatus");
+        //nestedMap.get("movieStatus");
 
         //need to be parsed again
         System.out.println("le contenu de time dans nested est : "+nestedMap.get("time"));

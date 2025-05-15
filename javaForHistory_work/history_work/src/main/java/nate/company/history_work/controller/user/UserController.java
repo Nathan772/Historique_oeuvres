@@ -312,12 +312,14 @@ public class UserController {
     public static Map<String, String> parseComplexJson(String complexJson){
         // Convert JSON string to Map
         Map<String, Object> map = null;
+        System.out.println("avant le from json converter");
         try {
             map = FROMJSONCONVERTER.readValue(complexJson, new TypeReference<Map<String, Object>>() {});
 
         } catch (JsonProcessingException ex) {
             throw new AssertionError("failure for parsing json movie-user probably inconsistent writting "+ex);
         }
+        System.out.println("après le try du from json converter");
         // Print the Map in an organized manner
         HashMap<String, String> nestedMap = new HashMap<>();
         HashMap<String,String> copyNestedEntries = new HashMap<>();
@@ -361,6 +363,7 @@ public class UserController {
             nested map into map
              */
         }
+        System.out.println("en sortie de parseComplexJson");
         return  copyNestedEntries;
     }
 
