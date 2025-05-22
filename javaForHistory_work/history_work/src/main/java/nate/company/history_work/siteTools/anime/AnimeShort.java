@@ -26,7 +26,7 @@ public class AnimeShort extends GenericVisualArt {
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_watch_anime",joinColumns = @JoinColumn(name = "animeid"),inverseJoinColumns = @JoinColumn(name = "userid"))
+    @JoinTable(name = "user_watch_anime",joinColumns = @JoinColumn(name = "idAnime"),inverseJoinColumns = @JoinColumn(name = "userid"))
     private Set<User> animeIsWatchedBy = new HashSet<User>();
 
     /*

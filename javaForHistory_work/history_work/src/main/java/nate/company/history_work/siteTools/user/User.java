@@ -3,10 +3,12 @@ package nate.company.history_work.siteTools.user;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 
+import nate.company.history_work.siteTools.anime.AnimeShort;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
 import nate.company.history_work.siteTools.reaction.Reaction;
 //import nate.company.history_work.siteTools.watchedAnime.WatchedAnime;
+import nate.company.history_work.siteTools.watchedAnime.WatchedAnime;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.stereotype.Component;
 import src.main.java.nate.company.history_work.siteTools.user.UserCategory;
@@ -65,9 +67,9 @@ public class User {
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
     private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
 
-    //@ManyToMany(fetch = FetchType.LAZY,mappedBy="animeIsWatchedBy", cascade = CascadeType.PERSIST, targetEntity = AnimeShort.class)
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy="animeIsWatchedBy", cascade = CascadeType.PERSIST, targetEntity = AnimeShort.class)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
-    //private Set<WatchedAnime> watchAnime = new LinkedHashSet<>();
+    private Set<WatchedAnime> watchAnime = new LinkedHashSet<>();
 
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy="reactioner", cascade = CascadeType.ALL, targetEntity = MovieReaction.class)
@@ -169,14 +171,14 @@ public class User {
      // * @param animeWatched
      * the anime watched
      */
-//    public void addWatchedAnime(WatchedAnime animeWatched){
-//        Objects.requireNonNull(animeWatched);
-//        //remove the old state
-//        watchAnime.remove(animeWatched);
-//
-//        //add the new state
-//        watchAnime.add(animeWatched);
-//    }
+    public void addWatchedAnime(WatchedAnime animeWatched){
+        Objects.requireNonNull(animeWatched);
+        //remove the old state
+        watchAnime.remove(animeWatched);
+
+        //add the new state
+        watchAnime.add(animeWatched);
+    }
 
 
 
@@ -202,10 +204,10 @@ public class User {
      * remove an anime from the watch list
      //* @param animeWatched
      */
-//    public void removeFromWatchedAnime(WatchedAnime animeWatched){
-//        Objects.requireNonNull(animeWatched);
-//        watchAnime.removeIf(animeWatched1->animeWatched1.getAnimeShort().getImdbID().equals(animeWatched.getAnimeShort().getImdbID()));
-//    }
+    public void removeFromWatchedAnime(WatchedAnime animeWatched){
+        Objects.requireNonNull(animeWatched);
+        watchAnime.removeIf(animeWatched1->animeWatched1.getAnimeShort().getImdbID().equals(animeWatched.getAnimeShort().getImdbID()));
+    }
 
     public void setWatchMovies(Set<WatchedMovie> watchMovies) {
         Objects.requireNonNull(watchMovies);
