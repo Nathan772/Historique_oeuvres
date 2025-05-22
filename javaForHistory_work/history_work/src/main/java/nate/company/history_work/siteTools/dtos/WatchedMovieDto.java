@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.timeHandler.TimeConverter;
 import nate.company.history_work.siteTools.user.User;
-import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
+import nate.company.history_work.siteTools.status.VisualArtStatus;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 
 import static nate.company.history_work.siteTools.timeHandler.TimeConverter.fromSecondToOnlyTimeObject;
@@ -42,7 +42,7 @@ public class WatchedMovieDto {
         this.movie = new MovieDto(new Movie());
         this.watcherDto = new UserDto(new User());
         this.time = new TimeConverter.OnlyTime(0,0,0);
-        this.movieStatus = MovieStatus.WATCHLATER.ordinal();
+        this.movieStatus = VisualArtStatus.WATCHLATER.ordinal();
     }
 
     @JsonCreator
@@ -50,7 +50,7 @@ public class WatchedMovieDto {
                            int seconds,
                            int minutes,
                            int hours,
-                           MovieStatus movieStatus){
+                           VisualArtStatus movieStatus){
         this.id = id;
         this.movie = movie;
         this.watcherDto = watcherDto;
@@ -86,7 +86,7 @@ public class WatchedMovieDto {
         }
         var actualTime = fromSecondToOnlyTimeObject(watchedMovie.getTimeAsLong());
         this.time = new TimeConverter.OnlyTime(actualTime.getSeconds(), actualTime.getMinutes(),actualTime.getHours());
-        this.movieStatus = watchedMovie.getMovieStatus().ordinal();
+        this.movieStatus = watchedMovie.getArtStatus().ordinal();
     }
 
     /*

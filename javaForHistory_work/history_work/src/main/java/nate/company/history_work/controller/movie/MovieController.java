@@ -2,7 +2,6 @@ package nate.company.history_work.controller.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import io.jsonwebtoken.security.Jwks;
 import nate.company.history_work.service.MovieReactionService;
 import nate.company.history_work.service.MovieService;
 import nate.company.history_work.service.UserService;
@@ -11,26 +10,21 @@ import nate.company.history_work.siteTools.dtos.MovieDto;
 import nate.company.history_work.siteTools.dtos.WatchedMovieDto;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.person.Person;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
 import nate.company.history_work.siteTools.timeHandler.TimeConverter;
 import nate.company.history_work.siteTools.user.User;
-import nate.company.history_work.siteTools.watchedMovie.MovieStatus;
+import nate.company.history_work.siteTools.status.VisualArtStatus;
 import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.*;
 import java.util.logging.Level;
 
 import static nate.company.history_work.controller.ControllerResources.FROMJSONCONVERTER;
-import static nate.company.history_work.controller.user.UserController.parseComplexJson;
 import static nate.company.history_work.logger.LoggerInfo.LOGGER;
 import static nate.company.history_work.service.UserService.USER_CHOSEN;
 import static nate.company.history_work.siteTools.json.JsonTools.parseKeyValueString;
@@ -168,8 +162,9 @@ public class MovieController {
             throw  new IllegalArgumentException("Error : the json received movie doesn't respect the json format "+e);
         }
         try {
+            var personAsString = fromStringToJsonMovieMap.get("director").split(" ");
             movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
-                    fromStringToJsonMovieMap.get("director"),
+                    new Person(personAsString[0], personAsString[1]),
                     fromStringToJsonMovieMap.get("poster"));
         }
 
@@ -341,8 +336,9 @@ public class MovieController {
         //check if movie already exists in db
         Movie movie;
         try {
+            var personAsString = fromStringToJsonMovieMap.get("director").split(" ");
             movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
-                    fromStringToJsonMovieMap.get("director"),
+                    new Person(personAsString[0], personAsString[1]),
                     fromStringToJsonMovieMap.get("poster"));
         }
 
@@ -612,8 +608,9 @@ public class MovieController {
         //check if movie already exists in db
         Movie movie;
         try {
+            var personAsString = fromStringToJsonMovieMap.get("director").split(" ");
             movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
-                    fromStringToJsonMovieMap.get("director"),
+                    new Person(personAsString[0], personAsString[1]),
                     fromStringToJsonMovieMap.get("poster"));
         }
 
@@ -657,7 +654,7 @@ public class MovieController {
                 alreadyWatchedMovie.setTimeAsLong(fromOnlyTimeToSeconds(onlyTimeOfMovie));
 
                 //update "watched status"
-                alreadyWatchedMovie.setMovieStatus(MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")));
+                alreadyWatchedMovie.setArtStatus(VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")));
 
                 actualUser.addWatchedMovie(alreadyWatchedMovie);
                 movieChosen.addIsWatchedBy(actualUser);
@@ -689,7 +686,7 @@ public class MovieController {
 
             //new watchMovie object instantiate (there was nothing in db)
 
-            var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+            var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
                     fromOnlyTimeToSeconds(onlyTimeOfMovie));
             System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
 
@@ -711,7 +708,7 @@ public class MovieController {
         it's a new movie that is registered in data base
          */
 
-        var watchedMovie = new WatchedMovie(actualUser,movie, MovieStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+        var watchedMovie = new WatchedMovie(actualUser,movie, VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
                 fromOnlyTimeToSeconds(onlyTimeOfMovie));
         System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
 

@@ -12,7 +12,6 @@ import nate.company.history_work.siteTools.user.User;
 import java.util.Objects;
 
 public class ReactionDto {
-    private long id;
     private UserDto reactioner;
     private ReactionChoices reaction;
 
@@ -26,8 +25,8 @@ public class ReactionDto {
     public ReactionDto(Reaction reaction){
         this.reactioner = new UserDto(reaction.getReactioner());
         this.reaction = reaction.getReaction();
-        this.id = reaction.getId();
     }
+
 
     public ReactionChoices getReaction() {
         return reaction;

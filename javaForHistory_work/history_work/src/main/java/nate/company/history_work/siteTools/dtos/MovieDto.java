@@ -50,7 +50,7 @@ public class MovieDto {
      * @param imdbID the imdb id
      * @param director the director name of the movie
      */
-    @JsonCreator
+
     public MovieDto(long idmovie, String title, int yearOfRelease, String imdbID, String director,
 
                  String poster){
@@ -93,13 +93,13 @@ public class MovieDto {
         this.id = movie.getId();
         this.yearOfRelease = movie.getYearOfRelease();
         this.imdbID = movie.getImdbID();
-        this.director = movie.getDirector();
+        this.director = movie.getDirector().getFirstName() +"   "+movie.getDirector().getLastName();
         this.title = movie.getTitle();
         this.poster = movie.getPoster();
         //ignore copy of set
         if(!ignore) {
             System.out.println("on est censé ignorer le watchedBy");
-            this.isWatchedBy = movie.getIsWatchedBy().stream().map(user -> new UserDto(user, true)).collect(Collectors.toSet());
+            this.isWatchedBy = movie.getMovieIsWatchedBy().stream().map(user -> new UserDto(user, true)).collect(Collectors.toSet());
         }
         else {
             System.out.println("on a pas ignoré le watchedBy");

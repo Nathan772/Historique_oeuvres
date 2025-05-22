@@ -13,6 +13,8 @@ import java.util.Objects;
 
 public class MovieReactionDto extends ReactionDto {
 
+    private long id;
+
     @JsonBackReference
     private MovieDto movieReacted;
 
@@ -41,6 +43,14 @@ public class MovieReactionDto extends ReactionDto {
     public void setMovieReacted(MovieDto movieReacted) {
         Objects.requireNonNull(movieReacted);
         this.movieReacted = movieReacted;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public MovieDto getMovieReacted() {

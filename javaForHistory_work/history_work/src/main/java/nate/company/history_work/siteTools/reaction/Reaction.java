@@ -5,15 +5,18 @@ import nate.company.history_work.siteTools.user.User;
 
 import java.util.Objects;
 
-@Entity
-@Table(name="reaction_table")
-public class Reaction {
-
+/*
+mapped superclass is use
+for inheritance
+ */
+@MappedSuperclass
+public abstract class Reaction {
 
     @Id
     @Column(name="id_reaction")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @JoinColumn(name="iduser", nullable=false)
     @ManyToOne
     private User reactioner;
@@ -21,11 +24,20 @@ public class Reaction {
     @Embedded
     private ReactionChoices reaction;
 
+    public Reaction(long id, User reactioner, ReactionChoices reaction){
+        Objects.requireNonNull(reactioner);
+        Objects.requireNonNull(reaction);
+        this.reactioner = reactioner;
+        this.reaction = reaction;
+        this.id = id;
+    }
+
     public Reaction(User reactioner, ReactionChoices reaction){
         Objects.requireNonNull(reactioner);
         Objects.requireNonNull(reaction);
         this.reactioner = reactioner;
         this.reaction = reaction;
+        this.id = 0;
     }
 
     public Reaction(){
@@ -57,4 +69,6 @@ public class Reaction {
     public void setId(long id) {
         this.id = id;
     }
+
+
 }

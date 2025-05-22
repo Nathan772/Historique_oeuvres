@@ -66,6 +66,8 @@ export class MovieSearchComponent {
         if (data != null && data.length > 0) {
           console.log("la liste est non-vide");
           //Only accept movies and no other kind
+          //this.listMoviesTransfer= data.filter(movie=>movie.Type === "movie");
+          //enable everything ()
           this.listMoviesTransfer= data.filter(movie=>movie.Type === "movie");
 
           //Deprecated

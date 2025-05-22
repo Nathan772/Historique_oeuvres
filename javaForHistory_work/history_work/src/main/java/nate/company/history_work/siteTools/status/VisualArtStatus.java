@@ -1,6 +1,6 @@
-package nate.company.history_work.siteTools.watchedMovie;
+package nate.company.history_work.siteTools.status;
 
-public enum MovieStatus {
+public enum VisualArtStatus {
 
     WATCHING,
     WATCHLATER,
@@ -8,7 +8,7 @@ public enum MovieStatus {
 
 
 
-    public static MovieStatus fromStringToMovieStatus(String status){
+    public static VisualArtStatus fromStringToMovieStatus(String status){
         return switch(status){
             case "REWATCH" -> REWATCH;
             case "WATCHLATER" -> WATCHLATER;

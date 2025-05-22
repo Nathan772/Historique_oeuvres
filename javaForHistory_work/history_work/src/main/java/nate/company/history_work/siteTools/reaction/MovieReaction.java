@@ -16,6 +16,7 @@ a reaction specific for a movie
 public class MovieReaction extends Reaction {
 
 
+
     /*
     @Id
     @Column(name="id_reaction")
@@ -27,7 +28,7 @@ public class MovieReaction extends Reaction {
 
     public MovieReaction(long id, User reactioner, ReactionChoices reaction, Movie movie){
         //set les champs extends
-        super(reactioner, reaction);
+        super(id, reactioner, reaction);
         this.movieReacted = movie;
         //this.id = id;
     }
@@ -68,6 +69,9 @@ public class MovieReaction extends Reaction {
     public Movie getMovieReacted() {
         return movieReacted;
     }
+
+
+
     /*
     @Override
     public void setReactioner(User reactioner) {

@@ -2,6 +2,8 @@ package nate.company.history_work.siteTools.movie;
 
 import jakarta.persistence.*;
 
+import nate.company.history_work.siteTools.genericVisualArt.GenericVisualArt;
+import nate.company.history_work.siteTools.person.Person;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
 import nate.company.history_work.siteTools.reaction.Reaction;
 import nate.company.history_work.siteTools.user.User;
@@ -23,7 +25,7 @@ name = movie, enable to be recognized as "movie" in database
 @Component
 @Table(name="movie_table")
 @Entity
-public class Movie {
+public class Movie extends GenericVisualArt {
     /*
     Id et generatedValue ont été
     importés manuellement en se référant aux noms présents
@@ -40,17 +42,7 @@ public class Movie {
     @Id
     @Column(name="idmovie")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String title;
-    private int yearOfRelease;
-    //many genre
-    // for one movie
-    //private String genre;
-
-    private String imdbID;
-    //director of the movie
-    private String director;
 
     /*
     - One to many means, one set will possess many users but a user will just be
@@ -62,14 +54,11 @@ public class Movie {
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "user_watch_movie",
-            joinColumns = @JoinColumn(name = "movieid"),
-            inverseJoinColumns = @JoinColumn(name = "userid"))
-    private Set<User> isWatchedBy = new HashSet<User>();
+    @JoinTable(name = "user_watch_movie",joinColumns = @JoinColumn(name = "movieid"),inverseJoinColumns = @JoinColumn(name = "userid"))
+    private Set<User> movieIsWatchedBy = new HashSet<User>();
 
-    @Column(name="movie_poster")
-    private String poster;
+    //@Column(name="movie_poster")
+    //private String poster;
 
 
     /*
@@ -78,17 +67,22 @@ public class Movie {
     @OneToMany(fetch = FetchType.LAZY,mappedBy="movieReacted", cascade = CascadeType.ALL)
     private Set<MovieReaction> reactions = new LinkedHashSet<>();
 
+    @ManyToOne
+    private Person director;
+
     /**
      *
      * constructeur par défaut, c'est à dire, avec 0 arguments, indispensable pour résoudre l'erreur
      * "required a bean of type "java.lang.String" that could not be found"
      */
     public Movie(){
-        this.title = "bla";
-        this.yearOfRelease = 0;
-        this.imdbID ="sss";
-        this.director = "jean";
-        this.poster = "nothing";
+//        this.title = "bla";
+//        this.yearOfRelease = 0;
+//        this.imdbID ="sss";
+//        this.director = "jean";
+//        this.poster = "nothing";
+        super();
+        this.director = new Person("","");
     }
 
     /**
@@ -102,18 +96,15 @@ public class Movie {
      * @param imdbID the imdb id
      * @param director the director name of the movie
      */
-    public Movie(String title, int yearOfRelease, String imdbID, String director, String poster){
-        Objects.requireNonNull(title, "the movie's title cannot be null");
-        Objects.requireNonNull(imdbID, "the imdbID cannot be null");
+    public Movie(String title, int yearOfRelease, String imdbID, Person director, String poster){
+//        this.yearOfRelease = yearOfRelease;
+//        this.imdbID = imdbID;
+//        this.director = director;
+//        this.title = title;
+//        this.poster = poster;
+        super(title, yearOfRelease, imdbID, poster);
         Objects.requireNonNull(director, "the movie director cannot be null");
-        if(yearOfRelease < 0){
-            throw new IllegalArgumentException("movie's year cannot be lower than 0");
-        }
-        this.yearOfRelease = yearOfRelease;
-        this.imdbID = imdbID;
         this.director = director;
-        this.title = title;
-        this.poster = poster;
     }
 
     /**
@@ -128,49 +119,17 @@ public class Movie {
      * @param imdbID the imdb id
      * @param director the director name of the movie
      */
-    public Movie(long idmovie, String title, int yearOfRelease, String imdbID, String director,
-
-                 String poster){
-        Objects.requireNonNull(title, "the movie's title cannot be null");
-        Objects.requireNonNull(imdbID, "the imdbID cannot be null");
-        Objects.requireNonNull(director, "the movie director cannot be null");
-        if(yearOfRelease < 0){
-            throw new IllegalArgumentException("movie's year cannot be lower than 0");
-        }
-        if(idmovie < 0){
-            throw new IllegalArgumentException("movie's id cannot be null");
-        }
+    public Movie(long idmovie, String title, int yearOfRelease, String imdbID, Person director, String poster){
+        super(title, yearOfRelease, imdbID, poster);
         this.id = idmovie;
-        this.yearOfRelease = yearOfRelease;
-        this.imdbID = imdbID;
         this.director = director;
-        this.title = title;
-        this.poster = poster;
     }
 
-    /**
-     * Retrieves the title of the movie.
-     * @return the title
-     */
-    public String getTitle(){
-        return title;
-    }
-
-    /**
-     * Retrieves the id of the movie.
-     *
-     * @return the id of the movie
-     */
-    public long getId(){
+    public long getId() {
         return id;
     }
-
-    /**
-     * Retrieves the release year of the movie.
-     * @return the year
-     */
-    public int getYearOfRelease(){
-        return yearOfRelease;
+    public void setId(long id) {
+        this.id = id;
     }
 
     /**
@@ -178,124 +137,30 @@ public class Movie {
      *
      * @return the name of the director
      */
-    public String getDirector(){
+    public Person getDirector(){
         return director;
     }
 
-    /**
-     * retrieve the poster of a movie.
-     * @return
-     * the movie's poster.
-     */
-    public String getPoster(){
-        return poster;
-    }
 
 
-    /**
-     * Sets a new user's id.
-     *
-     * @param id the new id
-     */
-    public void setMovieId(long id){
-        if(id < 0){
-            throw new IllegalArgumentException("movie id cannot be lower than 0");
-        }
-        this.id = id;
-    }
 
-    /**
-     * update the poster data.
-     * @param poster
-     * the new poster image for the movie.
-     */
-    public void setPoster(String poster) {
-        Objects.requireNonNull(poster);
-        this.poster = poster;
-    }
+
 
     /**
      * Sets a new password.
      *
      * @param newDirector the new director name
      */
-    public void setDirector(String newDirector){
+    public void setDirector(Person newDirector){
         Objects.requireNonNull(newDirector);
         this.director = newDirector;
     }
 
-    /**
-     * Sets a new year of release.
-     *
-     * @param yearOfRelease the year of the movie release.
-     */
-    public void setYearOfRelease(int yearOfRelease){
-        if(yearOfRelease < 0){
-            throw new IllegalArgumentException("Movie's year of release cannot be lower than 0");
-        }
-        this.yearOfRelease = yearOfRelease;
-    }
 
-    /**
-     * Sets a new email address.
-     *
-     * @param newTitle the new title
-     */
-    public void setTitle(String newTitle){
-        Objects.requireNonNull(newTitle);
-        title = newTitle;
-    }
-
-    /**
-     * Sets a new Imdb id.
-     *
-     * @param newImdbId  the new id
-     */
-    public void setImdbID(String newImdbId){
-        Objects.requireNonNull(newImdbId);
-        imdbID = newImdbId;
-    }
 
     @Override
     public String toString(){
-        return "L'id du film : "+id+ ", titre : "+title+", directeur : "+director + ", année : "+ yearOfRelease;
-    }
-
-    /*
-    this method adds a watcher
-     */
-    public void addIsWatchedBy(User user){
-        Objects.requireNonNull(user);
-        isWatchedBy.add(user);
-    }
-
-    public void removeUserFromWatcher(User user){
-        Objects.requireNonNull(user);
-        isWatchedBy.remove(user);
-
-    }
-
-    public Set<User> getIsWatchedBy() {
-        return isWatchedBy;
-    }
-
-    public void setIsWatchedBy(Set<User> userList){
-        isWatchedBy = userList;
-    }
-
-    public void setId(long id) {
-        if(id < 0){
-            throw new IllegalArgumentException("movie's id cannot be lower than 0");
-        }
-        this.id = id;
-    }
-
-    /**
-     * get the imdb id of the movie
-     * @return
-     */
-    public String getImdbID() {
-        return imdbID;
+        return "L'id du film : "+getId()+ ", titre : "+getTitle()+", directeur : "+director + ", année : "+ getYearOfRelease();
     }
 
     public void setReactions(Set<MovieReaction> reactions) {
@@ -316,16 +181,16 @@ public class Movie {
     @Override
     public boolean equals(Object o){
         return o instanceof Movie movie
-                && id == movie.id
-                && title.equals(movie.title)
-                && yearOfRelease == movie.yearOfRelease
-                && imdbID.equals(movie.imdbID)
+                && getId() == movie.getId()
+                && getTitle().equals(movie.getTitle())
+                && getYearOfRelease() == movie.getYearOfRelease()
+                && getImdbID().equals(movie.getImdbID())
                 && director.equals(movie.director);
     }
 
     @Override
     public int hashCode() {
-        return Long.hashCode(id)^title.hashCode()^yearOfRelease^imdbID.hashCode()^director.hashCode()^poster.hashCode();
+        return Long.hashCode(getId())^getTitle().hashCode()^getYearOfRelease()^getImdbID().hashCode()^director.hashCode()^getPoster().hashCode();
     }
 
     /**
@@ -353,6 +218,29 @@ public class Movie {
     public boolean unReactUser(MovieReaction movieReaction){
         Objects.requireNonNull(movieReaction);
         return reactions.removeIf(movieReaction1-> movieReaction.getReactioner().equals(movieReaction1.getReactioner()));
+    }
+
+    public void setMovieIsWatchedBy(Set<User> movieIsWatchedBy) {
+        Objects.requireNonNull(movieIsWatchedBy);
+        this.movieIsWatchedBy = movieIsWatchedBy;
+    }
+
+    public Set<User> getMovieIsWatchedBy() {
+        return movieIsWatchedBy;
+    }
+
+    /*
+      this method adds a watcher
+       */
+    public void addIsWatchedBy(User user){
+        Objects.requireNonNull(user);
+        movieIsWatchedBy.add(user);
+    }
+
+    public void removeUserFromWatcher(User user){
+        Objects.requireNonNull(user);
+        movieIsWatchedBy.remove(user);
+
     }
 }
 
