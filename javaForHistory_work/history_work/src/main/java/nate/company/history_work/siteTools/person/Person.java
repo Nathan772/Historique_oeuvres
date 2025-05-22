@@ -2,6 +2,7 @@ package nate.company.history_work.siteTools.person;
 
 import jakarta.persistence.*;
 //import nate.company.history_work.siteTools.anime.AnimeShort;
+import nate.company.history_work.siteTools.anime.AnimeShort;
 import nate.company.history_work.siteTools.movie.Movie;
 import org.springframework.stereotype.Component;
 
@@ -37,8 +38,8 @@ public class Person {
     /*
   all the anime where this person is a voice actor/actor.
    */
-//    @ManyToMany(fetch = FetchType.LAZY,mappedBy="actors", cascade = CascadeType.ALL)
-//    private HashSet<AnimeShort> actorsAnime = new LinkedHashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="actors", targetEntity = AnimeShort.class)
+    private HashSet<AnimeShort> actorsAnime = new LinkedHashSet<>();
 
     public Person(long id, String firstName, String lastName){
         Objects.requireNonNull(firstName);
@@ -90,19 +91,19 @@ public class Person {
 //        return writtenAnime;
 //    }
 //
-//    public HashSet<AnimeShort> getActorsAnime() {
-//        return actorsAnime;
-//    }
+    public HashSet<AnimeShort> getActorsAnime() {
+        return actorsAnime;
+    }
 
     public void setMoviesDirected(HashSet<Movie> moviesDirected) {
         Objects.requireNonNull(moviesDirected);
         this.moviesDirected = moviesDirected;
     }
 
-//    public void setActorsAnime(HashSet<AnimeShort> actorsAnime) {
-//        Objects.requireNonNull(actorsAnime);
-//        this.actorsAnime = actorsAnime;
-//    }
+    public void setActorsAnime(HashSet<AnimeShort> actorsAnime) {
+        Objects.requireNonNull(actorsAnime);
+        this.actorsAnime = actorsAnime;
+    }
 
     public HashSet<Movie> getMoviesDirected() {
         return moviesDirected;
