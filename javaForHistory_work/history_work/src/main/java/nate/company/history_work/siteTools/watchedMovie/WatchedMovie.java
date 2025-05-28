@@ -21,8 +21,20 @@ public class WatchedMovie extends WatchedObject {
     @Column(name="idWatchedMovie")
     private long id;
 
-    @JoinColumn(name="idmovie")
-    @OneToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name="id_movie", referencedColumnName = "idmovie")
+    //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JoinColumn(name="movie_id")
+    /*
+
+    WHY MERGE IS NECESSARY :
+    https://stackoverflow.com/questions/69890531/why-am-i-obtaining-this-detached-entity-passed-to-persist-when-i-first-retriev
+
+    prevent from double creation of persist in base with the same objct
+    contrary to cascade that will propagate the "persist".
+
+    It solves issues with
+     */
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Movie movie;
 
 
@@ -32,9 +44,10 @@ public class WatchedMovie extends WatchedObject {
     */
     @JsonCreator
     public WatchedMovie(long id, User user, Movie movie, VisualArtStatus status, long timeAsLong){
-        super(id,timeAsLong,user, status);
+        super(timeAsLong,user, status);
         Objects.requireNonNull(movie);
         this.movie = movie;
+        this.id = id;
     }
 
     public WatchedMovie(User user, Movie movie, VisualArtStatus status, long timeAsLong){
@@ -48,6 +61,14 @@ public class WatchedMovie extends WatchedObject {
         //this.watcher = user;
         super(timeAsLong, user, status);
         this.movie = movie;
+        //the watcher is visible by the movie
+        movie.addIsWatchedBy(user);
+        //
+        user.addWatchedMovie(this);
+        this.id = 0;
+        //add to user list
+        //cause issues because watched is not persistent at this moment
+        //user.addWatchedMovie(this,movie);
 //        this.movieStatus = status;
 //        this.timeAsLong = timeAsLong;
     }
@@ -58,6 +79,7 @@ public class WatchedMovie extends WatchedObject {
     public WatchedMovie(){
         super();
         this.movie = new Movie();
+        this.id = 0;
     }
 
 

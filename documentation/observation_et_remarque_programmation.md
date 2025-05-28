@@ -1688,3 +1688,57 @@ Pensez à ignorer les champs lorsque vous faites des copies pour vos dto classes
 @JsonIgnoreProperties
 @JsonManagedReference
 ```
+
+problème : 
+
+"java.lang.IllegalArgumentException:  Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+
+solution : 
+
+"étendez le message pour voir où se situe exactement l'erreur, pensez à vérifier que tous les objets et sous objets qui sont stockés dans les champs que vous voulez sauvegarder ne sont 
+pas vides, pensez à sauvegarder en base de données les objets dans le bon ordre (le objet qui n'inclut pas d'objet qui doivent eux mêmes être sauvegardé en premier)"
+
+et ajoutez :
+
+"@JoinColumn(name="id_movie", ---> referencedColumnName = "idmovie")
+    @OneToOne(fetch = FetchType.LAZY)"
+
+problème :
+
+"java.lang.IllegalArgumentException: Can not set java.util.HashSet field nate.company.history_work.siteTools.person.Person.actorsAnime to org.hibernate.collection.spi.PersistentSet"
+
+solution : 
+
+pensez à ajouter des setters et aussi un constructeur qui permet de préciser le champ "actorsAnime" dans la class Person.
+
+problème : 
+
+"Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+
+solution :
+
+pensez à utiliser une instance qui possède son champ "id" qui correspond bien à son id en base, et non à la valeur "0" qui signifie que le vrai id doit 
+être donné plus tard lors du premier "save".
+
+
+problème :
+
+"detached entity passed to persist: nate.company.history_work.siteTools.movie.Movie"
+
+solution :
+
+```java
+
+/*
+
+    WHY MERGE IS NECESSARY :
+    https://stackoverflow.com/questions/69890531/why-am-i-obtaining-this-detached-entity-passed-to-persist-when-i-first-retriev
+
+    prevent from double creation of persist in base with the same objct
+    contrary to cascade that will propagate the "persist".
+
+    It solves issues with 
+     */
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private Movie movie;
+```

@@ -22,7 +22,7 @@ public class WatchedAnime extends WatchedObject {
     private long id;
 
     @JoinColumn(name="idAnime")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private AnimeShort animeShort;
 
 
@@ -32,9 +32,10 @@ public class WatchedAnime extends WatchedObject {
     */
     @JsonCreator
     public WatchedAnime(long id, User user, AnimeShort animeShort, VisualArtStatus status, long timeAsLong){
-        super(id,timeAsLong,user, status);
+        super(timeAsLong,user, status);
         Objects.requireNonNull(animeShort);
         this.animeShort = animeShort;
+        this.id = id;
     }
 
     public WatchedAnime(User user, AnimeShort animeShort, VisualArtStatus status, long timeAsLong){
@@ -48,6 +49,7 @@ public class WatchedAnime extends WatchedObject {
         //this.watcher = user;
         super(timeAsLong, user, status);
         this.animeShort = animeShort;
+        this.id = 0;
 //        this.movieStatus = status;
 //        this.timeAsLong = timeAsLong;
     }
@@ -57,6 +59,7 @@ public class WatchedAnime extends WatchedObject {
      */
     public WatchedAnime(){
         super();
+        this.id = 0;
         this.animeShort = new AnimeShort();
     }
 

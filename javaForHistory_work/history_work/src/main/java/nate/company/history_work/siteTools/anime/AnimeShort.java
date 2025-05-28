@@ -32,18 +32,15 @@ public class AnimeShort extends GenericVisualArt {
     /*
   all the anime written by a person.
    */
-//    @ManyToMany(fetch = FetchType.LAZY,mappedBy="writtenAnime", cascade = CascadeType.ALL)
-//    private HashSet<Person> writers = new LinkedHashSet<>();
-
-    //tmp need to be replaced by many to many
-    private HashSet<Person> writers = new LinkedHashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy="writtenAnime", cascade = CascadeType.ALL)
+    private Set<Person> writers = new LinkedHashSet<>();
 
     /*
   all the anime where this person is a voice actor/actor.
    */
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "anime_participate_actors",joinColumns = @JoinColumn(name = "idAnime"),inverseJoinColumns = @JoinColumn(name = "id_person"))
-    private HashSet<Person> actors = new LinkedHashSet<>();
+    private Set<Person> actors = new LinkedHashSet<>();
 
     public AnimeShort(){
         super();
@@ -130,7 +127,7 @@ public class AnimeShort extends GenericVisualArt {
         return animeIsWatchedBy;
     }
 
-    public HashSet getActors() {
+    public Set<Person> getActors() {
         return actors;
     }
 
@@ -147,12 +144,12 @@ public class AnimeShort extends GenericVisualArt {
         return id;
     }
 
-    public void setActors(HashSet actors) {
+    public void setActors(Set<Person> actors) {
         Objects.requireNonNull(actors);
         this.actors = actors;
     }
 
-    public HashSet getWriters() {
+    public Set getWriters() {
         return writers;
     }
 

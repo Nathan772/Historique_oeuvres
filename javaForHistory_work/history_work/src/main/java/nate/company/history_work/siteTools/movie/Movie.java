@@ -7,6 +7,7 @@ import nate.company.history_work.siteTools.person.Person;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
 import nate.company.history_work.siteTools.reaction.Reaction;
 import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -54,7 +55,7 @@ public class Movie extends GenericVisualArt {
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "user_watch_movie",joinColumns = @JoinColumn(name = "movieid"),inverseJoinColumns = @JoinColumn(name = "userid"))
+    @JoinTable(name = "user_watch_movie",joinColumns = @JoinColumn(name = "idmovie"),inverseJoinColumns = @JoinColumn(name = "iduser"))
     private Set<User> movieIsWatchedBy = new HashSet<User>();
 
     //@Column(name="movie_poster")
@@ -70,6 +71,16 @@ public class Movie extends GenericVisualArt {
     @ManyToOne
     private Person director;
 
+    /*
+    connected to "watched movies"
+    structure
+    https://www.baeldung.com/spring-jpa-unidirectional-one-to-many-and-cascading-delete
+
+    not necessary due to unidirectionnal
+     */
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy="movie", cascade = CascadeType.MERGE, targetEntity = WatchedMovie.class)
+//    private Set<WatchedMovie> watchedMovies = new LinkedHashSet<>();
+
     /**
      *
      * constructeur par défaut, c'est à dire, avec 0 arguments, indispensable pour résoudre l'erreur
@@ -83,6 +94,7 @@ public class Movie extends GenericVisualArt {
 //        this.poster = "nothing";
         super();
         this.director = new Person("","");
+        this.id = 0;
     }
 
     /**
@@ -102,9 +114,12 @@ public class Movie extends GenericVisualArt {
 //        this.director = director;
 //        this.title = title;
 //        this.poster = poster;
+
         super(title, yearOfRelease, imdbID, poster);
         Objects.requireNonNull(director, "the movie director cannot be null");
         this.director = director;
+        this.id = 0;
+        director.addMovieDirected(this);
     }
 
     /**
@@ -160,7 +175,7 @@ public class Movie extends GenericVisualArt {
 
     @Override
     public String toString(){
-        return "L'id du film : "+getId()+ ", titre : "+getTitle()+", directeur : "+director + ", année : "+ getYearOfRelease();
+        return "L'id du film : "+getId()+ ", titre : "+getTitle()+", directeur : first name="+director.getFirstName()+ "lastname = " +director.getLastName() +", année : "+ getYearOfRelease();
     }
 
     public void setReactions(Set<MovieReaction> reactions) {
@@ -242,5 +257,18 @@ public class Movie extends GenericVisualArt {
         movieIsWatchedBy.remove(user);
 
     }
+
+//    public void setWatchedMovies(Set<WatchedMovie> watchedMovies) {
+//        this.watchedMovies = watchedMovies;
+//    }
+//
+//    public Set<WatchedMovie> getWatchedMovies() {
+//        return watchedMovies;
+//    }
+//
+//    public void addToWatchedList(WatchedMovie watchedMovie){
+//        Objects.requireNonNull(watchedMovie);
+//        watchedMovies.add(watchedMovie);
+//    }
 }
 

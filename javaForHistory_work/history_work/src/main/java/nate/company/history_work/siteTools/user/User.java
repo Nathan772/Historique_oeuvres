@@ -160,7 +160,7 @@ public class User {
     public void addWatchedMovie(WatchedMovie movieWatched){
         Objects.requireNonNull(movieWatched);
         //remove the old state
-        watchMovies.remove(movieWatched);
+        //watchMovies.remove(movieWatched);
 
         //add the new state
         watchMovies.add(movieWatched);

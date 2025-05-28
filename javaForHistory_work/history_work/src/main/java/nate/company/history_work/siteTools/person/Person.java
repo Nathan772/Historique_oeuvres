@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Component
 @Table(name="person_table")
@@ -27,20 +28,27 @@ public class Person {
     as movie director.
      */
     @OneToMany(fetch = FetchType.LAZY,mappedBy="director", cascade = CascadeType.ALL)
-    private HashSet<Movie> moviesDirected = new LinkedHashSet<>();
-
-    /*
-   all the anime written by a person.
-    */
-//    @ManyToMany(fetch = FetchType.LAZY,mappedBy="writers", cascade = CascadeType.ALL)
-//    private HashSet<AnimeShort> writtenAnime = new LinkedHashSet<>();
+    private Set<Movie> moviesDirected = new LinkedHashSet<>();
 
     /*
   all the anime where this person is a voice actor/actor.
    */
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="actors", targetEntity = AnimeShort.class)
-    private HashSet<AnimeShort> actorsAnime = new LinkedHashSet<>();
+    private Set<AnimeShort> actorsAnime = new LinkedHashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "anime_written_by_author",joinColumns = @JoinColumn(name = "idAnime"),inverseJoinColumns = @JoinColumn(name = "id_person"))
+    private Set<AnimeShort> writtenAnime = new LinkedHashSet<>();
+
+    public Person(long id, String firstName, String lastName, Set<Movie> moviesDirected, Set<AnimeShort> actorsAnime){
+        Objects.requireNonNull(firstName);
+        Objects.requireNonNull(lastName);
+        this.id = id;
+        this.firstName= firstName;
+        this.lastName =lastName;
+        this.moviesDirected = moviesDirected;
+        this.actorsAnime = actorsAnime;
+    }
     public Person(long id, String firstName, String lastName){
         Objects.requireNonNull(firstName);
         Objects.requireNonNull(lastName);
@@ -82,30 +90,46 @@ public class Person {
                  moviesDirected.equals(person.moviesDirected);
     }
 
-//    public void setWrittenAnime(HashSet<AnimeShort> writtenAnime) {
-//        Objects.requireNonNull(writtenAnime);
-//        this.writtenAnime = writtenAnime;
-//    }
-//
-//    public HashSet<AnimeShort> getWrittenAnime() {
-//        return writtenAnime;
-//    }
-//
-    public HashSet<AnimeShort> getActorsAnime() {
+    @Override
+    public String toString() {
+        return "Director : lastName = "+lastName+" firstName = "+firstName+" movies directed : "+moviesDirected+ " anime voice actors "+actorsAnime;
+    }
+
+    public void addMovieDirected(Movie movie){
+        Objects.requireNonNull(movie);
+        moviesDirected.add(movie);
+    }
+
+    public void addAnimeVoiced(AnimeShort animeShort){
+        Objects.requireNonNull(animeShort);
+        actorsAnime.add(animeShort);
+    }
+
+
+    public void setWrittenAnime(Set<AnimeShort> writtenAnime) {
+        Objects.requireNonNull(writtenAnime);
+        this.writtenAnime = writtenAnime;
+    }
+
+    public Set<AnimeShort> getWrittenAnime() {
+        return writtenAnime;
+    }
+
+    public Set<AnimeShort> getActorsAnime() {
         return actorsAnime;
     }
 
-    public void setMoviesDirected(HashSet<Movie> moviesDirected) {
+    public void setMoviesDirected(Set<Movie> moviesDirected) {
         Objects.requireNonNull(moviesDirected);
         this.moviesDirected = moviesDirected;
     }
 
-    public void setActorsAnime(HashSet<AnimeShort> actorsAnime) {
+    public void setActorsAnime(Set<AnimeShort> actorsAnime) {
         Objects.requireNonNull(actorsAnime);
         this.actorsAnime = actorsAnime;
     }
 
-    public HashSet<Movie> getMoviesDirected() {
+    public Set<Movie> getMoviesDirected() {
         return moviesDirected;
     }
 

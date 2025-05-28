@@ -2,10 +2,7 @@ package nate.company.history_work.controller.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import nate.company.history_work.service.MovieReactionService;
-import nate.company.history_work.service.MovieService;
-import nate.company.history_work.service.UserService;
-import nate.company.history_work.service.WatchMovieService;
+import nate.company.history_work.service.*;
 import nate.company.history_work.siteTools.dtos.MovieDto;
 import nate.company.history_work.siteTools.dtos.WatchedMovieDto;
 import nate.company.history_work.siteTools.movie.Movie;
@@ -62,6 +59,8 @@ public class MovieController {
 
     private final MovieReactionService movieReactionService;
 
+    private PersonService personService;
+
     /**
      * Repository that stores movies watched by a user.
      * deprecated
@@ -79,7 +78,8 @@ public class MovieController {
     public MovieController(MovieRepository movieRepository, UserService userService, MovieService movieService,
 
                            WatchMovieService watchedMovieService,
-                           MovieReactionService movieReactionService){
+                           MovieReactionService movieReactionService,
+                           PersonService personService){
         Objects.requireNonNull(movieRepository);
         Objects.requireNonNull(userService);
         this.movieRepository = movieRepository;
@@ -87,6 +87,7 @@ public class MovieController {
         this.watchedMovieService = watchedMovieService;
         this.movieService = movieService;
         this.movieReactionService = movieReactionService;
+        this.personService = personService;
     }
 
     /**
@@ -607,10 +608,12 @@ public class MovieController {
 
         //check if movie already exists in db
         Movie movie;
+        Person director;
         try {
             var personAsString = fromStringToJsonMovieMap.get("director").split(" ");
+            director = new Person(personAsString[0], personAsString[1]);
             movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
-                    new Person(personAsString[0], personAsString[1]),
+                    director,
                     fromStringToJsonMovieMap.get("poster"));
         }
 
@@ -696,6 +699,8 @@ public class MovieController {
             movieChosen.addIsWatchedBy(actualUser);
             actualUser.addWatchedMovie(watchedMovie);
             //makes them persistent in db
+            System.out.println("la valeur du directeur est : "+director);
+            personService.savePerson(director);
             movieService.saveMovie(movieChosen);
             //this specific order is compulsory
             watchedMovieService.saveWatchMovie(watchedMovie);
@@ -718,9 +723,13 @@ public class MovieController {
         //we save it in db
         movie.addIsWatchedBy(actualUser);
         actualUser.addWatchedMovie(watchedMovie);
+        System.out.println("la valeur du directeur est : "+director);
+        director.addMovieDirected(movie);
+        //makes them persistent in db
+        personService.savePerson(director);
         movieService.saveMovie(movie);
-        userService.saveUser(actualUser);
         watchedMovieService.saveWatchMovie(watchedMovie);
+        userService.saveUser(actualUser);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
         System.out.println("juste avant le responseEntity de watchedmovieDto");
 

@@ -3,9 +3,13 @@
  */
 package nate.company.history_work;
 import nate.company.history_work.service.MovieService;
+import nate.company.history_work.service.PersonService;
 import nate.company.history_work.service.UserService;
 import nate.company.history_work.service.WatchMovieService;
+import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.person.Person;
+import nate.company.history_work.siteTools.person.PersonRepository;
 import nate.company.history_work.siteTools.reaction.MovieReactionRepository;
 import nate.company.history_work.siteTools.reaction.ReactionRepository;
 import nate.company.history_work.siteTools.user.User;
@@ -55,7 +59,9 @@ public class Application {
     CommandLineRunner init(UserService userService, MovieService movieService, UserRepository userRepository, MovieRepository movieRepository,
                            WatchMovieService watchMovieService, WatchedMovieRepository watchedMovieRepository,
                            MovieReactionRepository movieReactionRepository,
-                           ReactionRepository reactionRepository
+                           ReactionRepository reactionRepository,
+                           PersonRepository personRepository ,
+                           PersonService personService
     ) {
         return args -> {
 
@@ -75,6 +81,8 @@ public class Application {
 //            System.out.println("tous les films en bdd :"+movieRepository.findAll());
 //            System.out.println("tous les films regardés par des users en bdd :"+watchedMovieRepository.findAll());
             //watchMovieRepository.findAll().forEach(System.out::println);
+
+
             System.out.println("let's start everything !!!");
         };
     }

@@ -16,7 +16,7 @@ mapped superclass is use
 for inheritance
  */
 @MappedSuperclass
-public abstract class GenericVisualArt {
+public class GenericVisualArt {
     private String title;
     private int yearOfRelease;
     //many genre

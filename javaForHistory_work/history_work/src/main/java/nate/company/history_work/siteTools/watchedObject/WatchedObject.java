@@ -23,7 +23,8 @@ public abstract class WatchedObject {
 
     private long timeAsLong;
 
-    public WatchedObject(long id, long timeAsLong,   User watcher, VisualArtStatus artStatus){
+    /*
+    public WatchedObject( long timeAsLong,   User watcher, VisualArtStatus artStatus){
         Objects.requireNonNull(watcher);
         Objects.requireNonNull(artStatus);
 
@@ -33,7 +34,7 @@ public abstract class WatchedObject {
         this.timeAsLong = timeAsLong;
         this.watcher = watcher;
         this.artStatus = artStatus;
-    }
+    }*/
 
     public WatchedObject(long timeAsLong,   User watcher, VisualArtStatus artStatus){
         Objects.requireNonNull(watcher);
