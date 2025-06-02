@@ -2,6 +2,7 @@ package nate.company.history_work.siteTools.movie;
 
 import jakarta.persistence.*;
 
+import lombok.*;
 import nate.company.history_work.siteTools.genericVisualArt.GenericVisualArt;
 import nate.company.history_work.siteTools.person.Person;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
@@ -26,6 +27,8 @@ name = movie, enable to be recognized as "movie" in database
 @Component
 @Table(name="movie_table")
 @Entity
+@Data
+@AllArgsConstructor
 public class Movie extends GenericVisualArt {
     /*
     Id et generatedValue ont été
@@ -43,6 +46,8 @@ public class Movie extends GenericVisualArt {
     @Id
     @Column(name="idmovie")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    @Setter
     private long id;
 
     /*
@@ -51,12 +56,14 @@ public class Movie extends GenericVisualArt {
     - watchmovies is the name of the field connected in the "user" object to the list
     of the "User" Object.
 
+        - undirectionnal relationship
+        -the user will just possess the watchedmovie to prevent from repetitive data
      */
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_watch_movie",joinColumns = @JoinColumn(name = "idmovie"),inverseJoinColumns = @JoinColumn(name = "iduser"))
-    private Set<User> movieIsWatchedBy = new HashSet<User>();
+    private Set<User> movieIsWatchedBy = new LinkedHashSet<>();
 
     //@Column(name="movie_poster")
     //private String poster;
@@ -68,7 +75,8 @@ public class Movie extends GenericVisualArt {
     @OneToMany(fetch = FetchType.LAZY,mappedBy="movieReacted", cascade = CascadeType.ALL)
     private Set<MovieReaction> reactions = new LinkedHashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "director_id", referencedColumnName = "id_person")
     private Person director;
 
     /*
@@ -78,8 +86,8 @@ public class Movie extends GenericVisualArt {
 
     not necessary due to unidirectionnal
      */
-//    @OneToMany(fetch = FetchType.EAGER,mappedBy="movie", cascade = CascadeType.MERGE, targetEntity = WatchedMovie.class)
-//    private Set<WatchedMovie> watchedMovies = new LinkedHashSet<>();
+    @OneToMany(fetch = FetchType.EAGER,mappedBy="movie", cascade = CascadeType.MERGE, targetEntity = WatchedMovie.class)
+    private Set<WatchedMovie> watchedMovies = new LinkedHashSet<>();
 
     /**
      *
@@ -93,7 +101,7 @@ public class Movie extends GenericVisualArt {
 //        this.director = "jean";
 //        this.poster = "nothing";
         super();
-        this.director = new Person("","");
+        this.director = new Person();
         this.id = 0;
     }
 
@@ -119,7 +127,7 @@ public class Movie extends GenericVisualArt {
         Objects.requireNonNull(director, "the movie director cannot be null");
         this.director = director;
         this.id = 0;
-        director.addMovieDirected(this);
+        //director.addMovieDirected(this);
     }
 
     /**
@@ -139,6 +147,7 @@ public class Movie extends GenericVisualArt {
         this.id = idmovie;
         this.director = director;
     }
+
 
     public long getId() {
         return id;
@@ -169,13 +178,15 @@ public class Movie extends GenericVisualArt {
     public void setDirector(Person newDirector){
         Objects.requireNonNull(newDirector);
         this.director = newDirector;
+        //set for the director perspective
+        newDirector.addMovieDirected(this);
     }
 
 
 
     @Override
     public String toString(){
-        return "L'id du film : "+getId()+ ", titre : "+getTitle()+", directeur : first name="+director.getFirstName()+ "lastname = " +director.getLastName() +", année : "+ getYearOfRelease();
+        return "L'id du film : "+getId()+ ", titre : "+getTitle()+", directeur : "+director+", année : "+ getYearOfRelease();
     }
 
     public void setReactions(Set<MovieReaction> reactions) {
@@ -199,8 +210,7 @@ public class Movie extends GenericVisualArt {
                 && getId() == movie.getId()
                 && getTitle().equals(movie.getTitle())
                 && getYearOfRelease() == movie.getYearOfRelease()
-                && getImdbID().equals(movie.getImdbID())
-                && director.equals(movie.director);
+                && getImdbID().equals(movie.getImdbID());
     }
 
     @Override
@@ -258,17 +268,17 @@ public class Movie extends GenericVisualArt {
 
     }
 
-//    public void setWatchedMovies(Set<WatchedMovie> watchedMovies) {
-//        this.watchedMovies = watchedMovies;
-//    }
-//
-//    public Set<WatchedMovie> getWatchedMovies() {
-//        return watchedMovies;
-//    }
-//
-//    public void addToWatchedList(WatchedMovie watchedMovie){
-//        Objects.requireNonNull(watchedMovie);
-//        watchedMovies.add(watchedMovie);
-//    }
+    public void setWatchedMovies(Set<WatchedMovie> watchedMovies) {
+        this.watchedMovies = watchedMovies;
+    }
+
+    public Set<WatchedMovie> getWatchedMovies() {
+        return watchedMovies;
+    }
+
+    public void addToWatchedList(WatchedMovie watchedMovie){
+        Objects.requireNonNull(watchedMovie);
+        watchedMovies.add(watchedMovie);
+    }
 }
 

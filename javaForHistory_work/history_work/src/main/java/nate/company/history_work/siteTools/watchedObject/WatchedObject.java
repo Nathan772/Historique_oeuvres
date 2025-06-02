@@ -14,9 +14,8 @@ for inheritance
 @MappedSuperclass
 public abstract class WatchedObject {
 
-
-    @JoinColumn(name="watcher_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="watcher_ID", referencedColumnName = "id_user")
     private User watcher;
 
     private VisualArtStatus artStatus;
@@ -57,14 +56,10 @@ public abstract class WatchedObject {
         return timeAsLong;
     }
 
-    public void setWatcher(long id, User watcher, VisualArtStatus artStatus) {
+    public void setWatcher(User watcher, VisualArtStatus artStatus) {
         Objects.requireNonNull(watcher);
         this.watcher = watcher;
         this.artStatus = artStatus;
-    }
-
-    public void setWatcher(User watcher) {
-        this.watcher = watcher;
     }
 
     public void setArtStatus(VisualArtStatus artStatus) {

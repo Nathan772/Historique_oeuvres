@@ -1719,6 +1719,7 @@ solution :
 
 pensez à utiliser une instance qui possède son champ "id" qui correspond bien à son id en base, et non à la valeur "0" qui signifie que le vrai id doit 
 être donné plus tard lors du premier "save".
+En gros vous devez save en base puis récupérer l'instance qui a été save en base pour récupérer son nouvel "id" plutôt qu'utiliser l'instance avec l'id = 0.
 
 
 problème :
@@ -1739,6 +1740,138 @@ solution :
 
     It solves issues with 
      */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.LAZY, ---> cascade = CascadeType.MERGE)
     private Movie movie;
+```
+
+remarque à propos du Cascade.Merge et sa propagation : 
+
+-le merge ne permet pas d'utiliser une version d'un objet sans id en le stockant dans le champ d'une autre class et en espérant que l'id du futur se propagera sur l'instance du passé.
+Donc même avec le merge, il faudra avoir sauvegardé l'objet en base avant de le donner dans un champ d'un autre objet, sinon l'id sera tjrs absent.
+
+exemple de code non fonctionnel :
+
+```java
+
+var watchedMovie = new WatchedMovie(actualUser,movie, VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+                fromOnlyTimeToSeconds(onlyTimeOfMovie));
+        System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
+
+
+
+        //it's a new movie that wasn't in db
+        //we save it in db
+        movie.addIsWatchedBy(actualUser);
+        actualUser.addWatchedMovie(watchedMovie);
+        System.out.println("la valeur du directeur est : "+director);
+        //director.addMovieDirected(movie);
+        //makes them persistent in db
+        //retrieve director with the actual id
+        //director = personService.findByFirstNameAndLastName(director.getFirstName(),director.getLastName()).get();
+        movieService.saveMovie(movie);
+        //update with the suppose propagate movie's id
+        personService.savePerson(director);
+        //retrieve the movie with the actual id
+        //movie = movieService.getMovieByImdb(movie.getImdbID()).get();
+        director.addMovieDirected(movie);
+        //personService.savePerson(director);
+        //movieService.saveMovie(movie);
+        watchedMovieService.saveWatchMovie(watchedMovie);
+        //
+
+```
+
+---> Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie
+
+
+problème :
+
+"Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+
+solution : 
+
+-installer lombok
+-ajouter la dépendance lombok :
+
+
+-source : https://www.youtube.com/watch?v=JChR0wILdkM
+
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+        </dependency>
+
+<!--
+            necessary for lombok plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.30</version>
+                    </path>
+                </annotationProcessorPaths>
+
+            </configuration>
+
+            </plugin>
+
+
+-ajouter @Getter et @Setter sur le field de l'identifiant de la class qui pose problème :
+
+```java
+
+//class : Movie.java
+
+ @Id
+    @Column(name="idmovie")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //ici !!!!
+    @Getter
+    @Setter
+    private long id;
+
+```
+
+-s'assurer que le linkedhashset du manytoMany correspondent deux fois au même type des deux côtés (je suis moins sûr pour ça)
+
+problème :
+
+" Can not get nate.company.history_work.siteTools.person.Person field nate.company.history_work.siteTools.movie.Movie.director on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+
+-attention une autre cause peut aussi être que vous avez save dans la class user le watchMovie avant que le watch movie possède son vrai "id" en base données (donc id == 0).
+Il faut lui donner la class qui a reçu l'id pour que ça fonctionne correctement, donc post-save, et récupérée avec "get".
+
+-vérifiez que votre targetEntity est du bon type :
+
+```java
+@ManyToMany(fetch = FetchType.LAZY,mappedBy="movieIsWatchedBy", cascade = CascadeType.MERGE, targetEntity = WatchedMovie.class)
+    //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
+    private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
+
+    ```
+
+
+aussi pensez à bien faire vos manyToMany :
+
+
+```java
+
+//User.java
+
+//@ManyToMany(fetch = FetchType.LAZY,mappedBy="movieIsWatchedBy", cascade = CascadeType.MERGE, targetEntity = Movie.class)
+    //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
+    //private Set<WatchedMovie> movies = new LinkedHashSet<>(); ----> ERROR : car de l'autre côté il fallait que ce soit pointé par le ty
+    //type de user par WatchedMovie mais dans mon cas c'était le type Movie qui pointait vers User
+    // donc in incohérence au niveau des deux sets des deux many to many
+
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "watcher")
+    private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
+
 ```

@@ -22,6 +22,7 @@ public class MovieService {
     }
 
     public void saveMovie(Movie movie){
+        System.out.println("on save le movie en db:  "+movie);
         //save only if the movie is absent
         if(movieRepository.getByimdbID(movie.getImdbID()).isEmpty()) {
             movieRepository.save(movie);

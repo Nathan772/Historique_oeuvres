@@ -3,6 +3,10 @@ package nate.company.history_work.siteTools.user;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import nate.company.history_work.siteTools.anime.AnimeShort;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.reaction.MovieReaction;
@@ -26,6 +30,8 @@ import java.util.*;
 // Table est utilisé car il existe déjà une table de nom User donc on
 // renomme avec cette annotation
 @Table(name="user_table")
+@Data
+@AllArgsConstructor
 public class User {
     /*
     Id et generatedValue ont été
@@ -44,7 +50,9 @@ public class User {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="iduser")
+    @Column(name="id_user")
+//    @Getter
+//    @Setter
     private long id;
 
     @Column(name="pseudo", unique = true)
@@ -63,12 +71,19 @@ public class User {
     "List" not arrayList.
     This list is connected to Movie's "isWatchedBy" field
      */
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy="movieIsWatchedBy", cascade = CascadeType.PERSIST, targetEntity = Movie.class)
+    //@ManyToMany(fetch = FetchType.LAZY,mappedBy="movieIsWatchedBy", cascade = CascadeType.MERGE, targetEntity = Movie.class)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
+    //private Set<Movie> movies = new LinkedHashSet<>();
+
+    @OneToMany(fetch= FetchType.LAZY, mappedBy = "watcher")
     private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy="animeIsWatchedBy", cascade = CascadeType.PERSIST, targetEntity = AnimeShort.class)
+
+
+    //@ManyToMany(fetch = FetchType.LAZY,mappedBy="animeIsWatchedBy", cascade = CascadeType.PERSIST, targetEntity = AnimeShort.class)
     //@JoinTable(name = "UserWatches", joinColumns =@JoinColumn(name="iduser") , inverseJoinColumns=@JoinColumn(name="idmovie"))
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="watcher")
     private Set<WatchedAnime> watchAnime = new LinkedHashSet<>();
 
 
@@ -167,18 +182,44 @@ public class User {
     }
 
     /**
+     * this method adds a movie watched
+     //* @param movieWatched
+     * the movie watched
+     */
+//    public void movie(WatchedMovie movieWatched){
+//        Objects.requireNonNull(movieWatched);
+//        //remove the old state
+//        //watchMovies.remove(movieWatched);
+//
+//        //add the new state
+//        watchMovies.add(movieWatched);
+//    }
+
+    //deprecatred
+
+//    public void setWatchedMovies(Set<Movie> movies) {
+//        this.movies = movies;
+//    }
+//
+//    public Set<Movie> getWatchedMovies() {
+//        return movies;
+//    }
+
+    /**
      * this method adds a anime watched
      // * @param animeWatched
      * the anime watched
      */
-    public void addWatchedAnime(WatchedAnime animeWatched){
-        Objects.requireNonNull(animeWatched);
-        //remove the old state
-        watchAnime.remove(animeWatched);
 
-        //add the new state
-        watchAnime.add(animeWatched);
-    }
+    //deprecated
+//    public void addWatchedAnime(AnimeShort animeWatched){
+//        Objects.requireNonNull(animeWatched);
+//        //remove the old state
+//        watchAnime.remove(animeWatched);
+//
+//        //add the new state
+//        watchAnime.add(animeWatched);
+//    }
 
 
 
@@ -195,19 +236,40 @@ public class User {
      * remove a movie from the watch list
      * @param movieWatched
      */
-    public void removeFromWatchedMovie(WatchedMovie movieWatched){
+    public void removeFromWatchedMovie(Movie movieWatched){
         Objects.requireNonNull(movieWatched);
-        watchMovies.removeIf(movieWatched1->movieWatched1.getMovie().getImdbID().equals(movieWatched.getMovie().getImdbID()));
+        watchMovies.removeIf(movie->movie.getId() == movieWatched.getId());
     }
+
+    /**
+     * remove a movie from the watch list
+     * @param animeShort
+     */
+    public void removeFromWatchedAnime(AnimeShort animeShort){
+        Objects.requireNonNull(animeShort);
+        watchAnime.removeIf(anime->anime.getId() == animeShort.getId());
+    }
+//deprecated
+//    public Set<AnimeShort> getWatchAnime() {
+//        return watchAnime;
+//    }
+//
+//    public Set<Movie> getMovies() {
+//        return movies;
+//    }
+
+//    public void setWatchAnime(Set<AnimeShort> watchAnime) {
+//        this.watchAnime = watchAnime;
+//    }
 
     /**
      * remove an anime from the watch list
      //* @param animeWatched
      */
-    public void removeFromWatchedAnime(WatchedAnime animeWatched){
-        Objects.requireNonNull(animeWatched);
-        watchAnime.removeIf(animeWatched1->animeWatched1.getAnimeShort().getImdbID().equals(animeWatched.getAnimeShort().getImdbID()));
-    }
+//    public void removeFromWatchedAnime(AnimeShort animeWatched){
+//        Objects.requireNonNull(animeWatched);
+//        animeWatched.removeIf(animeWatched1->animeWatched1.getId() == animeWatched.getId());
+//    }
 
     public void setWatchMovies(Set<WatchedMovie> watchMovies) {
         Objects.requireNonNull(watchMovies);
@@ -342,6 +404,11 @@ public class User {
     public boolean unReactMovie(MovieReaction movieReaction){
         Objects.requireNonNull(movieReaction);
         return reactions.removeIf(movieReaction1-> movieReaction.getMovieReacted().equals(movieReaction1.getMovieReacted()));
+    }
+
+    @Override
+    public int hashCode(){
+        return Long.hashCode(id)^pseudo.hashCode()^ email.hashCode();
     }
 
 }

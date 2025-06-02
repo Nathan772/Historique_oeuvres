@@ -28,7 +28,7 @@
     </scm>
     <properties>
         <!-- nécessaire pour faire tourner java 21 -->
-        <java.version>23</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
 
@@ -42,6 +42,19 @@
             <version>5.2.2</version>
         </dependency>
 
+
+        <!--
+
+        solve issues realted to
+        non perceveid getter and setters
+
+        -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.icegreen/greenmail -->
         <!--<dependency>
@@ -369,6 +382,28 @@
                     <additionalOptions>-html5</additionalOptions>
                     <additionalJOptions>--allow-script-in-comments</additionalJOptions>
                 </configuration>
+
+
+
+            </plugin>
+
+            <!--
+            necessary for lombok plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.30</version>
+                    </path>
+                </annotationProcessorPaths>
+
+            </configuration>
+
             </plugin>
         </plugins>
     </build>

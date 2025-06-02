@@ -2,6 +2,7 @@ package nate.company.history_work.siteTools.watchedMovie;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
+import lombok.*;
 import nate.company.history_work.service.WatchMovieService;
 import nate.company.history_work.siteTools.movie.Movie;
 import nate.company.history_work.siteTools.status.VisualArtStatus;
@@ -14,11 +15,15 @@ import java.util.Objects;
 @Entity
 @Component
 @Table(name="watched_movie_table")
+@Data
+@AllArgsConstructor
 public class WatchedMovie extends WatchedObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idWatchedMovie")
+    @Getter
+    @Setter
     private long id;
 
     //@JoinColumn(name="id_movie", referencedColumnName = "idmovie")
@@ -34,7 +39,8 @@ public class WatchedMovie extends WatchedObject {
 
     It solves issues with
      */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "movie_id", referencedColumnName = "idmovie")
     private Movie movie;
 
 
@@ -59,13 +65,16 @@ public class WatchedMovie extends WatchedObject {
 //        }
 
         //this.watcher = user;
+
         super(timeAsLong, user, status);
+        System.out.println("les infos du movie qui va être sauvegardé dans watchedmovie: "+movie);
         this.movie = movie;
         //the watcher is visible by the movie
         movie.addIsWatchedBy(user);
-        //
-        user.addWatchedMovie(this);
         this.id = 0;
+        //cause issue here because watch movie doesn't possess its actual "id"
+        //user.addWatchedMovie(this);
+
         //add to user list
         //cause issues because watched is not persistent at this moment
         //user.addWatchedMovie(this,movie);
@@ -95,6 +104,10 @@ public class WatchedMovie extends WatchedObject {
         return movie;
     }
 
+//    public long getMovieId() {
+//        return movie.getId();
+//    }
+
     public void setMovie(Movie movie) {
         Objects.requireNonNull(movie);
         this.movie = movie;
@@ -102,11 +115,8 @@ public class WatchedMovie extends WatchedObject {
 
     @Override
     public int hashCode() {
-        return movie.hashCode()^getWatcher().hashCode()^Long.hashCode(getId())^Long.hashCode(
-                getTimeAsLong()
-        )^getArtStatus().hashCode();
+        return movie.hashCode()^getWatcher().hashCode()^Long.hashCode(getId());
     }
-
     @Override
     public boolean equals(Object obj) {
         return obj instanceof WatchedMovie watchedMovie && watchedMovie.movie.equals(watchedMovie.movie) && watchedMovie.getWatcher()
@@ -115,6 +125,7 @@ public class WatchedMovie extends WatchedObject {
 
     @Override
     public String toString() {
+        System.out.println("on affiche le get IsWatched depuis WatchedMovie : "+getMovie().getMovieIsWatchedBy());
         return "le movie : "+movie+" est regardé par : "+getWatcher()+" au temps : "+getTimeAsLong()+" il a pour statut : "+getArtStatus();
     }
 
