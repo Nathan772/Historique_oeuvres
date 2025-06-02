@@ -8,7 +8,7 @@ public enum VisualArtStatus {
 
 
 
-    public static VisualArtStatus fromStringToMovieStatus(String status){
+    public static VisualArtStatus fromStringToArtStatus(String status){
         return switch(status){
             case "REWATCH" -> REWATCH;
             case "WATCHLATER" -> WATCHLATER;

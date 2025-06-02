@@ -30,6 +30,8 @@ import {ChatbotComponent } from './chatbot/chatbot.component';
 //about movies
 import { MovieServiceService } from './movies/movie_service/movie-service.service';
 import { NavbarMoviesComponent } from './movies/navbar/navbar-movies.component';
+import { AnimeNavbarComponent} from './anime/navbar/anime-navbar/anime-navbar.component'
+import {AnimeServiceService } from './anime/anime_service/anime-service.service';
 import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
@@ -47,6 +49,7 @@ import { OrderByPipe } from "./order-by/order-by.pipe";
       UserConnectionComponent,
       MovieCardComponent,
       NavbarMoviesComponent,
+      AnimeNavbarComponent,
       MovieListComponent,
       MovieSearchComponent,
       AccueilComponent,
@@ -69,7 +72,7 @@ import { OrderByPipe } from "./order-by/order-by.pipe";
       RouterModule,
 
     ],
-  providers: [UserService, ConnectionServiceService, MovieServiceService, OrderByPipe],
+  providers: [AnimeServiceService, UserService, ConnectionServiceService, MovieServiceService, OrderByPipe],
   bootstrap:[AppComponent],
 })
 export class AppModule { }

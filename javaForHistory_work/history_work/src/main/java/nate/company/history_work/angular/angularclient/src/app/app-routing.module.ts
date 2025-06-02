@@ -51,8 +51,11 @@ const routes: Routes = [
    //search movie page
   {path: 'user/entrance/menuMovieChoice/SearchMovie' , component: MovieSearchComponent},
 
-   //user's movie ist
+   //user's movie list
    {path: 'user/entrance/menuMovieChoice/listMovies' , component: UserMovieListComponent},
+
+   //user's anime list
+      //{path: 'user/entrance/menuAnimeChoice' , component: UserAnimeListComponent},
 
    {path: 'user/entrance/listUsers' , component: UserListComponent},
 

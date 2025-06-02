@@ -211,15 +211,14 @@ public class User {
      * the anime watched
      */
 
-    //deprecated
-//    public void addWatchedAnime(AnimeShort animeWatched){
-//        Objects.requireNonNull(animeWatched);
-//        //remove the old state
-//        watchAnime.remove(animeWatched);
-//
-//        //add the new state
-//        watchAnime.add(animeWatched);
-//    }
+    public void addWatchedAnime(WatchedAnime animeWatched){
+        Objects.requireNonNull(animeWatched);
+        //remove the old state
+        watchAnime.remove(animeWatched);
+
+        //add the new state
+        watchAnime.add(animeWatched);
+    }
 
 
 

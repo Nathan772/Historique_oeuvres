@@ -687,7 +687,7 @@ public class MovieController {
                 alreadyWatchedMovie.setTimeAsLong(fromOnlyTimeToSeconds(onlyTimeOfMovie));
 
                 //update "watched status"
-                alreadyWatchedMovie.setArtStatus(VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")));
+                alreadyWatchedMovie.setArtStatus(VisualArtStatus.fromStringToArtStatus(nestedMap.get("movieStatus")));
 
                 actualUser.addWatchedMovie(alreadyWatchedMovie);
                 movieChosen.addIsWatchedBy(actualUser);
@@ -719,7 +719,7 @@ public class MovieController {
 
             //new watchMovie object instantiate (there was nothing in db)
 
-            var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),
+            var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), VisualArtStatus.fromStringToArtStatus(nestedMap.get("movieStatus")),
                     fromOnlyTimeToSeconds(onlyTimeOfMovie));
             System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
 
@@ -804,11 +804,11 @@ public class MovieController {
         //movieService.saveMovie(movie);
         //movieService.saveMovie(movie);
         //movie = movieService.getMovieByImdb(movie.getImdbID()).get();
-        var watchedMovie = new WatchedMovie(actualUser,movie, VisualArtStatus.fromStringToMovieStatus(nestedMap.get("movieStatus")),fromOnlyTimeToSeconds(onlyTimeOfMovie));
+        var watchedMovie = new WatchedMovie(actualUser,movie, VisualArtStatus.fromStringToArtStatus(nestedMap.get("movieStatus")),fromOnlyTimeToSeconds(onlyTimeOfMovie));
         //System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
         watchedMovieService.saveWatchMovie(watchedMovie);
         watchedMovie = watchedMovieService.findByUserAndMovie(actualUser, movie).get();
-        //add the movie as watched
+        //add the movie as watched : not necessary
         //actualUser.addWatchedMovie(watchedMovie);
         movieService.saveMovie(movie);
         //userService.saveUser(actualUser);
