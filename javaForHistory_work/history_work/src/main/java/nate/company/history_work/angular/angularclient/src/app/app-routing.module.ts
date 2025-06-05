@@ -23,6 +23,7 @@ import { MovieMenuUserComponent } from '../user/movie_menu_user/movie-menu-user.
 import { AnimeMenuUserComponent } from '../user/anime-menu-user/anime-menu-user.component';
 import { AnimeSearchComponent } from '../anime/anime-search/anime-search.component';
 import { AnimeListComponent} from '../anime/anime-list/anime-list.component';
+import {UserAnimeListComponent } from '../user/user-anime-list/user-anime-list.component';
 /*
 ce tableau indique quel composant afficher selon
 le chemin web "path" choisit (ce sera l'url qui va s'afficher dans la page web et aussi celui qui peut être réutilisé
@@ -55,10 +56,13 @@ const routes: Routes = [
     {path: 'user/entrance/menuAnimeChoice' , component: AnimeMenuUserComponent},
 
     //page choice : watch anime list or add anime to the list
-        {path: 'user/entrance/menuAnimeChoice/listAnimes' , component: AnimeListComponent},
+    //deprecated
+     //   {path: 'user/entrance/menuAnimeChoice/listAnimes' , component: AnimeListComponent},
 
     //search anime page
-    {path: 'user/entrance/menuAnimechoice/SearchAnime' , component: AnimeSearchComponent},
+    {path: 'user/entrance/menuAnimeChoice/SearchAnime' , component: AnimeSearchComponent},
+
+    {path:'user/entrance/menuAnimeChoice/listAnimes', component:UserAnimeListComponent},
 
    //search movie page
   {path: 'user/entrance/menuMovieChoice/SearchMovie' , component: MovieSearchComponent},

@@ -39,6 +39,7 @@ import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
 import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
 import { AnimeListComponent } from './anime/anime-list/anime-list.component';
+import { UserAnimeListComponent } from './user/user-anime-list/user-anime-list.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
 import { LowerCasePipeComponent } from './lower-case-pipe/lower-case-pipe.component';
 import { OrderByPipe } from "./order-by/order-by.pipe";
@@ -58,6 +59,7 @@ import {AnimeSearchComponent} from './anime/anime-search/anime-search.component'
       NavbarMoviesComponent,
       AnimeNavbarComponent,
       AnimeCardComponent,
+      UserAnimeListComponent,
       MovieListComponent,
       MovieSearchComponent,
       AnimeSearchComponent,

@@ -1,0 +1,33 @@
+<app-default-user></app-default-user>
+
+<app-anime-search>
+
+</app-anime-search>
+<!-- old without animation, deprecated
+<h1>Votre liste de films : </h1>
+-->
+
+<h3 #typewriterElement></h3>
+<br/>
+
+
+<app-anime-card *ngFor="let animeInfo of this.animesService.userAnimesList.slice(currentPage*numberPerPage, currentPage*numberPerPage+3)" [anime]="animeInfo.anime">
+</app-anime-card>
+
+<br/>
+
+
+<div class="list_arrows">
+
+  actuel : {{ ((currentPage)*numberPerPage) +(this.animesService.userAnimesList.length%3) }} / {{ this.animesService.userAnimesList.length}}
+  total à voir : {{ this.animesService.userAnimesList.length }}
+
+  <br/>
+  <button (click)="decreasesPages()" class="btn btn-primary btn-lg">
+    <i class="bi bi-arrow-return-left"> </i>
+  </button>
+
+  <button (click)="increasesPages()" class="btn btn-primary btn-lg">
+    <i class="bi bi-arrow-return-right"> </i>
+  </button>
+</div>

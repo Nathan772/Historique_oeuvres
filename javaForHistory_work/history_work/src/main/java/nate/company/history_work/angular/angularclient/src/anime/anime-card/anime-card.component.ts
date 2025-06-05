@@ -23,8 +23,10 @@ export class AnimeCardComponent implements OnInit{
     */
    animeService: AnimeServiceService;
    watchedAnimeStatus = watchedAnimeStatus;
+
     @Input()
     animeFull: AnimeFullInformations;
+
     fullInfoOn: boolean = false;
     userService:UserService;
 
