@@ -38,6 +38,7 @@ export interface Anime {
   Year: string;
   imdbID: string;
   Poster:string;
+  Type:string;
 }
 
 /*

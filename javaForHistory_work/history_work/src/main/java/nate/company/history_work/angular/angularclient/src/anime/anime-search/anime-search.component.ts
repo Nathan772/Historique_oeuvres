@@ -68,7 +68,39 @@ export class AnimeSearchComponent {
             //this.listMoviesTransfer= data.filter(movie=>movie.Type === "movie");
             //enable everything ()
             //need to add in genre : Contains animation in anime.genre (in the fullinformation form)
-            this.listAnimesTransfer= data//.filter(anime=>anime.Type === "series";
+
+
+            this.listAnimesTransfer= data.filter(async anime=> {
+              //let animeFull:AnimeFullInformations;
+              //isAnime:boolean;
+
+
+               //animeRes:AnimeFullInformations;
+              let animeRes = await this.animeService.getAnimeComplete(anime.imdbID).toPromise()
+
+              /*| AnimeFullInformations:{
+                Title:"",
+                Year: "string",
+                  Genre: "string",
+                  Director: "string",
+                  Plot: "string",
+                  Awards: "string",
+                  Poster: "string",
+                  Ratings: [],
+                  Writer:"string",
+                  Actors:"string",
+                  imdbID: "string",
+                  Type: "string"
+               };*/
+
+              //return anime.Type === "series" && animeFull.Genre.includes("Animation");
+              if(animeRes === undefined)
+                return false;
+              //return animeRes.Genre.includes("Animation")*/
+              return animeRes.Genre.includes("Animation")
+
+              }
+            );
 
             //Deprecated
             //for(var movie of this.listMovies){

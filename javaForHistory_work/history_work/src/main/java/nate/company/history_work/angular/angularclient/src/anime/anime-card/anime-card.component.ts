@@ -58,6 +58,7 @@ export class AnimeCardComponent implements OnInit{
              Year: "",
              imdbID: "",
              Poster: "",
+             Type:"series"
              }
 
            if(this.animeService.userAnimesList.length == 0){

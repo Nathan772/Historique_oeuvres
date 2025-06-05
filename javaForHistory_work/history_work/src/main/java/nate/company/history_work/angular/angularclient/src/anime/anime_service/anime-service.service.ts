@@ -194,7 +194,8 @@ addToWatchList(anime:watchedAnime){
               Title:anime.Title,
               Year:anime.Year,
               imdbID:anime.imdbID,
-              Poster: anime.Poster
+              Poster: anime.Poster,
+              Type:""
     };
   /* useless, just for tests
     for(let i=0;i<this.userMoviesList.length;i++){
@@ -262,6 +263,7 @@ addToWatchList(anime:watchedAnime){
               Year:anime.Year,
               imdbID:anime.imdbID,
               Poster: anime.Poster,
+              Type:anime.Type
     };
     for(let i=0;i<this.userAnimesList.length;i++){
        // console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
@@ -297,6 +299,7 @@ addToWatchList(anime:watchedAnime){
               Year:watchedAnime.anime.Year,
               imdbID:watchedAnime.anime.imdbID,
               Poster: watchedAnime.anime.Poster,
+              Type:"series"
     };
     for(let i=0;i<this.userAnimesList.length;i++){
         //console.log("les films présents dans la liste user : "+this.userMoviesList[i].movie.imdbID);
@@ -449,7 +452,8 @@ in the user list for the database
             Title:anime.Title,
             Year:anime.Year,
             imdbID:anime.imdbID,
-            Poster:anime.Poster
+            Poster:anime.Poster,
+            Type:"series"
           };
 
           let watchedAnime:watchedAnime = {
@@ -525,7 +529,8 @@ in the user list for the database
                                                   Year:watchedAnime1.anime.Year,
                                                   //Director:watchedAnime1.anime.Director,
                                                   imdbID:watchedAnime1.anime.imdbID,
-                                                  Poster:watchedAnime1.anime.Poster
+                                                  Poster:watchedAnime1.anime.Poster,
+                                                  Type:watchedAnime1.anime.Type
                                                 };
 
                                                 let watchedAnime:watchedAnime = {
@@ -693,7 +698,8 @@ public removeAnimeFromUserInDataBase(anime:AnimeFullInformations, user:User):wat
             Title:anime.Title,
             Year:anime.Year,
             imdbID:anime.imdbID,
-            Poster: anime.Poster
+            Poster: anime.Poster,
+            Type:anime.Type
           };
 
           let userSimple = {

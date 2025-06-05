@@ -1,0 +1,75 @@
+/*
+sources:
+https://www.w3schools.com/howto/howto_js_dropdown.asp
+
+*/
+
+/*This makes the movie cards be displayed side by side (two cards per row)*/
+div#movieCard-display {
+  display : inline-block; /*divs will be displayed side by side*/
+  width : 30%;
+  vertical-align : top; /*when a card is displayed in full information mode,
+                        it will be displayed at the same height of its neighbour*/
+}
+
+/* Dropdown Button */
+#status {
+   color: white;
+   padding: 16px;
+   font-size: 16px;
+   border: none;
+   cursor: pointer;
+ }
+
+ small {
+  color:white;
+
+ }
+
+/*
+#statusButton:active + #status {
+  display:contents;
+}
+*/
+
+#status {
+  display:none
+}
+
+
+#statusButton:hover + #status {
+  display:contents;
+}
+
+/* The container <div> - needed to position the dropdown content */
+/*.dropdown show {
+position: relative;
+  display: inline-block;
+}*/
+
+/* Dropdown Content (Hidden by Default) */
+
+/*
+ici qu'il fauidra gérer le fait de cacher
+*/
+/*.ngbDropdownMenu {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}*/
+
+/* ici qu'il faudra gérer le fait d'afficher
+après être passé dessus */
+/* Change color of dropdown links on hover */
+/*
+.ngbDropdownMenu a:hover {
+ display: block;
+}
+*/
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+/*.show {display:block;}*/
+
+
