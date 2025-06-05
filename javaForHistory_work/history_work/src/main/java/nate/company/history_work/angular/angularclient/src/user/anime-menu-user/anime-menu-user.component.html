@@ -1,0 +1,45 @@
+<app-default-user>
+
+</app-default-user>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card bg-dark my-5">
+        <div class="card-body">
+          <h2 class="card-title text-center text-white py-3"> Qu'aimerais-tu faire ? {{ userService.userAccount.pseudo }}:</h2>
+          <ul class="text-center list-inline py-3">
+
+
+            <br>
+            <br>
+
+            <li>
+              <a routerLink="listAnimes" class="btn btn-info"> consulter/ajouter à ma liste d'animes ?</a>
+            </li>
+
+            <br>
+            <br>
+
+            <!-- deprecated it has been merged
+            <li>
+              <a routerLink="SearchMovie" class="btn btn-info"> ajouter un film ? </a>
+            </li>
+
+            -->
+
+            <br>
+            <br>
+
+
+          </ul>
+        </div>
+
+      </div>
+      <!--
+      nécesaire ou non ? (vient du fichier qui a servi de base (app.component)
+      <router-outlet></router-outlet>
+      -->
+    </div>
+  </div>
+</div>

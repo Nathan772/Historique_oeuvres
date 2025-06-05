@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Movie, watchedMovie} from '../movies/movie_models/movie_models';
+import { Anime, watchedAnime } from '../anime/anime-models/anime-models';
 @Pipe({
   name: 'orderBy',
 })
@@ -44,5 +45,35 @@ choice for the order of the element (ascendent, or descedant)
         return 0;
       });
     }
+
+  transformAnime(values:watchedAnime[], order: "asc" | "desc" = "asc"): watchedAnime[] {
+        return values.sort((a, b) => {
+          if (order === "asc") {
+            //compare status status
+            if(a.animeStatus !=b.animeStatus){
+              return a.animeStatus-b.animeStatus
+              }
+            //compare movies names if status are alike
+            else {
+              if(a.anime.Title <= b.anime.Title){
+                return -1;
+              }
+            }
+          }
+          else if (order === "desc") {
+            //status first the same meaning
+             if(a.animeStatus !=b.animeStatus){
+                        return a.animeStatus-b.animeStatus
+             }
+            //compare movies names if status are alike but in reverse order
+                      else {
+                        if(a.anime.Title >= b.anime.Title){
+                          return -1;
+                        }
+                      }
+          }
+          return 0;
+        });
+      }
 
 }

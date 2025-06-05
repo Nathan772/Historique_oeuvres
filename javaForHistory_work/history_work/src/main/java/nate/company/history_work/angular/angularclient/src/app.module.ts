@@ -15,6 +15,9 @@ import { UserFormComponent } from './user/user_form/user-form.component';
 import { UserMovieListComponent } from './user/user_movie_list/user-movie-list.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MovieMenuUserComponent } from './user/movie_menu_user/movie-menu-user.component';
+
+import {AnimeMenuUserComponent}from './user/anime-menu-user/anime-menu-user.component';
+
 import { UserService } from './user/user_service/user-service.service';
 import {ChatbotService} from './chatbot/chatbot_service/chatbot.service'
 import { CommonFunctionalityComponent } from './common-functionality-component/common-functionality-component.component';
@@ -34,9 +37,12 @@ import { AnimeNavbarComponent} from './anime/navbar/anime-navbar/anime-navbar.co
 import {AnimeServiceService } from './anime/anime_service/anime-service.service';
 import { MovieListComponent } from './movies/movie_list/movie-list.component';
 import { MovieCardComponent } from './movies/movie_card/movie-card.component';
+import { AnimeCardComponent } from './anime/anime-card/anime-card.component';
+import { AnimeListComponent } from './anime/anime-list/anime-list.component';
 import { MovieSearchComponent } from './movies/movie_search/movie-search.component';
 import { LowerCasePipeComponent } from './lower-case-pipe/lower-case-pipe.component';
 import { OrderByPipe } from "./order-by/order-by.pipe";
+import {AnimeSearchComponent} from './anime/anime-search/anime-search.component';
 
 
 
@@ -45,13 +51,17 @@ import { OrderByPipe } from "./order-by/order-by.pipe";
    declarations: [
       UserFormComponent,
       AppComponent,
+      AnimeMenuUserComponent,
       UserEntranceComponent,
       UserConnectionComponent,
       MovieCardComponent,
       NavbarMoviesComponent,
       AnimeNavbarComponent,
+      AnimeCardComponent,
       MovieListComponent,
       MovieSearchComponent,
+      AnimeSearchComponent,
+      AnimeListComponent,
       AccueilComponent,
       MovieMenuUserComponent,
       UserMovieListComponent,
