@@ -2,8 +2,6 @@ package company.history_work.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Unit test class for the {@link EmailDetails} entity class.
  *

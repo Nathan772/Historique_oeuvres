@@ -18,7 +18,7 @@ Ils permettront de résoudre:
 
 Il est aussi possible que vous ayez à recréer le fichier :
 
-"java_for_history_work/history_work/src/main/main.resources/application.properties"
+"java_for_history_work/java/src/main/main.resources/application.properties"
 
 si il n'est pas présent.
 
@@ -121,13 +121,13 @@ nvm use 22.0.0
 nvm alias default v22.0.0
 ```
 
-Lancer la commande : "ng new src.main.java.nate.company.history_work.angular.angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
+Lancer la commande : "ng new src.main.java.nate.company.java.angular.angularclient" dans un dossier que vous aurez prévu dans votre projet pour stocker les fichiers angular 
 (nommé comme vous le souhaitez) afin de générer les fichiers associés à angular automatiquement.
 
--les fichiers dans le dossier angular.src.main.java.nate.company.history_work.angular.angularclient, ont tous été autogénérés.
+-les fichiers dans le dossier angular.src.main.java.nate.company.java.angular.angularclient, ont tous été autogénérés.
 Seul une partie des fichiers contenus dans "src" ne sont pas autogénérés.
 
-La commande : "ng generate class user" se lance dans le dossier autogénérés src.main.java.nate.company.history_work.angular.angularclient.
+La commande : "ng generate class user" se lance dans le dossier autogénérés src.main.java.nate.company.java.angular.angularclient.
 
 dans le dossier "angular", le dossier "service" a été créé par moi-même.
 

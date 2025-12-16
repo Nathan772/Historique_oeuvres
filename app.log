@@ -9,8 +9,8 @@
 2025-12-15T19:36:10.548+01:00  INFO 319519 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:36:10.855+01:00  INFO 319519 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:36:10.857+01:00  INFO 319519 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:36:11.753+01:00  INFO 319519 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:36:11.757+01:00  INFO 319519 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:36:11.753+01:00  INFO 319519 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:36:11.757+01:00  INFO 319519 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:36:11.903+01:00  INFO 319519 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:36:12.014+01:00  INFO 319519 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:36:12.377+01:00  INFO 319519 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -38,8 +38,8 @@
 2025-12-15T19:37:43.549+01:00  INFO 320820 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:37:43.634+01:00  INFO 320820 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:37:43.636+01:00  INFO 320820 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:37:44.718+01:00  INFO 320820 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:37:44.747+01:00  INFO 320820 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:37:44.718+01:00  INFO 320820 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:37:44.747+01:00  INFO 320820 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:37:44.929+01:00  INFO 320820 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:37:45.072+01:00  INFO 320820 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:37:45.421+01:00  INFO 320820 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -64,8 +64,8 @@
 2025-12-15T19:39:30.932+01:00  INFO 322181 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:39:32.920+01:00  INFO 322181 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:39:32.923+01:00  INFO 322181 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:39:33.718+01:00  INFO 322181 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:39:33.722+01:00  INFO 322181 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:39:33.718+01:00  INFO 322181 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:39:33.722+01:00  INFO 322181 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:39:33.845+01:00  INFO 322181 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:39:33.945+01:00  INFO 322181 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:39:34.257+01:00  INFO 322181 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -90,8 +90,8 @@
 2025-12-15T19:40:58.683+01:00  INFO 323382 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:40:58.753+01:00  INFO 323382 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:40:58.755+01:00  INFO 323382 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:40:59.721+01:00  INFO 323382 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:40:59.727+01:00  INFO 323382 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:40:59.721+01:00  INFO 323382 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:40:59.727+01:00  INFO 323382 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:40:59.864+01:00  INFO 323382 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:40:59.909+01:00  INFO 323382 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:41:00.286+01:00  INFO 323382 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -116,8 +116,8 @@
 2025-12-15T19:42:27.717+01:00  INFO 324494 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:42:27.785+01:00  INFO 324494 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:42:27.786+01:00  INFO 324494 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:42:28.621+01:00  INFO 324494 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:42:28.627+01:00  INFO 324494 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:42:28.621+01:00  INFO 324494 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:42:28.627+01:00  INFO 324494 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:42:28.775+01:00  INFO 324494 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:42:28.848+01:00  INFO 324494 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:42:29.169+01:00  INFO 324494 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -142,8 +142,8 @@
 2025-12-15T19:46:15.176+01:00  INFO 327323 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:46:15.368+01:00  INFO 327323 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:46:15.369+01:00  INFO 327323 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:46:17.181+01:00  INFO 327323 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:46:17.188+01:00  INFO 327323 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:46:17.181+01:00  INFO 327323 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:46:17.188+01:00  INFO 327323 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:46:17.430+01:00  INFO 327323 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:46:17.515+01:00  INFO 327323 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:46:17.901+01:00  INFO 327323 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -168,8 +168,8 @@
 2025-12-15T19:50:00.838+01:00  INFO 330046 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:50:01.484+01:00  INFO 330046 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:50:01.488+01:00  INFO 330046 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:50:03.309+01:00  INFO 330046 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:50:03.327+01:00  INFO 330046 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:50:03.309+01:00  INFO 330046 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:50:03.327+01:00  INFO 330046 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:50:03.797+01:00  INFO 330046 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:50:04.308+01:00  INFO 330046 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:50:05.059+01:00  INFO 330046 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -194,8 +194,8 @@
 2025-12-15T19:50:44.353+01:00  INFO 330712 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:50:44.454+01:00  INFO 330712 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:50:44.456+01:00  INFO 330712 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:50:45.737+01:00  INFO 330712 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:50:45.742+01:00  INFO 330712 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:50:45.737+01:00  INFO 330712 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:50:45.742+01:00  INFO 330712 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:50:45.897+01:00  INFO 330712 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:50:45.976+01:00  INFO 330712 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:50:46.277+01:00  INFO 330712 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -220,8 +220,8 @@
 2025-12-15T19:56:35.372+01:00  INFO 334731 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T19:56:35.665+01:00  INFO 334731 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T19:56:35.666+01:00  INFO 334731 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T19:56:36.607+01:00  INFO 334731 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T19:56:36.614+01:00  INFO 334731 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:56:36.607+01:00  INFO 334731 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T19:56:36.614+01:00  INFO 334731 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T19:56:36.824+01:00  INFO 334731 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T19:56:36.921+01:00  INFO 334731 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T19:56:37.340+01:00  INFO 334731 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -246,8 +246,8 @@
 2025-12-15T20:02:40.433+01:00  INFO 339116 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T20:02:40.807+01:00  INFO 339116 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T20:02:40.808+01:00  INFO 339116 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T20:02:41.946+01:00  INFO 339116 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T20:02:41.952+01:00  INFO 339116 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:02:41.946+01:00  INFO 339116 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:02:41.952+01:00  INFO 339116 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T20:02:42.099+01:00  INFO 339116 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T20:02:42.192+01:00  INFO 339116 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:02:42.534+01:00  INFO 339116 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -272,8 +272,8 @@
 2025-12-15T20:03:42.629+01:00  INFO 339954 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T20:03:42.700+01:00  INFO 339954 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T20:03:42.702+01:00  INFO 339954 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T20:03:43.611+01:00  INFO 339954 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T20:03:43.616+01:00  INFO 339954 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:03:43.611+01:00  INFO 339954 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:03:43.616+01:00  INFO 339954 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T20:03:43.746+01:00  INFO 339954 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T20:03:43.878+01:00  INFO 339954 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:03:44.263+01:00  INFO 339954 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -298,8 +298,8 @@
 2025-12-15T20:05:35.658+01:00  INFO 341236 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T20:05:35.737+01:00  INFO 341236 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T20:05:35.739+01:00  INFO 341236 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T20:05:36.706+01:00  INFO 341236 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T20:05:36.711+01:00  INFO 341236 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:05:36.706+01:00  INFO 341236 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:05:36.711+01:00  INFO 341236 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T20:05:36.893+01:00  INFO 341236 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T20:05:36.961+01:00  INFO 341236 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:05:37.357+01:00  INFO 341236 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -324,8 +324,8 @@
 2025-12-15T20:06:41.849+01:00  INFO 342125 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T20:06:41.929+01:00  INFO 342125 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T20:06:41.931+01:00  INFO 342125 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T20:06:42.759+01:00  INFO 342125 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T20:06:42.764+01:00  INFO 342125 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:06:42.759+01:00  INFO 342125 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:06:42.764+01:00  INFO 342125 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T20:06:42.905+01:00  INFO 342125 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T20:06:42.953+01:00  INFO 342125 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:06:43.264+01:00  INFO 342125 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -350,8 +350,8 @@
 2025-12-15T20:08:27.703+01:00  INFO 343509 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T20:08:27.786+01:00  INFO 343509 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T20:08:27.787+01:00  INFO 343509 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T20:08:28.651+01:00  INFO 343509 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T20:08:28.656+01:00  INFO 343509 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:08:28.651+01:00  INFO 343509 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:08:28.656+01:00  INFO 343509 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T20:08:28.813+01:00  INFO 343509 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T20:08:28.910+01:00  INFO 343509 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:08:29.193+01:00  INFO 343509 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -376,8 +376,8 @@
 2025-12-15T20:20:14.948+01:00  INFO 351710 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2025-12-15T20:20:15.428+01:00  INFO 351710 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
 2025-12-15T20:20:15.430+01:00  INFO 351710 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-12-15T20:20:16.547+01:00  INFO 351710 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
-2025-12-15T20:20:16.552+01:00  INFO 351710 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:20:16.547+01:00  INFO 351710 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-15T20:20:16.552+01:00  INFO 351710 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
 2025-12-15T20:20:16.717+01:00  INFO 351710 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2025-12-15T20:20:16.817+01:00  INFO 351710 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:20:17.563+01:00  INFO 351710 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
@@ -394,3 +394,390 @@
 2025-12-15T20:20:35.388+01:00  INFO 351710 --- [Historique_oeuvres] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-12-15T20:20:35.409+01:00  INFO 351710 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-12-15T20:20:35.419+01:00  INFO 351710 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-16T08:25:41.403+01:00  INFO 62988 --- [Historique_oeuvres] [main] nate.company.java.Application    : Starting Application using Java 23 with PID 62988 (/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes started by nathanb in /home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres)
+2025-12-16T08:25:41.405+01:00  INFO 62988 --- [Historique_oeuvres] [main] nate.company.java.Application    : No active profile set, falling back to 1 default profile: "default"
+2025-12-16T08:25:42.884+01:00  INFO 62988 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-16T08:25:43.946+01:00  INFO 62988 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1056 ms. Found 8 JPA repository interfaces.
+2025-12-16T08:25:44.335+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-12-16T08:25:44.349+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-16T08:25:44.350+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-12-16T08:25:44.398+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-16T08:25:44.398+01:00  INFO 62988 --- [Historique_oeuvres] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2939 ms
+2025-12-16T08:25:44.429+01:00  INFO 62988 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-16T08:25:47.302+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-16T08:25:47.344+01:00  INFO 62988 --- [Historique_oeuvres] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-12-16T08:25:47.369+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-16T08:25:47.602+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-16T08:25:47.623+01:00  INFO 62988 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-16T08:25:49.876+01:00  WARN 62988 --- [Historique_oeuvres] [main] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+
+java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.sqlExceptionHelper()" is null
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:290) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:123) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:77) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:221) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:189) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:682) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1705) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1454) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:266) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:240) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:516) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:619) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.3.jar:3.3.3]
+	at nate.company.java.Application.main(Application.java:53) ~[classes/:na]
+
+2025-12-16T08:25:49.891+01:00 ERROR 62988 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+2025-12-16T08:25:49.897+01:00 ERROR 62988 --- [Historique_oeuvres] [main] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtFilter' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/config/JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userService' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/service/UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in nate.company.java.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2025-12-16T08:25:49.926+01:00  INFO 62988 --- [Historique_oeuvres] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-12-16T08:25:49.929+01:00  WARN 62988 --- [Historique_oeuvres] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2025-12-16T08:25:49.937+01:00  INFO 62988 --- [Historique_oeuvres] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-16T08:25:49.952+01:00 ERROR 62988 --- [Historique_oeuvres] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:165) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:619) ~[spring-context-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.3.jar:3.3.3]
+	at nate.company.java.Application.main(Application.java:53) ~[classes/:na]
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:147) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:516) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162) ~[spring-boot-3.3.3.jar:3.3.3]
+	... 8 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtFilter' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/config/JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userService' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/service/UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in nate.company.java.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:266) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:240) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.3.3.jar:3.3.3]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4414) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:148) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:874) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437) ~[tomcat-embed-core-10.1.28.jar:10.1.28]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128) ~[spring-boot-3.3.3.jar:3.3.3]
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/service/UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in nate.company.java.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 54 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userRepository' defined in nate.company.java.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1705) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1454) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 68 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:682) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 82 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 94 common frames omitted
+Caused by: org.hibernate.service.spi.ServiceException: Unable to create requested service [org.hibernate.engine.jdbc.env.spi.JdbcEnvironment] due to: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:276) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:221) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:189) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:171) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1431) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1502) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366) ~[spring-orm-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853) ~[spring-beans-6.1.12.jar:6.1.12]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.1.12.jar:6.1.12]
+	... 101 common frames omitted
+Caused by: org.hibernate.HibernateException: Unable to determine Dialect without JDBC metadata (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' when a custom Dialect implementation must be provided)
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.determineDialect(DialectFactoryImpl.java:191) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl.buildDialect(DialectFactoryImpl.java:87) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentWithDefaults(JdbcEnvironmentInitiator.java:152) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:362) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:123) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:77) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
+	... 116 common frames omitted
+
+2025-12-16T08:26:34.235+01:00  INFO 63970 --- [Historique_oeuvres] [main] nate.company.java.Application    : Starting Application using Java 23 with PID 63970 (/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes started by nathanb in /home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres)
+2025-12-16T08:26:34.237+01:00  INFO 63970 --- [Historique_oeuvres] [main] nate.company.java.Application    : No active profile set, falling back to 1 default profile: "default"
+2025-12-16T08:26:35.499+01:00  INFO 63970 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-16T08:26:36.482+01:00  INFO 63970 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 977 ms. Found 8 JPA repository interfaces.
+2025-12-16T08:26:36.864+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-12-16T08:26:36.876+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-16T08:26:36.877+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2025-12-16T08:26:36.923+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-16T08:26:36.923+01:00  INFO 63970 --- [Historique_oeuvres] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2645 ms
+2025-12-16T08:26:36.951+01:00  INFO 63970 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-16T08:26:37.077+01:00  INFO 63970 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
+2025-12-16T08:26:37.078+01:00  INFO 63970 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-16T08:26:37.087+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:tcp://localhost/~/historyDB'
+2025-12-16T08:26:37.959+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-16T08:26:38.182+01:00  INFO 63970 --- [Historique_oeuvres] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-12-16T08:26:38.207+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-16T08:26:39.082+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-16T08:26:39.878+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-16T08:26:39.882+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-16T08:26:40.012+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-16T08:26:40.303+01:00  INFO 63970 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-16T08:26:40.792+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-16T08:26:41.443+01:00  WARN 63970 --- [Historique_oeuvres] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-16T08:26:41.462+01:00  WARN 63970 --- [Historique_oeuvres] [main] r$InitializeUserDetailsManagerConfigurer : Found 2 UserDetailsService beans, with names [myUserDetailsService, userDetailsService]. Global Authentication Manager will not use a UserDetailsService for username/password login. Consider publishing a single UserDetailsService bean.
+2025-12-16T08:26:42.341+01:00  INFO 63970 --- [Historique_oeuvres] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2025-12-16T08:26:42.348+01:00  INFO 63970 --- [Historique_oeuvres] [main] nate.company.java.Application    : Started Application in 8.416 seconds (process running for 8.652)
+2025-12-16T08:26:46.732+01:00  INFO 63970 --- [Historique_oeuvres] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-16T08:26:46.753+01:00  INFO 63970 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-16T08:26:46.801+01:00  INFO 63970 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-16T08:56:29.466+01:00  INFO 86470 --- [Historique_oeuvres] [main] h.controller.movie.MovieControllerTest   : Starting MovieControllerTest using Java 21.0.4 with PID 86470 (started by nathanb in /home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres)
+2025-12-16T08:56:29.468+01:00  INFO 86470 --- [Historique_oeuvres] [main] h.controller.movie.MovieControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2025-12-16T08:56:30.747+01:00  INFO 86470 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-16T08:56:31.325+01:00  INFO 86470 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 572 ms. Found 8 JPA repository interfaces.
+2025-12-16T08:56:32.124+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-16T08:56:32.200+01:00  INFO 86470 --- [Historique_oeuvres] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-12-16T08:56:32.229+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-16T08:56:32.505+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-16T08:56:32.532+01:00  INFO 86470 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-16T08:56:32.987+01:00  INFO 86470 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
+2025-12-16T08:56:32.989+01:00  INFO 86470 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-16T08:56:33.819+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-16T08:56:33.825+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.java.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-16T08:56:33.970+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-16T08:56:34.055+01:00  INFO 86470 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-16T08:56:34.359+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-16T08:56:34.908+01:00  WARN 86470 --- [Historique_oeuvres] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-16T08:56:34.924+01:00  WARN 86470 --- [Historique_oeuvres] [main] r$InitializeUserDetailsManagerConfigurer : Found 2 UserDetailsService beans, with names [myUserDetailsService, userDetailsService]. Global Authentication Manager will not use a UserDetailsService for username/password login. Consider publishing a single UserDetailsService bean.
+2025-12-16T08:56:35.848+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:tcp://localhost/~/historyDB'
+2025-12-16T08:56:35.927+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-12-16T08:56:35.927+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-12-16T08:56:35.929+01:00  INFO 86470 --- [Historique_oeuvres] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2025-12-16T08:56:35.960+01:00  INFO 86470 --- [Historique_oeuvres] [main] h.controller.movie.MovieControllerTest   : Started MovieControllerTest in 6.761 seconds (process running for 7.665)
+2025-12-16T08:56:49.991+01:00  INFO 86470 --- [Historique_oeuvres] [main] java.lang.Class                          : l'actuel user connecté est : jeanPP
+2025-12-16T08:56:49.995+01:00  INFO 86470 --- [Historique_oeuvres] [main] java.lang.Class                          : le user a bien été trouvé, on renvoie ses films trouvés en bdd
+2025-12-16T08:56:50.000+01:00  INFO 86470 --- [Historique_oeuvres] [main] java.lang.Class                          : les films du user trouvés sont : []
+2025-12-16T08:56:50.054+01:00  INFO 86470 --- [Historique_oeuvres] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-16T08:56:50.070+01:00  INFO 86470 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-16T08:56:50.197+01:00  INFO 86470 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-16T09:21:21.163+01:00  INFO 106444 --- [Historique_oeuvres] [main] c.h.c.movie.MovieControllerTest          : Starting MovieControllerTest using Java 21.0.4 with PID 106444 (started by nathanb in /home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres)
+2025-12-16T09:21:21.218+01:00  INFO 106444 --- [Historique_oeuvres] [main] c.h.c.movie.MovieControllerTest          : No active profile set, falling back to 1 default profile: "default"
+2025-12-16T09:21:24.113+01:00  INFO 106444 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-16T09:21:25.341+01:00  INFO 106444 --- [Historique_oeuvres] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1215 ms. Found 8 JPA repository interfaces.
+2025-12-16T09:21:27.889+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-16T09:21:28.103+01:00  INFO 106444 --- [Historique_oeuvres] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-12-16T09:21:28.270+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-16T09:21:29.156+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-16T09:21:29.241+01:00  INFO 106444 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-16T09:21:30.795+01:00  INFO 106444 --- [Historique_oeuvres] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:tcp://localhost/~/historyDB user=SA
+2025-12-16T09:21:30.798+01:00  INFO 106444 --- [Historique_oeuvres] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-16T09:21:33.007+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-16T09:21:33.015+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.h.m.internal.PojoInstantiatorImpl      : HHH000182: No default (no-argument) constructor for class: nate.company.history_work.siteTools.reaction.ReactionChoices (class must be instantiated by Interceptor)
+2025-12-16T09:21:33.357+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-16T09:21:34.839+01:00  INFO 106444 --- [Historique_oeuvres] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-16T09:21:35.954+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-16T09:21:37.795+01:00  WARN 106444 --- [Historique_oeuvres] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-16T09:21:37.844+01:00  WARN 106444 --- [Historique_oeuvres] [main] r$InitializeUserDetailsManagerConfigurer : Found 2 UserDetailsService beans, with names [myUserDetailsService, userDetailsService]. Global Authentication Manager will not use a UserDetailsService for username/password login. Consider publishing a single UserDetailsService bean.
+2025-12-16T09:21:40.505+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:tcp://localhost/~/historyDB'
+2025-12-16T09:21:40.880+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-12-16T09:21:40.884+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-12-16T09:21:40.889+01:00  INFO 106444 --- [Historique_oeuvres] [main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2025-12-16T09:21:40.978+01:00  INFO 106444 --- [Historique_oeuvres] [main] c.h.c.movie.MovieControllerTest          : Started MovieControllerTest in 20.608 seconds (process running for 24.038)
+2025-12-16T09:21:58.218+01:00  INFO 106444 --- [Historique_oeuvres] [main] java.lang.Class                          : l'actuel user connecté est : jeanPP
+2025-12-16T09:21:58.226+01:00  INFO 106444 --- [Historique_oeuvres] [main] java.lang.Class                          : le user a bien été trouvé, on renvoie ses films trouvés en bdd
+2025-12-16T09:21:58.240+01:00  INFO 106444 --- [Historique_oeuvres] [main] java.lang.Class                          : les films du user trouvés sont : []
+2025-12-16T09:21:58.449+01:00  INFO 106444 --- [Historique_oeuvres] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-16T09:21:58.552+01:00  INFO 106444 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-16T09:21:58.769+01:00  INFO 106444 --- [Historique_oeuvres] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

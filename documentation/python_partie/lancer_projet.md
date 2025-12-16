@@ -4,7 +4,7 @@ lancer le projet :
 
 go dans :
 
-"angular/src.main.java.nate.company.history_work.angular.angularclient"
+"angular/src.main.java.nate.company.java.angular.angularclient"
 
 puis
 

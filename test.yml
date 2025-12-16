@@ -9,14 +9,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image:node:22.9.0
+      image:node: 20
     steps:
       - uses: actions/checkout@v3
         with:
-          node-version:22.9.0
+          node-version: 20
         #run clean install
-      - run: npm ci
+      - run: mvn clean
+      - run : mvn clean test
+      #- run: mvn spring-boot:run
+      #- run: npm ci
         #run tests
-      - run: npm test
+      #- run: npm test
         #compile the project
-      - run: npm run build
+      #- run: npm run build
