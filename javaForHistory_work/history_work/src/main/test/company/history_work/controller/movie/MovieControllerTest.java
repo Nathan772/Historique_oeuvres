@@ -1,20 +1,38 @@
-package src.test.java.nate.company.history_work.controller.movie;
+package company.history_work.controller.movie;
 
+import nate.company.history_work.Application;
+import nate.company.history_work.siteTools.movie.Movie;
+import nate.company.history_work.siteTools.movie.MovieRepository;
+import nate.company.history_work.siteTools.person.Person;
+import nate.company.history_work.siteTools.person.PersonRepository;
+import nate.company.history_work.siteTools.status.VisualArtStatus;
+import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.user.UserRepository;
+import nate.company.history_work.siteTools.watchedMovie.WatchedMovie;
+import nate.company.history_work.siteTools.watchedMovie.WatchedMovieRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import src.main.java.nate.company.history_work.siteTools.movie.Movie;
-import src.main.java.nate.company.history_work.siteTools.user.UserRepository;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
 
 
 ///**
@@ -24,21 +42,46 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // * @author Nathan BILINGI
 // * @see MovieController
 // */
-//@WebMvcTest(nate.company.history_work.controller.movie.MovieController.class)
-//public class MovieControllerTest {
-//
-//    @Autowired        // Injects dependencies
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private MovieRepository movieRepository;
-//
-//    @MockBean
-//   // private WatchMovieRepository watchMovieRepository;
-//
-//    @MockBean
-//    private UserRepository userRepository; // Without this Mock, the test can't be launched
-//
+
+//@DataJpaTest
+@SpringBootTest(classes=Application.class)
+@AutoConfigureMockMvc
+public class MovieControllerTest {
+
+    @Autowired        // Injects dependencies
+    private MockMvc mockMvc;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private WatchedMovieRepository watchMovieRepository;
+
+    @Autowired
+    private UserRepository userRepository; // Without this Mock, the test can't be launched
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    @Test
+    public void shouldGetEmptyUserMovies() throws Exception {
+        var director1 = new Person("Mathieu","Delaporte");
+        var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
+        var director2 = new Person("Greta","Gerwig");
+        var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
+        var user1 = new User("jeanPP", "jeanpp@gmail.com", "666666");
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        user1.setPassword(encoder.encode(user1.getPassword()));
+        userRepository.save(user1);
+        //connect user
+        mockMvc.perform(MockMvcRequestBuilders.get("/validAuthentication").param("pseudo", "jeanPP").param("password","666666")).andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie").param("pseudo","jeanPP").param("password", "666666")) // Forgetting the '/' character at the beginning makes the  method throw an exception
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
 //    /**
 //     * Checks that all the movies saved by a user are all retrieved.
 //     *
@@ -46,16 +89,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //     */
 //    @Test
 //    public void shouldGetUserMovies() throws Exception {
-//        var firstMovie = new Movie(1L, "Le Comte de Monte-Cristo", 2024, "ID_1", "Matthieu Delaporte");
-//        var secondMovie = new Movie(2L, "Barbie", 2023, "ID_2", "Greta Gerwig");
-//        var firstWatchMovie = new WatchMovie(1L, 1L, "À regarder plus tard");
-//        var secondWatchMovie = new WatchMovie(1L, 2L, "À regarder plus tard");
+//        var director1 = new Person("Mathieu","Delaporte");
+//        var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
+//        var director2 = new Person("Greta","Gerwig");
+//        var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
+//        var user1 = new User("jeanPP", "jeanpp@gmail.com", "666666");
 //
-//        //when(watchMovieRepository.findAll()).thenReturn(List.of(firstWatchMovie, secondWatchMovie));
-//        when(movieRepository.findById(1L)).thenReturn(Optional.of(firstMovie));
-//        when(movieRepository.findById(2L)).thenReturn(Optional.of(secondMovie));
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+//        user1.setPassword(encoder.encode(user1.getPassword()));
+//        userRepository.save(user1);
 //
-//        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie?id=1")) // Forgetting the '/' character at the beginning makes the  method throw an exception
+//        personRepository.save(director1);
+//        personRepository.save(director2);
+//
+//        firstMovie = movieRepository.save(firstMovie);
+//        secondMovie =movieRepository.save(secondMovie);
+//
+//
+//        //connect user
+//        mockMvc.perform(MockMvcRequestBuilders.get("/validAuthentication").param("pseudo", "jeanPP").param("password","666666")).andExpect(status().isOk());
+//
+//
+//
+//
+//
+//
+//
+//        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie").param("pseudo","jeanPP").param("password", "666666")) // Forgetting the '/' character at the beginning makes the  method throw an exception
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$").isNotEmpty())
 //                .andExpect(jsonPath("$[0].title").value("Le Comte de Monte-Cristo"))
@@ -65,13 +125,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //                .andExpect(jsonPath("$[1].id").value(2L))
 //                .andExpect(jsonPath("$[1].imdbID").value("ID_2"));
 //    }
-//
-//    /**
-//     * Checks that an empty list is returned when a valid user doesn't have
-//     * any movie in his bookmark.
-//     *
-//     * @throws Exception if the perform method of the mockMVC throws it
-//     */
+
+    /**
+     * Checks that an empty list is returned when a valid user doesn't have
+     * any movie in his bookmark.
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
+     */
 //    @Test
 //    public void shouldReturnNoneMovie() throws Exception {
 //        when(watchMovieRepository.findAll()).thenReturn(List.of());
@@ -81,15 +141,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$").isEmpty());
 //    }
-//
-//    /**
-//     * Checks that a the retrieval of a movie of a uer that doesn't exist in the database should
-//     * return a Not Found code.
-//     *
-//     * TODO : To pass this test, the method of the controller must be implemented in a different way that checks the user id exist
-//     *
-//     * @throws Exception if the perform method of the mockMVC throws it
-//     */
+
+    /**
+     * Checks that a the retrieval of a movie of a uer that doesn't exist in the database should
+     * return a Not Found code.
+     *
+     * TODO : To pass this test, the method of the controller must be implemented in a different way that checks the user id exist
+     *
+     * @throws Exception if the perform method of the mockMVC throws it
+     */
 //    @Test
 //    public void shouldGetError() throws Exception {
 //        when(watchMovieRepository.findAll()).thenReturn(List.of());
@@ -98,7 +158,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie?id=1"))
 //                .andExpect(status().isNotFound());
 //    }
-//
+
 //    /**
 //     * Checks the save of a movie that already exists in the database.
 //     *
@@ -203,4 +263,4 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //        mockMvc.perform(MockMvcRequestBuilders.delete("/user/movie/remove/1/Note"))
 //                .andExpect(status().isNoContent());
 //    }
-//}
+}

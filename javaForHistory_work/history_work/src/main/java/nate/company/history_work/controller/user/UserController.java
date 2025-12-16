@@ -201,7 +201,6 @@ public class UserController {
     @GetMapping("/validAuthentication")
     @ResponseBody
     public ResponseEntity<Boolean>validAuthenticationUser(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="password") String password){
-        System.out.println("on va chercher un user par pseudo");
         var userByPseudo = userService.getUserByPseudo(userPseudo);
         if(userByPseudo.isPresent()){
             //converter to compare raw password to encoded password

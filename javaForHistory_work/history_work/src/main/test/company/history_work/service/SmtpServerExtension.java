@@ -2,7 +2,7 @@
  * This class is used as an extension by the integration tests for the email service.
  */
 
-package src.test.java.nate.company.history_work.service;
+package company.history_work.service;
 
 
 

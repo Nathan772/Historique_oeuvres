@@ -9,6 +9,7 @@ import java.util.Optional;
  */
 @Repository
 public interface MovieRepository extends CrudRepository<Movie,Long> {
+    public Movie save(Movie movie);
     public Optional<Movie> getById(long id);
     public Optional<Movie> getByimdbID(String imdbID);
 }

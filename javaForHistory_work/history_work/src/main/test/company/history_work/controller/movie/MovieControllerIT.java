@@ -1,4 +1,4 @@
-package nate.company.history_work.controller.movie;
+package company.history_work.controller.movie;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

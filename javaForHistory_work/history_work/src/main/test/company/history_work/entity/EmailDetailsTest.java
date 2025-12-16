@@ -1,4 +1,4 @@
-package nate.company.history_work.entity;
+package company.history_work.entity;
 
 import org.junit.jupiter.api.Test;
 

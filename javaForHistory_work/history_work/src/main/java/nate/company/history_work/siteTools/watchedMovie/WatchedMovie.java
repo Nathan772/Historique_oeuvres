@@ -26,9 +26,6 @@ public class WatchedMovie extends WatchedObject {
     @Setter
     private long id;
 
-    //@JoinColumn(name="id_movie", referencedColumnName = "idmovie")
-    //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JoinColumn(name="movie_id")
     /*
 
     WHY MERGE IS NECESSARY :
@@ -57,29 +54,10 @@ public class WatchedMovie extends WatchedObject {
     }
 
     public WatchedMovie(User user, Movie movie, VisualArtStatus status, long timeAsLong){
-//        Objects.requireNonNull(user);
-//        Objects.requireNonNull(status);
-//        Objects.requireNonNull(movie);
-//        if(timeAsLong < 0){
-//            throw new IllegalArgumentException("WATCHed movie time cannot be lower than 0");
-//        }
-
-        //this.watcher = user;
-
         super(timeAsLong, user, status);
         System.out.println("les infos du movie qui va être sauvegardé dans watchedmovie: "+movie);
         this.movie = movie;
-        //the watcher is visible by the movie
-        movie.addIsWatchedBy(user);
         this.id = 0;
-        //cause issue here because watch movie doesn't possess its actual "id"
-        //user.addWatchedMovie(this);
-
-        //add to user list
-        //cause issues because watched is not persistent at this moment
-        //user.addWatchedMovie(this,movie);
-//        this.movieStatus = status;
-//        this.timeAsLong = timeAsLong;
     }
 
     /*

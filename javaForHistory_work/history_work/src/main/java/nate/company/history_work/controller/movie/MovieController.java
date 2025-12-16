@@ -2,6 +2,7 @@ package nate.company.history_work.controller.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import nate.company.history_work.logger.LoggerInfo;
 import nate.company.history_work.service.*;
 import nate.company.history_work.siteTools.dtos.MovieDto;
 import nate.company.history_work.siteTools.dtos.WatchedMovieDto;
@@ -108,8 +109,7 @@ public class MovieController {
 
     @DeleteMapping("/user/movie/remove")
     public ResponseEntity<String> removeMovieFromList(@RequestBody String movieDataUserJson) {
-        System.out.println("les infos du json en brut sont : "+movieDataUserJson);
-        //System.out.println("on a trouvé le user principal");
+        LOGGER.log(Level.INFO,"les infos du json en brut sont : "+movieDataUserJson);
         //user is connected
         // doesn't work use another approach
         //var currentUser = userService.getPrincipal()
@@ -117,7 +117,7 @@ public class MovieController {
         Optional<User> userOpt;
         //get user thanks to back end save of persistent session
         if(USER_CHOSEN.getPseudo() != null && USER_CHOSEN.getPseudo().isEmpty() == false){
-            System.out.println(" on récupère les infos du user grâce au back end et pas le front end");
+            LOGGER.log(Level.INFO," on récupère les infos du user grâce au back end et pas le front end");
             userOpt = userService.getUserByPseudo(USER_CHOSEN.getPseudo());
         }
         //use the request to retrieve user's information (password + pseudo)
@@ -126,7 +126,7 @@ public class MovieController {
              //userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
 
             //user doesn't exists
-            System.out.println("on envoie le json classique 0 : user not connected");
+            LOGGER.log(Level.INFO,"on envoie le json classique 0 : user not connected");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("{}");
 
@@ -172,30 +172,28 @@ public class MovieController {
         catch(Exception e){
             //inconsistent movie fields
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
-            System.out.println("Error : the json received as movie doesn't respect the json format");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{}");
         }
-        System.out.println("l'état du movie récupéré grâce au json et au parsing est :"+movie);
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
         if(movieAlreadyExistsOpt.isPresent()){
 
-            System.out.println("le film a bien été "+movie+" ( found)");
+            LOGGER.log(Level.INFO,"le film a bien été "+movie+" ( found)");
             //remove the watched movie line from database
             var watchedToRemoveOpt = watchedMovieService.findByUserAndMovie(actualUser, movieAlreadyExistsOpt.get());
             /*
             movie not found, but it's not a problem
              */
             if(watchedToRemoveOpt.isEmpty()){
-                System.out.println("le film à supprimer n'a pas été trouvé pour le user "+actualUser+ " "+movie+" (not found)");
+                LOGGER.log(Level.INFO,"le film à supprimer n'a pas été trouvé pour le user "+actualUser+ " "+movie+" (not found)");
                 return ResponseEntity.ok("{}");
             }
             /*
             movie found, you remove this
              */
-            System.out.println("le watch movie à supprimer est : "+watchedToRemoveOpt.get());
+            LOGGER.log(Level.INFO,"le watch movie à supprimer est : "+watchedToRemoveOpt.get());
             watchedMovieService.removeByIdMovie(watchedToRemoveOpt.get().getId());
             //the movie is already in the data base don't need to recreate with the same imdb
             var movieChosen = movieAlreadyExistsOpt.get();
@@ -208,9 +206,7 @@ public class MovieController {
             userService.saveUser(actualUser);
             //send the movie as json
             try {
-                System.out.println("on envoie le json classique 2");
                 var jsonStr = FROMJSONCONVERTER.writeValueAsString(new WatchedMovieDto(watchedToRemoveOpt.get()));
-                System.out.println("l'état du json produit :"+jsonStr);
                 return ResponseEntity.ok(jsonStr);
             } catch (JsonProcessingException e) {
                 throw new AssertionError("not proper json format for watch movie : "+e);
@@ -219,7 +215,6 @@ public class MovieController {
         /*
         movie not found, but it's not a problem
          */
-        System.out.println("on envoie le json classique 3");
         return ResponseEntity.ok("");
     }
 
@@ -253,7 +248,6 @@ public class MovieController {
 
     @PostMapping("/user/movie/react")
     public ResponseEntity<String> reactMovie(@RequestBody String userMovieReactJson){
-        System.out.println("on ajoute le film et le user en react: "+userMovieReactJson);
         LOGGER.log(Level.INFO, " on ajoute le film: "+userMovieReactJson);
         //user not connected abnormal
         var nestedMap = parseComplexJsonForWatchedMovie(userMovieReactJson);
@@ -275,8 +269,7 @@ public class MovieController {
         //need to be parsed again
         nestedMap.get("movie");
 
-        //need to be parsed again
-        System.out.println("le contenu de la reaction nested est : "+nestedMap.get("reactionChoice"));
+
 
         //parse time as json object for test
 
@@ -292,8 +285,6 @@ public class MovieController {
         } catch (Exception e) {
             throw  new IllegalArgumentException("Error : the json received movie doesn't respect the json format "+e);
         }
-        System.out.println("le json du movie en string : "+fromStringToJsonMovieMap);
-
 
         /*
         retrieve reaction data into map
@@ -308,7 +299,6 @@ public class MovieController {
 
 
         //mapForWatchedMovie.put("");
-        //System.out.println("on a trouvé le user principal");
         //user is connected
         // doesn't work use another approach
         //var currentUser = userService.getPrincipal();
@@ -316,7 +306,7 @@ public class MovieController {
         var userOpt = userService.getUserByPseudo(nestedMap.get("pseudo"));
         //user doesn't exists
         if(userOpt.isEmpty()){
-            System.out.println("erreur le user au pseudo: "+nestedMap.get("pseudo")+" n'existe pas ");
+            LOGGER.log(Level.INFO,"erreur le user au pseudo: "+nestedMap.get("pseudo")+" n'existe pas ");
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Movie());
         }
@@ -324,7 +314,7 @@ public class MovieController {
         //user exists
         //but false password
         if(userOpt.get().getPassword().equals(nestedMap.get("password"))){
-            System.out.println("erreur le user au password: "+nestedMap.get("password")+" n'existe pas ");
+            LOGGER.log(Level.INFO,"erreur le user au password: "+nestedMap.get("password")+" n'existe pas ");
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Movie());
         }
@@ -346,14 +336,12 @@ public class MovieController {
         catch(Exception e){
             //inconsistent movie fields
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
-            System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
+            LOGGER.log(Level.INFO,"erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{}");
         }
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
-
-        System.out.println("avant time converter");
 
         /*
         the movie is already registered in data base
@@ -370,7 +358,7 @@ public class MovieController {
 
             //Already exists in database, just update data then
             if(alreadyReactedMovieOpt.isPresent()){
-                System.out.println("le film est déjà dans la reactionList, on a juste mettre à jour son statut : "
+                LOGGER.log(Level.INFO,"le film est déjà dans la reactionList, on a juste mettre à jour son statut : "
                         +alreadyReactedMovieOpt.get());
                 var alreadyReactedMovie = alreadyReactedMovieOpt.get();
 
@@ -408,10 +396,6 @@ public class MovieController {
             //new reaction object instantiate (there was nothing in db)
 
             var reacted = new MovieReaction(actualUser,fromStringToReactionStatus(nestedMap.get("reactionChoice")),movieAlreadyExistsOpt.get());
-            System.out.println("l'état de watched movie avant la création du dto : "+reacted);
-
-
-
 
             movieChosen.reactUser(reacted);
             actualUser.reactMovie(reacted);
@@ -420,7 +404,6 @@ public class MovieController {
             //this specific order is compulsory
             movieReactionService.save(reacted);
             userService.saveUser(actualUser);
-            System.out.println("l'état de reaction movie avant la création du dto : "+reacted);
             return ResponseEntity.ok("{}");
         }
 
@@ -429,10 +412,6 @@ public class MovieController {
          */
 
         var reacted = new MovieReaction(actualUser,fromStringToReactionStatus(nestedMap.get("reactionChoice")),movie);
-        System.out.println("l'état de watched movie avant la création du dto : "+reacted);
-
-
-
         //it's a new movie that wasn't in db
         //we save it in db
         movie.reactUser(reacted);
@@ -440,7 +419,6 @@ public class MovieController {
         userService.saveUser(actualUser);
         movieReactionService.save(reacted);
         LOGGER.log(Level.INFO, " on sauvegardé le film dans la liste du user : "+actualUser);
-        System.out.println("juste avant le responseEntity de watchedmovieDto");
 
         // Getting organisation object as a json string
         String jsonStr;
@@ -477,15 +455,6 @@ public class MovieController {
 
 
 
-    /**
-     *
-     * Retrieve a user based on their pseudo or email.
-     * @param user the you user you want to retrieve
-     * @return the user object.
-     */
-    //@RequestMapping("/users")
-    //@GetMapping("/user")
-
 
     /**
      * The "add movie" add a new movie into the data base.
@@ -496,24 +465,15 @@ public class MovieController {
      *
      * @return the retrieved movie
      */
-    //Requestbody can be used only once,
-    //thereby you use a wrapper class or two request param
-    //you cannot
     @PostMapping("/user/movie/add")
     public ResponseEntity<String> addMovie(@RequestBody String userMovieJson){
-        System.out.println("on ajoute le film et le user dans movie/add: "+userMovieJson);
+        LOGGER.log(Level.INFO,"on ajoute le film et le user dans movie/add: "+userMovieJson);
 
-        System.out.println("l'actuel user connecté est : "+USER_CHOSEN.getPseudo());
+        LOGGER.log(Level.INFO,("l'actuel user connecté est : "+USER_CHOSEN.getPseudo()));
 
         //regex searched : {({.*})\,({.*})}
         LOGGER.log(Level.INFO, " on ajoute le film : "+userMovieJson);
         //user not connected abnormal
-        // doesn't work for now, use another approach
-//        if(userService.getPrincipal().isEmpty()){
-//            System.out.println("on ne trouve pas le user principal");
-//            //EMPTY MOVIE RETURNED IF Not connected
-//            return ResponseEntity.ok(new Movie());
-//        }
         var nestedMap = parseComplexJsonForWatchedMovie(userMovieJson);
 
         var mapForWatchedMovie = new HashMap<String,String>();
@@ -527,23 +487,6 @@ public class MovieController {
          */
         mapForUserWatcher.put("password",nestedMap.get("password"));
         mapForUserWatcher.put("pseudo", nestedMap.get("pseudo"));
-        /*
-        load movie data
-         */
-        //need to be parsed again
-        //nestedMap.get("movie");
-
-        //need to be parsed again
-        //nestedMap.get("movieStatus");
-
-        //need to be parsed again
-        System.out.println("le contenu de time dans nested est : "+nestedMap.get("time"));
-
-        //parse time as json object for test
-
-        //parse time as json object for test
-        //HashMap<String, Object > mapTimeAsJsonString;
-
 
         HashMap<String, String> fromStringToJsonMovieStatusMap;
 
@@ -555,7 +498,6 @@ public class MovieController {
         } catch (Exception e) {
             throw  new IllegalArgumentException("Error : the json received as \"time\" (movie duration) doesn't respect the json format "+e);
         }
-        System.out.println("le json time en string : "+fromStringToJsonTimeMap);
         /*try {
             mapTimeAsJsonString = fromJsonConverter.readValue(fromStringToJsonTime, new TypeReference<HashMap<String, Object>>() {});
         } catch (JsonProcessingException e) {
@@ -567,39 +509,20 @@ public class MovieController {
         } catch (Exception e) {
             throw  new IllegalArgumentException("Error : the json received movie doesn't respect the json format "+e);
         }
-        System.out.println("le json du movie en string : "+fromStringToJsonMovieMap);
 
         try {
             fromStringToJsonMovieStatusMap = parseKeyValueString(nestedMap.get("movieStatus"));
         } catch (Exception e) {
             throw  new IllegalArgumentException("Error : the json received as \"movieStatus\" doesn't respect the json format "+e);
         }
-        System.out.println("le json du movie en string : "+fromStringToJsonMovieStatusMap);
-
-
-
-
-        //mapForWatchedMovie.put("");
-        //System.out.println("on a trouvé le user principal");
-        //user is connected
-        // doesn't work use another approach
-        //var currentUser = userService.getPrincipal();
 
         var userOpt = userService.getUserByPseudo(USER_CHOSEN.getPseudo());
         //user doesn't exists
         if(userOpt.isEmpty()){
-            System.out.println("erreur le user au pseudo: "+nestedMap.get("pseudo")+" n'existe pas ");
+            LOGGER.log(Level.INFO,"erreur le user au pseudo: "+nestedMap.get("pseudo")+" n'existe pas ");
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new Movie());
         }
-
-        //user exists
-        //but false password
-//        if(userOpt.get().getPassword().equals(nestedMap.get("password"))){
-//            System.out.println("erreur le user au password: "+nestedMap.get("password")+" n'existe pas ");
-//            ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body(new Movie());
-//        }
 
         //user exists and good password
 
@@ -618,19 +541,16 @@ public class MovieController {
 
             //find person in db if already exist
             if(personService.findByFirstNameAndLastName(director.getFirstName(), director.getLastName()).isPresent()) {
-                System.out.println("old director");
                 director = personService.findByFirstNameAndLastName(director.getFirstName(), director.getLastName()).get();
             }
             //new person
             else {
                 personService.savePerson(director);
-                System.out.println("new director");
                 director = personService.findByFirstNameAndLastName(director.getFirstName(), director.getLastName()).get();
             }
 
                 //movie already exists
             if(movieService.getMovieByImdb(fromStringToJsonMovieMap.get("imdbID")).isPresent()) {
-                System.out.println("le film existe déjà !!");
                 movie = movieService.getMovieByImdb(fromStringToJsonMovieMap.get("imdbID")).get();
             }
             //doesn't exist
@@ -638,26 +558,22 @@ public class MovieController {
                 movie = new Movie(fromStringToJsonMovieMap.get("title"), Integer.parseInt(fromStringToJsonMovieMap.get("yearOfRelease")), fromStringToJsonMovieMap.get("imdbID"),
                         director, fromStringToJsonMovieMap.get("poster"));
 
-//                movieService.saveMovie(movie);
-//                //get id updated
-//                movie = movieService.getMovieByImdb(movie.getImdbID()).get();
-                //personService.savePerson(director);
             }
         }
 
         catch(Exception e){
             //inconsistent movie fields
             LOGGER.log(Level.INFO,"Error : the json received as movie doesn't respect the json format");
-            // error here !!!
 
-            System.out.println("erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
+            LOGGER.log(Level.INFO,"erreur le film au titre: "+nestedMap.get("title")+" n'existe pas ");
             //EMPTY MOVIE RETURNED IF Not connected
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{}");
         }
+
+
         var movieAlreadyExistsOpt = movieService.getMovieByImdb(movie.getImdbID());
 
-        System.out.println("avant time converter");
         //var timeConverter = new TimeConverter();
         //convert string of time to actual time object
         var onlyTimeOfMovie = new TimeConverter.OnlyTime(Integer.parseInt(fromStringToJsonTimeMap.get("seconds")), Integer.parseInt(fromStringToJsonTimeMap.get("minutes")),
@@ -670,16 +586,14 @@ public class MovieController {
 
         if(movieAlreadyExistsOpt.isPresent()){
 
-
             //retrieve and update if it already exists
             var alreadyWatchedMovieOpt =watchedMovieService.findByUserAndMovie(userOpt.get(),movieAlreadyExistsOpt.get());
-
             //the movie is already in the data base don't need to recreate with the same imdb
             var movieChosen = movieAlreadyExistsOpt.get();
 
             //Already exists in database, just update data then
             if(alreadyWatchedMovieOpt.isPresent()){
-                System.out.println("le film est déjà dans la watchlist, on a juste mettre à jour son statut : "
+                LOGGER.log(Level.INFO,"le film est déjà dans la watchlist, on a juste mettre à jour son statut : "
                         +alreadyWatchedMovieOpt.get());
                 var alreadyWatchedMovie = alreadyWatchedMovieOpt.get();
 
@@ -716,20 +630,14 @@ public class MovieController {
 
 
 
-
             //new watchMovie object instantiate (there was nothing in db)
 
             var watchedMovie = new WatchedMovie(actualUser,movieAlreadyExistsOpt.get(), VisualArtStatus.fromStringToArtStatus(nestedMap.get("movieStatus")),
                     fromOnlyTimeToSeconds(onlyTimeOfMovie));
-            System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
-
-
-
 
             movieChosen.addIsWatchedBy(actualUser);
             actualUser.addWatchedMovie(watchedMovie);
             //makes them persistent in db
-            System.out.println("la valeur du directeur est : "+director);
             personService.savePerson(director);
 
             movieService.saveMovie(movieChosen);
@@ -738,7 +646,6 @@ public class MovieController {
             //this specific order is compulsory
             watchedMovieService.saveWatchMovie(watchedMovie);
             userService.saveUser(actualUser);
-            System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
             return ResponseEntity.ok("{}");
         }
 
@@ -752,7 +659,7 @@ public class MovieController {
         //we save it in db
         //movie.addIsWatchedBy(actualUser);
 
-        System.out.println("la valeur du directeur est : "+director);
+
         //director.addMovieDirected(movie);
         //makes them persistent in db
         //retrieve director with the actual id
@@ -768,53 +675,27 @@ public class MovieController {
         if(movieService.getMovieByImdb(movie.getImdbID()).isPresent()){
             //update due to propagation
             movie = movieService.getMovieByImdb(movie.getImdbID()).get();
-//            director.addMovieDirected(movie);
-//            personService.savePerson(director);
-            //movie.setDirector(personService.findByFirstNameAndLastName(director.getFirstName(), director.getLastName()).get());
-            System.out.println("il n' y a PAS un double save");
+            LOGGER.log(Level.INFO,"il n' y a PAS un double save");
 
         }else {
-            System.out.println("il y a un double save");
+            LOGGER.log(Level.INFO,"il y a un double save");
+
+            LOGGER.log(Level.INFO," ON teste les logs !!");
             //movie.setDirector(director);
             //need its director because director is not null otherwisee cause error
             movieService.saveMovie(movie);
             //update the movie with its actual id
-
 //            director.addMovieDirected(movie);
             personService.savePerson(director);
             //update movie with new data
             movie = movieService.getMovieByImdb(movie.getImdbID()).get();
-            //movie.setDirector(personService.findByFirstNameAndLastName(director.getFirstName(), director.getLastName()).get());
         }
-        //personService.savePerson(director);
-
-//        System.out.println("l'id du du director , récupéré en bdd : "+director.getId());
-//        //there's no propagation !!!
-//        System.out.println("l'id du film, y a-t-il propagation après le save sans devoir get??? : "+movie.getId());
-//        System.out.println("l'id du director du pdv du film director.id: "+movie.getDirector());
-        //retrieve the movie with the actual id memorized in database
-        //useless due to propagation
-        //movie = movieService.getMovieByImdb(movie.getImdbID()).get();
-
-
-        //retrieve the movie with the actual id
-        //movie = movieService.getMovieByImdb(movie.getImdbID()).get();
-        //director.addMovieDirected(movie);
-        //personService.savePerson(director);
-        //movieService.saveMovie(movie);
-        //movieService.saveMovie(movie);
-        //movie = movieService.getMovieByImdb(movie.getImdbID()).get();
         var watchedMovie = new WatchedMovie(actualUser,movie, VisualArtStatus.fromStringToArtStatus(nestedMap.get("movieStatus")),fromOnlyTimeToSeconds(onlyTimeOfMovie));
-        //System.out.println("l'état de watched movie avant la création du dto : "+watchedMovie);
         watchedMovieService.saveWatchMovie(watchedMovie);
         watchedMovie = watchedMovieService.findByUserAndMovie(actualUser, movie).get();
         //add the movie as watched : not necessary
         //actualUser.addWatchedMovie(watchedMovie);
         movieService.saveMovie(movie);
-        //userService.saveUser(actualUser);
-
-        //actualUser.addWatchedMovie(watchedMovie);
-        //userService.saveUser(actualUser);
         LOGGER.log(Level.INFO," ON REGARDE user SA LISTE DE WATCHEDMOVIES DE SON pdv : "+ actualUser.getWatchMovies());
         LOGGER.log(Level.INFO, " on a sauvegardé le film dans la liste du user : "+actualUser);
         LOGGER.log(Level.INFO,"juste avant le responseEntity de watchedmovieDto");
@@ -838,7 +719,7 @@ public class MovieController {
     @GetMapping("/user/movie")
 
     public ResponseEntity<String> getMoviesWatched(@RequestParam(name="pseudo") String userPseudo, @RequestParam(name="password") String password){
-        //doesn't for now, use another approach
+        //doesn't work for now, use another approach
 //        if(userService.getPrincipal().isEmpty()) {
 //            LOGGER.log(Level.INFO, "l'utilisateur pour lequel on cherche les filmsf, est non connecté");
 //            System.out.println("on a pas trouvé le user principal pour la listes des films vus");
@@ -868,8 +749,6 @@ public class MovieController {
         //the user exists
         LOGGER.log(Level.INFO,"le user a bien été trouvé, on renvoie ses films trouvés en bdd");
         LOGGER.log(Level.INFO,"les films du user trouvés sont : "+userOpt.get().getWatchMovies());
-
-
 
         //return the list of movies as a string array
         var watchedMovies = userOpt.get().getWatchMovies().stream().map(movie->new WatchedMovieDto(movie)).toList();
@@ -915,36 +794,22 @@ public class MovieController {
                 /*
                 check if it's a nested JSON
                  */
-                //System.out.println("le contenu des values de entry : "+entry.getValue());
-                //System.out.println("peut-on le convertir en map que l'on parcours ensuite : "+fromJsonConverter(entry.getValue()));
-                //System.out.println("le contenu des values de entry : "+entry.getValue());
 
-                //parse a second time for the nested objects : watchedMovie, userSimple, movieStatus, time
-                String watchedNestedDataAsJson = entry.getValue().toString();
-//                String movieStatusAsJson = entry.getValue()).get("movieStatus").toString();
-//                String timeAsJson = ((Map<?, ?>) entry.getValue()).get("time").toString();
-//                String userSimpleAsJson = ((Map<?, ?>) entry.getValue()).get("userSimple").toString();
-
-               // System.out.println("on affiche le simple élément récupéré dans le entry récupéré : "+watchedNestedDataAsJson);
 
                 mapTmp.forEach((key,value)->
                         //add quotes because they are necessary for json parsing aftewards
                         copyNestedEntries.put(""+key.toString()+"", value.toString()));
-                //.stream().forEach(
-                //(key, value)->
-
-                //System.out.println("le nouvel état de copy nested : "+copyNestedEntries);
             }
 
             /*
             direct key list
              */
             else if (entry.getValue() instanceof List) {
-                System.out.println(entry.getKey() + " = " + entry.getValue());
+                LOGGER.log(Level.INFO,entry.getKey() + " = " + entry.getValue());
             }
 
             else {
-                System.out.println(entry.getKey() + " = " + entry.getValue());
+                LOGGER.log(Level.INFO,entry.getKey() + " = " + entry.getValue());
             }
 
             /*
