@@ -1,4 +1,4 @@
-name:builder-test-history-work
+name: builder-test-history-work
 
 on: 
   pull_request:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          node-version:22.9.0
+          node-version: 22.9.0
       - run: npm ci
       - run: npm test
       - run: npm run build
