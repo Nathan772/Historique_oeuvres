@@ -1,7 +1,7 @@
 côté angular : 
 
 0) lancer le fichier Application.java depuis intellij
-1) il faut se placer dans src.main.java.nate.company.history_work.angular.angularclient
+1) il faut se placer dans src.main.java.nate.company.java.angular.angularclient
 2) tapez : ng serve --open (lancer angular)
 
 ng serve --open

@@ -15,8 +15,11 @@ jobs:
         with:
           node-version: 20
         #run clean install
-      - run: npm ci
+      - run: mvn clean
+      - run : mvn clean test
+      #- run: mvn spring-boot:run
+      #- run: npm ci
         #run tests
-      - run: npm test
+      #- run: npm test
         #compile the project
-      - run: npm run build
+      #- run: npm run build

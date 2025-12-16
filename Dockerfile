@@ -25,7 +25,7 @@ EXPOSE 4200 49153
 
 #equivalent to "cd", in order to go to the angular 
 # file content
-WORKDIR javaForHistory_work/history_work/src/main/java/nate/company/history_work/angular/angularclient
+WORKDIR javaForHistory_work/java/src/main/java/nate/company/java/angular/angularclient
 
 # source : https://www.docker.com/blog/docker-best-practices-choosing-between-run-cmd-and-entrypoint/
 # These commands are executed during the image build process, and each RUN instruction creates a new layer in the Docker image. 
@@ -81,7 +81,7 @@ RUN yarn add @angular/cli@19.2.7
 RUN npm update
 
 #go to the angular project part
-WORKDIR ./javaForHistory_work/history_work/src/main/java/nate/company/history_work/angular/angularclient
+WORKDIR ./javaForHistory_work/java/src/main/java/nate/company/java/angular/angularclient
 
 #start is equivalent
 #for ng serve --host 0.0.0.0 (look at package.json in scipts)
