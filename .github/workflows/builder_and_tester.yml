@@ -26,8 +26,7 @@ jobs:
 
       # 3️⃣ Exécuter les tests Maven
      #- name: Run Maven tests
-     - run: javac MovieControllerTest
-     - run : java MovieControllerTest
+     - run: mvn test
       #- run: npm ci
       #- run: npm test
       #- run: npm run build
