@@ -21,7 +21,7 @@ public class JwtUtil {
 
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Clé secrète pour signer le token
 
-    @Value("${jwt.expirationMs}") // Durée d'expiration du token (configurable)
+    @Value("${jwt.expirationMs:3600000}") // Durée d'expiration du token (configurable)
     private long expirationMs;
 
     /**

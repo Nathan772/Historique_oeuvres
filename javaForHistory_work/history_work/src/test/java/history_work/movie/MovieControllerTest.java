@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -35,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@DataJpaTest
 @SpringBootTest(classes=Application.class)
 @AutoConfigureMockMvc
+@TestPropertySource(properties="jwt.expiration=36000000")
 public class MovieControllerTest {
 
     @Autowired        // Injects dependencies
@@ -59,7 +61,7 @@ public class MovieControllerTest {
         var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
         var director2 = new Person("Greta","Gerwig");
         var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
-        var user1 = new User("jeanPP", "jeanpp@gmail.com", "666666");
+        var user1 = new User("jeanPP2", "jeanpp@gmail2.com", "666666");
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
         user1.setPassword(encoder.encode(user1.getPassword()));
