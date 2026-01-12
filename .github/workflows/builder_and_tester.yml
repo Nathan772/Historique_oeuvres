@@ -15,11 +15,18 @@ jobs:
       image: node:20
       
     steps:
-      - uses: actions/checkout@v3
-        with:
-          node-version: 20
-            - run :mvn clean test
-            - run :mvn spring-boot:run
+     - uses: actions/checkout@v3
+
+      # 2️⃣ Installer Java et Maven
+     - name: JDK17 setup
+       uses: actions/setup-java@v3
+       with:
+          distribution: temurin
+          java-version: 17
+
+      # 3️⃣ Exécuter les tests Maven
+     - name: Run Maven tests
+       run: mvn clean test
       #- run: npm ci
       #- run: npm test
       #- run: npm run build
