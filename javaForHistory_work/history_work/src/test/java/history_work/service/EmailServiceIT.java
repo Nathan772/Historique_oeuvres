@@ -1,4 +1,4 @@
-package company.history_work.service;
+package history_work.service;
 
 //import jakarta.mail.MessagingException;
 //import nate.company.history_work.entity.EmailDetails;

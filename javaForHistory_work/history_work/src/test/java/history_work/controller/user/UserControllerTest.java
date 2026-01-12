@@ -1,4 +1,4 @@
-package company.history_work.controller.user;
+package history_work.controller.user;
 
 //import nate.company.history_work.siteTools.movie.MovieRepository;
 //import nate.company.history_work.siteTools.user.User;

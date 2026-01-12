@@ -2,7 +2,7 @@
  * This class is used as an extension by the integration tests for the email service.
  */
 
-package company.history_work.service;
+package history_work.service;
 
 
 

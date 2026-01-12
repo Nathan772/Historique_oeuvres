@@ -1,4 +1,4 @@
-package company.history_work.controller.user;
+package history_work.controller.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

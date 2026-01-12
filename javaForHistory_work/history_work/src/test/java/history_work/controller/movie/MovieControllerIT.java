@@ -1,4 +1,4 @@
-package company.history_work.controller.movie;
+package history_work.controller.movie;
 
 /**
  * Integration test for the MovieController class.

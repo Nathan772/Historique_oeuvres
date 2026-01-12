@@ -1,4 +1,4 @@
-package company.history_work.siteTools.movie;
+package history_work.siteTools.movie;
 
 
 //@SpringBootTest
