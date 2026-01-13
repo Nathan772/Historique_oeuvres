@@ -17,13 +17,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 //both annotation are necessary to enable th use of repositories but they cause bug in pipeline
-@SpringBootTest(classes= Application.class)
+//@SpringBootTest(classes= Application.class)
 //@AutoConfigureMockMvc
+@DataJpaTest
+@ActiveProfiles("test")
+@ContextConfiguration(classes =Application.class)
 public class UserControllerTest {
 
     //@Autowired
