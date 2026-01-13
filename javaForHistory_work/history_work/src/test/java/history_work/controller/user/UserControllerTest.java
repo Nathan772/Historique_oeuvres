@@ -18,8 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-//@SpringBootTest(classes= Application.class)
-//@AutoConfigureMockMvc
+//both annotation are necessary to enable th use of repositories but they cause bug in pipeline
+@SpringBootTest(classes= Application.class)
+@AutoConfigureMockMvc
 //@TestPropertySource(properties="jwt.expiration=36000000")
 public class UserControllerTest {
 
@@ -45,28 +46,28 @@ public class UserControllerTest {
      *
      * @throws Exception if the mockMVC could not perform
      */
-//    @Test
-//    public void shouldGetAllUsersFromDB() throws Exception {
-//        var user1 = new User("leoMessi", "lm@sfr.fr", "bestFootballPlayer");
-//        var user2 = new User("rafNadal", "rn@sfr.fr", "besTennisPlayer");
-//
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-//        user1.setPassword(encoder.encode(user1.getPassword()));
-//        user2.setPassword(encoder.encode(user2.getPassword()));
-//        user1 = userRepository.save(user1);
-//        user2 = userRepository.save(user2);
-//
-//
-//        var users = userRepository.findAll();
-//        System.out.println("le contenu de users est : "+users);
-//        System.out.println("l'état de user1 est : "+user1);
-//        System.out.println("l'état de user2 est : "+user1);
-//        Assertions.assertTrue(users.contains(user1));
-//        Assertions.assertTrue(users.contains(user2));
-//
-//
-//        //mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(status().isOk()).andExpect(jsonPath("$[0].pseudo").value("leoMessi"));
-//    }
+    @Test
+    public void shouldGetAllUsersFromDB() throws Exception {
+        var user1 = new User("leoMessi", "lm@sfr.fr", "bestFootballPlayer");
+        var user2 = new User("rafNadal", "rn@sfr.fr", "besTennisPlayer");
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        user1.setPassword(encoder.encode(user1.getPassword()));
+        user2.setPassword(encoder.encode(user2.getPassword()));
+        user1 = userRepository.save(user1);
+        user2 = userRepository.save(user2);
+
+
+        var users = userRepository.findAll();
+        System.out.println("le contenu de users est : "+users);
+        System.out.println("l'état de user1 est : "+user1);
+        System.out.println("l'état de user2 est : "+user1);
+        Assertions.assertTrue(users.contains(user1));
+        Assertions.assertTrue(users.contains(user2));
+
+
+        //mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(status().isOk()).andExpect(jsonPath("$[0].pseudo").value("leoMessi"));
+    }
 }
 //
     /**
