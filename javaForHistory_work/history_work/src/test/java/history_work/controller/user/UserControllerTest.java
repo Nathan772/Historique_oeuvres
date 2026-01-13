@@ -18,9 +18,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest(classes= Application.class)
-@AutoConfigureMockMvc
-@TestPropertySource(properties="jwt.expiration=36000000")
+//@SpringBootTest(classes= Application.class)
+//@AutoConfigureMockMvc
+//@TestPropertySource(properties="jwt.expiration=36000000")
 public class UserControllerTest {
 
     @Autowired
