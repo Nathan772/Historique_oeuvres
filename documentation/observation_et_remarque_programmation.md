@@ -1875,3 +1875,17 @@ aussi pensez à bien faire vos manyToMany :
     private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
 
 ```
+
+
+problème :
+
+Erreur lors du lancement de la pipeline des Tests unitaires.
+
+Cause :
+
+//both annotation are necessary to enable th use of repositories but they cause bug in pipeline
+@SpringBootTest(classes= Application.class)
+@AutoConfigureMockMvc
+
+Ces annotations.
+Mais elles sont nécessaires pour reconnaitre les repositories.

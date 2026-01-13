@@ -12,20 +12,22 @@ import nate.company.history_work.siteTools.user.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 //both annotation are necessary to enable th use of repositories but they cause bug in pipeline
 @SpringBootTest(classes= Application.class)
-@AutoConfigureMockMvc
-//@TestPropertySource(properties="jwt.expiration=36000000")
+//@AutoConfigureMockMvc
 public class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    //@Autowired
+    //private MockMvc mockMvc;
 
     @Autowired
     private UserRepository userRepository;
