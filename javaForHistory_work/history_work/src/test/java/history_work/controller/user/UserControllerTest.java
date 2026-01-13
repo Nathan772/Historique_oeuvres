@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 //both annotation are necessary to enable the use of repositories but they cause bug in pipeline
 @SpringBootTest(classes= Application.class)
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 public class UserControllerTest {
 
     @Autowired
