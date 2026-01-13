@@ -410,4 +410,9 @@ public class User {
         return Long.hashCode(id)^pseudo.hashCode()^ email.hashCode();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof User user1 && user1.id == id && user1.email.equals(email) && user1.pseudo.equals(pseudo)
+                && user1.password.equals(password);
+    }
 }

@@ -24,6 +24,7 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
     void removeByPseudo(String pseudo);
 
-    //List<User> getAll();
+    @Query("SELECT user FROM User user")
+    List<User> findAll();
 }
 

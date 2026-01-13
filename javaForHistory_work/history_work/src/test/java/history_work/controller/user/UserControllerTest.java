@@ -1,64 +1,74 @@
 package history_work.controller.user;
 
-//import nate.company.history_work.siteTools.movie.MovieRepository;
-//import nate.company.history_work.siteTools.user.User;
-//import nate.company.history_work.siteTools.user.UserRepository;
-//import nate.company.history_work.siteTools.watch_read.WatchMovieRepository;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//import static org.mockito.Mockito.when;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//
+
 //@WebMvcTest(UserController.class)
 ///**
 // * Unit test for the UserController class.
 // */
-//public class UserControllerTest {
-//
+
+import nate.company.history_work.Application;
+import nate.company.history_work.siteTools.user.User;
+import nate.company.history_work.siteTools.user.UserRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+
+@SpringBootTest(classes= Application.class)
+@AutoConfigureMockMvc
+@TestPropertySource(properties="jwt.expiration=36000000")
+public class UserControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private UserRepository userRepository;
+
 //    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private UserRepository userRepository;
-//
-//    @MockBean
 //    private MovieRepository movieRepository;
 //
-//    @MockBean
+//    @Autowired
 //    private WatchMovieRepository watchMovieRepository;
+
+    /**
+     * Checks that all the user are retrieved.
+     *
+     * @throws Exception if the mockMVC could not perform
+     */
+    @Test
+    public void shouldGetAllUsersFromDB() throws Exception {
+        var user1 = new User("leoMessi", "lm@sfr.fr", "bestFootballPlayer");
+        var user2 = new User("rafNadal", "rn@sfr.fr", "besTennisPlayer");
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        user1.setPassword(encoder.encode(user1.getPassword()));
+        user2.setPassword(encoder.encode(user2.getPassword()));
+        user1 = userRepository.save(user1);
+        user2 = userRepository.save(user2);
+
+
+        var users = userRepository.findAll();
+        System.out.println("le contenu de users est : "+users);
+        System.out.println("l'état de user1 est : "+user1);
+        System.out.println("l'état de user2 est : "+user1);
+        Assertions.assertTrue(users.contains(user1));
+        Assertions.assertTrue(users.contains(user2));
+
+
+        //mockMvc.perform(MockMvcRequestBuilders.get("/users")).andExpect(status().isOk()).andExpect(jsonPath("$[0].pseudo").value("leoMessi"));
+    }
+}
 //
-//    /**
-//     * Checks that all the user are retrieved.
-//     *
-//     * @throws Exception if the mockMVC could not perform
-//     */
-//    @Test
-//    public void shouldGetAllUsers() throws Exception {
-//        var user1 = new User("leoMessi", "lm@sfr.fr", "bestFootballPlayer");
-//        var user2 = new User("rafNadal", "rn@sfr.fr", "besTennisPlayer");
-//        when(userRepository.findAll()).thenReturn(List.of(user1, user2));
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/users"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$[0].pseudo").value("leoMessi"));
-//    }
-//
-//    /**
-//     * Ensures that the user can be retrieved thanks to its information in the database.
-//     *
-//     * @throws Exception if the mockMVC could not perform.
-//     */
+    /**
+     * Ensures that the user can be retrieved thanks to its information in the database.
+     *
+     * @throws Exception if the mockMVC could not perform.
+     */
 //    @Test
 //    public void shouldGetIdentifier() throws Exception {
 //        String jsonRequest =
