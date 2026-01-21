@@ -1,11 +1,11 @@
 #name of the image chosen
-FROM openjdk:23-jdk
+FROM eclipse-temurin:23-jdk
 #where the application will live
 #and where future run command will run from
 WORKDIR .
 
 
-FROM openjdk:23-jdk
+FROM eclipse-temurin:23-jdk
 
 # Install the application dependencies
 #copy host to working directory data
@@ -23,7 +23,7 @@ EXPOSE 4200 49153
 #CMD ["./angular/ng", "serve", "--open", "0.0.0.0", "--port", "8080"]
 
 
-#equivalent to "cd", in order to go to the angular 
+#WORKDIR is equivalent for "cd", in order to go to the angular 
 # file content
 WORKDIR javaForHistory_work/java/src/main/java/nate/company/java/angular/angularclient
 
@@ -33,20 +33,12 @@ WORKDIR javaForHistory_work/java/src/main/java/nate/company/java/angular/angular
 #in our case we will install angular last version
 
 
-# Install Node.js and Yarn
-#RUN 
-#yarn add @angular/cli
-
-#already exists in global environment thus cause error...
-#RUN npm install --global yarn
-
-
 
 #INSTALL YARN (BEGIN)
 
 #install yarn directly
 #IT'S Compulsory to enable docker to download node
-FROM node:22.9.0
+FROM node:22.12.0
 
 #Install some dependencies
 
@@ -65,20 +57,21 @@ RUN apt-get update && apt-get install -y \
     apt-transport-https \
     lsb-release \
     gnupg
-# Install yarn using the official Yarn repo
-RUN curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && \
-    apt-get install -y yarn
 
 #INSTALL YARN (END)
 #COPY ./ /angular
 
 #INSTALL ANGULAR tools (BEGIN)
-RUN yarn add @angular-devkit/architect 
-RUN yarn add @angular/cli@19.2.7 
+
+RUN npm i @angular-devkit/architect
+RUN npm i @angular/cli@19.2.19
 
 RUN npm update
+
+
+#run java's back-end 
+#WORKDIR ~/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres
+#CMD ["./mvnw","spring-boot:run"]
 
 #go to the angular project part
 WORKDIR ./javaForHistory_work/java/src/main/java/nate/company/java/angular/angularclient
@@ -86,6 +79,9 @@ WORKDIR ./javaForHistory_work/java/src/main/java/nate/company/java/angular/angul
 #start is equivalent
 #for ng serve --host 0.0.0.0 (look at package.json in scipts)
 RUN npm start
+
+
+
 
 #https://jonathanantoine.medium.com/hosting-an-angular-application-inside-a-docker-container-with-nginx-b10f3f0a4c26#:~:text=This%20also%20applies%20to%20docker,use%20ng%20serve%20in%20production.
 #you mustn't run it here... (see upper link)
