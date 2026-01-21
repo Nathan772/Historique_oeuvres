@@ -43,109 +43,109 @@ public class MovieControllerTest {
     /*
     it works with intellij but it doesn't with the pipeline
      */
-//    @Autowired        // Injects dependencies
-//    private MockMvc mockMvc;
-//
-//    @Autowired
-//    private MovieRepository movieRepository;
-//
-//    @Autowired
-//    private WatchedMovieRepository watchMovieRepository;
-//
-//    @Autowired
-//    private UserRepository userRepository; // Without this Mock, the test can't be launched
-//
-//    @Autowired
-//    private PersonRepository personRepository;
-//
-//    //functional
-//    @Test
-//    public void testShouldGetEmptyUserMovies() throws Exception {
-//        var director1 = new Person("Mathieu","Delaporte");
-//        var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
-//        var director2 = new Person("Greta","Gerwig");
-//        var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
-//        var user1 = new User("jeanPP2", "jeanpp@gmail2.com", "666666");
-//
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-//        user1.setPassword(encoder.encode(user1.getPassword()));
-//        userRepository.save(user1);
-//        //connect user
-//        mockMvc.perform(MockMvcRequestBuilders.get("/validAuthentication").param("pseudo", "jeanPP").param("password","666666")).andExpect(status().isOk());
-//
-//        var mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/user/movie").param("pseudo","jeanPP").param("password", "666666")).andReturn();
-//        var mvcResponse = mvcResult.getResponse().getContentAsString();
-//        System.out.println("les films du user : "+mvcResponse);
-//        // Forgetting the '/' character at the beginning makes the  method throw an exception.andExpect(status().isOk()).andExpect(jsonPath("$").isEmpty());
-//    }
-//
-////    /**
-////     * Checks that all the movies saved by a user are all retrieved.
-////     *
-////     * @throws Exception if the perform method of the mockMVC throws it
-////     */
-//    @Test
-//    public void shouldGetUserMovies() throws Exception {
-//        var director1 = new Person("Mathieu","Delaporte");
-//        var director2 = new Person("Greta","Gerwig");
-//        var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
-//        var user1 = new User("jeanPP", "jeanpp@gmail.com", "666666");
-//
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-//        user1.setPassword(encoder.encode(user1.getPassword()));
-//        user1 = userRepository.save(user1);
-//
-//        //save necessary data (and alone data) firstly
-//        director1 = personRepository.save(director1);
-//
-//        var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
-//        firstMovie = movieRepository.save(firstMovie);
-//
-//        //update data
-//
-//        director1.addMovieDirected(firstMovie);
-//        firstMovie.setDirector(director1);
-//        firstMovie= movieRepository.save(firstMovie);
-//
-//        //you don't need to save director1 again, the save with firstMovie propagate to dir1
-//
-//        director2 = personRepository.save(director2);
-//        director2.addMovieDirected(secondMovie);
-//        secondMovie =movieRepository.save(secondMovie);
-//
-//
-//
-//
-//        //connect user
-//        mockMvc.perform(MockMvcRequestBuilders.get("/validAuthentication").param("pseudo", "jeanPP").param("password","666666")).andExpect(status().isOk());
-//
-//
-//        //save watched movie from the user
-//        var watchedMovie = new WatchedMovie(user1, firstMovie, VisualArtStatus.WATCHLATER,0);
-//
-//         watchMovieRepository.save(watchedMovie);
-//        user1.addWatchedMovie(watchedMovie);
-//        watchMovieRepository.save(watchedMovie);
-//        var watchedMovie2 = new WatchedMovie(user1, secondMovie, VisualArtStatus.WATCHLATER,0);
-//        user1.addWatchedMovie(watchedMovie2);
-//        watchMovieRepository.save(watchedMovie2);
-//
-//
-//
-//
-//
-//        //get user's movies
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie").param("pseudo","jeanPP").param("password", "666666")) // Forgetting the '/' character at the beginning makes the  method throw an exception
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$").isNotEmpty())
-//                .andExpect(jsonPath("$[1].movie.title").value("Le Comte de Monte-Cristo"))
-//                .andExpect(jsonPath("$[1].movie.id").value(1L))
-//                .andExpect(jsonPath("$[1].movie.imdbID").value("Imdb_1"))
-//                .andExpect(jsonPath("$[0].movie.title").value("Barbie"))
-//                .andExpect(jsonPath("$[0].movie.id").value(2L))
-//                .andExpect(jsonPath("$[0].movie.imdbID").value("Imdb_2"));
-//    }
+    @Autowired        // Injects dependencies
+    private MockMvc mockMvc;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private WatchedMovieRepository watchMovieRepository;
+
+    @Autowired
+    private UserRepository userRepository; // Without this Mock, the test can't be launched
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    //functional
+    @Test
+    public void testShouldGetEmptyUserMovies() throws Exception {
+        var director1 = new Person("Mathieu","Delaporte");
+        var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
+        var director2 = new Person("Greta","Gerwig");
+        var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
+        var user1 = new User("jeanPP2", "jeanpp@gmail2.com", "666666");
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        user1.setPassword(encoder.encode(user1.getPassword()));
+        userRepository.save(user1);
+        //connect user
+        mockMvc.perform(MockMvcRequestBuilders.get("/validAuthentication").param("pseudo", "jeanPP").param("password","666666")).andExpect(status().isOk());
+
+        var mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/user/movie").param("pseudo","jeanPP").param("password", "666666")).andReturn();
+        var mvcResponse = mvcResult.getResponse().getContentAsString();
+        System.out.println("les films du user : "+mvcResponse);
+        // Forgetting the '/' character at the beginning makes the  method throw an exception.andExpect(status().isOk()).andExpect(jsonPath("$").isEmpty());
+    }
+
+//    /**
+//     * Checks that all the movies saved by a user are all retrieved.
+//     *
+//     * @throws Exception if the perform method of the mockMVC throws it
+//     */
+    @Test
+    public void shouldGetUserMovies() throws Exception {
+        var director1 = new Person("Mathieu","Delaporte");
+        var director2 = new Person("Greta","Gerwig");
+        var secondMovie = new Movie("Barbie", 2023, "Imdb_2", director2, "https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fofficial-poster-for-greta-gerwigs-barbie-v0-w1hmtffyjs7b1.jpg%3Fauto%3Dwebp%26s%3D0597bd09ee35dba16a16109995f18fdc0928c12f");
+        var user1 = new User("jeanPP", "jeanpp@gmail.com", "666666");
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+        user1.setPassword(encoder.encode(user1.getPassword()));
+        user1 = userRepository.save(user1);
+
+        //save necessary data (and alone data) firstly
+        director1 = personRepository.save(director1);
+
+        var firstMovie = new Movie("Le Comte de Monte-Cristo", 2024, "Imdb_1", director1, "https://fr.web.img6.acsta.net/c_300_300/img/29/eb/29eb8341475fdb0b19b1d7b995b70e17.jpg");
+        firstMovie = movieRepository.save(firstMovie);
+
+        //update data
+
+        director1.addMovieDirected(firstMovie);
+        firstMovie.setDirector(director1);
+        firstMovie= movieRepository.save(firstMovie);
+
+        //you don't need to save director1 again, the save with firstMovie propagate to dir1
+
+        director2 = personRepository.save(director2);
+        director2.addMovieDirected(secondMovie);
+        secondMovie =movieRepository.save(secondMovie);
+
+
+
+
+        //connect user
+        mockMvc.perform(MockMvcRequestBuilders.get("/validAuthentication").param("pseudo", "jeanPP").param("password","666666")).andExpect(status().isOk());
+
+
+        //save watched movie from the user
+        var watchedMovie = new WatchedMovie(user1, firstMovie, VisualArtStatus.WATCHLATER,0);
+
+         watchMovieRepository.save(watchedMovie);
+        user1.addWatchedMovie(watchedMovie);
+        watchMovieRepository.save(watchedMovie);
+        var watchedMovie2 = new WatchedMovie(user1, secondMovie, VisualArtStatus.WATCHLATER,0);
+        user1.addWatchedMovie(watchedMovie2);
+        watchMovieRepository.save(watchedMovie2);
+
+
+
+
+
+        //get user's movies
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/movie").param("pseudo","jeanPP").param("password", "666666")) // Forgetting the '/' character at the beginning makes the  method throw an exception
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$[1].movie.title").value("Le Comte de Monte-Cristo"))
+                .andExpect(jsonPath("$[1].movie.id").value(1L))
+                .andExpect(jsonPath("$[1].movie.imdbID").value("Imdb_1"))
+                .andExpect(jsonPath("$[0].movie.title").value("Barbie"))
+                .andExpect(jsonPath("$[0].movie.id").value(2L))
+                .andExpect(jsonPath("$[0].movie.imdbID").value("Imdb_2"));
+    }
 
     /**
      * Checks that an empty list is returned when a valid user doesn't have
