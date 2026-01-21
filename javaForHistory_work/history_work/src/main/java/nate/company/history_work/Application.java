@@ -87,14 +87,14 @@ public class Application {
         };
     }
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        /*
-        it loads .env file
-         */
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        configurer.setLocation(new FileSystemResource("javaForHistory_work/history_work/src/.env"));
-        return configurer;
-    }
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+//        PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
+//        /*
+//        it loads .env file
+//         */
+//        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+//        configurer.setLocation(new FileSystemResource("javaForHistory_work/history_work/src/.env"));
+//        return configurer;
+//    }
 }
