@@ -603,14 +603,8 @@ public class MovieController {
                 //update "watched status"
                 alreadyWatchedMovie.setArtStatus(VisualArtStatus.fromStringToArtStatus(nestedMap.get("movieStatus")));
 
-                actualUser.addWatchedMovie(alreadyWatchedMovie);
-                movieChosen.addIsWatchedBy(actualUser);
-
-                //makes them persistent in db
-                movieService.saveMovie(movieChosen);
-                //this specific order is compulsory
+                //it will propagate to the rest
                 watchedMovieService.saveWatchMovie(alreadyWatchedMovie);
-                userService.saveUser(actualUser);
 
                 // Getting organisation object as a json string
                 String jsonStr;
@@ -637,6 +631,7 @@ public class MovieController {
 
             movieChosen.addIsWatchedBy(actualUser);
             actualUser.addWatchedMovie(watchedMovie);
+
             //makes them persistent in db
             personService.savePerson(director);
 
