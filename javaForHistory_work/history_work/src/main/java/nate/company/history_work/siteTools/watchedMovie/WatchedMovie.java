@@ -35,8 +35,9 @@ public class WatchedMovie extends WatchedObject {
     contrary to cascade that will propagate the "persist".
 
     It solves issues with
+    requires a CascadeType.Merge, rather than "ALL" in order to work
      */
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "movie_id", referencedColumnName = "idmovie")
     private Movie movie;
 

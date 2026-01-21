@@ -1,15 +1,29 @@
 côté angular : 
 
 0) lancer le fichier Application.java depuis intellij
-1) il faut se placer dans src.main.java.nate.company.history_work.angular.angularclient
+1) il faut se placer dans src.main.java.nate.company.java.angular.angularclient
 2) tapez : ng serve --open (lancer angular)
 
+```sh
 ng serve --open
+```
 
 côté back : 
 
+1)
+
 
 - appuyez simplement sur le bouton play de intellij si le back end a bien été build avant (il n'est nécessaire de ne build qu'une seule fois si tout s'est bien passé lors du premier build).
+
+2)
+
+-depuis le terminal 
+
+```sh
+cd ~/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres
+
+mvn spring-boot:run
+```
 
 ````shell
 java -cp h2-2.3.232.jar org.h2.tools.Server -ifNotExists &
@@ -29,8 +43,7 @@ si le container n'existe pas :
 
 ```
 
-docker container create -i -t --name museeoeuvrecontainer openjdk:23-jdk
-
+docker container create -i -t --name museeoeuvrecontainer eclipse-temurin:23-jdk
 ```
 
 (fin optionnel)

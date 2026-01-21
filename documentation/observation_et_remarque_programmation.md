@@ -1,9 +1,9 @@
 
 
--les fichiers dans le dossier angular.src.main.java.nate.company.history_work.angular.angularclient, ont tous été autogénérés.
+-les fichiers dans le dossier angular.src.main.java.nate.company.java.angular.angularclient, ont tous été autogénérés.
 Seul une partie des fichiers contenus dans "src" ne sont pas autogénérés.
 
-La commande : "ng generate class user" se lance dans le dossier autogénérés src.main.java.nate.company.history_work.angular.angularclient.
+La commande : "ng generate class user" se lance dans le dossier autogénérés src.main.java.nate.company.java.angular.angularclient.
 
 dans le dossier "angular", le dossier "service" a été créé par moi-même.
 
@@ -57,7 +57,7 @@ Contrairement à l'autre format qui est en mode standalone (c'est à dire une se
 
 Si il y a un problème avec rxjs alors qu'il est installé avec yarn et
 npm, alors tenter de supprimer rxjs pour le réinstaller, depuis le dossier
-angular/src.main.java.nate.company.history_work.angular.angularclient : et si ça produit une erreur avec architect/node,
+angular/src.main.java.nate.company.java.angular.angularclient : et si ça produit une erreur avec architect/node,
 alors supprimer manuellement en allant directement dans le fichier
 associé, les lignes qui contiennent architect/Node, il peut causer des
 bugs à l'installation.
@@ -76,7 +76,7 @@ Dans ce cas, c'est peut être un bug d'angular, supprimer puis remettez la parti
 
 Pour updater les données de la base de donnée (bdd) de façon persistante, il faut modifier le fichier
 (non?)"out/production/Historique_oeuvres/main/main.resources/application.properties"
-(oui)javaForHistory_work/history_work/src/main/main.resources/application.properties
+(oui)javaForHistory_work/java/src/main/main.resources/application.properties
 
 ```properties
 
@@ -195,7 +195,7 @@ Parameter 0 of method init in nate.company.youtube_converter.Application
 
 required a bean of type 'nate.company.youtube_converter.siteTools.UserRepository' that could not be found.
  */
-@ComponentScan({"nate/company/history_work"})
+@ComponentScan({"nate/company/java"})
 ```
 
 
@@ -842,7 +842,7 @@ de Application.java :
         it loads .env file
          */
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        configurer.setLocation(new FileSystemResource("javaForHistory_work/history_work/src/.env"));
+        configurer.setLocation(new FileSystemResource("javaForHistory_work/java/src/.env"));
         return configurer;
     }
 ```
@@ -1004,7 +1004,7 @@ doivent permettre de d'afficher correctement le mdp et le mail du développeur �
 
 résoudre le problème :
 
-"failed to lazily initialize a collection of role: nate.company.history_work.siteTools.user.User.watchMovies: could not initialize proxy - no Session"
+"failed to lazily initialize a collection of role: nate.company.java.siteTools.user.User.watchMovies: could not initialize proxy - no Session"
 
 solution :
 
@@ -1036,7 +1036,7 @@ Error creating bean with name 'entityManagerFactory' defined in class path resou
 
 pb :
 
-failed to lazily initialize a collection of role: nate.company.history_work.siteTools.user.User.watchMovies: could not initialize proxy - no Session
+failed to lazily initialize a collection of role: nate.company.java.siteTools.user.User.watchMovies: could not initialize proxy - no Session
 
 solution : 
 
@@ -1080,7 +1080,7 @@ Mais pour sql-connector, si vous switchez de create-drop à update, pour que cel
 
 pb :
 
-"detached entity passed to persist: nate.company.history_work.siteTools.user.User"
+"detached entity passed to persist: nate.company.java.siteTools.user.User"
 
 solution : 
 
@@ -1088,7 +1088,7 @@ assurez vous que la valeur par défaut de l'id n'est pas 0, cette valeur  fait b
 
 problème : 
 
-"Parameter 2 of method init in src.main.java.nate.company.history_work.Application required a bean of type 'src.main.service.UserService' that could not be found."
+"Parameter 2 of method init in src.main.java.nate.company.java.Application required a bean of type 'src.main.service.UserService' that could not be found."
 
 solution :
 
@@ -1097,7 +1097,7 @@ basique plutôt qu'à vouloir préciser le path.
 
 problème :
 
-"detached entity passed to persist: src.main.java.nate.company.history_work.siteTools.user.User"
+"detached entity passed to persist: src.main.java.nate.company.java.siteTools.user.User"
 
 solution :
 
@@ -1244,7 +1244,7 @@ persistence.xml :
 
 problème :
 
-"Error creating bean with name 'jwtFilter' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/history_work/config/JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'jwtUtil': Injection of autowired dependencies failed"
+"Error creating bean with name 'jwtFilter' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/config/JwtFilter.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'jwtUtil': Injection of autowired dependencies failed"
 
 "Could not resolve placeholder 'jwt.expirationMs' in value "${jwt.expirationMs}""
 
@@ -1515,6 +1515,11 @@ server.port=8081 #changement du port 8080 par 8081
 
 ```
 
+2)
+
+Cela peut aussi être lié à des containers dockers qui tournent encore. 
+Il faut dans ce cas les supprimer car ils s'accaparent l'adresse et la rendent inutilisable.
+
 problème : 
 
 "
@@ -1536,7 +1541,7 @@ problème :
 
 ```
 
-cannot invoke "nate.company.history_work.siteTools.movie.Movie.hashCode()" because "this.movie" is null
+cannot invoke "nate.company.java.siteTools.movie.Movie.hashCode()" because "this.movie" is null
 
 ```
 
@@ -1568,13 +1573,13 @@ public void removeById(long idWatchMovie);
 ```
 
 problème : 
-"Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userService' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/history_work/service/UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in nate.company.history_work.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+"Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userService' defined in file [/home/nathanb/Bureau/Bureau/Bureau/Perso/projets_développement_informatique/Historique_oeuvres/target/classes/nate/company/java/service/UserService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userRepository' defined in nate.company.java.siteTools.user.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
 "
 
 +
 
 
-" Could not determine recommended JdbcType for Java type 'nate.company.history_work.siteTools.user.User"
+" Could not determine recommended JdbcType for Java type 'nate.company.java.siteTools.user.User"
 
 solution :
 
@@ -1691,7 +1696,7 @@ Pensez à ignorer les champs lorsque vous faites des copies pour vos dto classes
 
 problème : 
 
-"java.lang.IllegalArgumentException:  Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+"java.lang.IllegalArgumentException:  Can not get long field nate.company.java.siteTools.movie.Movie.id on nate.company.java.siteTools.watchedMovie.WatchedMovie"
 
 solution : 
 
@@ -1705,7 +1710,7 @@ et ajoutez :
 
 problème :
 
-"java.lang.IllegalArgumentException: Can not set java.util.HashSet field nate.company.history_work.siteTools.person.Person.actorsAnime to org.hibernate.collection.spi.PersistentSet"
+"java.lang.IllegalArgumentException: Can not set java.util.HashSet field nate.company.java.siteTools.person.Person.actorsAnime to org.hibernate.collection.spi.PersistentSet"
 
 solution : 
 
@@ -1713,7 +1718,7 @@ pensez à ajouter des setters et aussi un constructeur qui permet de préciser l
 
 problème : 
 
-"Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+"Can not get long field nate.company.java.siteTools.movie.Movie.id on nate.company.java.siteTools.watchedMovie.WatchedMovie"
 
 solution :
 
@@ -1724,7 +1729,7 @@ En gros vous devez save en base puis récupérer l'instance qui a été save en 
 
 problème :
 
-"detached entity passed to persist: nate.company.history_work.siteTools.movie.Movie"
+"detached entity passed to persist: nate.company.java.siteTools.movie.Movie"
 
 solution :
 
@@ -1781,12 +1786,12 @@ var watchedMovie = new WatchedMovie(actualUser,movie, VisualArtStatus.fromString
 
 ```
 
----> Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie
+---> Can not get long field nate.company.java.siteTools.movie.Movie.id on nate.company.java.siteTools.watchedMovie.WatchedMovie
 
 
 problème :
 
-"Can not get long field nate.company.history_work.siteTools.movie.Movie.id on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+"Can not get long field nate.company.java.siteTools.movie.Movie.id on nate.company.java.siteTools.watchedMovie.WatchedMovie"
 
 solution : 
 
@@ -1843,7 +1848,7 @@ solution :
 
 problème :
 
-" Can not get nate.company.history_work.siteTools.person.Person field nate.company.history_work.siteTools.movie.Movie.director on nate.company.history_work.siteTools.watchedMovie.WatchedMovie"
+" Can not get nate.company.java.siteTools.person.Person field nate.company.java.siteTools.movie.Movie.director on nate.company.java.siteTools.watchedMovie.WatchedMovie"
 
 -attention une autre cause peut aussi être que vous avez save dans la class user le watchMovie avant que le watch movie possède son vrai "id" en base données (donc id == 0).
 Il faut lui donner la class qui a reçu l'id pour que ça fonctionne correctement, donc post-save, et récupérée avec "get".
@@ -1875,3 +1880,17 @@ aussi pensez à bien faire vos manyToMany :
     private Set<WatchedMovie> watchMovies = new LinkedHashSet<>();
 
 ```
+
+
+problème :
+
+Erreur lors du lancement de la pipeline des Tests unitaires.
+
+Cause :
+
+//both annotation are necessary to enable th use of repositories but they cause bug in pipeline
+@SpringBootTest(classes= Application.class)
+@AutoConfigureMockMvc
+
+Ces annotations.
+Mais elles sont nécessaires pour reconnaitre les repositories.

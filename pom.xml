@@ -12,7 +12,7 @@
     <artifactId>history-work</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>history-work</name>
-    <description>API pour recenser les oeuvres en cours</description>
+    <description>API pour recenser les oeuvres en cours de visionnage</description>
     <url/>
     <licenses>
         <license/>
@@ -30,6 +30,9 @@
         <!-- nécessaire pour faire tourner java 21 -->
         <java.version>21</java.version>
     </properties>
+
+
+
     <dependencies>
 
         <!--
@@ -42,6 +45,13 @@
             <version>5.2.2</version>
         </dependency>
 
+        <!-- Source: https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>3.0</version>
+        </dependency>
+
 
         <!--
 
@@ -49,12 +59,6 @@
         non perceveid getter and setters
 
         -->
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.icegreen/greenmail -->
         <!--<dependency>
@@ -112,7 +116,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>3.3.4</version>
+            <!--<version>3.3.4</version>-->
         </dependency>
 
 
@@ -123,7 +127,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.3.4</version>
+            <!--<version>3.4.4</version>-->
         </dependency>
 
 
@@ -154,7 +158,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.3.232</version>
             <scope>runtime</scope>
             <!--<scope>runtime</scope>-->
         </dependency>
@@ -170,7 +173,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>3.4.4</version>
+            <!--<<version>3.4.4</version>-->
         </dependency>
 
         <!--
@@ -181,7 +184,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>3.4.4</version>
+            <!--<version>3.4.4</version>-->
         </dependency>
 
         <!--
@@ -231,11 +234,11 @@
 
 
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- spring boot starter web est utilisé
         pour créer l'API REST -->
@@ -251,17 +254,18 @@
             </exclusions>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>5.7.0</version>
         </dependency>
+        -->
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.1.2</version>
         </dependency>
 
         <!-- permet de gérer une base de données
@@ -276,11 +280,12 @@
         </dependency>-->
 
         <!-- Ajout de JUNIT comme dépendance pour les tests unitaires-->
+        <!-- lié à junit 4, cause des erreurs car on utilise junit 5
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
 
         <!-- Dependency for email sending-->
@@ -343,9 +348,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test-autoconfigure</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -353,13 +360,15 @@
 
     <build>
 
+        <sourceDirectory>javaForHistory_work/history_work/src</sourceDirectory>
+        <testSourceDirectory>javaForHistory_work/history_work/src/test/java</testSourceDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <includes>
+                <!--<includes>
                     <include>**/*.properties</include>
-                </includes>
+                </includes>-->
             </resource>
         </resources>
         <plugins>
@@ -367,14 +376,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.3.3</version>
+                <version>3.4.4</version>
             </plugin>
+
 
             <!--nécessaire en plus du jar et de la dépendance -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+               <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.1.2</version>
+
             </plugin>
 
             <!-- Used to generate javadoc with maven (the doc is located in the target/site/apidocs folder)-->
