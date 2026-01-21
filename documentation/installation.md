@@ -229,6 +229,14 @@ en cas d'erreur du type :
 
 lsof -i:8080 (avec 8080 le port utilisé)
 
+ou
+
+sudo lsof -i -P -n | grep LISTEN
+
+(affiche tous ls ports utilisés)
+
 puis "kill LePidAssocié" 
 
 
+
+lsof -i:8081

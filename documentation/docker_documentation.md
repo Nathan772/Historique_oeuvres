@@ -74,7 +74,7 @@ sudo kill numberPortAssociatedToRoot
 
 ```
 
-voir les container créés mais non démarrés et ceux qui sont morts :
+voir/lister les container créés mais non démarrés et ceux qui sont morts :
 
 ```bash
 
