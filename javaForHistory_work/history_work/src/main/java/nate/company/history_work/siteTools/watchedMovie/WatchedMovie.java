@@ -32,7 +32,7 @@ public class WatchedMovie extends WatchedObject {
     https://stackoverflow.com/questions/69890531/why-am-i-obtaining-this-detached-entity-passed-to-persist-when-i-first-retriev
 
     prevent from double creation of persist in base with the same objct
-    contrary to cascade that will propagate the "persist".
+    contrary to cascade that will propagate the "persist".add
 
     It solves issues with
     requires a CascadeType.Merge, rather than "ALL" in order to work
