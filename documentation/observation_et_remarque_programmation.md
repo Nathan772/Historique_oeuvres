@@ -1515,6 +1515,11 @@ server.port=8081 #changement du port 8080 par 8081
 
 ```
 
+2)
+
+Cela peut aussi être lié à des containers dockers qui tournent encore. 
+Il faut dans ce cas les supprimer car ils s'accaparent l'adresse et la rendent inutilisable.
+
 problème : 
 
 "
